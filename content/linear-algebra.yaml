@@ -1,0 +1,481 @@
+topic:
+  id: linear-algebra
+  name: Linear algebra
+  order: 10
+  prefix: la
+  blurb: Subspaces, linear independence and bases, linear maps and rank–nullity, determinants, eigenvalues, and inner product spaces.
+  subtopics: [Subspaces, Independence & bases, Linear maps, Matrices & determinants, Eigenvalues, Inner products]
+
+problems:
+  - id: la-001
+    title: Subspace or not?
+    subtopic: Subspaces
+    difficulty: easy
+    type: proof
+    tags: [subspaces, subspace test]
+    statement: |
+      Prove that $W = \{(x,y,z) \in \R^3 : x + 2y - z = 0\}$ is a subspace of $\R^3$, and that $S = \{(x, y) \in \R^2 : xy \ge 0\}$ is not a subspace of $\R^2$.
+    solution: |
+      **$W$.** $(0,0,0) \in W$. If $(x,y,z), (x',y',z') \in W$ and $c \in \R$, then
+      $$(x + x') + 2(y + y') - (z + z') = 0 + 0 = 0, \qquad cx + 2cy - cz = c \cdot 0 = 0,$$
+      so $W$ is closed under addition and scalar multiplication.
+
+      **$S$.** $(1, 0) \in S$ and $(0, -1) \in S$, but their sum $(1, -1)$ has $xy = -1 < 0$. So $S$ is not closed under addition. $\blacksquare$
+
+  - id: la-002
+    title: Unions of subspaces
+    subtopic: Subspaces
+    difficulty: medium
+    type: proof
+    tags: [subspaces, union, intersection]
+    related: [la-009]
+    statement: |
+      Let $U, W$ be subspaces of $V$. Prove that $U \cap W$ is a subspace, and that $U \cup W$ is a subspace if and only if $U \subseteq W$ or $W \subseteq U$.
+    solution: |
+      **Intersection.** $0 \in U \cap W$. If $x, y \in U \cap W$ and $c$ is a scalar, then $x + y$ and $cx$ lie in both $U$ and $W$.
+
+      **Union, ($\Leftarrow$).** If $U \subseteq W$ then $U \cup W = W$, a subspace; similarly the other way round.
+
+      **Union, ($\Rightarrow$).** Suppose neither contains the other: pick $u \in U \setminus W$ and $w \in W \setminus U$. If $u + w \in U$, then $w = (u + w) - u \in U$, a contradiction. If $u + w \in W$, then $u = (u+w) - w \in W$, a contradiction. So $u + w \notin U \cup W$ and the union is not a subspace. $\blacksquare$
+
+  - id: la-003
+    title: Spaces of 2×2 matrices
+    subtopic: Subspaces
+    difficulty: easy
+    type: compute
+    tags: [subspaces, dimension, matrices]
+    statement: |
+      In the space $M_2(\R)$ of $2\times 2$ real matrices, decide whether each set is a subspace. For any that is, find a basis and its dimension.
+
+      1. Matrices with determinant $0$.
+      2. Matrices with trace $0$.
+    solution: |
+      1. **Not a subspace.** $\begin{pmatrix}1&0\\0&0\end{pmatrix}$ and $\begin{pmatrix}0&0\\0&1\end{pmatrix}$ have determinant $0$, but their sum $I$ has determinant $1$.
+      2. **A subspace**, since the trace is linear (it is the kernel of $\tr$). A matrix $\begin{pmatrix}a&b\\c&-a\end{pmatrix}$ is
+      $$a\begin{pmatrix}1&0\\0&-1\end{pmatrix} + b\begin{pmatrix}0&1\\0&0\end{pmatrix} + c\begin{pmatrix}0&0\\1&0\end{pmatrix},$$
+      and these three matrices are clearly independent. **Dimension 3.**
+
+  - id: la-004
+    title: A basis of polynomials
+    subtopic: Independence & bases
+    difficulty: easy
+    type: compute
+    tags: [basis, polynomials, coordinates]
+    statement: |
+      Show that $\{1,\ 1 + x,\ 1 + x + x^2\}$ is a basis of $P_2$, the polynomials of degree at most 2, and find the coordinates of $3 + 2x + x^2$ in this basis.
+    solution: |
+      **Independent.** If $a + b(1+x) + c(1 + x + x^2) = 0$, the $x^2$ coefficient gives $c = 0$, then the $x$ coefficient gives $b = 0$, then $a = 0$. Three independent vectors in the 3-dimensional space $P_2$ form a basis.
+
+      **Coordinates.** $a + b(1+x) + c(1+x+x^2) = (a + b + c) + (b + c)x + cx^2$. Matching with $3 + 2x + x^2$: $c = 1$, $b = 1$, $a = 1$. So the coordinates are $(1, 1, 1)$.
+
+  - id: la-005
+    title: Independence of pairwise sums
+    subtopic: Independence & bases
+    difficulty: medium
+    type: proof
+    tags: [linear independence]
+    statement: |
+      Let $v_1, v_2, v_3$ be linearly independent vectors in a real vector space. Prove that $v_1 + v_2$, $v_2 + v_3$, $v_3 + v_1$ are linearly independent.
+    solution: |
+      Suppose $a(v_1 + v_2) + b(v_2 + v_3) + c(v_3 + v_1) = 0$. Regrouping,
+      $$(a + c)v_1 + (a + b)v_2 + (b + c)v_3 = 0,$$
+      so by independence $a + c = a + b = b + c = 0$. Adding the three equations gives $2(a + b + c) = 0$, so $a + b + c = 0$. Subtracting each equation from this gives $b = 0$, $c = 0$, $a = 0$. $\blacksquare$
+
+      (Over a field where $2 = 0$ the result fails: the three vectors then sum to $0$.)
+
+  - id: la-006
+    title: Too many vectors are dependent
+    subtopic: Independence & bases
+    difficulty: medium
+    type: proof
+    tags: [linear independence, gaussian elimination]
+    statement: |
+      Prove that any $n + 1$ vectors in $\R^n$ are linearly dependent.
+    solution: |
+      Let the vectors be the columns of an $n \times (n+1)$ matrix $A$. They are dependent iff $Ax = 0$ has a non-zero solution.
+
+      Row reduce $A$ to echelon form $E$; this doesn't change the solution set. Each pivot lies in a different row, so there are at most $n$ pivots among the $n + 1$ columns, and at least one column has no pivot. Its variable is free. Setting it to $1$ and solving for the pivot variables by back-substitution gives a non-zero solution. $\blacksquare$
+
+  - id: la-007
+    title: Finding a dependency
+    subtopic: Independence & bases
+    difficulty: easy
+    type: compute
+    tags: [linear independence, row reduction]
+    statement: |
+      Are $(1,2,3)$, $(4,5,6)$, $(7,8,9)$ linearly independent? If not, find an explicit dependency and the dimension of their span.
+    solution: |
+      Solve $a(1,2,3) + b(4,5,6) + c(7,8,9) = 0$. Row reducing the coefficient matrix:
+      $$\begin{pmatrix}1&4&7\\2&5&8\\3&6&9\end{pmatrix} \to \begin{pmatrix}1&4&7\\0&-3&-6\\0&-6&-12\end{pmatrix} \to \begin{pmatrix}1&4&7\\0&1&2\\0&0&0\end{pmatrix}.$$
+      There is a free variable, so they are **dependent**. With $c = 1$: $b = -2$, $a = -4b - 7c = 1$. So
+      $$(1,2,3) - 2(4,5,6) + (7,8,9) = 0.$$
+      There are two pivots, so the span has **dimension 2**.
+
+  - id: la-008
+    title: Extending to a basis
+    subtopic: Independence & bases
+    difficulty: medium
+    type: proof
+    tags: [basis, linear independence, dimension]
+    related: [la-009]
+    statement: |
+      Let $V$ be finite-dimensional. Prove that every linearly independent set $S \subseteq V$ can be extended to a basis of $V$. (You may use that every independent set has at most $\dim V$ elements.)
+    solution: |
+      **Key step.** If $S$ is independent and $v \notin \Span S$, then $S \cup \{v\}$ is independent. Indeed, if $cv + \sum a_i s_i = 0$ with $c \ne 0$, then $v = -\frac1c\sum a_i s_i \in \Span S$, a contradiction. So $c = 0$, and then all $a_i = 0$ by independence of $S$.
+
+      Now, if $S$ spans $V$ it is a basis. Otherwise add some $v \notin \Span S$; the result is still independent. Repeat. Each step increases the size of an independent set, which can never exceed $\dim V$, so the process stops, and it can only stop at a spanning independent set, i.e. a basis containing $S$. $\blacksquare$
+
+  - id: la-009
+    title: Dimension of a sum of subspaces
+    subtopic: Independence & bases
+    difficulty: hard
+    type: proof
+    tags: [dimension, subspaces, basis]
+    related: [la-008, la-002]
+    hints:
+      - |
+        Start with a basis of $U \cap W$ and extend it in two ways.
+    statement: |
+      Let $U, W$ be subspaces of a finite-dimensional space. Prove that
+      $$\dim(U + W) = \dim U + \dim W - \dim(U \cap W).$$
+    solution: |
+      Let $u_1, \dots, u_k$ be a basis of $U \cap W$. Extend it to a basis $u_1, \dots, u_k, x_1, \dots, x_p$ of $U$ and to a basis $u_1, \dots, u_k, y_1, \dots, y_q$ of $W$. We claim
+      $$B = \{u_1, \dots, u_k, x_1, \dots, x_p, y_1, \dots, y_q\}$$
+      is a basis of $U + W$. Then $\dim(U+W) = k + p + q = (k + p) + (k + q) - k$, as required.
+
+      **Spanning.** Every element of $U + W$ is $u + w$ with $u \in U$, $w \in W$, and each of these is a combination of elements of $B$.
+
+      **Independence.** Suppose $\sum a_iu_i + \sum b_jx_j + \sum c_\ell y_\ell = 0$. Then
+      $$\sum c_\ell y_\ell = -\sum a_iu_i - \sum b_jx_j \in U,$$
+      and it is also in $W$, so it lies in $U \cap W$: $\sum c_\ell y_\ell = \sum d_iu_i$ for some $d_i$. Since the $u_i, y_\ell$ are independent (a basis of $W$), all $c_\ell = 0$. Then $\sum a_iu_i + \sum b_jx_j = 0$, and independence of the basis of $U$ gives all $a_i = b_j = 0$. $\blacksquare$
+
+  - id: la-010
+    title: Kernels and images are subspaces
+    subtopic: Linear maps
+    difficulty: easy
+    type: proof
+    tags: [linear maps, kernel, image]
+    statement: |
+      Let $T : V \to W$ be linear. Prove that $\ker T$ is a subspace of $V$ and $\im T$ is a subspace of $W$.
+    solution: |
+      $T(0) = T(0 + 0) = 2T(0)$, so $T(0) = 0$. Hence $0 \in \ker T$ and $0 \in \im T$.
+
+      **Kernel.** If $T(x) = T(y) = 0$ then $T(x + cy) = T(x) + cT(y) = 0$.
+
+      **Image.** If $w = T(x)$ and $w' = T(y)$ then $w + cw' = T(x + cy) \in \im T$. $\blacksquare$
+
+  - id: la-011
+    title: Injective iff trivial kernel
+    subtopic: Linear maps
+    difficulty: easy
+    type: proof
+    tags: [linear maps, kernel, injective]
+    statement: |
+      Prove that a linear map $T$ is injective if and only if $\ker T = \{0\}$.
+    solution: |
+      **($\Rightarrow$)** If $T(x) = 0 = T(0)$, injectivity gives $x = 0$.
+
+      **($\Leftarrow$)** If $T(x) = T(y)$ then $T(x - y) = 0$, so $x - y \in \ker T = \{0\}$, i.e. $x = y$. $\blacksquare$
+
+  - id: la-012
+    title: The rank–nullity theorem
+    subtopic: Linear maps
+    difficulty: hard
+    type: proof
+    tags: [rank-nullity, basis, dimension]
+    related: [la-008, la-015]
+    hints:
+      - |
+        Extend a basis of $\ker T$ to a basis of $V$, and show the images of the new vectors form a basis of $\im T$.
+    statement: |
+      Let $V$ be finite-dimensional and $T : V \to W$ linear. Prove that $\dim V = \dim\ker T + \dim\im T$.
+    solution: |
+      Let $u_1, \dots, u_k$ be a basis of $\ker T$ and extend it to a basis $u_1, \dots, u_k, v_1, \dots, v_r$ of $V$. We show $T(v_1), \dots, T(v_r)$ is a basis of $\im T$, which gives $\dim V = k + r$.
+
+      **Spanning.** Any $x \in V$ is $\sum a_iu_i + \sum b_jv_j$, so $T(x) = \sum b_jT(v_j)$, since $T(u_i) = 0$.
+
+      **Independence.** If $\sum b_jT(v_j) = 0$, then $T\left(\sum b_jv_j\right) = 0$, so $\sum b_jv_j \in \ker T$ and $\sum b_jv_j = \sum a_iu_i$ for some $a_i$. By independence of the basis of $V$, all $b_j = 0$ (and all $a_i = 0$). $\blacksquare$
+
+  - id: la-013
+    title: Kernel, image and rank of a matrix
+    subtopic: Linear maps
+    difficulty: medium
+    type: compute
+    tags: [kernel, image, rank, row reduction]
+    related: [la-012]
+    statement: |
+      For $A = \begin{pmatrix}1&2&1\\2&4&0\\3&6&1\end{pmatrix}$, find a basis for $\ker A$ and for the column space of $A$, and check rank–nullity.
+    solution: |
+      Row reduce:
+      $$\begin{pmatrix}1&2&1\\2&4&0\\3&6&1\end{pmatrix} \to \begin{pmatrix}1&2&1\\0&0&-2\\0&0&-2\end{pmatrix} \to \begin{pmatrix}1&2&0\\0&0&1\\0&0&0\end{pmatrix}.$$
+      Pivots are in columns 1 and 3, so the **rank is 2**.
+
+      **Kernel.** $z = 0$ and $x = -2y$, with $y$ free: $\ker A = \Span\{(-2, 1, 0)\}$. Nullity $1$.
+
+      **Column space.** The pivot columns of the original matrix: $\Span\{(1,2,3), (1,0,1)\}$.
+
+      Check: $2 + 1 = 3$ columns.
+
+  - id: la-014
+    title: The matrix of differentiation
+    subtopic: Linear maps
+    difficulty: easy
+    type: compute
+    tags: [matrix of a linear map, polynomials, nilpotent]
+    statement: |
+      Let $D : P_3 \to P_3$, $D(p) = p'$. Find its matrix with respect to the basis $1, x, x^2, x^3$, its rank and nullity, and show that $D^4 = 0$.
+    solution: |
+      $D(1) = 0$, $D(x) = 1$, $D(x^2) = 2x$, $D(x^3) = 3x^2$. Writing these as columns of coordinates,
+      $$[D] = \begin{pmatrix}0&1&0&0\\0&0&2&0\\0&0&0&3\\0&0&0&0\end{pmatrix}.$$
+      The kernel is the constants (nullity 1), and the image is $P_2$ (rank 3). $D^4p$ is the fourth derivative of a polynomial of degree at most 3, which is $0$, so $D^4 = 0$.
+
+  - id: la-015
+    title: Injective endomorphisms are surjective
+    subtopic: Linear maps
+    difficulty: easy
+    type: proof
+    tags: [rank-nullity, injective, surjective]
+    related: [la-012]
+    statement: |
+      Let $V$ and $W$ be finite-dimensional with $\dim V = \dim W$, and let $T : V \to W$ be linear. Prove that $T$ is injective if and only if it is surjective. Show this fails for $V = W = $ the space of all real polynomials.
+    solution: |
+      By rank–nullity, $\dim\ker T + \dim\im T = \dim V = \dim W$. So $\ker T = \{0\}$ iff $\dim\im T = \dim W$ iff $\im T = W$. That is, injective iff surjective.
+
+      **Infinite dimensions.** $p(x) \mapsto xp(x)$ is injective but not surjective (it never hits $1$). Differentiation is surjective but not injective. $\blacksquare$
+
+  - id: la-016
+    title: Rank of a product
+    subtopic: Linear maps
+    difficulty: medium
+    type: proof
+    tags: [rank, composition]
+    statement: |
+      Let $A$ be $m \times n$ and $B$ be $n \times p$. Prove that $\rank(AB) \le \min(\rank A, \rank B)$.
+    solution: |
+      **$\rank(AB) \le \rank A$.** Every column of $AB$ is $A$ times a vector, so the column space of $AB$ lies inside that of $A$.
+
+      **$\rank(AB) \le \rank B$.** The column space of $AB$ is $A(\operatorname{col} B)$, the image of the subspace $\operatorname{col} B$ under the linear map $x \mapsto Ax$. A linear map sends a spanning set of $\operatorname{col} B$ (of size $\rank B$) to a spanning set of the image, so $\dim A(\operatorname{col}B) \le \rank B$. $\blacksquare$
+
+  - id: la-017
+    title: Inverses of products
+    subtopic: Matrices & determinants
+    difficulty: easy
+    type: proof
+    tags: [inverse, matrices]
+    statement: |
+      Prove that if $A$ and $B$ are invertible $n \times n$ matrices then $AB$ is invertible with $(AB)^{-1} = B^{-1}A^{-1}$. Also verify that if $ad - bc \ne 0$ then
+      $$\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1} = \frac{1}{ad - bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}.$$
+    solution: |
+      $(AB)(B^{-1}A^{-1}) = A(BB^{-1})A^{-1} = AA^{-1} = I$, and likewise $(B^{-1}A^{-1})(AB) = B^{-1}B = I$.
+
+      For the $2\times2$ case,
+      $$\begin{pmatrix}a&b\\c&d\end{pmatrix}\begin{pmatrix}d&-b\\-c&a\end{pmatrix} = \begin{pmatrix}ad - bc & 0\\ 0 & ad - bc\end{pmatrix},$$
+      and the product in the other order is the same. Dividing by $ad - bc \ne 0$ gives $I$. $\blacksquare$
+
+  - id: la-018
+    title: Computing determinants
+    subtopic: Matrices & determinants
+    difficulty: medium
+    type: compute
+    tags: [determinants, vandermonde, row operations]
+    statement: |
+      Compute
+      $$\det\begin{pmatrix}2&0&1\\1&3&2\\1&1&2\end{pmatrix} \qquad\text{and}\qquad \det\begin{pmatrix}1&a&a^2\\1&b&b^2\\1&c&c^2\end{pmatrix}.$$
+    solution: |
+      **First.** Expand along the first row:
+      $$2(3\cdot2 - 2\cdot1) - 0 + 1(1\cdot 1 - 3\cdot 1) = 8 - 2 = 6.$$
+
+      **Vandermonde.** Subtracting row 1 from rows 2 and 3 doesn't change the determinant:
+      $$\det\begin{pmatrix}1&a&a^2\\0&b-a&b^2-a^2\\0&c-a&c^2-a^2\end{pmatrix} = (b-a)(c-a)\det\begin{pmatrix}1&b+a\\1&c+a\end{pmatrix} = (b-a)(c-a)(c-b).$$
+      (It is non-zero iff $a, b, c$ are distinct.)
+
+  - id: la-019
+    title: Idempotent and nilpotent matrices
+    subtopic: Matrices & determinants
+    difficulty: medium
+    type: proof
+    tags: [determinants, nilpotent, inverse]
+    statement: |
+      Let $A$ be an $n \times n$ matrix.
+
+      1. If $A^2 = A$, prove that $\det A \in \{0, 1\}$.
+      2. If $A^k = 0$ for some $k \ge 1$, prove that $\det A = 0$ and that $I - A$ is invertible with inverse $I + A + \cdots + A^{k-1}$.
+    solution: |
+      1. $\det(A)^2 = \det(A^2) = \det A$, so $\det A(\det A - 1) = 0$.
+      2. $\det(A)^k = \det(A^k) = 0$, so $\det A = 0$. For the inverse, the sum telescopes:
+      $$(I - A)(I + A + \cdots + A^{k-1}) = I - A^k = I,$$
+      and multiplying in the other order gives the same. $\blacksquare$
+
+  - id: la-020
+    title: Orthogonal matrices
+    subtopic: Matrices & determinants
+    difficulty: easy
+    type: proof
+    tags: [orthogonal matrices, determinants, norms]
+    statement: |
+      A real square matrix $Q$ is orthogonal if $Q^TQ = I$. Prove that then $\det Q = \pm 1$ and $\norm{Qx} = \norm{x}$ for every vector $x$.
+    solution: |
+      $1 = \det(Q^TQ) = \det(Q^T)\det(Q) = (\det Q)^2$, so $\det Q = \pm1$.
+
+      $\norm{Qx}^2 = (Qx)^T(Qx) = x^TQ^TQx = x^Tx = \norm x^2$. $\blacksquare$
+
+  - id: la-021
+    title: Diagonalise and take powers
+    subtopic: Eigenvalues
+    difficulty: medium
+    type: compute
+    tags: [diagonalisation, eigenvalues, matrix powers]
+    related: [gt-006, la-022]
+    statement: |
+      Diagonalise $A = \begin{pmatrix}2&1\\1&2\end{pmatrix}$ and find a formula for $A^n$.
+    solution: |
+      $\det(A - \lambda I) = (2-\lambda)^2 - 1 = (\lambda - 1)(\lambda - 3)$, so the eigenvalues are $3$ and $1$.
+
+      - $\lambda = 3$: $(A - 3I)v = 0$ gives $v = (1, 1)$.
+      - $\lambda = 1$: $(A - I)v = 0$ gives $v = (1, -1)$.
+
+      With $P = \begin{pmatrix}1&1\\1&-1\end{pmatrix}$ and $D = \operatorname{diag}(3, 1)$, $A = PDP^{-1}$ where $P^{-1} = \frac12\begin{pmatrix}1&1\\1&-1\end{pmatrix}$. So
+      $$A^n = PD^nP^{-1} = \frac12\begin{pmatrix}3^n + 1 & 3^n - 1\\ 3^n - 1 & 3^n + 1\end{pmatrix}.$$
+      Check $n = 1$: $\frac12\begin{pmatrix}4&2\\2&4\end{pmatrix} = A$.
+
+  - id: la-022
+    title: Distinct eigenvalues give independent eigenvectors
+    subtopic: Eigenvalues
+    difficulty: medium
+    type: proof
+    tags: [eigenvectors, linear independence, induction]
+    related: [la-021]
+    statement: |
+      Let $v_1, \dots, v_k$ be eigenvectors of $A$ with distinct eigenvalues $\lambda_1, \dots, \lambda_k$. Prove that they are linearly independent.
+    solution: |
+      Induct on $k$. For $k = 1$, $v_1 \ne 0$ by definition of an eigenvector.
+
+      Suppose $\sum_{i=1}^k c_iv_i = 0$. Apply $A - \lambda_kI$, which sends $v_i$ to $(\lambda_i - \lambda_k)v_i$:
+      $$\sum_{i=1}^{k-1}c_i(\lambda_i - \lambda_k)v_i = 0.$$
+      By the inductive hypothesis $c_i(\lambda_i - \lambda_k) = 0$ for $i < k$, and since $\lambda_i \ne \lambda_k$, $c_i = 0$. Then $c_kv_k = 0$ and $v_k \ne 0$, so $c_k = 0$. $\blacksquare$
+
+      (So an $n\times n$ matrix with $n$ distinct eigenvalues is diagonalisable.)
+
+  - id: la-023
+    title: Eigenvalues of powers and inverses
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: proof
+    tags: [eigenvalues, inverse]
+    statement: |
+      Let $Av = \lambda v$ with $v \ne 0$. Prove that $A^kv = \lambda^kv$ for all $k \ge 1$, and that if $A$ is invertible then $\lambda \ne 0$ and $A^{-1}v = \lambda^{-1}v$.
+    solution: |
+      Induct: $A^{k+1}v = A(\lambda^kv) = \lambda^kAv = \lambda^{k+1}v$.
+
+      If $A$ is invertible and $\lambda = 0$, then $Av = 0$ with $v \ne 0$, contradicting injectivity. So $\lambda \ne 0$. Applying $A^{-1}$ to $Av = \lambda v$ gives $v = \lambda A^{-1}v$, i.e. $A^{-1}v = \lambda^{-1}v$. $\blacksquare$
+
+  - id: la-024
+    title: Symmetric matrices have real eigenvalues
+    subtopic: Eigenvalues
+    difficulty: medium
+    type: proof
+    tags: [symmetric matrices, eigenvalues, complex numbers]
+    related: [la-025]
+    statement: |
+      Let $A$ be a real symmetric $n\times n$ matrix. Prove that every (complex) eigenvalue of $A$ is real.
+    solution: |
+      Let $Av = \lambda v$ with $v \in \C^n$, $v \ne 0$, and consider the scalar $s = \bar v^TAv = \lambda\,\bar v^Tv = \lambda\sum|v_i|^2$.
+
+      Since $A$ is real, $\bar s = v^TA\bar v$. A $1\times1$ matrix equals its transpose, so $\bar s = (v^TA\bar v)^T = \bar v^TA^Tv = \bar v^TAv = s$, using $A^T = A$. Hence $s$ is real. As $\sum|v_i|^2$ is real and positive, $\lambda = s / \sum|v_i|^2$ is real. $\blacksquare$
+
+  - id: la-025
+    title: Orthogonal eigenvectors
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: proof
+    tags: [symmetric matrices, orthogonality, eigenvectors]
+    related: [la-024]
+    statement: |
+      Let $A$ be real symmetric, $Au = \lambda u$ and $Av = \mu v$ with $\lambda \ne \mu$. Prove that $u \cdot v = 0$.
+    solution: |
+      For symmetric $A$, $(Au)\cdot v = u^TA^Tv = u^TAv = u \cdot (Av)$. So
+      $$\lambda(u\cdot v) = (Au)\cdot v = u\cdot(Av) = \mu(u\cdot v),$$
+      giving $(\lambda - \mu)(u\cdot v) = 0$. Since $\lambda \ne \mu$, $u \cdot v = 0$. $\blacksquare$
+
+  - id: la-026
+    title: Eigenvalues of 2×2 matrices
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: compute
+    tags: [eigenvalues, characteristic polynomial, rotation]
+    related: [la-027]
+    statement: |
+      1. Find the eigenvalues and eigenvectors of $\begin{pmatrix}4&-2\\1&1\end{pmatrix}$, and check that their sum and product are the trace and determinant.
+      2. Show that the rotation matrix $R_\theta = \begin{pmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{pmatrix}$ has no real eigenvalues unless $\theta$ is a multiple of $\pi$.
+    solution: |
+      1. $\det\begin{pmatrix}4-\lambda&-2\\1&1-\lambda\end{pmatrix} = \lambda^2 - 5\lambda + 6 = (\lambda - 2)(\lambda - 3)$.
+         - $\lambda = 2$: $\begin{pmatrix}2&-2\\1&-1\end{pmatrix}v = 0$ gives $v = (1,1)$.
+         - $\lambda = 3$: $\begin{pmatrix}1&-2\\1&-2\end{pmatrix}v = 0$ gives $v = (2,1)$.
+
+         The sum is $5 = \tr A$ and the product is $6 = 4 + 2 = \det A$.
+      2. The characteristic polynomial is $\lambda^2 - 2\cos\theta\,\lambda + 1$, with discriminant $4\cos^2\theta - 4 = -4\sin^2\theta$. This is negative unless $\sin\theta = 0$, i.e. $\theta \in \pi\Z$. Geometrically, a non-trivial rotation fixes no line through the origin.
+
+  - id: la-027
+    title: Cayley–Hamilton for 2×2 matrices
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: proof
+    tags: [cayley-hamilton, characteristic polynomial]
+    related: [la-026]
+    statement: |
+      Prove that every $2\times 2$ matrix $A$ satisfies $A^2 - (\tr A)A + (\det A)I = 0$. Use this to express $A^{-1}$ in terms of $A$ when $\det A \ne 0$.
+    solution: |
+      Let $A = \begin{pmatrix}a&b\\c&d\end{pmatrix}$. Then
+      $$A^2 = \begin{pmatrix}a^2 + bc & ab + bd\\ ac + cd & bc + d^2\end{pmatrix}, \quad (a + d)A = \begin{pmatrix}a^2 + ad & ab + bd \\ ac + cd & ad + d^2\end{pmatrix},$$
+      so $A^2 - (a+d)A = (bc - ad)I = -(\det A)I$.
+
+      If $\det A \ne 0$, then $A\big(A - (\tr A)I\big) = -(\det A)I$, so
+      $$A^{-1} = \frac{(\tr A)I - A}{\det A}. \qquad\blacksquare$$
+
+  - id: la-028
+    title: The Cauchy–Schwarz inequality
+    subtopic: Inner products
+    difficulty: medium
+    type: proof
+    tags: [cauchy-schwarz, inner products, quadratics]
+    statement: |
+      Let $V$ be a real inner product space. Prove that $|\langle u, v\rangle| \le \norm u\,\norm v$ for all $u, v \in V$, with equality if and only if $u, v$ are linearly dependent.
+    solution: |
+      If $v = 0$ both sides are $0$ (and the vectors are dependent). Otherwise, for $t \in \R$,
+      $$0 \le \norm{u - tv}^2 = \norm u^2 - 2t\langle u, v\rangle + t^2\norm v^2.$$
+      A quadratic in $t$ with positive leading coefficient that is never negative has discriminant $\le 0$:
+      $$4\langle u,v\rangle^2 - 4\norm u^2\norm v^2 \le 0.$$
+      Taking square roots gives the inequality.
+
+      **Equality** holds iff the discriminant is $0$, iff the quadratic has a real root $t$, iff $u = tv$ for some $t$. $\blacksquare$
+
+  - id: la-029
+    title: Gram–Schmidt
+    subtopic: Inner products
+    difficulty: medium
+    type: compute
+    tags: [gram-schmidt, orthonormal basis]
+    statement: |
+      Apply the Gram–Schmidt process to $(1,1,0)$, $(1,0,1)$, $(0,1,1)$ in $\R^3$ with the dot product.
+    solution: |
+      $u_1 = \frac{1}{\sqrt2}(1,1,0)$.
+
+      $w_2 = (1,0,1) - \big((1,0,1)\cdot u_1\big)u_1 = (1,0,1) - \tfrac12(1,1,0) = \left(\tfrac12, -\tfrac12, 1\right)$, so $u_2 = \frac{1}{\sqrt6}(1,-1,2)$.
+
+      $w_3 = (0,1,1) - \tfrac{1}{\sqrt2}u_1 - \tfrac{1}{\sqrt6}u_2 = (0,1,1) - \left(\tfrac12,\tfrac12,0\right) - \left(\tfrac16, -\tfrac16, \tfrac13\right) = \left(-\tfrac23, \tfrac23, \tfrac23\right)$, so $u_3 = \frac1{\sqrt3}(-1,1,1)$.
+
+      Check: $u_1\cdot u_2 \propto 1 - 1 + 0 = 0$, $u_1 \cdot u_3 \propto -1 + 1 = 0$, $u_2\cdot u_3 \propto -1 - 1 + 2 = 0$.
+
+  - id: la-030
+    title: Orthogonal complements
+    subtopic: Inner products
+    difficulty: hard
+    type: proof
+    tags: [orthogonal complement, rank-nullity, dimension]
+    related: [la-012]
+    statement: |
+      Let $W$ be a subspace of $\R^n$ and $W^\perp = \{x : x \cdot w = 0 \text{ for all } w \in W\}$. Prove that $\dim W + \dim W^\perp = n$ and $(W^\perp)^\perp = W$.
+    solution: |
+      Let $w_1, \dots, w_k$ be a basis of $W$ and let $M$ be the $k\times n$ matrix with these as rows. Then $x \in W^\perp$ iff $x$ is orthogonal to each $w_i$ (and hence to all their combinations), iff $Mx = 0$. So $W^\perp = \ker M$. The rows of $M$ are independent, so $\rank M = k$, and rank–nullity gives $\dim W^\perp = n - k$.
+
+      Every $w \in W$ is orthogonal to every element of $W^\perp$, so $W \subseteq (W^\perp)^\perp$. Applying the dimension formula to $W^\perp$, $\dim (W^\perp)^\perp = n - (n - k) = k = \dim W$. A subspace contained in another of the same finite dimension is equal to it. $\blacksquare$

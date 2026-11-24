@@ -1,0 +1,490 @@
+topic:
+  id: real-analysis
+  name: Real analysis
+  order: 13
+  prefix: ra
+  blurb: Completeness and suprema, sequences and Cauchy sequences, series, continuity and uniform continuity, and Riemann integration.
+  subtopics: [Completeness, Sequences, Series, Continuity, Integration]
+
+problems:
+  - id: ra-001
+    title: Suprema and infima
+    subtopic: Completeness
+    difficulty: easy
+    type: compute
+    tags: [supremum, infimum]
+    related: [ra-002]
+    statement: |
+      Find the supremum and infimum of each set, and say whether they are attained.
+
+      1. $A = \{1 - \frac1n : n \in \N, n \ge 1\}$
+      2. $B = \{(-1)^n + \frac1n : n \ge 1\}$
+      3. $C = \{x \in \Q : x^2 < 2\}$
+    solution: |
+      1. $\inf A = 0$, attained at $n = 1$. $\sup A = 1$, not attained. Every element is $< 1$, and for any $\eps > 0$ the Archimedean property gives $n$ with $\frac1n < \eps$, so $1 - \frac1n > 1 - \eps$. No smaller number is an upper bound.
+      2. Even $n$ give $1 + \frac1n$, largest at $n = 2$: $\sup B = \frac32$, attained. Odd $n$ give $-1 + \frac1n > -1$, approaching $-1$: $\inf B = -1$, not attained.
+      3. $\sup C = \sqrt2$ and $\inf C = -\sqrt 2$, neither attained (they're irrational). Rationals between $\sqrt2 - \eps$ and $\sqrt 2$ exist by density, so nothing smaller than $\sqrt2$ is an upper bound.
+
+  - id: ra-002
+    title: The approximation property
+    subtopic: Completeness
+    difficulty: easy
+    type: proof
+    tags: [supremum, epsilon]
+    related: [ra-001, ra-005]
+    statement: |
+      Let $A \subseteq \R$ be non-empty and let $s$ be an upper bound of $A$. Prove that $s = \sup A$ if and only if for every $\eps > 0$ there is $a \in A$ with $a > s - \eps$.
+    solution: |
+      **($\Rightarrow$)** If $\eps > 0$, then $s - \eps < s$ is not an upper bound (as $s$ is the least), so some $a \in A$ has $a > s - \eps$.
+
+      **($\Leftarrow$)** Let $t$ be any upper bound and suppose $t < s$. With $\eps = s - t > 0$ there is $a \in A$ with $a > s - \eps = t$, contradicting that $t$ is an upper bound. So $s \le t$ for every upper bound $t$, i.e. $s = \sup A$. $\blacksquare$
+
+  - id: ra-003
+    title: The Archimedean property
+    subtopic: Completeness
+    difficulty: medium
+    type: proof
+    tags: [archimedean property, completeness]
+    related: [ra-004]
+    statement: |
+      Using the completeness axiom, prove that $\N$ is not bounded above in $\R$. Deduce that for every $\eps > 0$ there is $n \in \N$ with $\frac1n < \eps$.
+    solution: |
+      Suppose $\N$ were bounded above. By completeness it has a supremum $s$. Then $s - 1$ is not an upper bound, so some $n \in \N$ has $n > s - 1$. But then $n + 1 \in \N$ and $n + 1 > s$, contradicting that $s$ is an upper bound.
+
+      Given $\eps > 0$, $\frac1\eps$ is not an upper bound for $\N$, so some $n > \frac1\eps$, i.e. $\frac1n < \eps$. $\blacksquare$
+
+  - id: ra-004
+    title: The rationals are dense
+    subtopic: Completeness
+    difficulty: medium
+    type: proof
+    tags: [density, archimedean property]
+    related: [ra-003, ra-023]
+    statement: |
+      Prove that between any two real numbers $a < b$ there is a rational number. Deduce that there is also an irrational number between them.
+    solution: |
+      By the Archimedean property choose $n \ge 1$ with $\frac1n < b - a$. The set of integers $m$ with $m > na$ is non-empty (Archimedean again) and bounded below, so it has a least element $m$. Then $m - 1 \le na < m$, so
+      $$a < \frac mn \le a + \frac1n < b.$$
+
+      **Irrational.** Apply this to $a - \sqrt2 < b - \sqrt2$ to get a rational $q$ between them. Then $a < q + \sqrt2 < b$, and $q + \sqrt2$ is irrational. $\blacksquare$
+
+  - id: ra-005
+    title: Supremum of a sum of sets
+    subtopic: Completeness
+    difficulty: medium
+    type: proof
+    tags: [supremum, approximation property]
+    related: [ra-002]
+    statement: |
+      Let $A, B \subseteq \R$ be non-empty and bounded above, and $A + B = \{a + b : a \in A, b \in B\}$. Prove that $\sup(A + B) = \sup A + \sup B$.
+    solution: |
+      Let $\alpha = \sup A$ and $\beta = \sup B$.
+
+      **Upper bound.** For $a \in A$ and $b \in B$, $a + b \le \alpha + \beta$.
+
+      **Least.** Let $\eps > 0$. By the approximation property there are $a \in A$ with $a > \alpha - \frac\eps2$ and $b \in B$ with $b > \beta - \frac\eps2$. Then $a + b > \alpha + \beta - \eps$. By the approximation property again, $\alpha + \beta = \sup(A + B)$. $\blacksquare$
+
+  - id: ra-006
+    title: The square root of 2 exists
+    subtopic: Completeness
+    difficulty: hard
+    type: proof
+    tags: [completeness, supremum, existence]
+    related: [lg-009, ra-027]
+    hints:
+      - |
+        Let $s = \sup\{x \ge 0 : x^2 < 2\}$ and rule out $s^2 < 2$ and $s^2 > 2$ separately by nudging $s$.
+    statement: |
+      Using the completeness axiom, prove that there is a real number $s > 0$ with $s^2 = 2$.
+    solution: |
+      Let $S = \{x \ge 0 : x^2 < 2\}$. $1 \in S$, and $2$ is an upper bound (if $x \ge 2$ then $x^2 \ge 4$). Let $s = \sup S$, so $1 \le s \le 2$.
+
+      **Not $s^2 < 2$.** Choose $0 < h < 1$ with $h < \frac{2 - s^2}{2s + 1}$. Then
+      $$(s + h)^2 = s^2 + h(2s + h) < s^2 + h(2s + 1) < 2,$$
+      so $s + h \in S$, contradicting that $s$ is an upper bound.
+
+      **Not $s^2 > 2$.** Let $h = \frac{s^2 - 2}{2s} > 0$; note $h < \frac{s}{2}$, so $s - h > 0$. Then
+      $$(s - h)^2 = s^2 - 2sh + h^2 > s^2 - 2sh = 2.$$
+      For every $x \in S$, $x^2 < 2 < (s-h)^2$, so $x < s - h$. Thus $s - h$ is a smaller upper bound, a contradiction.
+
+      Hence $s^2 = 2$. $\blacksquare$
+
+  - id: ra-007
+    title: Geometric sequences tend to zero
+    subtopic: Sequences
+    difficulty: easy
+    type: proof
+    tags: [sequences, bernoulli, limits]
+    related: [in-011]
+    statement: |
+      Prove from the definition of a limit that $r^n \to 0$ whenever $|r| < 1$.
+    solution: |
+      If $r = 0$ it is trivial. Otherwise write $|r| = \frac{1}{1 + h}$ with $h > 0$. By Bernoulli's inequality $(1 + h)^n \ge 1 + nh > nh$, so
+      $$|r^n - 0| = \frac{1}{(1+h)^n} < \frac{1}{nh}.$$
+      Given $\eps > 0$, choose $N > \frac{1}{h\eps}$. Then for $n \ge N$, $|r^n| < \frac{1}{nh} \le \frac1{Nh} < \eps$. $\blacksquare$
+
+  - id: ra-008
+    title: Limits are unique, convergent sequences are bounded
+    subtopic: Sequences
+    difficulty: easy
+    type: proof
+    tags: [sequences, limits, boundedness]
+    statement: |
+      Prove that a sequence has at most one limit, and that every convergent sequence is bounded.
+    solution: |
+      **Uniqueness.** Suppose $a_n \to L$ and $a_n \to M$ with $L \ne M$. Let $\eps = \frac{|L - M|}{2}$. For large $n$, $|a_n - L| < \eps$ and $|a_n - M| < \eps$, so
+      $$|L - M| \le |L - a_n| + |a_n - M| < 2\eps = |L - M|,$$
+      a contradiction.
+
+      **Bounded.** With $\eps = 1$ there is $N$ such that $|a_n - L| < 1$ for $n \ge N$, so $|a_n| < |L| + 1$ for those $n$. Then $|a_n| \le \max\big(|a_1|, \dots, |a_{N-1}|, |L| + 1\big)$ for all $n$. $\blacksquare$
+
+  - id: ra-009
+    title: The limit of a product
+    subtopic: Sequences
+    difficulty: medium
+    type: proof
+    tags: [sequences, algebra of limits]
+    related: [ra-008]
+    statement: |
+      Prove that if $a_n \to a$ and $b_n \to b$ then $a_nb_n \to ab$.
+    solution: |
+      Convergent sequences are bounded, so $|a_n| \le M$ for all $n$, for some $M > 0$. Then
+      $$|a_nb_n - ab| = |a_n(b_n - b) + b(a_n - a)| \le M|b_n - b| + |b|\,|a_n - a|.$$
+      Given $\eps > 0$, choose $N$ so that for $n \ge N$, $|b_n - b| < \frac{\eps}{2M}$ and $|a_n - a| < \frac{\eps}{2(|b| + 1)}$. Then $|a_nb_n - ab| < \frac\eps2 + \frac\eps2 = \eps$. $\blacksquare$
+
+  - id: ra-010
+    title: The monotone convergence theorem
+    subtopic: Sequences
+    difficulty: medium
+    type: proof
+    tags: [monotone convergence, completeness, supremum]
+    related: [in-026, ra-013]
+    statement: |
+      Prove that every increasing sequence that is bounded above converges, to its supremum.
+    solution: |
+      Let $s = \sup\{a_n\}$, which exists by completeness. Given $\eps > 0$, by the approximation property some $a_N > s - \eps$. For $n \ge N$, since the sequence is increasing and $s$ is an upper bound,
+      $$s - \eps < a_N \le a_n \le s,$$
+      so $|a_n - s| < \eps$. $\blacksquare$
+
+  - id: ra-011
+    title: The nth root of n
+    subtopic: Sequences
+    difficulty: medium
+    type: proof
+    tags: [sequences, binomial theorem, limits]
+    statement: |
+      Prove that $n^{1/n} \to 1$.
+    solution: |
+      For $n \ge 2$, $n^{1/n} > 1$; write $n^{1/n} = 1 + h_n$ with $h_n > 0$. By the binomial theorem, keeping only the $k = 2$ term,
+      $$n = (1 + h_n)^n \ge \binom n2h_n^2 = \frac{n(n-1)}{2}h_n^2,$$
+      so $h_n^2 \le \frac{2}{n-1}$ and $0 < h_n \le \sqrt{\frac{2}{n-1}} \to 0$. By the squeeze theorem $h_n \to 0$, so $n^{1/n} \to 1$. $\blacksquare$
+
+  - id: ra-012
+    title: Evaluating limits of sequences
+    subtopic: Sequences
+    difficulty: easy
+    type: compute
+    tags: [sequences, limits]
+    related: [ca-020]
+    statement: |
+      Find the limits of
+      $$\text{(a) } \frac{3n^2 + 1}{n^2 - n}, \qquad \text{(b) } \sqrt{n^2 + n} - n, \qquad \text{(c) } \left(1 + \frac2n\right)^n.$$
+    solution: |
+      (a) Divide top and bottom by $n^2$: $\dfrac{3 + 1/n^2}{1 - 1/n} \to 3$.
+
+      (b) Rationalise:
+      $$\sqrt{n^2 + n} - n = \frac{n}{\sqrt{n^2 + n} + n} = \frac{1}{\sqrt{1 + 1/n} + 1} \to \frac12.$$
+
+      (c) Using $\left(1 + \frac xn\right)^n \to e^x$ with $x = 2$: the limit is $e^2$.
+
+  - id: ra-013
+    title: Bolzano–Weierstrass
+    subtopic: Sequences
+    difficulty: hard
+    type: proof
+    tags: [bolzano-weierstrass, subsequences, monotone convergence]
+    related: [ra-010, ra-015]
+    hints:
+      - |
+        Call $m$ a *peak* if $a_m \ge a_n$ for all $n > m$. Consider whether there are infinitely many peaks.
+    statement: |
+      Prove that every bounded sequence of real numbers has a convergent subsequence.
+    solution: |
+      We show every sequence has a monotone subsequence; a bounded monotone sequence converges by the monotone convergence theorem.
+
+      Call $m$ a **peak** if $a_m \ge a_n$ for every $n > m$.
+
+      - **Infinitely many peaks** $m_1 < m_2 < \cdots$: then $a_{m_1} \ge a_{m_2} \ge \cdots$ is a decreasing subsequence.
+      - **Finitely many peaks:** let $n_1$ be larger than all of them. Since $n_1$ is not a peak, some $n_2 > n_1$ has $a_{n_2} > a_{n_1}$. Since $n_2$ is not a peak, some $n_3 > n_2$ has $a_{n_3} > a_{n_2}$, and so on. This gives an increasing subsequence.
+
+      Either way there is a monotone subsequence, which is bounded and so converges. $\blacksquare$
+
+  - id: ra-014
+    title: Convergent sequences are Cauchy
+    subtopic: Sequences
+    difficulty: easy
+    type: proof
+    tags: [cauchy sequences, boundedness]
+    related: [ra-015]
+    statement: |
+      Prove that every convergent sequence is Cauchy, and every Cauchy sequence is bounded.
+    solution: |
+      **Convergent $\Rightarrow$ Cauchy.** Let $a_n \to L$ and $\eps > 0$. Choose $N$ with $|a_n - L| < \frac\eps2$ for $n \ge N$. For $m, n \ge N$,
+      $$|a_m - a_n| \le |a_m - L| + |L - a_n| < \eps.$$
+
+      **Cauchy $\Rightarrow$ bounded.** With $\eps = 1$, choose $N$ with $|a_m - a_n| < 1$ for $m, n \ge N$. Then $|a_n| < |a_N| + 1$ for all $n \ge N$, and so $|a_n| \le \max(|a_1|, \dots, |a_{N-1}|, |a_N| + 1)$ for all $n$. $\blacksquare$
+
+  - id: ra-015
+    title: Cauchy sequences converge
+    subtopic: Sequences
+    difficulty: hard
+    type: proof
+    tags: [cauchy sequences, completeness, bolzano-weierstrass]
+    related: [ra-013, ra-014, ra-019]
+    statement: |
+      Prove that every Cauchy sequence of real numbers converges.
+    solution: |
+      A Cauchy sequence is bounded, so by Bolzano–Weierstrass it has a subsequence $a_{n_k} \to L$. We show $a_n \to L$.
+
+      Let $\eps > 0$. Choose $N$ with $|a_m - a_n| < \frac\eps2$ for $m, n \ge N$, and choose $k$ with $n_k \ge N$ and $|a_{n_k} - L| < \frac\eps2$. Then for $n \ge N$,
+      $$|a_n - L| \le |a_n - a_{n_k}| + |a_{n_k} - L| < \eps. \qquad\blacksquare$$
+
+      (This fails in $\Q$: the decimal truncations of $\sqrt2$ are Cauchy but have no rational limit.)
+
+  - id: ra-016
+    title: The harmonic series diverges
+    subtopic: Series
+    difficulty: medium
+    type: proof
+    tags: [series, cauchy criterion, harmonic series]
+    related: [in-014, ra-018]
+    statement: |
+      Prove that $\displaystyle\sum_{n=1}^\infty\frac1n$ diverges by showing its partial sums are not Cauchy.
+    solution: |
+      Let $H_n = \sum_{k=1}^n\frac1k$. For every $n$,
+      $$H_{2n} - H_n = \frac{1}{n+1} + \cdots + \frac{1}{2n} \ge n\cdot\frac{1}{2n} = \frac12.$$
+      So with $\eps = \frac12$, however large $N$ is, the indices $m = 2N$ and $n = N$ give $|H_m - H_n| \ge \frac12$. The partial sums are not Cauchy, hence don't converge. $\blacksquare$
+
+  - id: ra-017
+    title: Cauchy condensation and p-series
+    subtopic: Series
+    difficulty: hard
+    type: proof
+    tags: [cauchy condensation, p-series, comparison]
+    related: [ca-022, ca-029]
+    hints:
+      - |
+        Group the terms into blocks $2^k \le n < 2^{k+1}$.
+    statement: |
+      Let $a_n \ge 0$ be decreasing. Prove that $\sum a_n$ converges if and only if $\sum 2^ka_{2^k}$ converges. Deduce that $\sum\frac1{n^p}$ converges if and only if $p > 1$.
+    solution: |
+      Both series have non-negative terms, so each converges iff its partial sums are bounded.
+
+      **Upper bound.** The block $2^k \le n < 2^{k+1}$ has $2^k$ terms, each $\le a_{2^k}$. So
+      $$\sum_{n=1}^{2^{K+1}-1}a_n \le \sum_{k=0}^K2^ka_{2^k}.$$
+      **Lower bound.** The block $2^k < n \le 2^{k+1}$ has $2^k$ terms, each $\ge a_{2^{k+1}}$. So
+      $$\sum_{n=2}^{2^{K+1}}a_n \ge \sum_{k=0}^K2^ka_{2^{k+1}} = \frac12\sum_{k=1}^{K+1}2^ka_{2^k}.$$
+      Hence one series has bounded partial sums iff the other does.
+
+      **p-series.** If $p \le 0$ the terms don't tend to $0$, so the series diverges. For $p > 0$, $\frac1{n^p}$ is decreasing and $2^k\cdot2^{-kp} = (2^{1-p})^k$, a geometric series that converges iff $2^{1-p} < 1$, iff $p > 1$. $\blacksquare$
+
+  - id: ra-018
+    title: Terms must tend to zero
+    subtopic: Series
+    difficulty: easy
+    type: proof
+    tags: [series, divergence test]
+    related: [ra-016]
+    statement: |
+      Prove that if $\sum a_n$ converges then $a_n \to 0$. Show that the converse is false.
+    solution: |
+      Let $S_n$ be the partial sums, $S_n \to S$. Then $a_n = S_n - S_{n-1} \to S - S = 0$.
+
+      The converse fails: $\frac1n \to 0$ but $\sum\frac1n$ diverges. $\blacksquare$
+
+  - id: ra-019
+    title: Absolute convergence implies convergence
+    subtopic: Series
+    difficulty: medium
+    type: proof
+    tags: [absolute convergence, cauchy criterion]
+    related: [ra-015]
+    statement: |
+      Prove that if $\sum|a_n|$ converges then $\sum a_n$ converges. Give an example showing the converse fails.
+    solution: |
+      Let $S_n = \sum_{k\le n}a_k$ and $T_n = \sum_{k \le n}|a_k|$. $T_n$ converges, so it is Cauchy. For $n > m$, by the triangle inequality,
+      $$|S_n - S_m| = \left|\sum_{k=m+1}^na_k\right| \le \sum_{k=m+1}^n|a_k| = |T_n - T_m|.$$
+      So $S_n$ is Cauchy too, and therefore converges by completeness.
+
+      **Converse fails:** $\sum\frac{(-1)^{n+1}}{n}$ converges (to $\ln 2$), but $\sum\frac1n$ diverges. $\blacksquare$
+
+  - id: ra-020
+    title: The square root is continuous
+    subtopic: Continuity
+    difficulty: medium
+    type: proof
+    tags: [continuity, epsilon-delta]
+    related: [ca-002]
+    statement: |
+      Prove from the $\eps$–$\delta$ definition that $f(x) = \sqrt x$ is continuous on $[0, \infty)$.
+    solution: |
+      **At $c > 0$.** For $x \ge 0$,
+      $$|\sqrt x - \sqrt c| = \frac{|x - c|}{\sqrt x + \sqrt c} \le \frac{|x - c|}{\sqrt c}.$$
+      Given $\eps > 0$, take $\delta = \eps\sqrt c$. Then $|x - c| < \delta$ gives $|\sqrt x - \sqrt c| < \eps$.
+
+      **At $c = 0$.** Take $\delta = \eps^2$. If $0 \le x < \delta$ then $\sqrt x < \eps$. $\blacksquare$
+
+  - id: ra-021
+    title: Proving the intermediate value theorem
+    subtopic: Continuity
+    difficulty: hard
+    type: proof
+    tags: [intermediate value theorem, supremum, continuity]
+    related: [ca-005, ra-026]
+    hints:
+      - |
+        With $f(a) < 0 < f(b)$, let $c = \sup\{x \in [a,b] : f(x) < 0\}$ and rule out $f(c) < 0$ and $f(c) > 0$.
+    statement: |
+      Let $f : [a,b] \to \R$ be continuous with $f(a) < 0 < f(b)$. Prove that $f(c) = 0$ for some $c \in (a,b)$.
+    solution: |
+      Let $S = \{x \in [a,b] : f(x) < 0\}$. It contains $a$ and is bounded above by $b$; let $c = \sup S$, so $c \in [a, b]$.
+
+      **Not $f(c) < 0$.** Then $c \ne b$. By continuity there is $\delta > 0$ with $f < 0$ on $[c, c + \delta) \cap [a,b]$, so $S$ contains points bigger than $c$, a contradiction.
+
+      **Not $f(c) > 0$.** Then $c \ne a$. By continuity there is $\delta > 0$ with $f > 0$ on $(c - \delta, c]\cap[a,b]$. No point of this interval is in $S$, and no point of $S$ exceeds $c$. So every element of $S$ is $\le c - \delta$, making $c - \delta$ a smaller upper bound, a contradiction.
+
+      So $f(c) = 0$, and $c \ne a, b$ since $f(a), f(b) \ne 0$. $\blacksquare$
+
+  - id: ra-022
+    title: The extreme value theorem
+    subtopic: Continuity
+    difficulty: hard
+    type: proof
+    tags: [extreme value theorem, bolzano-weierstrass, continuity]
+    related: [ra-013]
+    hints:
+      - |
+        For boundedness, suppose $|f(x_n)| > n$ and use Bolzano–Weierstrass. For attainment, consider $\frac{1}{M - f(x)}$.
+    statement: |
+      Let $f : [a,b] \to \R$ be continuous. Prove that $f$ is bounded and attains its maximum.
+    solution: |
+      **Bounded.** If not, for each $n$ there is $x_n \in [a,b]$ with $|f(x_n)| > n$. By Bolzano–Weierstrass some subsequence $x_{n_k} \to x$, and $x \in [a,b]$ since $a \le x_{n_k} \le b$. By continuity $f(x_{n_k}) \to f(x)$. But a convergent sequence is bounded, while $|f(x_{n_k})| > n_k \to \infty$. Contradiction.
+
+      **Attains its max.** Let $M = \sup f([a,b])$, which exists by the first part. If $f(x) < M$ for all $x$, then $g(x) = \frac{1}{M - f(x)}$ is continuous and positive on $[a,b]$, hence bounded, say by $K$. Then $M - f(x) \ge \frac1K$ for all $x$, so $M - \frac1K$ is an upper bound for $f$, contradicting that $M$ is the least upper bound. $\blacksquare$
+
+  - id: ra-023
+    title: A function continuous nowhere
+    subtopic: Continuity
+    difficulty: medium
+    type: proof
+    tags: [continuity, sequential criterion, density]
+    related: [ra-004, ra-029]
+    statement: |
+      Let $f(x) = 1$ if $x \in \Q$ and $f(x) = 0$ otherwise. Prove that $f$ is discontinuous at every point. (Use the sequential criterion: $f$ is continuous at $c$ iff $f(x_n) \to f(c)$ whenever $x_n \to c$.)
+    solution: |
+      Fix $c \in \R$. By density, for each $n$ there is a rational $q_n$ and an irrational $r_n$ in $\left(c, c + \frac1n\right)$. Both sequences tend to $c$, but $f(q_n) = 1$ and $f(r_n) = 0$ for all $n$. These can't both tend to $f(c)$, so $f$ is not continuous at $c$. $\blacksquare$
+
+  - id: ra-024
+    title: Bounded derivatives give uniform continuity
+    subtopic: Continuity
+    difficulty: medium
+    type: proof
+    tags: [uniform continuity, mean value theorem, lipschitz]
+    related: [ca-012, ra-025]
+    statement: |
+      Let $f$ be differentiable on an interval $I$ with $|f'(x)| \le M$ for all $x \in I$. Prove that $f$ is uniformly continuous on $I$.
+    solution: |
+      For $x, y \in I$, by the mean value theorem $f(x) - f(y) = f'(c)(x - y)$ for some $c$ between them, so $|f(x) - f(y)| \le M|x - y|$.
+
+      Given $\eps > 0$, let $\delta = \frac{\eps}{M + 1}$, which does not depend on $x$ or $y$. If $|x - y| < \delta$ then $|f(x) - f(y)| \le M\delta < \eps$. $\blacksquare$
+
+  - id: ra-025
+    title: Continuous but not uniformly continuous
+    subtopic: Continuity
+    difficulty: medium
+    type: proof
+    tags: [uniform continuity, counterexample]
+    related: [ra-024]
+    statement: |
+      Prove that $f(x) = \frac1x$ is continuous but not uniformly continuous on $(0, 1)$.
+    solution: |
+      Continuity follows from the algebra of limits, since $x \ne 0$ on $(0,1)$.
+
+      **Not uniformly continuous.** Take $\eps = 1$. For any $\delta > 0$, choose $n \ge 2$ with $\frac1{n(n+1)} < \delta$, and let $x = \frac1n$, $y = \frac1{n+1}$. Then $|x - y| = \frac1{n(n+1)} < \delta$, but $|f(x) - f(y)| = |n - (n+1)| = 1 \not< \eps$. So no $\delta$ works for $\eps = 1$. $\blacksquare$
+
+  - id: ra-026
+    title: A fixed-point theorem
+    subtopic: Continuity
+    difficulty: easy
+    type: proof
+    tags: [intermediate value theorem, fixed points]
+    related: [ra-021]
+    statement: |
+      Prove that every continuous function $f : [0,1] \to [0,1]$ has a fixed point, i.e. some $c$ with $f(c) = c$.
+    solution: |
+      Let $g(x) = f(x) - x$, which is continuous. Since $0 \le f \le 1$, $g(0) = f(0) \ge 0$ and $g(1) = f(1) - 1 \le 0$. If either is $0$ we're done. Otherwise $g(0) > 0 > g(1)$, and by the IVT $g(c) = 0$ for some $c \in (0,1)$. $\blacksquare$
+
+  - id: ra-027
+    title: Newton's method for √2
+    subtopic: Sequences
+    difficulty: medium
+    type: compute
+    tags: [recursive sequences, monotone convergence, am-gm]
+    related: [ra-006, ra-010]
+    statement: |
+      Let $x_1 = 1$ and $x_{n+1} = \frac12\left(x_n + \frac{2}{x_n}\right)$. Compute $x_2, x_3, x_4$, then prove that $x_n \to \sqrt 2$.
+    solution: |
+      $x_2 = \frac32$, $x_3 = \frac{17}{12} \approx 1.41667$, $x_4 = \frac{577}{408} \approx 1.414216$, already very close to $\sqrt 2 = 1.414214\ldots$
+
+      **Bounded below.** All $x_n > 0$ (by induction). By AM–GM, $x_{n+1} = \frac12\left(x_n + \frac2{x_n}\right) \ge \sqrt{x_n\cdot\frac2{x_n}} = \sqrt2$, so $x_n \ge \sqrt 2$ for $n \ge 2$.
+
+      **Decreasing from $n = 2$.** $x_{n+1} - x_n = \dfrac{2 - x_n^2}{2x_n} \le 0$, since $x_n^2 \ge 2$.
+
+      By monotone convergence $x_n \to L \ge \sqrt2 > 0$. Letting $n \to \infty$ in the recurrence, $L = \frac12\left(L + \frac2L\right)$, so $L^2 = 2$ and $L = \sqrt2$.
+
+  - id: ra-028
+    title: Upper and lower sums
+    subtopic: Integration
+    difficulty: medium
+    type: compute
+    tags: [darboux sums, riemann integral]
+    related: [ca-024]
+    statement: |
+      Using the partition $P_n$ of $[0,1]$ into $n$ equal parts, compute the upper and lower Darboux sums of $f(x) = x$. Deduce that $f$ is integrable with $\int_0^1x\,dx = \frac12$.
+    solution: |
+      On $\left[\frac{i-1}n, \frac in\right]$ the supremum of $f$ is $\frac in$ and the infimum is $\frac{i-1}{n}$. So
+      $$U(P_n) = \sum_{i=1}^n\frac in\cdot\frac1n = \frac{n+1}{2n}, \qquad L(P_n) = \sum_{i=1}^n\frac{i-1}{n}\cdot\frac1n = \frac{n-1}{2n}.$$
+      Then $U(P_n) - L(P_n) = \frac1n \to 0$, so $f$ is integrable. The integral lies between $L(P_n)$ and $U(P_n)$ for every $n$, both of which tend to $\frac12$, so it equals $\frac12$.
+
+  - id: ra-029
+    title: A non-integrable function
+    subtopic: Integration
+    difficulty: medium
+    type: proof
+    tags: [riemann integral, darboux sums, density]
+    related: [ra-023]
+    statement: |
+      Prove that the function $f(x) = 1$ for $x \in \Q$, $f(x) = 0$ otherwise, is not Riemann integrable on $[0,1]$.
+    solution: |
+      Every subinterval of positive length contains both rationals and irrationals (by density), so on each one the supremum of $f$ is $1$ and the infimum is $0$. Hence for **every** partition $P$,
+      $$U(P) = \sum 1\cdot\Delta x_i = 1, \qquad L(P) = 0.$$
+      The upper integral is $1$ and the lower integral is $0$. They differ, so $f$ is not Riemann integrable. $\blacksquare$
+
+  - id: ra-030
+    title: Summing some series
+    subtopic: Series
+    difficulty: easy
+    type: compute
+    tags: [series, telescoping, geometric series]
+    related: [in-005, in-004]
+    statement: |
+      Find the sums of
+      $$\text{(a) } \sum_{n=1}^\infty\frac1{n(n+1)}, \qquad\text{(b) } \sum_{n=0}^\infty\left(\frac23\right)^n, \qquad\text{(c) } \sum_{n=1}^\infty\frac{n}{2^n}.$$
+    solution: |
+      (a) Telescoping: $\frac{1}{n(n+1)} = \frac1n - \frac1{n+1}$, so $S_N = 1 - \frac1{N+1} \to 1$.
+
+      (b) Geometric with ratio $\frac23$: $\dfrac{1}{1 - 2/3} = 3$.
+
+      (c) It converges by the ratio test, since the ratio $\frac{n+1}{2n} \to \frac12$. Call the sum $S$. Then
+      $$S - \frac S2 = \sum_{n\ge1}\frac{n}{2^n} - \sum_{n\ge1}\frac{n-1}{2^n} = \sum_{n\ge1}\frac{1}{2^n} = 1,$$
+      so $S = 2$.

@@ -1,0 +1,477 @@
+topic:
+  id: calculus
+  name: Calculus
+  order: 11
+  prefix: ca
+  blurb: Limits and continuity, differentiation, the mean value theorem, integration techniques, and Taylor series. First-year calculus with proofs.
+  subtopics: [Limits & continuity, Differentiation, Mean value theorem, Integration, Series & Taylor]
+
+problems:
+  - id: ca-001
+    title: A linear limit from the definition
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: proof
+    tags: [epsilon-delta, limits]
+    related: [ca-002]
+    statement: |
+      Using the $\eps$–$\delta$ definition, prove that $\displaystyle\lim_{x\to2}(3x + 1) = 7$.
+    solution: |
+      Let $\eps > 0$ and take $\delta = \eps/3$. If $0 < |x - 2| < \delta$, then
+      $$|(3x + 1) - 7| = 3|x - 2| < 3\delta = \eps. \qquad\blacksquare$$
+
+  - id: ca-002
+    title: A quadratic limit from the definition
+    subtopic: Limits & continuity
+    difficulty: medium
+    type: proof
+    tags: [epsilon-delta, limits]
+    related: [ca-001, ra-020]
+    hints:
+      - |
+        Factor $x^2 - 9 = (x-3)(x+3)$ and first restrict to $|x - 3| < 1$ to bound $|x + 3|$.
+    statement: |
+      Using the $\eps$–$\delta$ definition, prove that $\displaystyle\lim_{x\to3}x^2 = 9$.
+    solution: |
+      Let $\eps > 0$ and take $\delta = \min(1, \eps/7)$. Suppose $0 < |x - 3| < \delta$. Since $|x - 3| < 1$, we have $2 < x < 4$, so $|x + 3| < 7$. Then
+      $$|x^2 - 9| = |x - 3|\,|x + 3| < \frac{\eps}{7}\cdot 7 = \eps. \qquad\blacksquare$$
+
+  - id: ca-003
+    title: Standard limits
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: compute
+    tags: [limits, trigonometric limits, rationalising]
+    statement: |
+      Using $\displaystyle\lim_{x\to0}\frac{\sin x}{x} = 1$ where needed, evaluate
+      $$\text{(a) } \lim_{x\to0}\frac{\sin 3x}{x}, \qquad \text{(b) } \lim_{x\to0}\frac{1 - \cos x}{x^2}, \qquad \text{(c) } \lim_{x\to0}\frac{\sqrt{x+1} - 1}{x}.$$
+    solution: |
+      (a) $\dfrac{\sin 3x}{x} = 3\cdot\dfrac{\sin 3x}{3x} \to 3$.
+
+      (b) Multiply top and bottom by $1 + \cos x$:
+      $$\frac{1 - \cos x}{x^2} = \frac{\sin^2x}{x^2(1 + \cos x)} = \left(\frac{\sin x}{x}\right)^2\frac{1}{1 + \cos x} \to 1\cdot\frac12 = \frac12.$$
+
+      (c) Rationalise:
+      $$\frac{\sqrt{x+1} - 1}{x} = \frac{(x + 1) - 1}{x(\sqrt{x+1} + 1)} = \frac{1}{\sqrt{x+1} + 1} \to \frac12.$$
+
+  - id: ca-004
+    title: The squeeze theorem
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: proof
+    tags: [squeeze theorem, limits, oscillation]
+    related: [ca-006]
+    statement: |
+      Prove that $\displaystyle\lim_{x\to0}x\sin\frac1x = 0$, and explain why $\displaystyle\lim_{x\to0}\sin\frac1x$ does not exist.
+    solution: |
+      For $x \ne 0$, $\left|x\sin\frac1x\right| \le |x|$, i.e. $-|x| \le x\sin\frac1x \le |x|$. Both bounds tend to $0$, so by the squeeze theorem the limit is $0$.
+
+      For $\sin\frac1x$: along $x_k = \frac{1}{2\pi k + \pi/2} \to 0$ it equals $1$, and along $y_k = \frac{1}{2\pi k - \pi/2} \to 0$ it equals $-1$. A limit would have to equal both. $\blacksquare$
+
+  - id: ca-005
+    title: Roots from the intermediate value theorem
+    subtopic: Limits & continuity
+    difficulty: medium
+    type: proof
+    tags: [intermediate value theorem, polynomials]
+    related: [ca-016, ra-021]
+    statement: |
+      1. Prove that $x^5 - 3x + 1 = 0$ has a solution in $(0, 1)$.
+      2. Prove that every real polynomial of odd degree has a real root.
+    solution: |
+      1. $p(x) = x^5 - 3x + 1$ is continuous, with $p(0) = 1 > 0$ and $p(1) = -1 < 0$. By the IVT, $p(c) = 0$ for some $c \in (0,1)$.
+
+      2. Dividing by the leading coefficient, we may assume $p(x) = x^n + a_{n-1}x^{n-1} + \cdots + a_0$ with $n$ odd. For $x \ne 0$,
+      $$\frac{p(x)}{x^n} = 1 + \frac{a_{n-1}}{x} + \cdots + \frac{a_0}{x^n} \to 1 \text{ as } |x| \to \infty.$$
+      So for some large $M$, $p(x)/x^n > 0$ whenever $|x| \ge M$. Then $p(M) > 0$, and since $(-M)^n < 0$ for odd $n$, $p(-M) < 0$. By the IVT $p$ has a root in $(-M, M)$. $\blacksquare$
+
+  - id: ca-006
+    title: Differentiable, but the derivative is not continuous
+    subtopic: Differentiation
+    difficulty: medium
+    type: proof
+    tags: [differentiability, counterexample, oscillation]
+    related: [ca-004]
+    statement: |
+      Let $f(x) = x^2\sin\frac1x$ for $x \ne 0$ and $f(0) = 0$. Prove that $f$ is differentiable everywhere but $f'$ is not continuous at $0$.
+    solution: |
+      **At $0$.** $\dfrac{f(h) - f(0)}{h} = h\sin\frac1h \to 0$ by the squeeze theorem, so $f'(0) = 0$.
+
+      **Elsewhere.** By the product and chain rules,
+      $$f'(x) = 2x\sin\frac1x - \cos\frac1x \qquad (x \ne 0).$$
+
+      **Not continuous at $0$.** The term $2x\sin\frac1x \to 0$, but $\cos\frac1x$ has no limit: it is $1$ at $x = \frac{1}{2\pi k}$ and $-1$ at $x = \frac{1}{(2k+1)\pi}$. So along these sequences $f'$ tends to $-1$ and $+1$ respectively, and $f'(x) \not\to f'(0) = 0$. $\blacksquare$
+
+  - id: ca-007
+    title: The product rule from first principles
+    subtopic: Differentiation
+    difficulty: easy
+    type: proof
+    tags: [product rule, definition of derivative]
+    related: [ca-011]
+    statement: |
+      Prove that if $f$ and $g$ are differentiable at $x$ then so is $fg$, with $(fg)'(x) = f'(x)g(x) + f(x)g'(x)$.
+    solution: |
+      Add and subtract $f(x+h)g(x)$:
+      $$\frac{f(x+h)g(x+h) - f(x)g(x)}{h} = f(x+h)\frac{g(x+h) - g(x)}{h} + g(x)\frac{f(x+h) - f(x)}{h}.$$
+      As $h \to 0$, $f(x+h) \to f(x)$ (differentiable implies continuous) and the difference quotients tend to $g'(x)$ and $f'(x)$. So the whole expression tends to $f(x)g'(x) + g(x)f'(x)$. $\blacksquare$
+
+  - id: ca-008
+    title: Some derivatives
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [logarithmic differentiation, implicit differentiation, inverse functions]
+    statement: |
+      Find $\dfrac{d}{dx}$ of (a) $x^x$ for $x > 0$, (b) $\arctan x$, (c) $\ln(\sec x + \tan x)$.
+    solution: |
+      (a) $x^x = e^{x\ln x}$, so the derivative is $e^{x\ln x}(\ln x + 1) = x^x(\ln x + 1)$.
+
+      (b) If $y = \arctan x$ then $\tan y = x$. Differentiating, $\sec^2 y\cdot y' = 1$, so $y' = \dfrac{1}{1 + \tan^2y} = \dfrac{1}{1 + x^2}$.
+
+      (c) By the chain rule,
+      $$\frac{\sec x\tan x + \sec^2x}{\sec x + \tan x} = \frac{\sec x(\tan x + \sec x)}{\sec x + \tan x} = \sec x.$$
+
+  - id: ca-009
+    title: Tangent to the folium of Descartes
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [implicit differentiation, tangent lines]
+    statement: |
+      Find the tangent line to $x^3 + y^3 = 6xy$ at the point $(3, 3)$.
+    solution: |
+      Differentiate implicitly: $3x^2 + 3y^2y' = 6y + 6xy'$, so
+      $$y' = \frac{6y - 3x^2}{3y^2 - 6x}.$$
+      At $(3,3)$: $y' = \dfrac{18 - 27}{27 - 18} = -1$. The tangent line is $y - 3 = -(x - 3)$, i.e. $y = 6 - x$.
+
+  - id: ca-010
+    title: The biggest box
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [optimisation]
+    statement: |
+      Equal squares of side $x$ are cut from the corners of a $12 \times 12$ sheet, and the sides are folded up to make an open box. Find the maximum volume.
+    solution: |
+      $V(x) = x(12 - 2x)^2$ for $0 \le x \le 6$. Then
+      $$V'(x) = (12 - 2x)^2 - 4x(12 - 2x) = (12 - 2x)(12 - 6x),$$
+      which is zero at $x = 2$ and $x = 6$. Since $V(0) = V(6) = 0$ and $V(2) = 2\cdot 64 = 128$, the maximum is **128** at $x = 2$.
+
+  - id: ca-011
+    title: The Leibniz rule
+    subtopic: Differentiation
+    difficulty: medium
+    type: proof
+    tags: [higher derivatives, induction, binomial coefficients]
+    related: [ca-007, cb-030]
+    statement: |
+      Prove that if $f, g$ are $n$ times differentiable then
+      $$(fg)^{(n)} = \sum_{k=0}^n\binom nk f^{(k)}g^{(n-k)}.$$
+    solution: |
+      Induct on $n$. $n = 0$ is trivial and $n = 1$ is the product rule. Assume the formula for $n$ and differentiate it with the product rule:
+      $$(fg)^{(n+1)} = \sum_{k=0}^n\binom nk\left(f^{(k+1)}g^{(n-k)} + f^{(k)}g^{(n+1-k)}\right).$$
+      Re-index the first part with $j = k+1$. The coefficient of $f^{(j)}g^{(n+1-j)}$ is then $\binom n{j-1} + \binom nj = \binom{n+1}{j}$ for $1 \le j \le n$, and $1$ for $j = 0$ and $j = n + 1$. This is the formula for $n + 1$. $\blacksquare$
+
+  - id: ca-012
+    title: Rolle's theorem and the mean value theorem
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [rolle, mean value theorem, extreme value theorem]
+    related: [ca-013, ra-024]
+    hints:
+      - |
+        For Rolle, use the extreme value theorem. For the MVT, subtract the secant line.
+    statement: |
+      Let $f$ be continuous on $[a,b]$ and differentiable on $(a,b)$.
+
+      1. (Rolle) If $f(a) = f(b)$, prove $f'(c) = 0$ for some $c \in (a,b)$.
+      2. (MVT) Prove $f'(c) = \dfrac{f(b) - f(a)}{b - a}$ for some $c \in (a, b)$.
+
+      You may use the extreme value theorem.
+    solution: |
+      **Rolle.** By the extreme value theorem $f$ attains a maximum and a minimum on $[a,b]$. If both are attained only at the endpoints, then since $f(a) = f(b)$, $f$ is constant and $f' \equiv 0$. Otherwise one of them, say a maximum, is at some $c \in (a, b)$. Then $\frac{f(c+h) - f(c)}{h}$ is $\le 0$ for $h > 0$ and $\ge 0$ for $h < 0$. The limit $f'(c)$ is therefore both $\le 0$ and $\ge 0$, so it is $0$.
+
+      **MVT.** Let $g(x) = f(x) - \dfrac{f(b) - f(a)}{b - a}(x - a)$. Then $g$ is continuous on $[a,b]$, differentiable on $(a,b)$, and $g(a) = g(b) = f(a)$. By Rolle, $0 = g'(c) = f'(c) - \dfrac{f(b) - f(a)}{b - a}$. $\blacksquare$
+
+  - id: ca-013
+    title: Zero derivative means constant
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: proof
+    tags: [mean value theorem]
+    related: [ca-012]
+    statement: |
+      Prove that if $f'(x) = 0$ for all $x$ in an interval $I$, then $f$ is constant on $I$. Deduce that two antiderivatives of the same function on an interval differ by a constant.
+    solution: |
+      Let $x < y$ in $I$. By the MVT, $f(y) - f(x) = f'(c)(y - x) = 0$ for some $c \in (x, y)$. So $f(x) = f(y)$.
+
+      If $F' = G' = g$ on $I$, then $(F - G)' = 0$, so $F - G$ is constant. $\blacksquare$
+
+      (The interval matters: $f(x) = \operatorname{sign}(x)$ on $\R\setminus\{0\}$ has zero derivative but is not constant.)
+
+  - id: ca-014
+    title: Sine is 1-Lipschitz
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: proof
+    tags: [mean value theorem, inequalities]
+    statement: |
+      Prove that $|\sin a - \sin b| \le |a - b|$ for all real $a, b$.
+    solution: |
+      If $a = b$ there is nothing to prove. Otherwise, by the MVT, $\sin a - \sin b = \cos c\,(a - b)$ for some $c$ between $a$ and $b$. Since $|\cos c| \le 1$, $|\sin a - \sin b| \le |a - b|$. $\blacksquare$
+
+  - id: ca-015
+    title: The exponential lies above its tangent
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: proof
+    tags: [mean value theorem, exponential, inequalities]
+    statement: |
+      Prove that $e^x \ge 1 + x$ for all real $x$, with equality only at $x = 0$.
+    solution: |
+      At $x = 0$ there is equality. For $x \ne 0$, the MVT gives $e^x - 1 = e^cx$ for some $c$ strictly between $0$ and $x$.
+
+      - If $x > 0$: $c > 0$, so $e^c > 1$ and $e^x - 1 = e^c x > x$.
+      - If $x < 0$: $c < 0$, so $0 < e^c < 1$, and multiplying by $x < 0$ reverses the inequality: $e^cx > x$.
+
+      Either way $e^x > 1 + x$. $\blacksquare$
+
+  - id: ca-016
+    title: Exactly one real root
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: proof
+    tags: [intermediate value theorem, monotonicity, roots]
+    related: [ca-005]
+    statement: |
+      Prove that $x^3 + x - 1 = 0$ has exactly one real solution.
+    solution: |
+      **Existence.** $p(x) = x^3 + x - 1$ is continuous with $p(0) = -1 < 0 < 1 = p(1)$, so by the IVT it has a root in $(0,1)$.
+
+      **Uniqueness.** $p'(x) = 3x^2 + 1 > 0$ everywhere, so by the MVT $p$ is strictly increasing (if $x < y$ then $p(y) - p(x) = p'(c)(y-x) > 0$). A strictly increasing function takes each value at most once. $\blacksquare$
+
+  - id: ca-017
+    title: Indeterminate forms
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: compute
+    tags: [lhopital, limits]
+    statement: |
+      Evaluate
+      $$\text{(a) } \lim_{x\to0}\frac{e^x - 1 - x}{x^2}, \qquad\text{(b) } \lim_{x\to0^+}x\ln x, \qquad\text{(c) } \lim_{x\to\infty}x^{1/x}.$$
+    solution: |
+      (a) $\frac00$; by L'Hôpital twice: $\lim\frac{e^x - 1}{2x} = \lim\frac{e^x}{2} = \frac12$.
+
+      (b) Write it as $\dfrac{\ln x}{1/x}$, of the form $\frac{-\infty}{\infty}$. By L'Hôpital, $\lim\dfrac{1/x}{-1/x^2} = \lim(-x) = 0$.
+
+      (c) $x^{1/x} = e^{(\ln x)/x}$. By L'Hôpital, $\frac{\ln x}{x} \to \lim\frac{1/x}{1} = 0$, so by continuity of $\exp$ the limit is $e^0 = 1$.
+
+  - id: ca-018
+    title: Differentiating an integral
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [fundamental theorem of calculus, chain rule]
+    statement: |
+      Find $F'(x)$ where
+      $$F(x) = \int_{0}^{x^2}\sin(t^2)\,dt \qquad\text{and}\qquad G(x) = \int_x^{2x}\frac{dt}{t}\quad (x > 0).$$
+      Explain the answer for $G$ without the FTC.
+    solution: |
+      Let $S(u) = \int_0^u\sin(t^2)\,dt$, so $S'(u) = \sin(u^2)$ by the FTC. Then $F(x) = S(x^2)$ and by the chain rule
+      $$F'(x) = 2x\sin(x^4).$$
+
+      Similarly $G'(x) = \frac{1}{2x}\cdot2 - \frac1x = 0$. Directly, $G(x) = \ln(2x) - \ln x = \ln 2$ is constant.
+
+  - id: ca-019
+    title: Integration by parts
+    subtopic: Integration
+    difficulty: medium
+    type: compute
+    tags: [integration by parts]
+    statement: |
+      Evaluate $\displaystyle\int x^2e^x\,dx$ and $\displaystyle\int e^x\sin x\,dx$.
+    solution: |
+      **First.** Integrate by parts twice:
+      $$\int x^2e^x\,dx = x^2e^x - 2\int xe^x\,dx = x^2e^x - 2\left(xe^x - e^x\right) + C = e^x(x^2 - 2x + 2) + C.$$
+
+      **Second.** Let $I = \int e^x\sin x\,dx$. Then
+      $$I = e^x\sin x - \int e^x\cos x\,dx = e^x\sin x - \left(e^x\cos x + \int e^x\sin x\,dx\right).$$
+      So $2I = e^x(\sin x - \cos x)$ and $I = \frac12e^x(\sin x - \cos x) + C$.
+
+  - id: ca-020
+    title: The exponential as a limit
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: proof
+    tags: [limits, logarithm, exponential]
+    related: [pr-021]
+    statement: |
+      Prove that $\left(1 + \dfrac xn\right)^n \to e^x$ as $n \to \infty$, for every real $x$.
+    solution: |
+      For $x = 0$ it is trivial. Fix $x \ne 0$; for large $n$, $1 + x/n > 0$, so we can take logarithms:
+      $$\ln\left(1 + \frac xn\right)^n = n\ln\left(1 + \frac xn\right) = x\cdot\frac{\ln(1 + t_n)}{t_n}, \qquad t_n = \frac xn \to 0.$$
+      Now $\dfrac{\ln(1 + t)}{t} \to 1$ as $t \to 0$, since it is the difference quotient of $\ln$ at $1$ and $\ln'(1) = 1$. So the logarithm tends to $x$, and by continuity of $\exp$, $\left(1 + \frac xn\right)^n \to e^x$. $\blacksquare$
+
+  - id: ca-021
+    title: A reduction formula
+    subtopic: Integration
+    difficulty: medium
+    type: proof
+    tags: [reduction formula, integration by parts]
+    statement: |
+      Let $I_n = \displaystyle\int_0^{\pi/2}\sin^nx\,dx$. Prove that $nI_n = (n-1)I_{n-2}$ for $n \ge 2$, and compute $I_4$.
+    solution: |
+      Integrate by parts with $u = \sin^{n-1}x$, $dv = \sin x\,dx$:
+      $$I_n = \Big[-\cos x\sin^{n-1}x\Big]_0^{\pi/2} + (n-1)\int_0^{\pi/2}\sin^{n-2}x\cos^2x\,dx.$$
+      The boundary term is $0$ at both ends (for $n \ge 2$). Using $\cos^2 = 1 - \sin^2$,
+      $$I_n = (n-1)(I_{n-2} - I_n) \implies nI_n = (n-1)I_{n-2}.$$
+      With $I_0 = \frac\pi2$: $I_2 = \frac12\cdot\frac\pi2 = \frac\pi4$ and $I_4 = \frac34\cdot\frac\pi4 = \frac{3\pi}{16}$. $\blacksquare$
+
+  - id: ca-022
+    title: The p-integral
+    subtopic: Integration
+    difficulty: easy
+    type: proof
+    tags: [improper integrals]
+    related: [ra-017]
+    statement: |
+      Prove that $\displaystyle\int_1^\infty\frac{dx}{x^p}$ converges if and only if $p > 1$, and find its value when it does.
+    solution: |
+      For $p \ne 1$,
+      $$\int_1^R x^{-p}\,dx = \frac{R^{1-p} - 1}{1 - p}.$$
+      If $p > 1$ then $R^{1-p} \to 0$, giving $\frac{1}{p-1}$. If $p < 1$ then $R^{1-p} \to \infty$. For $p = 1$, $\int_1^R\frac{dx}{x} = \ln R \to \infty$. $\blacksquare$
+
+  - id: ca-023
+    title: Partial fractions
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [partial fractions]
+    statement: |
+      Evaluate $\displaystyle\int\frac{dx}{x^2 - 1}$ and $\displaystyle\int\frac{3x + 5}{(x+1)(x+2)}\,dx$.
+    solution: |
+      **First.** $\dfrac{1}{x^2 - 1} = \dfrac12\left(\dfrac{1}{x - 1} - \dfrac{1}{x + 1}\right)$, so the integral is
+      $$\frac12\ln\left|\frac{x-1}{x+1}\right| + C.$$
+
+      **Second.** Write $\dfrac{3x + 5}{(x+1)(x+2)} = \dfrac{A}{x+1} + \dfrac{B}{x+2}$, so $3x + 5 = A(x + 2) + B(x + 1)$. Putting $x = -1$ gives $A = 2$, and $x = -2$ gives $B = 1$. So the integral is
+      $$2\ln|x+1| + \ln|x + 2| + C.$$
+
+  - id: ca-024
+    title: An integral as a limit of sums
+    subtopic: Integration
+    difficulty: medium
+    type: compute
+    tags: [riemann sums, definite integrals]
+    related: [in-002]
+    statement: |
+      Compute $\displaystyle\int_0^1x^2\,dx$ directly as the limit of right-endpoint Riemann sums.
+    solution: |
+      Divide $[0,1]$ into $n$ equal parts and use right endpoints $x_i = i/n$:
+      $$R_n = \sum_{i=1}^n\left(\frac in\right)^2\frac1n = \frac1{n^3}\cdot\frac{n(n+1)(2n+1)}{6} = \frac{(1 + \frac1n)(2 + \frac1n)}{6} \to \frac26 = \frac13.$$
+
+  - id: ca-025
+    title: Bounds for log n!
+    subtopic: Integration
+    difficulty: hard
+    type: proof
+    tags: [integral comparison, factorial, asymptotics]
+    statement: |
+      Prove that for $n \ge 1$,
+      $$n\ln n - n + 1 \le \ln n! \le (n+1)\ln(n+1) - n,$$
+      and deduce that $\dfrac{\ln n!}{n\ln n} \to 1$.
+    solution: |
+      Since $\ln$ is increasing, for $k \ge 2$,
+      $$\int_{k-1}^{k}\ln x\,dx \le \ln k \le \int_k^{k+1}\ln x\,dx.$$
+      Summing over $k = 2, \dots, n$ and using $\ln 1 = 0$:
+      $$\int_1^n\ln x\,dx \le \ln n! \le \int_2^{n+1}\ln x\,dx \le \int_1^{n+1}\ln x\,dx.$$
+      With $\int\ln x\,dx = x\ln x - x$, the outer integrals are $n\ln n - n + 1$ and $(n+1)\ln(n+1) - n$.
+
+      Dividing by $n\ln n$ (for $n \ge 2$), the lower bound is $1 - \frac{1}{\ln n} + \frac{1}{n\ln n} \to 1$. The upper bound is
+      $$\frac{n+1}{n}\cdot\frac{\ln(n+1)}{\ln n} - \frac{1}{\ln n} \to 1,$$
+      since $\ln(n+1) - \ln n = \ln(1 + \frac1n) \to 0$. By the squeeze theorem the ratio tends to $1$. $\blacksquare$
+
+  - id: ca-026
+    title: e is irrational
+    subtopic: Series & Taylor
+    difficulty: hard
+    type: proof
+    tags: [taylor remainder, irrationality, contradiction]
+    source: Fourier
+    hints:
+      - |
+        Write $e = \sum_{k=0}^q\frac1{k!} + R_q$ with the Lagrange remainder, and multiply by $q!$.
+    statement: |
+      Prove that $e$ is irrational. You may use $2 < e < 3$ and Taylor's theorem with the Lagrange remainder.
+    solution: |
+      Suppose $e = p/q$ with positive integers $p, q$. Replacing $p/q$ by $2p/2q$ if necessary, we may assume $q \ge 2$. By Taylor's theorem for $e^x$ at $0$, evaluated at $x = 1$,
+      $$e = \sum_{k=0}^q\frac{1}{k!} + R, \qquad R = \frac{e^c}{(q+1)!} \text{ for some } c \in (0,1).$$
+      So $0 < R < \frac{3}{(q+1)!}$. Multiply by $q!$:
+      $$q!\,R = q!\,e - \sum_{k=0}^q\frac{q!}{k!}.$$
+      The right side is an integer, since $q!e = (q-1)!\,p$ and each $q!/k!$ is an integer. But
+      $$0 < q!\,R < \frac{3}{q+1} \le 1$$
+      for $q \ge 2$. No integer lies strictly between $0$ and $1$, a contradiction. $\blacksquare$
+
+  - id: ca-027
+    title: A Taylor approximation
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: compute
+    tags: [taylor series, alternating series, error bounds]
+    statement: |
+      Write down the Taylor series of $\ln(1 + x)$ about $0$, use four terms to approximate $\ln 1.1$, and bound the error.
+    solution: |
+      Integrating $\frac{1}{1+t} = 1 - t + t^2 - \cdots$ for $|t| < 1$ term by term from $0$ to $x$ gives
+      $$\ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} - \frac{x^4}{4} + \cdots.$$
+      With $x = 0.1$:
+      $$\ln 1.1 \approx 0.1 - 0.005 + 0.000\,333 - 0.000\,025 = 0.095\,308.$$
+      The series is alternating with terms decreasing to 0, so the error is at most the next term, $\frac{0.1^5}{5} = 2\times10^{-6}$. (The true value is $0.095\,310\ldots$)
+
+  - id: ca-028
+    title: Radius of convergence
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: compute
+    tags: [power series, ratio test, radius of convergence]
+    statement: |
+      Find the radius of convergence of $\displaystyle\sum_{n\ge1}\frac{n x^n}{2^n}$ and $\displaystyle\sum_{n\ge0}\frac{x^n}{n!}$. For the first, decide what happens at the endpoints.
+    solution: |
+      **First.** By the ratio test,
+      $$\left|\frac{(n+1)x^{n+1}/2^{n+1}}{nx^n/2^n}\right| = \frac{n+1}{n}\cdot\frac{|x|}{2} \to \frac{|x|}{2},$$
+      so it converges for $|x| < 2$ and diverges for $|x| > 2$: **$R = 2$**. At $x = \pm 2$ the terms are $n(\pm1)^n$, which don't tend to $0$, so it diverges at both endpoints.
+
+      **Second.** $\left|\dfrac{x^{n+1}/(n+1)!}{x^n/n!}\right| = \dfrac{|x|}{n+1} \to 0$ for every $x$: **$R = \infty$**.
+
+  - id: ca-029
+    title: The sum of 1/n² converges
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: proof
+    tags: [series, comparison, telescoping]
+    related: [ra-017]
+    statement: |
+      Prove that $\displaystyle\sum_{n=1}^\infty\frac1{n^2}$ converges and that its sum is less than $2$.
+    solution: |
+      For $n \ge 2$, $\dfrac{1}{n^2} < \dfrac{1}{n(n-1)} = \dfrac{1}{n-1} - \dfrac1n$. So the partial sums satisfy
+      $$S_N = 1 + \sum_{n=2}^N\frac{1}{n^2} < 1 + \sum_{n=2}^N\left(\frac1{n-1} - \frac1n\right) = 1 + 1 - \frac1N < 2.$$
+      The partial sums are increasing and bounded above, so they converge, to a limit at most $2$. (It is in fact $\pi^2/6 \approx 1.645$.) $\blacksquare$
+
+  - id: ca-030
+    title: The alternating harmonic series
+    subtopic: Series & Taylor
+    difficulty: hard
+    type: proof
+    tags: [series, riemann sums, logarithm]
+    related: [ca-024]
+    hints:
+      - |
+        Show $S_{2n} = \frac1{n+1} + \cdots + \frac1{2n}$ and recognise a Riemann sum.
+    statement: |
+      Prove that $1 - \frac12 + \frac13 - \frac14 + \cdots = \ln 2$.
+    solution: |
+      Let $S_m$ be the $m$th partial sum and $H_m = 1 + \frac12 + \cdots + \frac1m$. Adding and subtracting the even terms,
+      $$S_{2n} = H_{2n} - 2\left(\frac12 + \frac14 + \cdots + \frac1{2n}\right) = H_{2n} - H_n = \sum_{j=1}^n\frac{1}{n+j}.$$
+      This is a Riemann sum:
+      $$\sum_{j=1}^n\frac1{n+j} = \frac1n\sum_{j=1}^n\frac{1}{1 + j/n} \to \int_0^1\frac{dx}{1+x} = \ln 2,$$
+      since $\frac{1}{1+x}$ is continuous and hence integrable. Finally $S_{2n+1} = S_{2n} + \frac1{2n+1} \to \ln 2$ as well. Both the even and odd partial sums tend to $\ln 2$, so $S_m \to \ln 2$. $\blacksquare$

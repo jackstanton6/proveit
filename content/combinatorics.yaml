@@ -1,0 +1,476 @@
+topic:
+  id: combinatorics
+  name: Combinatorics
+  order: 4
+  prefix: cb
+  blurb: Counting principles, binomial coefficients, the pigeonhole principle, inclusion–exclusion, bijective and double-counting proofs.
+  subtopics: [Counting principles, Binomial coefficients, Pigeonhole, Inclusion–exclusion, Bijections & double counting]
+
+problems:
+  - id: cb-001
+    title: Passwords with a digit
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [complement, product rule]
+    statement: |
+      A password is a string of 8 characters, each a lowercase letter (26 choices) or a digit (10 choices). How many passwords contain at least one digit?
+    solution: |
+      Count the complement. There are $36^8$ strings in total and $26^8$ with no digit, so the answer is
+      $$36^8 - 26^8 = 2\,821\,109\,907\,456 - 208\,827\,064\,576 = 2\,612\,282\,842\,880.$$
+
+  - id: cb-002
+    title: Arrangements of MISSISSIPPI
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [multinomial, permutations with repetition]
+    related: [cb-029]
+    statement: |
+      How many distinct arrangements are there of the letters of MISSISSIPPI?
+    solution: |
+      There are 11 letters: M once, I four times, S four times, P twice. Arranging 11 distinct objects gives $11!$, and each distinct word is counted $1!\,4!\,4!\,2!$ times (permuting identical letters among themselves). So the answer is
+      $$\frac{11!}{1!\,4!\,4!\,2!} = \frac{39\,916\,800}{1152} = 34\,650.$$
+
+  - id: cb-003
+    title: Stars and bars
+    subtopic: Counting principles
+    difficulty: medium
+    type: proof
+    tags: [stars and bars, bijection]
+    related: [cb-004]
+    statement: |
+      Prove that the number of solutions of $x_1 + x_2 + \cdots + x_k = n$ in non-negative integers is $\dbinom{n + k - 1}{k - 1}$.
+    solution: |
+      Biject solutions with strings of $n$ stars and $k - 1$ bars. Given a solution, write $x_1$ stars, a bar, $x_2$ stars, a bar, ..., $x_k$ stars. This is a string of length $n + k - 1$ with exactly $k - 1$ bars.
+
+      Conversely, any such string determines a solution: $x_1$ is the number of stars before the first bar, $x_i$ the number between the $(i-1)$th and $i$th bars, and $x_k$ the number after the last. The two maps are inverse to each other.
+
+      A string is determined by choosing which $k - 1$ of the $n + k - 1$ positions hold bars, giving $\binom{n+k-1}{k-1}$. $\blacksquare$
+
+  - id: cb-004
+    title: Solutions with lower bounds
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [stars and bars]
+    related: [cb-003]
+    statement: |
+      How many integer solutions does $x_1 + x_2 + x_3 + x_4 = 20$ have with every $x_i \ge 2$?
+    solution: |
+      Put $y_i = x_i - 2 \ge 0$. Then $y_1 + y_2 + y_3 + y_4 = 12$, which by stars and bars has
+      $$\binom{12 + 3}{3} = \binom{15}{3} = 455$$
+      solutions.
+
+  - id: cb-005
+    title: Lattice paths
+    subtopic: Counting principles
+    difficulty: easy
+    type: proof
+    tags: [lattice paths, binomial coefficients]
+    related: [cb-024]
+    statement: |
+      A lattice path from $(0,0)$ to $(m, n)$ uses unit steps right $(1,0)$ or up $(0,1)$. Prove there are $\dbinom{m+n}{n}$ such paths.
+    solution: |
+      Every such path has exactly $m$ right steps and $n$ up steps, $m + n$ in total, and is determined by its sequence of steps. Conversely, every sequence of $m$ R's and $n$ U's gives a path ending at $(m,n)$. Such a sequence is determined by choosing which $n$ of the $m + n$ positions are U's, so there are $\binom{m+n}{n}$ paths. $\blacksquare$
+
+  - id: cb-006
+    title: Round table
+    subtopic: Counting principles
+    difficulty: medium
+    type: compute
+    tags: [circular arrangements, complement]
+    statement: |
+      Eight people sit at a round table; two seatings are the same if one is a rotation of the other. How many seatings are there? In how many are Alice and Bob **not** next to each other?
+    solution: |
+      **All seatings.** Fix Alice's seat to remove rotational symmetry; the other 7 can be arranged in $7! = 5040$ ways.
+
+      **Alice and Bob adjacent.** Glue them into a block: 7 units around a table give $6!$ seatings, and the block has 2 internal orders, so $2\cdot 6! = 1440$.
+
+      **Not adjacent:** $5040 - 1440 = 3600$.
+
+  - id: cb-007
+    title: Pascal's rule
+    subtopic: Binomial coefficients
+    difficulty: easy
+    type: proof
+    tags: [binomial coefficients, combinatorial proof]
+    related: [cb-030]
+    statement: |
+      Prove combinatorially that for $1 \le k \le n$, $\dbinom{n}{k} = \dbinom{n-1}{k-1} + \dbinom{n-1}{k}$.
+    solution: |
+      The left side counts $k$-element subsets of $\{1, \dots, n\}$. Split them by whether they contain $n$.
+
+      - Those containing $n$: choose the other $k - 1$ elements from $\{1, \dots, n-1\}$, giving $\binom{n-1}{k-1}$.
+      - Those not containing $n$: choose all $k$ from $\{1,\dots,n-1\}$, giving $\binom{n-1}{k}$.
+
+      Adding the two cases gives the identity. $\blacksquare$
+
+  - id: cb-008
+    title: Row sums of Pascal's triangle
+    subtopic: Binomial coefficients
+    difficulty: easy
+    type: proof
+    tags: [binomial theorem]
+    related: [cb-022, cb-030]
+    statement: |
+      Prove that $\displaystyle\sum_{k=0}^n \binom nk = 2^n$ and, for $n \ge 1$, $\displaystyle\sum_{k=0}^n (-1)^k\binom nk = 0$.
+    solution: |
+      By the binomial theorem, $(x + y)^n = \sum_{k=0}^n \binom nk x^k y^{n-k}$.
+
+      - Put $x = y = 1$: $2^n = \sum_k \binom nk$.
+      - Put $x = -1$, $y = 1$: $0^n = \sum_k (-1)^k \binom nk$, and $0^n = 0$ for $n \ge 1$.
+
+      (Combinatorially, the first counts all subsets of an $n$-set by size.) $\blacksquare$
+
+  - id: cb-009
+    title: Vandermonde's identity
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [combinatorial proof, binomial coefficients]
+    source: Vandermonde
+    related: [cb-026]
+    statement: |
+      Prove that for non-negative integers $m, n, r$,
+      $$\sum_{k=0}^{r} \binom{m}{k}\binom{n}{r-k} = \binom{m+n}{r}.$$
+    solution: |
+      The right side counts $r$-person committees chosen from a group of $m$ men and $n$ women.
+
+      Classify committees by the number $k$ of men. There are $\binom mk$ ways to choose the men and $\binom{n}{r-k}$ ways to choose the $r - k$ women, so $\binom mk \binom n{r-k}$ committees with exactly $k$ men. Each committee has exactly one value of $k \in \{0, \dots, r\}$, so summing over $k$ counts every committee once. (Terms with $k > m$ or $r - k > n$ are $0$ and do no harm.) $\blacksquare$
+
+  - id: cb-010
+    title: The hockey-stick identity
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [combinatorial proof, binomial coefficients]
+    statement: |
+      Prove that for $0 \le r \le n$,
+      $$\sum_{i=r}^{n} \binom{i}{r} = \binom{n+1}{r+1}.$$
+    solution: |
+      The right side counts $(r+1)$-element subsets of $\{1, 2, \dots, n+1\}$. Classify them by their largest element, say $i + 1$ where $r \le i \le n$. The remaining $r$ elements are any $r$-subset of $\{1, \dots, i\}$: $\binom ir$ choices. Summing over $i$ counts each subset exactly once. $\blacksquare$
+
+      (Alternatively, induct on $n$ using Pascal's rule.)
+
+  - id: cb-011
+    title: Five points in a square
+    subtopic: Pigeonhole
+    difficulty: easy
+    type: proof
+    tags: [pigeonhole, geometry]
+    related: [lg-015]
+    statement: |
+      Five points are placed in a closed unit square. Prove that two of them are at distance at most $\frac{\sqrt2}{2}$.
+    solution: |
+      Divide the square into four closed $\frac12 \times \frac12$ squares. Every point lies in at least one of them. With 5 points and 4 small squares, by the pigeonhole principle two points lie in the same small square. The greatest distance between two points of a $\frac12\times\frac12$ square is its diagonal, $\sqrt{\frac14 + \frac14} = \frac{\sqrt2}{2}$. $\blacksquare$
+
+  - id: cb-012
+    title: One divides another
+    subtopic: Pigeonhole
+    difficulty: hard
+    type: proof
+    tags: [pigeonhole, divisibility]
+    source: Erdős
+    hints:
+      - |
+        Write every number as $2^k m$ with $m$ odd. How many possible values of $m$ are there?
+    statement: |
+      Prove that if $n + 1$ numbers are chosen from $\{1, 2, \dots, 2n\}$, then one of them divides another.
+    solution: |
+      Write each chosen number as $2^k m$ with $k \ge 0$ and $m$ odd (possible and unique by repeatedly dividing by 2). Then $m$ is an odd number in $\{1, 3, \dots, 2n-1\}$, which has $n$ elements.
+
+      With $n + 1$ chosen numbers and $n$ possible odd parts, two chosen numbers $2^a m$ and $2^b m$ with $a < b$ share the same $m$ (they're different numbers, so $a \ne b$). Then $2^a m \mid 2^b m$. $\blacksquare$
+
+      (The bound is sharp: $\{n+1, \dots, 2n\}$ has $n$ elements and no divisibilities.)
+
+  - id: cb-013
+    title: The Erdős–Szekeres theorem
+    subtopic: Pigeonhole
+    difficulty: hard
+    type: proof
+    tags: [pigeonhole, sequences]
+    source: Erdős–Szekeres, 1935
+    hints:
+      - |
+        Label each term with the length of the longest increasing subsequence **starting** there.
+    statement: |
+      Prove that every sequence of $n^2 + 1$ distinct real numbers contains an increasing subsequence of length $n + 1$ or a decreasing subsequence of length $n + 1$.
+    solution: |
+      Let the sequence be $a_1, \dots, a_{n^2+1}$, and let $L_i$ be the length of the longest increasing subsequence starting at $a_i$. If some $L_i \ge n + 1$ we're done, so suppose $1 \le L_i \le n$ for all $i$.
+
+      Then $n^2 + 1$ terms receive labels from $\{1, \dots, n\}$, so by pigeonhole some label is shared by at least $n + 1$ terms $a_{i_1}, \dots, a_{i_{n+1}}$ with $i_1 < \cdots < i_{n+1}$.
+
+      Take two of them, $i < j$, with $L_i = L_j$. If $a_i < a_j$, then putting $a_i$ in front of a longest increasing subsequence starting at $a_j$ gives one of length $L_j + 1$ starting at $a_i$, so $L_i > L_j$, a contradiction. Since the numbers are distinct, $a_i > a_j$.
+
+      Hence $a_{i_1} > a_{i_2} > \cdots > a_{i_{n+1}}$ is a decreasing subsequence of length $n + 1$. $\blacksquare$
+
+  - id: cb-014
+    title: Friends and strangers
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, ramsey, graphs]
+    related: [gt-028]
+    statement: |
+      At a party of six people, every two are either friends or strangers. Prove that there are three mutual friends or three mutual strangers. Show that five people are not enough.
+    solution: |
+      Pick a person $v$. Of the other five, by pigeonhole at least three are friends of $v$ or at least three are strangers to $v$. By symmetry suppose $a, b, c$ are friends of $v$.
+
+      - If any two of $a, b, c$ are friends, they and $v$ are three mutual friends.
+      - Otherwise $a, b, c$ are three mutual strangers.
+
+      **Five is not enough.** Seat five people in a circle and make neighbours friends and non-neighbours strangers. Any three people include two non-neighbours, so they're not mutual friends; and among any three people on a 5-cycle, two are neighbours, so they're not mutual strangers. $\blacksquare$
+
+  - id: cb-015
+    title: A subset sum divisible by n
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, prefix sums, divisibility]
+    statement: |
+      Prove that from any $n$ integers $a_1, \dots, a_n$ one can choose a non-empty set of **consecutive** terms $a_{i+1}, \dots, a_j$ whose sum is divisible by $n$.
+    solution: |
+      Consider the prefix sums $S_0 = 0$, $S_1 = a_1$, $S_2 = a_1 + a_2$, …, $S_n = a_1 + \cdots + a_n$. These are $n + 1$ integers, and there are only $n$ remainders mod $n$, so by pigeonhole $S_i \equiv S_j \pmod n$ for some $0 \le i < j \le n$. Then
+      $$S_j - S_i = a_{i+1} + \cdots + a_j \equiv 0 \pmod n. \qquad\blacksquare$$
+
+  - id: cb-016
+    title: Not divisible by 2, 3 or 5
+    subtopic: Inclusion–exclusion
+    difficulty: easy
+    type: compute
+    tags: [inclusion-exclusion]
+    related: [cb-019]
+    statement: |
+      How many integers in $\{1, 2, \dots, 1000\}$ are divisible by none of $2$, $3$, $5$?
+    solution: |
+      Let $A_d$ be the multiples of $d$; $|A_d| = \lfloor 1000/d \rfloor$, and $A_a \cap A_b = A_{ab}$ for coprime $a,b$.
+      $$|A_2 \cup A_3 \cup A_5| = (500 + 333 + 200) - (166 + 100 + 66) + 33 = 1033 - 332 + 33 = 734.$$
+      So the answer is $1000 - 734 = 266$.
+
+  - id: cb-017
+    title: Derangements
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: proof
+    tags: [inclusion-exclusion, permutations, derangements]
+    related: [pr-012]
+    statement: |
+      A derangement of $\{1, \dots, n\}$ is a permutation with no fixed point. Prove that the number of derangements is
+      $$D_n = n!\sum_{k=0}^{n}\frac{(-1)^k}{k!}.$$
+    solution: |
+      Let $A_i$ be the set of permutations fixing $i$. For any $k$ indices $i_1 < \cdots < i_k$, the permutations fixing all of them are permutations of the remaining $n - k$ elements, so $|A_{i_1} \cap \cdots \cap A_{i_k}| = (n-k)!$. By inclusion–exclusion,
+      $$|A_1 \cup \cdots \cup A_n| = \sum_{k=1}^{n} (-1)^{k+1}\binom nk (n-k)! = \sum_{k=1}^n (-1)^{k+1}\frac{n!}{k!}.$$
+      Derangements are the permutations in none of the $A_i$:
+      $$D_n = n! - \sum_{k=1}^n (-1)^{k+1}\frac{n!}{k!} = n!\sum_{k=0}^n \frac{(-1)^k}{k!}. \qquad \blacksquare$$
+
+      (So $D_n / n! \to e^{-1}$.)
+
+  - id: cb-018
+    title: Counting surjections
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: proof
+    tags: [inclusion-exclusion, functions, surjections]
+    statement: |
+      Prove that the number of surjections from an $n$-element set onto a $k$-element set is
+      $$\sum_{j=0}^{k} (-1)^j\binom{k}{j}(k-j)^n,$$
+      and use it to count surjections from a 5-set onto a 3-set.
+    solution: |
+      Let the codomain be $\{1, \dots, k\}$ and $A_i$ the functions whose image misses $i$. Functions missing a given set of $j$ values are functions into the other $k - j$ values: $(k - j)^n$ of them. By inclusion–exclusion the number of functions missing **no** value is
+      $$k^n - \binom k1 (k-1)^n + \binom k2 (k-2)^n - \cdots = \sum_{j=0}^k (-1)^j \binom kj (k-j)^n.$$
+
+      For $n = 5, k = 3$: $3^5 - 3\cdot 2^5 + 3 \cdot 1^5 - 0 = 243 - 96 + 3 = 150$. $\blacksquare$
+
+  - id: cb-019
+    title: Euler's phi by inclusion–exclusion
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: proof
+    tags: [inclusion-exclusion, euler phi]
+    related: [nt-021, cb-016]
+    statement: |
+      Let $n$ have distinct prime factors $p_1, \dots, p_r$. Prove that the number of integers in $\{1, \dots, n\}$ coprime to $n$ is
+      $$\varphi(n) = n\prod_{i=1}^r\left(1 - \frac1{p_i}\right).$$
+    solution: |
+      An integer is coprime to $n$ iff it is divisible by none of the $p_i$. Let $A_i$ be the multiples of $p_i$ in $\{1, \dots, n\}$. For $S \subseteq \{1, \dots, r\}$, the integers divisible by every $p_i$, $i \in S$, are the multiples of $\prod_{i\in S} p_i$ (distinct primes), and there are $n / \prod_{i \in S}p_i$ of them since this product divides $n$. By inclusion–exclusion,
+      $$\varphi(n) = \sum_{S \subseteq \{1,\dots,r\}} (-1)^{|S|}\frac{n}{\prod_{i\in S}p_i} = n\prod_{i=1}^r\left(1 - \frac1{p_i}\right),$$
+      where the last step is expanding the product. $\blacksquare$
+
+  - id: cb-020
+    title: All four suits
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [cards, counting, inclusion-exclusion]
+    statement: |
+      How many 5-card hands from a standard 52-card deck contain at least one card of every suit? Check your answer using inclusion–exclusion.
+    solution: |
+      **Direct.** The suit pattern must be $2,1,1,1$. Choose the doubled suit (4 ways), two cards of it ($\binom{13}{2} = 78$), and one card from each other suit ($13^3$):
+      $$4 \cdot 78 \cdot 2197 = 685\,464.$$
+
+      **Inclusion–exclusion.** Hands missing a given set of $j$ suits: $\binom{52 - 13j}{5}$. So
+      $$\binom{52}{5} - 4\binom{39}{5} + 6\binom{26}{5} - 4\binom{13}{5} = 2\,598\,960 - 2\,303\,028 + 394\,680 - 5\,148 = 685\,464.$$
+
+  - id: cb-021
+    title: Committees with a chair
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [double counting, binomial coefficients]
+    statement: |
+      Prove by double counting that $\displaystyle\sum_{k=0}^n k\binom nk = n2^{n-1}$.
+    solution: |
+      Count pairs (committee, chair) where the committee is a subset of $n$ people and the chair is a member of the committee.
+
+      - Choose the committee first: a committee of size $k$ can be chosen in $\binom nk$ ways and its chair in $k$ ways, giving $\sum_k k\binom nk$.
+      - Choose the chair first: $n$ ways. The rest of the committee is any subset of the other $n - 1$ people: $2^{n-1}$ ways, giving $n 2^{n-1}$.
+
+      Both count the same set. $\blacksquare$
+
+  - id: cb-022
+    title: Even and odd subsets
+    subtopic: Bijections & double counting
+    difficulty: easy
+    type: proof
+    tags: [bijection, subsets]
+    related: [cb-008]
+    statement: |
+      Let $n \ge 1$. Prove, using a bijection, that an $n$-element set has as many subsets of even size as of odd size.
+    solution: |
+      Fix an element $x$ of the set and define $f(A) = A \triangle \{x\}$: remove $x$ if $A$ contains it, add it otherwise. This changes $|A|$ by exactly one, so $f$ sends even-sized subsets to odd-sized ones and vice versa. Since $f(f(A)) = A$, $f$ is its own inverse and hence a bijection between the even-sized and odd-sized subsets. $\blacksquare$
+
+      (So each kind number $2^{n-1}$.)
+
+  - id: cb-023
+    title: Compositions
+    subtopic: Bijections & double counting
+    difficulty: easy
+    type: proof
+    tags: [bijection, compositions]
+    statement: |
+      A composition of $n$ is a way of writing $n$ as an ordered sum of positive integers (so $3 = 2 + 1$ and $3 = 1 + 2$ are different). Prove that $n \ge 1$ has exactly $2^{n-1}$ compositions.
+    solution: |
+      Write $n$ as a row of $n$ ones: $1\ \_\ 1\ \_\ \cdots\ \_\ 1$. There are $n - 1$ gaps. In each gap place either a "$+$" or a "$,$". Reading off the result groups the ones into consecutive blocks, which are the parts of a composition. Conversely, every composition arises from exactly one such choice (put a comma at the gap after each part except the last). So compositions correspond to subsets of the $n-1$ gaps, of which there are $2^{n-1}$. $\blacksquare$
+
+  - id: cb-024
+    title: Catalan numbers by reflection
+    subtopic: Bijections & double counting
+    difficulty: hard
+    type: proof
+    tags: [catalan, reflection principle, lattice paths]
+    source: André, 1887
+    related: [cb-005]
+    hints:
+      - |
+        Count the bad sequences: those whose partial sums dip to $-1$. Reflect the part before the first time the sum hits $-1$.
+    statement: |
+      Prove that the number of sequences of $n$ $(+1)$'s and $n$ $(-1)$'s whose partial sums are all $\ge 0$ (equivalently, balanced strings of $n$ pairs of parentheses) is
+      $$C_n = \frac{1}{n+1}\binom{2n}{n}.$$
+    solution: |
+      View a sequence as a path of $2n$ steps from height $0$ to height $0$. There are $\binom{2n}{n}$ paths in total. Call a path **bad** if it reaches height $-1$.
+
+      Given a bad path, let $T$ be the first time it is at height $-1$, and reflect the steps before $T$ (swap $+1 \leftrightarrow -1$). The new path starts at height $-2$, is at $-1$ at time $T$, and continues as before to end at $0$. This is a path from $-2$ to $0$ in $2n$ steps.
+
+      Conversely, any path from $-2$ to $0$ must pass through $-1$. Reflecting the steps before its first visit to $-1$ gives a bad path from $0$ to $0$. These maps are inverse, so bad paths are in bijection with paths from $-2$ to $0$. Such a path has $n+1$ up-steps and $n - 1$ down-steps, so there are $\binom{2n}{n+1}$ of them.
+
+      Hence
+      $$C_n = \binom{2n}{n} - \binom{2n}{n+1} = \binom{2n}{n}\left(1 - \frac{n}{n+1}\right) = \frac{1}{n+1}\binom{2n}{n}. \qquad\blacksquare$$
+
+  - id: cb-025
+    title: Distinct parts and odd parts
+    subtopic: Bijections & double counting
+    difficulty: hard
+    type: proof
+    tags: [partitions, generating functions]
+    source: Euler
+    hints:
+      - |
+        Write $1 + x^k = \dfrac{1 - x^{2k}}{1 - x^k}$.
+    statement: |
+      Prove that the number of partitions of $n$ into **distinct** parts equals the number of partitions of $n$ into **odd** parts. (For example, $6 = 5+1 = 4 + 2 = 3 + 2 + 1$, and $6 = 5+1 = 3+3 = 3+1+1+1 = 1+1+1+1+1+1$, giving 4 each.)
+    solution: |
+      As formal power series, the generating function for partitions into distinct parts is $\prod_{k\ge1}(1 + x^k)$: choosing $x^k$ or $1$ from each factor means using part $k$ once or not at all, and the coefficient of $x^n$ counts the ways to reach $n$. For odd parts, part $2k-1$ may be used any number of times:
+      $$\prod_{k\ge1}\frac{1}{1 - x^{2k-1}} = \prod_{k \ge 1}\left(1 + x^{2k-1} + x^{2(2k-1)} + \cdots\right).$$
+      Now
+      $$\prod_{k\ge1}(1 + x^k) = \prod_{k\ge1}\frac{1 - x^{2k}}{1 - x^k}.$$
+      The numerator contains a factor $1 - x^m$ for every even $m$, and these cancel the even-$m$ factors of the denominator, leaving $\prod_{m \text{ odd}} \frac{1}{1 - x^m}$. (Each coefficient involves only finitely many factors, so the manipulation is valid.) The two generating functions are equal, so their coefficients agree. $\blacksquare$
+
+  - id: cb-026
+    title: Sum of squares of binomial coefficients
+    subtopic: Bijections & double counting
+    difficulty: easy
+    type: proof
+    tags: [combinatorial proof, binomial coefficients]
+    related: [cb-009]
+    statement: |
+      Prove that $\displaystyle\sum_{k=0}^n \binom nk^2 = \binom{2n}{n}$.
+    solution: |
+      Count $n$-subsets of a group of $n$ red and $n$ blue balls. A subset with $k$ red balls has $n-k$ blue ones: $\binom nk \binom n{n-k} = \binom nk^2$ choices. Summing over $k$ gives every $n$-subset once, and the total is $\binom{2n}{n}$. (This is Vandermonde with $m = r = n$.) $\blacksquare$
+
+  - id: cb-027
+    title: Tiling with squares and dominoes
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [recurrence, fibonacci, tiling]
+    related: [in-020]
+    statement: |
+      Let $t_n$ be the number of ways to tile a $1 \times n$ strip with $1\times1$ squares and $1\times 2$ dominoes. Prove that $t_n = F_{n+1}$, where $F_1 = F_2 = 1$, $F_{k+1} = F_k + F_{k-1}$.
+    solution: |
+      $t_1 = 1$ (one square) and $t_2 = 2$ (two squares, or one domino), matching $F_2 = 1$ and $F_3 = 2$.
+
+      For $n \ge 3$, classify tilings by the last tile. If it is a square, the rest is any tiling of a $1\times(n-1)$ strip: $t_{n-1}$ ways. If it is a domino, the rest tiles a $1 \times (n-2)$ strip: $t_{n-2}$ ways. So $t_n = t_{n-1} + t_{n-2}$, the Fibonacci recurrence with the same starting values, and $t_n = F_{n+1}$ by (strong) induction. $\blacksquare$
+
+  - id: cb-028
+    title: Counting relations
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [relations, product rule]
+    related: [dm-001]
+    statement: |
+      Let $|A| = n$. How many relations on $A$ (subsets of $A \times A$) are
+
+      1. reflexive,
+      2. symmetric,
+      3. both reflexive and symmetric?
+    solution: |
+      A relation chooses independently, for each of the $n^2$ ordered pairs, whether it is in.
+
+      1. The $n$ diagonal pairs $(a,a)$ are forced in; the other $n^2 - n$ are free: $2^{n^2 - n}$.
+      2. A symmetric relation is determined by the diagonal pairs ($n$ choices) and the unordered pairs $\{a,b\}$, $a\ne b$ (each in or out together): $2^{n + \binom n2} = 2^{n(n+1)/2}$.
+      3. Diagonal forced, unordered pairs free: $2^{\binom n2} = 2^{n(n-1)/2}$.
+
+  - id: cb-029
+    title: Multinomial coefficients
+    subtopic: Binomial coefficients
+    difficulty: easy
+    type: compute
+    tags: [multinomial, binomial theorem]
+    related: [cb-002]
+    statement: |
+      Find the coefficient of
+
+      1. $x^3$ in $(1 + 2x)^7$,
+      2. $x^2y^3z^4$ in $(x + y + z)^9$.
+    solution: |
+      1. The $x^3$ term of $\sum_k \binom 7k (2x)^k$ is $\binom 73 2^3 x^3 = 35\cdot 8\, x^3$. **Coefficient: 280.**
+      2. Expanding $(x+y+z)^9$ means choosing $x$, $y$ or $z$ from each of 9 factors. The number of ways to choose $x$ twice, $y$ three times and $z$ four times is
+      $$\frac{9!}{2!\,3!\,4!} = \frac{362\,880}{288} = 1260.$$
+
+  - id: cb-030
+    title: The binomial theorem by induction
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [binomial theorem, induction, pascal]
+    related: [cb-007]
+    statement: |
+      Prove by induction that for all $n \ge 0$, $(x + y)^n = \displaystyle\sum_{k=0}^n \binom nk x^k y^{n-k}$.
+    solution: |
+      **Base.** $n = 0$: both sides are $1$.
+
+      **Step.** Assume the formula for $n$. Then
+      $$(x+y)^{n+1} = (x+y)\sum_{k=0}^n \binom nk x^k y^{n-k} = \sum_{k=0}^n \binom nk x^{k+1}y^{n-k} + \sum_{k=0}^n \binom nk x^k y^{n+1-k}.$$
+      Re-index the first sum by $j = k + 1$. The coefficient of $x^j y^{n+1-j}$ is then $\binom n{j-1} + \binom nj$ for $1 \le j \le n$, which is $\binom{n+1}{j}$ by Pascal's rule. The extreme terms are $x^{n+1}$ and $y^{n+1}$, each with coefficient $1 = \binom{n+1}{n+1} = \binom{n+1}0$. So $(x+y)^{n+1} = \sum_{j=0}^{n+1}\binom{n+1}j x^jy^{n+1-j}$. $\blacksquare$

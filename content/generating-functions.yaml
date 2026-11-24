@@ -1,0 +1,506 @@
+topic:
+  id: generating-functions
+  name: Partitions & generating functions
+  order: 6
+  prefix: gf
+  blurb: Ordinary and exponential generating functions, recurrence relations, and integer partitions.
+  subtopics: [Ordinary generating functions, Recurrences, Partitions, Exponential generating functions]
+
+problems:
+  - id: gf-001
+    title: Closed forms for generating functions
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: compute
+    tags: [generating functions, geometric series, differentiation]
+    related: [gf-009]
+    statement: |
+      Find a closed form for the ordinary generating function $\sum_{n\ge0}a_nx^n$ of each sequence.
+
+      1. $a_n = 1$
+      2. $a_n = n + 1$
+      3. $a_n = n^2$
+      4. $a_n = 2^n + 3^n$
+    solution: |
+      1. $\displaystyle\sum_{n\ge0}x^n = \frac{1}{1-x}$.
+      2. Differentiate (1): $\displaystyle\sum_{n\ge1}nx^{n-1} = \frac{1}{(1-x)^2}$, and re-indexing gives $\sum_{n\ge0}(n+1)x^n = \frac1{(1-x)^2}$.
+      3. Applying $x\frac{d}{dx}$ to $\frac1{1-x}$ gives $\sum nx^n = \frac{x}{(1-x)^2}$. Applying it again:
+      $$\sum_{n\ge0}n^2x^n = x\frac{d}{dx}\frac{x}{(1-x)^2} = \frac{x(1+x)}{(1-x)^3}.$$
+      4. By linearity, $\dfrac{1}{1-2x} + \dfrac{1}{1-3x}$.
+
+  - id: gf-002
+    title: Coefficients of negative powers
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: proof
+    tags: [generating functions, stars and bars]
+    related: [cb-003, gf-001]
+    statement: |
+      Prove that for $k \ge 1$,
+      $$\frac{1}{(1-x)^k} = \sum_{n\ge0}\binom{n+k-1}{k-1}x^n.$$
+    solution: |
+      $\frac{1}{(1-x)^k}$ is the product of $k$ copies of $1 + x + x^2 + \cdots$. Multiplying out, each way of choosing $x^{a_1}$ from the first factor, $x^{a_2}$ from the second, and so on contributes $x^{a_1 + \cdots + a_k}$. So the coefficient of $x^n$ is the number of solutions of $a_1 + \cdots + a_k = n$ in non-negative integers, which by stars and bars is $\binom{n+k-1}{k-1}$. $\blacksquare$
+
+  - id: gf-003
+    title: Counting with restrictions
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: compute
+    tags: [generating functions, counting]
+    statement: |
+      Find the generating function for the number of solutions of $a + b + c = n$ in non-negative integers with $a$ even and $b \le 3$. Use it, or a direct count, to find the number of solutions when $n = 10$.
+    solution: |
+      Each variable contributes a factor listing its allowed values:
+      $$G(x) = \underbrace{(1 + x^2 + x^4 + \cdots)}_{a}\underbrace{(1 + x + x^2 + x^3)}_{b}\underbrace{(1 + x + x^2 + \cdots)}_{c} = \frac{1 + x + x^2 + x^3}{(1-x^2)(1-x)}.$$
+
+      For $n = 10$: fix $b$, then $c$ is determined by $a$, and $a$ can be any even number from $0$ to $10 - b$, giving $\lfloor(10 - b)/2\rfloor + 1$ choices. For $b = 0, 1, 2, 3$ this is $6 + 5 + 5 + 4 = $ **20**.
+
+  - id: gf-004
+    title: Three dice summing to ten
+    subtopic: Ordinary generating functions
+    difficulty: medium
+    type: compute
+    tags: [generating functions, dice, binomial series]
+    related: [gf-002]
+    statement: |
+      Use generating functions to find the number of ways that three distinguishable dice can show a total of 10.
+    solution: |
+      The answer is the coefficient of $x^{10}$ in
+      $$(x + x^2 + \cdots + x^6)^3 = x^3\left(\frac{1 - x^6}{1-x}\right)^3 = x^3(1 - 3x^6 + 3x^{12} - x^{18})\sum_{n\ge0}\binom{n+2}{2}x^n.$$
+      We need the coefficient of $x^7$ in $(1 - 3x^6 + \cdots)\sum\binom{n+2}{2}x^n$, which is
+      $$\binom{9}{2} - 3\binom{3}{2} = 36 - 9 = 27.$$
+
+  - id: gf-005
+    title: The Catalan generating function
+    subtopic: Ordinary generating functions
+    difficulty: hard
+    type: proof
+    tags: [catalan, generating functions, quadratic]
+    related: [cb-024, gf-030]
+    hints:
+      - |
+        Split a balanced string as $(\,A\,)\,B$, where the first bracket closes at the matching $)$.
+    statement: |
+      Let $C_n$ be the number of balanced strings of $n$ pairs of brackets ($C_0 = 1$). Prove that
+      $$C_{n+1} = \sum_{k=0}^nC_kC_{n-k},$$
+      and deduce that $C(x) = \sum C_nx^n$ satisfies $C(x) = 1 + xC(x)^2$, so that
+      $$C(x) = \frac{1 - \sqrt{1 - 4x}}{2x}.$$
+    solution: |
+      **Recurrence.** A non-empty balanced string starts with "(". Let the matching ")" be at position $2k + 2$. The string is then $(\,A\,)\,B$ with $A$ balanced with $k$ pairs and $B$ balanced with $n - k$ pairs. Conversely, every such choice of $A$ and $B$ gives a balanced string with $n+1$ pairs, and the decomposition is unique. Summing over $k$ gives the recurrence.
+
+      **Functional equation.** The right side of the recurrence is the coefficient of $x^n$ in $C(x)^2$. So
+      $$C(x) - 1 = \sum_{n\ge0}C_{n+1}x^{n+1} = x\,C(x)^2.$$
+
+      **Solving.** $xC^2 - C + 1 = 0$, so $C = \frac{1 \pm \sqrt{1 - 4x}}{2x}$. With the $+$ sign the numerator tends to $2$ as $x \to 0$, so the expression blows up. That can't be a power series with $C(0) = 1$, so the sign must be $-$. With $-$, the numerator is $2x + O(x^2)$ and the expression is a genuine power series. $\blacksquare$
+
+  - id: gf-006
+    title: The Fibonacci generating function
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: proof
+    tags: [fibonacci, generating functions]
+    related: [dm-022, gf-007]
+    statement: |
+      With $F_0 = 0$, $F_1 = 1$, $F_{n} = F_{n-1} + F_{n-2}$, prove that $\displaystyle\sum_{n\ge0}F_nx^n = \frac{x}{1 - x - x^2}$.
+    solution: |
+      Let $F(x) = \sum F_nx^n$. Multiply the recurrence by $x^n$ and sum over $n \ge 2$:
+      $$F(x) - F_0 - F_1x = x\big(F(x) - F_0\big) + x^2F(x).$$
+      With $F_0 = 0$, $F_1 = 1$: $F(x)(1 - x - x^2) = x$. $\blacksquare$
+
+  - id: gf-007
+    title: A Fibonacci series
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: compute
+    tags: [fibonacci, generating functions, series]
+    related: [gf-006]
+    statement: |
+      Evaluate $\displaystyle\sum_{n\ge0}\frac{F_n}{2^n}$.
+    solution: |
+      The series $\sum F_nx^n$ converges for $|x| < 1/\varphi \approx 0.618$, since $F_n \le \varphi^{n-1}$. So we may substitute $x = \frac12$ into the closed form:
+      $$\sum_{n\ge0}\frac{F_n}{2^n} = \frac{1/2}{1 - \frac12 - \frac14} = \frac{1/2}{1/4} = 2.$$
+
+  - id: gf-008
+    title: Vandermonde by generating functions
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: proof
+    tags: [binomial coefficients, generating functions, convolution]
+    related: [cb-009]
+    statement: |
+      Use the identity $(1+x)^m(1+x)^n = (1+x)^{m+n}$ to prove $\displaystyle\sum_{k=0}^r\binom mk\binom n{r-k} = \binom{m+n}{r}$.
+    solution: |
+      By the binomial theorem, the coefficient of $x^r$ on the right is $\binom{m+n}{r}$. On the left, $x^r$ arises from $x^k$ in the first factor (coefficient $\binom mk$) times $x^{r-k}$ in the second (coefficient $\binom{n}{r-k}$), summed over $k$. Polynomials are equal only if all their coefficients are. $\blacksquare$
+
+  - id: gf-009
+    title: Partial sums via generating functions
+    subtopic: Ordinary generating functions
+    difficulty: medium
+    type: compute
+    tags: [generating functions, partial sums, sums of squares]
+    related: [gf-001, in-002]
+    statement: |
+      Show that if $A(x) = \sum a_nx^n$ then $\frac{A(x)}{1-x}$ generates the partial sums $s_n = a_0 + \cdots + a_n$. Use this to find $\sum_{k=0}^nk^2$.
+    solution: |
+      $\frac{A(x)}{1-x} = \left(\sum a_ix^i\right)\left(\sum x^j\right)$, and the coefficient of $x^n$ is $\sum_{i \le n}a_i\cdot 1 = s_n$.
+
+      With $a_k = k^2$, $A(x) = \frac{x(1+x)}{(1-x)^3}$, so the partial sums are generated by
+      $$\frac{x + x^2}{(1-x)^4}.$$
+      Since $[x^m]\frac{1}{(1-x)^4} = \binom{m+3}{3}$, the coefficient of $x^n$ is
+      $$\binom{n+2}{3} + \binom{n+1}{3} = \frac{(n+1)n}{6}\big((n+2) + (n-1)\big) = \frac{n(n+1)(2n+1)}{6}.$$
+
+  - id: gf-010
+    title: A non-homogeneous recurrence
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, particular solution]
+    related: [dm-020]
+    statement: |
+      Solve $a_n = 2a_{n-1} + n$ for $n \ge 1$, with $a_0 = 0$.
+    solution: |
+      **Homogeneous part:** $C\cdot 2^n$.
+
+      **Particular solution:** try $a_n = An + B$. Then $An + B = 2(A(n-1) + B) + n$. Comparing coefficients of $n$: $A = 2A + 1$, so $A = -1$. Constants: $B = -2A + 2B$, so $B = 2A = -2$. So $-n - 2$ is a solution.
+
+      **General:** $a_n = C2^n - n - 2$, and $a_0 = 0$ gives $C = 2$:
+      $$a_n = 2^{n+1} - n - 2.$$
+      Check: $a_1 = 1$, $a_2 = 4$, $a_3 = 11$, matching $a_n = 2a_{n-1} + n$.
+
+  - id: gf-011
+    title: A resonant recurrence
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, generating functions, repeated root]
+    related: [dm-023]
+    statement: |
+      Solve $a_n = 2a_{n-1} + 2^n$ for $n \ge 1$, with $a_0 = 1$.
+    solution: |
+      Trying $A2^n$ fails, since it solves the homogeneous equation. Instead divide by $2^n$: with $b_n = a_n/2^n$,
+      $$b_n = b_{n-1} + 1, \qquad b_0 = 1,$$
+      so $b_n = n + 1$ and
+      $$a_n = (n+1)2^n.$$
+      (With generating functions: $A(x)(1 - 2x) = 1 + \frac{2x}{1-2x}$, so $A(x) = \frac{1}{(1-2x)^2}$, whose coefficients are $(n+1)2^n$.)
+
+  - id: gf-012
+    title: A recurrence for derangements
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [derangements, recurrence, bijection]
+    related: [cb-017, gf-026]
+    statement: |
+      Prove combinatorially that the number $D_n$ of derangements of $\{1, \dots, n\}$ satisfies
+      $$D_n = (n-1)(D_{n-1} + D_{n-2}) \qquad (n \ge 2).$$
+    solution: |
+      Let $\sigma$ be a derangement and $k = \sigma(n)$, so $k \ne n$: there are $n - 1$ choices of $k$. For each $k$ there are two cases.
+
+      - **$\sigma(k) = n$.** Then $\sigma$ swaps $n$ and $k$, and restricts to a derangement of the other $n - 2$ elements: $D_{n-2}$ choices.
+      - **$\sigma(k) \ne n$.** Let $m = \sigma^{-1}(n)$; then $m \ne k$. Define $\tau$ on $\{1, \dots, n-1\}$ by $\tau(m) = k$ and $\tau(j) = \sigma(j)$ otherwise, i.e. cut $n$ out of the cycle $m \to n \to k$. $\tau$ is a derangement of $n - 1$ elements. Conversely, given $k$ and any derangement $\tau$ of $\{1, \dots, n-1\}$, set $m = \tau^{-1}(k)$ and re-insert $n$ between $m$ and $k$. This recovers $\sigma$. So this case gives $D_{n-1}$ choices.
+
+      Hence $D_n = (n-1)(D_{n-1} + D_{n-2})$. $\blacksquare$
+
+  - id: gf-013
+    title: Domino tilings of a 2 × n strip
+    subtopic: Recurrences
+    difficulty: easy
+    type: proof
+    tags: [tilings, fibonacci, recurrence]
+    related: [cb-027, gf-014]
+    statement: |
+      Let $t_n$ be the number of tilings of a $2 \times n$ rectangle by $1 \times 2$ dominoes. Prove that $t_n = F_{n+1}$.
+    solution: |
+      $t_1 = 1$ and $t_2 = 2$ (two vertical, or two horizontal).
+
+      For $n \ge 3$, look at the right-hand end. Either a vertical domino covers the last column, leaving a $2 \times (n-1)$ rectangle ($t_{n-1}$ ways), or the top-right cell is covered by a horizontal domino. In that case the bottom-right cell must also be covered by a horizontal domino directly below it (anything else leaves an isolated cell), leaving a $2\times(n-2)$ rectangle ($t_{n-2}$ ways).
+
+      So $t_n = t_{n-1} + t_{n-2}$ with $t_1 = F_2$, $t_2 = F_3$, and $t_n = F_{n+1}$ by induction. $\blacksquare$
+
+  - id: gf-014
+    title: Domino tilings of a 3 × n strip
+    subtopic: Recurrences
+    difficulty: hard
+    type: compute
+    tags: [tilings, mutual recursion, recurrence]
+    related: [gf-013]
+    hints:
+      - |
+        Let $b_n$ count tilings of a $3 \times n$ rectangle with one corner cell removed, and find a pair of recurrences linking $a_n$ and $b_n$.
+    statement: |
+      Let $a_n$ be the number of domino tilings of a $3 \times n$ rectangle ($a_0 = 1$). Show that $a_n = 0$ for odd $n$, and that $a_n = 4a_{n-2} - a_{n-4}$. Compute $a_2, a_4, a_6$.
+    solution: |
+      For odd $n$ the area $3n$ is odd, so $a_n = 0$.
+
+      Let $b_n$ count tilings of a $3\times n$ rectangle with its bottom-left cell removed (by symmetry, the same as with the top-left removed).
+
+      **Full board, left column.** Either all three left cells are covered by horizontal dominoes ($a_{n-2}$ ways), or a vertical domino covers the top two cells and a horizontal one covers the bottom cell, leaving a $3 \times (n-1)$ board missing a corner ($b_{n-1}$ ways), or the mirror image ($b_{n-1}$ ways). So
+      $$a_n = a_{n-2} + 2b_{n-1}.$$
+
+      **Board missing the bottom-left cell.** Its left column has two cells. Either they are one vertical domino, leaving a full $3 \times (n-1)$ board, or two horizontal dominoes. In that case the bottom cell of column 2 must be covered horizontally, leaving a $3 \times (n-2)$ board missing a corner. So
+      $$b_n = a_{n-1} + b_{n-2}.$$
+
+      **Eliminating $b$.** From the first equation at $n - 2$, $2b_{n-3} = a_{n-2} - a_{n-4}$. Then
+      $$a_n = a_{n-2} + 2(a_{n-2} + b_{n-3}) = 3a_{n-2} + (a_{n-2} - a_{n-4}) = 4a_{n-2} - a_{n-4}.$$
+
+      **Values.** $b_1 = 1$, so $a_2 = a_0 + 2b_1 = 3$. $b_3 = a_2 + b_1 = 4$, so $a_4 = 3 + 8 = 11$. Then $a_6 = 4\cdot11 - 3 = 41$.
+
+  - id: gf-015
+    title: Stirling numbers of the second kind
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [stirling numbers, set partitions, recurrence]
+    related: [gf-016, gf-028]
+    statement: |
+      Let $S(n,k)$ be the number of ways to partition $\{1, \dots, n\}$ into $k$ non-empty blocks. Prove that
+      $$S(n, k) = kS(n-1, k) + S(n-1, k-1),$$
+      and compute $S(4, 2)$.
+    solution: |
+      Consider where $n$ goes.
+
+      - **$n$ is alone in its block.** The other $n - 1$ elements form $k - 1$ blocks: $S(n-1, k-1)$ ways.
+      - **$n$ shares a block.** Removing $n$ leaves a partition of $\{1,\dots,n-1\}$ into $k$ blocks, and $n$ was in one of those $k$ blocks. Conversely, any partition into $k$ blocks plus a choice of block for $n$ gives such a partition: $kS(n-1,k)$ ways.
+
+      **$S(4,2)$:** $S(3,2) = 3$ (the pairs $\{1,2\},\{1,3\},\{2,3\}$, each with the remaining element alone) and $S(3,1) = 1$, so $S(4,2) = 2\cdot 3 + 1 = 7$. $\blacksquare$
+
+  - id: gf-016
+    title: Bell numbers
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [bell numbers, set partitions, recurrence]
+    related: [dm-008, gf-015]
+    statement: |
+      Let $B_n$ be the number of partitions of an $n$-element set ($B_0 = 1$). Prove that
+      $$B_{n+1} = \sum_{k=0}^n\binom nkB_k,$$
+      and compute $B_5$.
+    solution: |
+      Partition $\{1, \dots, n+1\}$ and look at the block containing $n + 1$. Let $T$ be the set of elements of $\{1, \dots, n\}$ **not** in that block, with $|T| = k$. There are $\binom nk$ choices of $T$; the block of $n + 1$ is then determined, and $T$ is partitioned arbitrarily, in $B_k$ ways. Summing over $k$ gives the recurrence.
+
+      Starting from $B_0 = 1$: $B_1 = 1$, $B_2 = 2$, $B_3 = 5$, $B_4 = 15$, and
+      $$B_5 = 1 + 4\cdot1 + 6\cdot2 + 4\cdot5 + 1\cdot15 = 52. \qquad\blacksquare$$
+
+  - id: gf-017
+    title: Small partition numbers
+    subtopic: Partitions
+    difficulty: easy
+    type: compute
+    tags: [partitions, enumeration]
+    related: [gf-020]
+    statement: |
+      Let $p(n)$ be the number of partitions of $n$ (ways of writing $n$ as an unordered sum of positive integers). List the partitions of $5$, and find $p(1), \dots, p(7)$.
+    solution: |
+      Partitions of 5: $5$, $4+1$, $3+2$, $3+1+1$, $2+2+1$, $2+1+1+1$, $1+1+1+1+1$. So $p(5) = 7$.
+
+      Listing systematically by largest part:
+      $$p(1), \dots, p(7) = 1, 2, 3, 5, 7, 11, 15.$$
+
+  - id: gf-018
+    title: Conjugate partitions
+    subtopic: Partitions
+    difficulty: easy
+    type: proof
+    tags: [partitions, ferrers diagrams, bijection]
+    related: [gf-022, gf-024]
+    statement: |
+      Prove that the number of partitions of $n$ into at most $k$ parts equals the number of partitions of $n$ whose largest part is at most $k$.
+    solution: |
+      Draw a partition $\lambda_1 \ge \lambda_2 \ge \cdots$ as a Ferrers diagram: row $i$ has $\lambda_i$ dots, left-aligned. Reflecting in the main diagonal (swapping rows and columns) gives another Ferrers diagram with the same number of dots: the **conjugate** partition. Conjugating twice gives back the original, so this is a bijection on partitions of $n$.
+
+      The number of parts of $\lambda$ is the number of rows, which becomes the number of columns of the conjugate, i.e. its largest part. So partitions with at most $k$ parts correspond exactly to partitions with largest part at most $k$. $\blacksquare$
+
+  - id: gf-019
+    title: Glaisher's bijection
+    subtopic: Partitions
+    difficulty: medium
+    type: proof
+    tags: [partitions, bijection, binary]
+    related: [cb-025, in-029]
+    hints:
+      - |
+        Write the multiplicity of each odd part in binary.
+    statement: |
+      Give an explicit bijection between partitions of $n$ into odd parts and partitions of $n$ into distinct parts.
+    solution: |
+      **Odd to distinct.** Suppose the odd part $m$ occurs $r$ times. Write $r = 2^{e_1} + \cdots + 2^{e_j}$ in binary (distinct $e_i$), and replace the $r$ copies of $m$ by the parts $2^{e_1}m, \dots, 2^{e_j}m$. The sum is unchanged. The new parts are distinct: every positive integer is uniquely $2^e \times (\text{odd})$, so parts coming from different $m$, or different $e$, differ.
+
+      **Distinct to odd.** Write each part as $2^em$ with $m$ odd, and replace it by $2^e$ copies of $m$.
+
+      Applying one map then the other returns the original, by uniqueness of binary expansions and of the $2^e\times\text{odd}$ form. For example $5 + 5 + 5 + 1 + 1 \mapsto 10 + 5 + 2$. $\blacksquare$
+
+  - id: gf-020
+    title: The partition generating function
+    subtopic: Partitions
+    difficulty: medium
+    type: proof
+    tags: [partitions, generating functions, infinite products]
+    related: [gf-017, gf-021]
+    statement: |
+      Explain why
+      $$\sum_{n\ge0}p(n)x^n = \prod_{k\ge1}\frac{1}{1 - x^k},$$
+      and why partitions with all parts at most $m$ have generating function $\prod_{k=1}^m\frac1{1-x^k}$.
+    solution: |
+      Write $\frac{1}{1-x^k} = 1 + x^k + x^{2k} + \cdots$, where the term $x^{jk}$ stands for "use part $k$ exactly $j$ times". A partition of $n$ is a choice of multiplicity $j_k \ge 0$ for each $k$, finitely many non-zero, with $\sum kj_k = n$. Expanding the product, each such choice contributes exactly one term $x^{\sum kj_k} = x^n$. So the coefficient of $x^n$ is $p(n)$.
+
+      For a fixed $n$, only the factors with $k \le n$ can contribute, so each coefficient is a finite computation and the infinite product makes sense as a formal power series. Restricting to parts $\le m$ means keeping only the factors with $k \le m$. $\blacksquare$
+
+  - id: gf-021
+    title: Partitions into parts of size at most three
+    subtopic: Partitions
+    difficulty: medium
+    type: compute
+    tags: [partitions, counting, restricted parts]
+    related: [gf-020]
+    statement: |
+      Find the number of partitions of $n$ into parts of size $1$ and $2$ only. Then count the partitions of $6$ into parts of size at most $3$, and compare with the formula "nearest integer to $\frac{(n+3)^2}{12}$".
+    solution: |
+      **Parts 1 and 2.** A partition is determined by the number of 2s, which can be $0, 1, \dots, \lfloor n/2\rfloor$. So there are $\lfloor n/2\rfloor + 1$.
+
+      **Parts at most 3, $n = 6$.** Fix the number $c$ of 3s; the rest is a partition of $6 - 3c$ into 1s and 2s:
+      $$c = 0: 4,\qquad c = 1: \lfloor 3/2\rfloor + 1 = 2,\qquad c = 2: 1.$$
+      Total **7**: $3{+}3,\ 3{+}2{+}1,\ 3{+}1{+}1{+}1,\ 2{+}2{+}2,\ 2{+}2{+}1{+}1,\ 2{+}1{+}1{+}1{+}1,\ 1^6$. The formula gives $81/12 = 6.75$, whose nearest integer is $7$.
+
+  - id: gf-022
+    title: Self-conjugate partitions
+    subtopic: Partitions
+    difficulty: hard
+    type: proof
+    tags: [partitions, ferrers diagrams, hooks, bijection]
+    related: [gf-018]
+    hints:
+      - |
+        Peel a self-conjugate Ferrers diagram into hooks along the diagonal.
+    statement: |
+      Prove that the number of self-conjugate partitions of $n$ (those equal to their conjugate) equals the number of partitions of $n$ into distinct odd parts.
+    solution: |
+      Let $\lambda$ be self-conjugate, so its Ferrers diagram is symmetric about the diagonal. Suppose the diagonal has $d$ cells $(i,i)$. The $i$th **hook** consists of cell $(i,i)$, the cells to its right in row $i$, and the cells below it in column $i$. By symmetry the arm and leg each have $\lambda_i - i$ cells, so the hook has $2(\lambda_i - i) + 1$ cells: an odd number. Since $\lambda_i - i$ strictly decreases in $i$ (because $\lambda_{i+1} \le \lambda_i$), the hook lengths are distinct. The hooks partition the diagram, so this gives a partition of $n$ into distinct odd parts.
+
+      Conversely, given distinct odd parts $h_1 > h_2 > \cdots > h_d$, bend each $h_i = 2a_i + 1$ into a symmetric hook with arm and leg $a_i$, and nest the hooks along the diagonal. Since $h_i \ge h_{i+1} + 2$, each hook is long enough to enclose the next, and the result is a symmetric Ferrers diagram. The two constructions are inverse. $\blacksquare$
+
+  - id: gf-023
+    title: Partitions with no ones
+    subtopic: Partitions
+    difficulty: easy
+    type: proof
+    tags: [partitions, bijection]
+    statement: |
+      Prove that the number of partitions of $n \ge 1$ that contain no part equal to $1$ is $p(n) - p(n-1)$.
+    solution: |
+      Partitions of $n$ that **do** contain a 1 are in bijection with partitions of $n - 1$: remove one 1, or in reverse, add a part 1. So there are $p(n-1)$ of them, and the rest number $p(n) - p(n-1)$. $\blacksquare$
+
+  - id: gf-024
+    title: Exactly k parts
+    subtopic: Partitions
+    difficulty: medium
+    type: proof
+    tags: [partitions, bijection]
+    related: [gf-018]
+    statement: |
+      Prove that the number of partitions of $n$ into **exactly** $k$ parts equals the number of partitions of $n - k$ into **at most** $k$ parts.
+    solution: |
+      Given $\lambda_1 \ge \cdots \ge \lambda_k \ge 1$ with sum $n$, subtract 1 from every part. This gives $\lambda_1 - 1 \ge \cdots \ge \lambda_k - 1 \ge 0$ with sum $n - k$. Dropping the zeros leaves a partition of $n - k$ with at most $k$ parts.
+
+      Conversely, given a partition of $n - k$ with $j \le k$ parts, pad it with $k - j$ zeros and add 1 to each of the $k$ entries. These maps are inverse. (In Ferrers diagrams: remove the first column.) $\blacksquare$
+
+  - id: gf-025
+    title: Binary representation by generating functions
+    subtopic: Partitions
+    difficulty: medium
+    type: proof
+    tags: [generating functions, binary, telescoping product]
+    related: [in-029, gf-019]
+    statement: |
+      Prove that $\displaystyle\prod_{k\ge0}\left(1 + x^{2^k}\right) = \frac{1}{1-x}$ as formal power series, and explain why this shows every non-negative integer has exactly one representation as a sum of distinct powers of 2.
+    solution: |
+      Using $(1 - y)(1 + y) = 1 - y^2$ repeatedly,
+      $$(1 - x)\prod_{k=0}^K\left(1 + x^{2^k}\right) = 1 - x^{2^{K+1}}.$$
+      So the coefficient of $x^n$ in $\prod_{k=0}^K(1 + x^{2^k})$ equals that in $\frac{1}{1-x}$, namely $1$, whenever $n < 2^{K+1}$. Factors with larger $k$ don't affect these coefficients, so the infinite product equals $\frac1{1-x}$.
+
+      Expanding the product, the coefficient of $x^n$ counts the sets of distinct powers of 2 summing to $n$. It equals $1$, so each $n$ has exactly one such representation. $\blacksquare$
+
+  - id: gf-026
+    title: Derangements by exponential generating functions
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: compute
+    tags: [egf, derangements, convolution]
+    related: [cb-017, gf-012]
+    statement: |
+      Using $n! = \sum_{k=0}^n\binom nkD_k$ (why?), find the exponential generating function $D(x) = \sum D_n\frac{x^n}{n!}$ and recover the formula for $D_n$.
+    solution: |
+      **The identity.** Classify permutations of $\{1,\dots,n\}$ by their set of non-fixed points. If it has size $k$ there are $\binom nk$ choices of the set, and the permutation is a derangement of it: $D_k$ ways.
+
+      **EGFs.** The binomial convolution $c_n = \sum\binom nka_kb_{n-k}$ corresponds to multiplying EGFs. Here $a_k = D_k$ and $b_j = 1$, whose EGF is $e^x$, and $n!$ has EGF $\sum x^n = \frac1{1-x}$. So
+      $$\frac{1}{1-x} = e^xD(x) \implies D(x) = \frac{e^{-x}}{1-x}.$$
+
+      **Coefficients.** $\frac{D_n}{n!} = [x^n]\,e^{-x}\cdot\frac1{1-x} = \sum_{k=0}^n\frac{(-1)^k}{k!}$, the partial sums of $e^{-1}$.
+
+  - id: gf-027
+    title: Words with an even number of a's
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: compute
+    tags: [egf, words, parity]
+    statement: |
+      How many words of length $n$ over the alphabet $\{a, b, c\}$ contain an even number of $a$'s? Use exponential generating functions, then check by a direct argument.
+    solution: |
+      In a word, a letter used $j$ times contributes $\frac{x^j}{j!}$ to the EGF, and the EGF of the whole word is the product over letters. For $a$ (even counts only) this is $\cosh x = \frac{e^x + e^{-x}}{2}$, and for $b, c$ it is $e^x$ each. So the EGF is
+      $$e^{2x}\cdot\frac{e^x + e^{-x}}2 = \frac{e^{3x} + e^x}{2},$$
+      whose coefficient of $\frac{x^n}{n!}$ is $\dfrac{3^n + 1}{2}$.
+
+      **Check.** Let $E$ and $O$ count words with an even and odd number of $a$'s. Then $E + O = 3^n$. Also $E - O = (2 + (-1))^n = 1$: expand $(b + c + a)^n$ with $b = c = 1$, $a = -1$. So $E = \frac{3^n + 1}{2}$.
+
+  - id: gf-028
+    title: Surjections and Stirling numbers via EGFs
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: proof
+    tags: [egf, surjections, stirling numbers]
+    related: [cb-018, gf-015]
+    statement: |
+      Explain why the exponential generating function for the number of surjections from an $n$-set onto $\{1, \dots, k\}$ is $(e^x - 1)^k$. Deduce the inclusion–exclusion formula for surjections and that $S(n,k) = \frac{1}{k!}\sum_{j=0}^k(-1)^j\binom kj(k-j)^n$.
+    solution: |
+      A surjection onto $\{1,\dots,k\}$ is an ordered sequence of $k$ **non-empty** sets (the preimages) partitioning the $n$-set. A non-empty set has EGF $\sum_{m\ge1}\frac{x^m}{m!} = e^x - 1$. The EGF of ordered $k$-tuples of disjoint labelled structures is the product of their EGFs, giving $(e^x - 1)^k$.
+
+      Expanding by the binomial theorem,
+      $$(e^x - 1)^k = \sum_{j=0}^k(-1)^j\binom kje^{(k-j)x},$$
+      and $n![x^n]e^{(k-j)x} = (k-j)^n$. So the number of surjections is $\sum_j(-1)^j\binom kj(k-j)^n$.
+
+      Each partition into $k$ blocks corresponds to exactly $k!$ surjections (one per labelling of the blocks), so $S(n,k)$ is this divided by $k!$. $\blacksquare$
+
+  - id: gf-029
+    title: Counting involutions
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: compute
+    tags: [involutions, recurrence, permutations]
+    statement: |
+      An involution is a permutation $\sigma$ with $\sigma^2 = \mathrm{id}$. Show that the number $I_n$ of involutions of $\{1,\dots,n\}$ satisfies $I_n = I_{n-1} + (n-1)I_{n-2}$ and compute $I_1, \dots, I_6$.
+    solution: |
+      An involution consists of fixed points and disjoint swaps. Either $n$ is fixed, leaving an involution of $n - 1$ elements ($I_{n-1}$), or $n$ is swapped with one of the other $n - 1$ elements, leaving an involution of the remaining $n - 2$ ($(n-1)I_{n-2}$).
+
+      With $I_0 = I_1 = 1$:
+      $$I_2 = 2,\quad I_3 = 4,\quad I_4 = 4 + 3\cdot2 = 10,\quad I_5 = 10 + 4\cdot4 = 26,\quad I_6 = 26 + 5\cdot 10 = 76.$$
+      (The EGF is $e^{x + x^2/2}$.)
+
+  - id: gf-030
+    title: Extracting the Catalan numbers
+    subtopic: Ordinary generating functions
+    difficulty: hard
+    type: proof
+    tags: [catalan, generalised binomial theorem, generating functions]
+    related: [gf-005, cb-024]
+    hints:
+      - |
+        Expand $\sqrt{1-4x}$ using $\binom{1/2}{n}$ and simplify the product of odd numbers.
+    statement: |
+      Starting from $C(x) = \dfrac{1 - \sqrt{1-4x}}{2x}$, use the generalised binomial theorem $(1+y)^{1/2} = \sum_n\binom{1/2}{n}y^n$ to prove that $C_n = \dfrac{1}{n+1}\dbinom{2n}{n}$.
+    solution: |
+      For $n \ge 1$,
+      $$\binom{1/2}{n} = \frac{\frac12\left(-\frac12\right)\left(-\frac32\right)\cdots\left(\frac12 - n + 1\right)}{n!} = \frac{(-1)^{n-1}\,1\cdot3\cdots(2n-3)}{2^n\,n!}.$$
+      Using $1 \cdot 3 \cdots (2n-3) = \dfrac{(2n-2)!}{2^{n-1}(n-1)!}$ and multiplying by $(-4)^n$,
+      $$\binom{1/2}{n}(-4)^n = -\frac{2\,(2n-2)!}{(n-1)!\,n!} = -\frac2n\binom{2n-2}{n-1}.$$
+      Hence $\sqrt{1 - 4x} = 1 - \sum_{n\ge1}\frac2n\binom{2n-2}{n-1}x^n$, and
+      $$C(x) = \frac{1}{2x}\sum_{n\ge1}\frac2n\binom{2n-2}{n-1}x^n = \sum_{n\ge1}\frac1n\binom{2n-2}{n-1}x^{n-1}.$$
+      Setting $m = n - 1$, $C_m = \frac{1}{m+1}\binom{2m}{m}$. $\blacksquare$

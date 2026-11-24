@@ -1,0 +1,570 @@
+topic:
+  id: algorithms
+  name: Algorithms & complexity
+  order: 9
+  prefix: al
+  blurb: Formal asymptotic notation, solving recurrences, proving algorithms correct, lower bounds, and P, NP and decidability.
+  subtopics: [Asymptotic notation, Recurrences, Correctness, Analysis & lower bounds, Complexity]
+
+problems:
+  - id: al-001
+    title: A polynomial is Θ of its leading term
+    subtopic: Asymptotic notation
+    difficulty: easy
+    type: proof
+    tags: [big-theta, definitions, constants]
+    related: [al-002]
+    statement: |
+      Recall that $f(n) = \Theta(g(n))$ means there are constants $c_1, c_2 > 0$ and $n_0$ such that $c_1g(n) \le f(n) \le c_2g(n)$ for all $n \ge n_0$. Prove that $3n^2 + 5n + 2 = \Theta(n^2)$, giving explicit constants.
+    solution: |
+      **Upper bound.** For $n \ge 1$ we have $n \le n^2$ and $1 \le n^2$, so
+      $$3n^2 + 5n + 2 \le 3n^2 + 5n^2 + 2n^2 = 10n^2.$$
+      **Lower bound.** For $n \ge 1$, $3n^2 + 5n + 2 \ge 3n^2$.
+
+      So $c_1 = 3$, $c_2 = 10$, $n_0 = 1$ work. $\blacksquare$
+
+  - id: al-002
+    title: n² is not O(n)
+    subtopic: Asymptotic notation
+    difficulty: easy
+    type: proof
+    tags: [big-o, contradiction]
+    related: [al-001]
+    statement: |
+      Prove directly from the definition that $n^2 \ne O(n)$.
+    solution: |
+      Suppose $n^2 = O(n)$: there are $c > 0$ and $n_0$ with $n^2 \le cn$ for all $n \ge n_0$. Dividing by $n > 0$, $n \le c$ for all $n \ge n_0$. But $n = \max(n_0, \lceil c\rceil + 1)$ satisfies $n \ge n_0$ and $n > c$, a contradiction. $\blacksquare$
+
+  - id: al-003
+    title: Rules for big-O
+    subtopic: Asymptotic notation
+    difficulty: easy
+    type: proof
+    tags: [big-o, transitivity, logarithms]
+    statement: |
+      Let all functions be positive. Prove:
+
+      1. If $f = O(g)$ and $g = O(h)$ then $f = O(h)$.
+      2. If $f_1 = O(g_1)$ and $f_2 = O(g_2)$ then $f_1 + f_2 = O(\max(g_1, g_2))$.
+      3. For constants $a, b > 1$, $\log_a n = \Theta(\log_b n)$. (So the base of a logarithm doesn't matter inside $O$.)
+    solution: |
+      1. We have $f \le c_1g$ for $n \ge n_1$ and $g \le c_2h$ for $n \ge n_2$. So $f \le c_1c_2h$ for $n \ge \max(n_1, n_2)$.
+      2. For $n$ beyond both thresholds, $f_1 + f_2 \le c_1g_1 + c_2g_2 \le (c_1 + c_2)\max(g_1, g_2)$.
+      3. $\log_a n = \dfrac{\log_b n}{\log_b a}$, and $\frac{1}{\log_b a}$ is a positive constant. So $c_1 = c_2 = \frac1{\log_ba}$ and $n_0 = 1$ work. $\blacksquare$
+
+  - id: al-004
+    title: The halting problem is undecidable
+    subtopic: Complexity
+    difficulty: hard
+    type: proof
+    tags: [decidability, diagonal argument, halting problem]
+    source: Turing, 1936
+    related: [lg-027]
+    hints:
+      - |
+        Feed a hypothetical decider a program built to do the opposite of what the decider predicts about it.
+    statement: |
+      Prove that there is no program $H$ that, given (the source code of) any program $P$ and any input $x$, always halts and correctly outputs whether $P$ halts on input $x$.
+    solution: |
+      Suppose such an $H$ exists. Build a program $D$ that, on input $P$:
+
+      - runs $H(P, P)$;
+      - if $H$ says "$P$ halts on $P$", enters an infinite loop;
+      - otherwise halts.
+
+      Now run $D$ on its own source code.
+
+      - If $D$ halts on $D$, then $H(D,D)$ says "halts", so $D$ loops forever, a contradiction.
+      - If $D$ doesn't halt on $D$, then $H(D,D)$ says "doesn't halt", so $D$ halts, a contradiction.
+
+      So $H$ cannot exist. This is Cantor's diagonal argument again: $D$ differs from the behaviour of every program $P$ on the input $P$. $\blacksquare$
+
+  - id: al-005
+    title: Polynomials are O of exponentials
+    subtopic: Asymptotic notation
+    difficulty: medium
+    type: proof
+    tags: [big-o, limits, exponentials]
+    related: [al-006]
+    statement: |
+      Prove that if $f, g > 0$ and $f(n)/g(n) \to L < \infty$ then $f = O(g)$. Use this to show $n^k = O(2^n)$ for every fixed $k$.
+    solution: |
+      **Lemma.** Taking $\eps = 1$ in the definition of the limit, there is $n_0$ with $f(n)/g(n) < L + 1$ for $n \ge n_0$. So $f \le (L+1)g$ there.
+
+      **Application.** Let $a_n = n^k/2^n$. Then
+      $$\frac{a_{n+1}}{a_n} = \frac12\left(1 + \frac1n\right)^k \to \frac12.$$
+      So for some $N$ and all $n \ge N$, $\frac{a_{n+1}}{a_n} \le \frac34$, and hence $a_n \le a_N(3/4)^{n - N} \to 0$. By the lemma (with $L = 0$), $n^k = O(2^n)$. $\blacksquare$
+
+  - id: al-006
+    title: Logarithms are O of any power
+    subtopic: Asymptotic notation
+    difficulty: medium
+    type: proof
+    tags: [big-o, little-o, lhopital, logarithms]
+    related: [al-005]
+    statement: |
+      Prove that for every $\eps > 0$, $\log n = o(n^\eps)$, i.e. $\dfrac{\log n}{n^\eps} \to 0$. Deduce that $\log n = O(n^\eps)$ but $\log n \ne \Theta(n^\eps)$.
+    solution: |
+      Treat $n$ as a real variable $x$ and use natural logs (a change of base is only a constant factor). By L'Hôpital,
+      $$\lim_{x\to\infty}\frac{\ln x}{x^\eps} = \lim_{x\to\infty}\frac{1/x}{\eps x^{\eps - 1}} = \lim_{x\to\infty}\frac{1}{\eps x^\eps} = 0.$$
+      A limit of $0 < \infty$ gives $\log n = O(n^\eps)$.
+
+      If $\log n = \Theta(n^\eps)$, then $\log n \ge c\,n^\eps$ for some $c > 0$ and all large $n$, so the ratio would stay $\ge c$, contradicting the limit $0$. $\blacksquare$
+
+  - id: al-007
+    title: Ordering growth rates
+    subtopic: Asymptotic notation
+    difficulty: medium
+    type: compute
+    tags: [growth rates, big-o, ordering]
+    related: [al-005, al-006, al-008]
+    statement: |
+      Arrange in increasing order of growth, so that each function is $o$ of the next:
+      $$n^2,\quad n\log n,\quad 2^n,\quad n!,\quad \log n,\quad \sqrt n,\quad n^n,\quad (\log n)^{10},\quad n^{1/3}.$$
+    solution: |
+      $$\log n \prec (\log n)^{10} \prec n^{1/3} \prec \sqrt n \prec n\log n \prec n^2 \prec 2^n \prec n! \prec n^n.$$
+
+      - $(\log n)^{10} = o(n^{1/3})$: substituting $m = \log n$, this is $m^{10} = o(2^{m/3})$, polynomial against exponential.
+      - $n^{1/3} = o(n^{1/2})$ and $\sqrt n = o(n\log n)$: the ratios are $n^{-1/6}$ and $\frac{1}{\sqrt n\log n}$, both $\to 0$.
+      - $n\log n = o(n^2)$: the ratio is $\frac{\log n}{n} \to 0$.
+      - $n^2 = o(2^n)$: polynomial against exponential.
+      - $2^n = o(n!)$: $\frac{2^n}{n!} = \frac{2}{1}\cdot\frac22\cdot\frac23\cdots\frac2n \le 2\cdot\frac2n \to 0$.
+      - $n! = o(n^n)$: $\frac{n!}{n^n} = \frac1n\cdot\frac2n\cdots\frac nn \le \frac1n \to 0$.
+
+  - id: al-008
+    title: log n! is Θ(n log n)
+    subtopic: Asymptotic notation
+    difficulty: medium
+    type: proof
+    tags: [big-theta, factorial, logarithms]
+    related: [ca-025, al-025]
+    hints:
+      - |
+        For the lower bound, keep only the largest half of the factors of $n!$.
+    statement: |
+      Prove that $\log_2(n!) = \Theta(n\log n)$ using elementary bounds on $n!$ (no Stirling).
+    solution: |
+      **Upper.** $n! = 1\cdot2\cdots n \le n^n$, so $\log n! \le n\log n$.
+
+      **Lower.** At least $\lceil n/2\rceil \ge n/2$ of the factors (those $\ge n/2$) are each at least $n/2$, and the rest are at least 1. So $n! \ge (n/2)^{n/2}$ and
+      $$\log n! \ge \frac n2\log\frac n2 = \frac n2(\log n - 1) \ge \frac n4\log n \quad\text{for } n \ge 4,$$
+      using $\log n - 1 \ge \frac12\log n \iff \log n \ge 2 \iff n \ge 4$.
+
+      So $\frac14 n\log n \le \log n! \le n\log n$ for $n \ge 4$. $\blacksquare$
+
+  - id: al-009
+    title: Sums of powers
+    subtopic: Asymptotic notation
+    difficulty: easy
+    type: proof
+    tags: [big-theta, sums, bounding]
+    related: [in-002, in-003]
+    statement: |
+      Prove that $\displaystyle\sum_{i=1}^n i^k = \Theta(n^{k+1})$ for every fixed integer $k \ge 0$, without using an exact formula.
+    solution: |
+      **Upper.** Each of the $n$ terms is at most $n^k$, so the sum is at most $n^{k+1}$.
+
+      **Lower.** Keep only the terms with $i \ge n/2$. There are at least $n/2$ of them, each at least $(n/2)^k$, so
+      $$\sum_{i=1}^n i^k \ge \frac n2\left(\frac n2\right)^k = \frac{n^{k+1}}{2^{k+1}}.$$
+      So $c_1 = 2^{-(k+1)}$, $c_2 = 1$, $n_0 = 1$. $\blacksquare$
+
+  - id: al-010
+    title: True or false?
+    subtopic: Asymptotic notation
+    difficulty: medium
+    type: proof
+    tags: [big-o, counterexample, logarithms]
+    statement: |
+      For positive functions with $f(n), g(n) \ge 2$, prove or disprove:
+
+      1. If $f = O(g)$ then $2^{f} = O(2^{g})$.
+      2. If $f = O(g)$ then $\log f = O(\log g)$.
+      3. $f = O(g)$ or $g = O(f)$.
+    solution: |
+      1. **False.** $f = 2n$, $g = n$: $f = O(g)$, but $2^{2n}/2^n = 2^n$ is unbounded, so $4^n \ne O(2^n)$.
+      2. **True.** If $f \le cg$ for $n \ge n_0$ (WLOG $c \ge 2$), then $\log f \le \log c + \log g \le (\log c + 1)\log g$, using $\log g \ge 1$ since $g \ge 2$ and logs are base 2.
+      3. **False.** Let $f(n) = n^2$ for even $n$ and $2$ for odd $n$, and $g(n) = n$. The ratio $f/g$ is unbounded along even $n$ and tends to $0$ along odd $n$, so neither is $O$ of the other.
+
+  - id: al-011
+    title: The binary search recurrence
+    subtopic: Recurrences
+    difficulty: easy
+    type: compute
+    tags: [recurrence, floor, strong induction]
+    related: [al-018]
+    statement: |
+      Solve exactly: $T(1) = 1$ and $T(n) = T(\lfloor n/2\rfloor) + 1$ for $n \ge 2$.
+    solution: |
+      **Claim:** $T(n) = \lfloor\log_2n\rfloor + 1$, so $T(n) = \Theta(\log n)$.
+
+      Strong induction. $T(1) = 1 = 0 + 1$. For $n \ge 2$, let $2^k \le n < 2^{k+1}$ with $k \ge 1$. Then $2^{k-1} \le \lfloor n/2\rfloor < 2^k$, so $\lfloor\log_2\lfloor n/2\rfloor\rfloor = k - 1$ and
+      $$T(n) = (k - 1 + 1) + 1 = k + 1 = \lfloor\log_2 n\rfloor + 1.$$
+
+  - id: al-012
+    title: The substitution method
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [recurrence, substitution method, induction]
+    related: [dm-025, al-013]
+    statement: |
+      Let $T(1) = 1$ and $T(n) = 2T(\lfloor n/2\rfloor) + n$ for $n \ge 2$. Prove by induction that $T(n) \le c\,n\log_2n$ for all $n \ge 2$, for a suitable constant $c$.
+    solution: |
+      Take $c = 4$.
+
+      **Base cases** $n = 2, 3$ (the step below uses $\lfloor n/2\rfloor \ge 2$, i.e. $n \ge 4$). $T(2) = 2 + 2 = 4 \le 4\cdot2\cdot1$, and $T(3) = 2 + 3 = 5 \le 4\cdot3\log_23$.
+
+      **Step.** Let $n \ge 4$ and assume the bound for $m = \lfloor n/2\rfloor \ge 2$. Since $m \le n/2$,
+      $$T(n) \le 2cm\log m + n \le 2c\frac n2\log\frac n2 + n = cn\log n - cn + n \le cn\log n,$$
+      as $c \ge 1$. So $T(n) = O(n\log n)$. $\blacksquare$
+
+  - id: al-013
+    title: Applying the master theorem
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [master theorem, recurrence]
+    related: [al-012, al-014]
+    statement: |
+      For $T(n) = aT(n/b) + f(n)$, let $c^* = \log_ba$. The master theorem says:
+
+      - if $f = O(n^{c^*-\eps})$ for some $\eps > 0$, then $T = \Theta(n^{c^*})$;
+      - if $f = \Theta(n^{c^*}\log^kn)$ with $k \ge 0$, then $T = \Theta(n^{c^*}\log^{k+1}n)$;
+      - if $f = \Omega(n^{c^*+\eps})$ and $af(n/b) \le \delta f(n)$ for some $\delta < 1$, then $T = \Theta(f)$.
+
+      Solve: (a) $9T(n/3) + n$, (b) $T(2n/3) + 1$, (c) $3T(n/4) + n\log n$, (d) $4T(n/2) + n^2$, (e) $2T(n/2) + n\log n$.
+    solution: |
+      (a) $c^* = \log_39 = 2$ and $f = n = O(n^{2 - 1})$: case 1, $\Theta(n^2)$.
+
+      (b) $a = 1$, $b = \frac32$, $c^* = 0$, $f = 1 = \Theta(n^0)$: case 2 with $k = 0$, $\Theta(\log n)$.
+
+      (c) $c^* = \log_43 \approx 0.79$ and $f = n\log n = \Omega(n^{0.79 + 0.2})$. Regularity: $3\cdot\frac n4\log\frac n4 \le \frac34n\log n$. Case 3: $\Theta(n\log n)$.
+
+      (d) $c^* = 2$, $f = \Theta(n^2)$: case 2, $\Theta(n^2\log n)$.
+
+      (e) $c^* = 1$, $f = \Theta(n\log n)$: case 2 with $k = 1$, $\Theta(n\log^2n)$. (Case 3 does **not** apply: $n\log n$ is not $\Omega(n^{1+\eps})$.)
+
+  - id: al-014
+    title: Karatsuba's recurrence exactly
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [recurrence, recursion tree, karatsuba]
+    source: Karatsuba, 1960
+    related: [al-013]
+    statement: |
+      Karatsuba multiplication satisfies $T(1) = 1$, $T(n) = 3T(n/2) + n$ for $n$ a power of 2. Prove that $T(n) = 3n^{\log_23} - 2n$, so $T(n) = \Theta(n^{\log_23}) \approx \Theta(n^{1.585})$.
+    solution: |
+      Let $n = 2^k$. Unrolling the recurrence (a recursion tree), level $i$ has $3^i$ subproblems of size $n/2^i$, contributing $3^i\cdot\frac{n}{2^i}$, and the $3^k$ leaves contribute $3^kT(1)$:
+      $$T(n) = n\sum_{i=0}^{k-1}\left(\frac32\right)^i + 3^k = n\cdot\frac{(3/2)^k - 1}{1/2} + 3^k = 2\cdot3^k - 2n + 3^k = 3\cdot3^k - 2n,$$
+      using $n(3/2)^k = 3^k$. Finally $3^k = 3^{\log_2n} = n^{\log_23}$.
+
+      Check: $T(2) = 3 + 2 = 5 = 9 - 4$. $\blacksquare$
+
+  - id: al-015
+    title: An unbalanced recursion
+    subtopic: Recurrences
+    difficulty: hard
+    type: proof
+    tags: [recurrence, substitution method, recursion tree]
+    related: [al-012]
+    hints:
+      - |
+        Substitute $T(m) \le c\,m\log m$ and simplify using $\log\frac n3 = \log n - \log 3$ and $\log\frac{2n}3 = \log n - \log 3 + 1$.
+    statement: |
+      Ignoring floors and ceilings, show that $T(n) = T(n/3) + T(2n/3) + n$ satisfies $T(n) = \Theta(n\log n)$.
+    solution: |
+      Let $h = \frac13\log 3 + \frac23\log\frac32 = \log 3 - \frac23 \approx 0.918 > 0$ (logs base 2).
+
+      **Upper bound.** Assume $T(m) \le cm\log m$ for smaller $m$. Then
+      $$T(n) \le c\frac n3\log\frac n3 + c\frac{2n}3\log\frac{2n}3 + n = cn\log n - cn\left(\tfrac13\log3 + \tfrac23\log\tfrac32\right) + n = cn\log n - (ch - 1)n,$$
+      which is $\le cn\log n$ when $c \ge 1/h$.
+
+      **Lower bound.** Assuming $T(m) \ge c'm\log m$, the same computation gives $T(n) \ge c'n\log n + (1 - c'h)n \ge c'n\log n$ when $c' \le 1/h$.
+
+      With suitable base cases, induction gives $c'n\log n \le T(n) \le cn\log n$. (Recursion-tree view: every level costs at most $n$, and there are between $\log_3n$ and $\log_{3/2}n$ levels.) $\blacksquare$
+
+  - id: al-016
+    title: Recursive Fibonacci is exponential
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, fibonacci, exponential time]
+    related: [in-019, dm-022]
+    statement: |
+      The naive recursive Fibonacci function makes $T(n)$ calls, where $T(0) = T(1) = 1$ and $T(n) = T(n-1) + T(n-2) + 1$. Solve exactly and give the asymptotic growth. Contrast with $S(n) = S(n-1) + n$, $S(1) = 1$.
+    solution: |
+      Let $U(n) = T(n) + 1$. Then $U(n) = U(n-1) + U(n-2)$ with $U(0) = U(1) = 2$, so $U(n) = 2F_{n+1}$ and
+      $$T(n) = 2F_{n+1} - 1.$$
+      Check: $T(2) = 3$, $T(3) = 5$. By Binet's formula, $F_{n+1} = \Theta(\varphi^n)$, so $T(n) = \Theta(\varphi^n) \approx \Theta(1.618^n)$: exponential.
+
+      By contrast, $S(n) = 1 + 2 + \cdots + n = \frac{n(n+1)}{2} = \Theta(n^2)$, which is the cost pattern of selection sort.
+
+  - id: al-017
+    title: Insertion sort is correct
+    subtopic: Correctness
+    difficulty: medium
+    type: proof
+    tags: [loop invariant, sorting, correctness]
+    related: [al-018]
+    statement: |
+      ```
+      insertion_sort(A[1..n]):
+        for j = 2 to n:
+          key = A[j]; i = j - 1
+          while i >= 1 and A[i] > key:
+            A[i+1] = A[i]; i = i - 1
+          A[i+1] = key
+      ```
+      Prove that this sorts $A$, using a loop invariant for the outer loop. Then show its worst-case running time is $\Theta(n^2)$.
+    solution: |
+      **Invariant.** At the start of each iteration of the outer loop, $A[1..j-1]$ consists of the elements originally in $A[1..j-1]$, in sorted order.
+
+      - **Initialisation** ($j = 2$): $A[1..1]$ is a single element, so it is sorted.
+      - **Maintenance:** the inner loop shifts each element of $A[1..j-1]$ that is greater than `key` one place right, stopping at the first $A[i] \le$ `key` (or at $i = 0$). Placing `key` at $A[i+1]$ puts it after every element $\le$ it and before every element $>$ it. So $A[1..j]$ holds the original first $j$ elements, sorted.
+      - **Termination:** the loop ends with $j = n + 1$, so $A[1..n]$ is sorted.
+
+      **Running time.** The inner loop runs at most $j - 1$ times, so the total is at most $\sum_{j=2}^n(j-1) = \frac{n(n-1)}2 = O(n^2)$. On reverse-sorted input it runs exactly $j - 1$ times for every $j$, so the worst case is $\Theta(n^2)$. $\blacksquare$
+
+  - id: al-018
+    title: Binary search is correct and fast
+    subtopic: Correctness
+    difficulty: medium
+    type: proof
+    tags: [loop invariant, binary search, termination]
+    related: [al-011]
+    statement: |
+      ```
+      search(A[0..n-1] sorted, x):
+        lo = 0; hi = n - 1
+        while lo <= hi:
+          mid = floor((lo + hi) / 2)
+          if A[mid] == x: return mid
+          if A[mid] < x: lo = mid + 1
+          else: hi = mid - 1
+        return NOT_FOUND
+      ```
+      Prove that it returns an index of $x$ if $x$ occurs in $A$ and NOT_FOUND otherwise, and that it makes $O(\log n)$ iterations.
+    solution: |
+      **Invariant:** if $x$ occurs in $A$, it occurs in $A[\mathrm{lo}..\mathrm{hi}]$. This holds initially. If $A[\mathrm{mid}] < x$, then since $A$ is sorted every index $\le \mathrm{mid}$ holds a value $< x$, so discarding them keeps the invariant. The case $A[\mathrm{mid}] > x$ is symmetric.
+
+      **Correctness.** A returned index is correct by the equality test. If the loop ends, then $\mathrm{lo} > \mathrm{hi}$, the range is empty, and by the invariant $x$ is not in $A$.
+
+      **Termination and speed.** Let $s = \mathrm{hi} - \mathrm{lo} + 1$. Since $\mathrm{mid} = \mathrm{lo} + \lfloor(s-1)/2\rfloor$, the two possible new ranges have sizes $\lfloor(s-1)/2\rfloor$ and $\lceil(s-1)/2\rceil$, both $\le s/2$. So $s$ at least halves each iteration, and after at most $\lfloor\log_2n\rfloor + 1$ iterations $s < 1$. $\blacksquare$
+
+  - id: al-019
+    title: Euclid's algorithm is logarithmic
+    subtopic: Analysis & lower bounds
+    difficulty: hard
+    type: proof
+    tags: [euclidean algorithm, running time, halving]
+    related: [nt-011, nt-012]
+    hints:
+      - |
+        Show that the remainder at least halves every two steps.
+    statement: |
+      Euclid's algorithm on $a > b > 0$ computes remainders $r_0 = a$, $r_1 = b$, $r_{i+1} = r_{i-1} \bmod r_i$, stopping when a remainder is $0$. Prove that $r_{i+1} < r_{i-1}/2$, and deduce that the algorithm takes $O(\log b)$ steps.
+    solution: |
+      Fix $i \ge 1$ with $r_i > 0$. Two cases:
+
+      - If $r_i \le r_{i-1}/2$: then $r_{i+1} < r_i \le r_{i-1}/2$, since a remainder is smaller than the divisor.
+      - If $r_i > r_{i-1}/2$: then $r_{i-1} < 2r_i$, so the quotient is $1$ and $r_{i+1} = r_{i-1} - r_i < r_{i-1}/2$.
+
+      So every two steps the remainder more than halves: $r_{2j+1} < b/2^j$. Once $2^j \ge b$, the remainder is $< 1$, i.e. $0$. Hence there are at most $2\lceil\log_2 b\rceil + 1$ steps. $\blacksquare$
+
+      (The worst case is consecutive Fibonacci numbers, giving about $\log_\varphi b$ steps.)
+
+  - id: al-020
+    title: Fast exponentiation
+    subtopic: Correctness
+    difficulty: medium
+    type: proof
+    tags: [loop invariant, exponentiation, logarithmic time]
+    related: [nt-018]
+    statement: |
+      ```
+      power(x, n):          # n >= 0 an integer
+        r = 1; b = x; e = n
+        while e > 0:
+          if e is odd: r = r * b
+          b = b * b
+          e = floor(e / 2)
+        return r
+      ```
+      Prove that `power` returns $x^n$ using $O(\log n)$ multiplications.
+    solution: |
+      **Invariant:** $r\cdot b^e = x^n$ at the start of each iteration. Initially $1\cdot x^n = x^n$.
+
+      **Maintenance.** If $e$ is even, the new values are $r$, $b^2$, $e/2$, and $r(b^2)^{e/2} = rb^e$. If $e$ is odd, they are $rb$, $b^2$, $(e-1)/2$, and $rb\,(b^2)^{(e-1)/2} = rb^e$.
+
+      **Termination.** $e$ strictly decreases while positive, so the loop stops with $e = 0$, and then $r = r\cdot b^0 = x^n$.
+
+      **Cost.** Each iteration halves $e$, so there are $\lfloor\log_2n\rfloor + 1$ iterations for $n \ge 1$, each with at most 2 multiplications: $O(\log n)$ in total. $\blacksquare$
+
+  - id: al-021
+    title: Greedy interval scheduling is optimal
+    subtopic: Correctness
+    difficulty: hard
+    type: proof
+    tags: [greedy algorithms, exchange argument, stays ahead]
+    hints:
+      - |
+        Show that the $i$th interval chosen by greedy finishes no later than the $i$th interval of any optimal solution.
+    statement: |
+      Given intervals $[s_j, f_j)$, the greedy algorithm repeatedly picks the interval with the **earliest finish time** among those compatible with (not overlapping) the ones already chosen. Prove that it selects a maximum-size set of pairwise disjoint intervals.
+    solution: |
+      Let greedy choose $g_1, \dots, g_k$ and let an optimal solution be $o_1, \dots, o_m$, both sorted by finish time, so $m \ge k$.
+
+      **Greedy stays ahead:** $f(g_i) \le f(o_i)$ for $i \le k$. For $i = 1$, greedy picks the earliest finish overall. If $f(g_{i-1}) \le f(o_{i-1})$, then $o_i$ starts after $o_{i-1}$ finishes, hence after $g_{i-1}$ finishes. So $o_i$ is compatible with $g_1, \dots, g_{i-1}$, and greedy, choosing the earliest finish among compatible intervals, has $f(g_i) \le f(o_i)$.
+
+      **No fewer intervals.** If $m > k$, then $o_{k+1}$ starts after $f(o_k) \ge f(g_k)$, so it is compatible with all of greedy's choices and greedy would not have stopped. So $m = k$. $\blacksquare$
+
+  - id: al-022
+    title: Counting operations in nested loops
+    subtopic: Analysis & lower bounds
+    difficulty: medium
+    type: compute
+    tags: [loop analysis, binomial coefficients, big-theta]
+    related: [cb-010]
+    statement: |
+      Find exactly how many times `count += 1` runs, as a function of $n$:
+      ```
+      for i = 1 to n:
+        for j = i to n:
+          for k = i to j:
+            count += 1
+      ```
+    solution: |
+      The statement runs once for each triple $1 \le i \le k \le j \le n$, i.e. for each way to choose $i \le k \le j$ from $\{1, \dots, n\}$ with repetition allowed. Such multisets of size 3 number
+      $$\binom{n+2}{3} = \frac{n(n+1)(n+2)}{6} = \Theta(n^3).$$
+      Check: $n = 2$ gives the triples $(1,1,1), (1,1,2), (1,2,2), (2,2,2)$, i.e. 4, and $\binom43 = 4$.
+
+  - id: al-023
+    title: A halving loop
+    subtopic: Analysis & lower bounds
+    difficulty: easy
+    type: compute
+    tags: [loop analysis, geometric series]
+    statement: |
+      Give tight $\Theta$ bounds on the work done by each fragment (each inner step is $O(1)$):
+      ```
+      A:  i = n                      B:  i = n
+          while i >= 1:                  while i >= 1:
+            for j = 1 to i: step           for j = 1 to n: step
+            i = floor(i / 2)               i = floor(i / 2)
+      ```
+    solution: |
+      The outer loop runs $\lfloor\log_2n\rfloor + 1$ times in both.
+
+      **A.** The inner loop runs $i$ times with $i = n, \lfloor n/2\rfloor, \lfloor n/4\rfloor, \dots$, so the work is at least $n$ and at most
+      $$n + \frac n2 + \frac n4 + \cdots < 2n.$$
+      **$\Theta(n)$.**
+
+      **B.** $n$ steps per outer iteration: $n(\lfloor\log_2n\rfloor + 1) = $ **$\Theta(n\log n)$**.
+
+  - id: al-024
+    title: Amortised cost of a growable array
+    subtopic: Analysis & lower bounds
+    difficulty: medium
+    type: proof
+    tags: [amortised analysis, dynamic arrays, geometric series]
+    statement: |
+      A dynamic array starts with capacity 1. Appending to a full array of capacity $c$ first copies all $c$ elements into a new array of capacity $2c$. Prove that $n$ appends cost $O(n)$ in total (counting one unit per element written), so each append costs $O(1)$ amortised.
+    solution: |
+      Each append writes its new element once: $n$ units. Copies happen when the size reaches $1, 2, 4, \dots, 2^k$, where $2^k < n$, costing
+      $$1 + 2 + 4 + \cdots + 2^k = 2^{k+1} - 1 < 2n.$$
+      So the total is less than $3n = O(n)$, an average of $O(1)$ per append, even though a single append can cost $\Theta(n)$. $\blacksquare$
+
+      (Growing by a constant amount instead, $c \to c + 10$, gives $\Theta(n^2)$ total.)
+
+  - id: al-025
+    title: Comparison sorting needs Ω(n log n)
+    subtopic: Analysis & lower bounds
+    difficulty: hard
+    type: proof
+    tags: [lower bounds, decision trees, sorting]
+    related: [al-008]
+    statement: |
+      Prove that every comparison-based sorting algorithm makes $\Omega(n\log n)$ comparisons in the worst case on inputs of $n$ distinct elements.
+    solution: |
+      Model the algorithm on inputs of size $n$ as a **decision tree**: each internal node is a comparison "$a_i < a_j$?" with two children, and each leaf is the output permutation. The worst-case number of comparisons is the height $h$ of the tree.
+
+      All $n!$ orderings of distinct inputs must lead to different leaves. If two orderings reached the same leaf, the algorithm would apply the same rearrangement to both, and could not sort both. So there are at least $n!$ leaves.
+
+      A binary tree of height $h$ has at most $2^h$ leaves, so $2^h \ge n!$ and
+      $$h \ge \log_2n! = \Theta(n\log n). \qquad\blacksquare$$
+
+      (Merge sort achieves $O(n\log n)$, so this is tight.)
+
+  - id: al-026
+    title: Finding the maximum needs n − 1 comparisons
+    subtopic: Analysis & lower bounds
+    difficulty: medium
+    type: proof
+    tags: [lower bounds, adversary argument]
+    statement: |
+      Prove that any comparison-based algorithm that finds the maximum of $n$ distinct numbers must make at least $n - 1$ comparisons on every input.
+    solution: |
+      Call an element a **loser** if it was the smaller element in some comparison. Each comparison creates at most one new loser.
+
+      **Claim:** when the algorithm outputs $m$, every other element has lost. Suppose $y \ne m$ never lost. Then every comparison involving $y$ was won by $y$. Change the input by making $y$ larger than every other element. All comparison outcomes stay the same: $y$ still wins its comparisons, and comparisons not involving $y$ are unaffected. So the algorithm behaves identically and outputs $m$ again, but now $y$ is the maximum, so the output is wrong.
+
+      So all $n - 1$ non-maximal elements are losers, which needs at least $n - 1$ comparisons. $\blacksquare$
+
+  - id: al-027
+    title: Closure properties of P
+    subtopic: Complexity
+    difficulty: easy
+    type: proof
+    tags: [complexity classes, closure, polynomial time]
+    statement: |
+      Prove that if $L_1, L_2 \in \mathsf{P}$ then $\overline{L_1}$, $L_1 \cup L_2$ and $L_1 \cap L_2$ are in $\mathsf P$.
+    solution: |
+      Let $M_1, M_2$ decide $L_1, L_2$ in times $p_1(n), p_2(n)$ (polynomials).
+
+      - **Complement:** run $M_1$ and flip its answer. Time $p_1(n) + O(1)$.
+      - **Union / intersection:** run $M_1$, then $M_2$, and output the OR / AND of the answers. Time $p_1(n) + p_2(n) + O(1)$, a polynomial. $\blacksquare$
+
+      (It is unknown whether $\mathsf{NP}$ is closed under complement.)
+
+  - id: al-028
+    title: Reductions compose
+    subtopic: Complexity
+    difficulty: medium
+    type: proof
+    tags: [reductions, polynomial time, transitivity]
+    related: [al-030]
+    statement: |
+      Prove that polynomial-time reductions are transitive: if $A \le_p B$ and $B \le_p C$ then $A \le_p C$.
+    solution: |
+      Let $f$ reduce $A$ to $B$ in time $p(n)$, and $g$ reduce $B$ to $C$ in time $q(n)$, with $p, q$ increasing polynomials. Then $x \in A \iff f(x) \in B \iff g(f(x)) \in C$, so $g\circ f$ reduces $A$ to $C$.
+
+      **Time.** Computing $f(x)$ takes $p(n)$ steps, and since a machine writes at most one symbol per step, $|f(x)| \le p(n)$. Computing $g$ on it takes at most $q(p(n))$ steps. The total $p(n) + q(p(n))$ is a polynomial, since polynomials are closed under composition. $\blacksquare$
+
+  - id: al-029
+    title: Independent set reduces to vertex cover
+    subtopic: Complexity
+    difficulty: medium
+    type: proof
+    tags: [reductions, np-completeness, graphs]
+    related: [al-028]
+    statement: |
+      INDEPENDENT-SET asks whether a graph $G$ has an independent set of size $\ge k$; VERTEX-COVER asks whether it has a vertex cover (a set touching every edge) of size $\le k$. Prove that INDEPENDENT-SET $\le_p$ VERTEX-COVER.
+    solution: |
+      **Key fact:** $S$ is independent iff $V \setminus S$ is a vertex cover. Indeed, $S$ is independent iff no edge has both ends in $S$, iff every edge has an end in $V \setminus S$.
+
+      **Reduction:** map $(G, k)$ to $(G, |V| - k)$. This takes polynomial time. $G$ has an independent set of size $\ge k$ iff it has a vertex cover of size $\le |V| - k$, by taking complements. $\blacksquare$
+
+  - id: al-030
+    title: One NP-complete problem in P collapses NP
+    subtopic: Complexity
+    difficulty: medium
+    type: proof
+    tags: [np-completeness, verifiers, p vs np]
+    related: [al-028]
+    statement: |
+      1. Show that SUBSET-SUM (given integers $a_1, \dots, a_n$ and $t$, is there a subset summing to $t$?) is in $\mathsf{NP}$.
+      2. Prove that if any $\mathsf{NP}$-complete problem $L$ is in $\mathsf P$ then $\mathsf P = \mathsf{NP}$.
+    solution: |
+      1. **Certificate:** the subset, given as a list of at most $n$ indices. **Verifier:** check the indices are distinct and in range, and that the chosen $a_i$ sum to $t$. This is at most $n$ additions of numbers whose bit length is at most the input size plus $\log n$, so it runs in polynomial time. If the answer is yes, some certificate is accepted; if no, none is.
+      2. Always $\mathsf P \subseteq \mathsf{NP}$. Let $L' \in \mathsf{NP}$. Since $L$ is $\mathsf{NP}$-complete, $L' \le_p L$ via some $f$. To decide $L'$, compute $f(x)$ and run the polynomial-time algorithm for $L$. As with composing reductions, this is polynomial time. So $L' \in \mathsf P$, and $\mathsf{NP} \subseteq \mathsf P$. $\blacksquare$

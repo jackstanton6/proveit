@@ -1,0 +1,461 @@
+topic:
+  id: graph-theory
+  name: Graph theory
+  order: 7
+  prefix: gt
+  blurb: Degrees, trees, connectivity, Euler and Hamilton, colouring and planarity, matchings and Ramsey numbers.
+  subtopics: [Degrees, Trees, Connectivity, Euler & Hamilton, Colouring & planarity, Matchings & Ramsey]
+
+problems:
+  - id: gt-001
+    title: The handshake lemma
+    subtopic: Degrees
+    difficulty: easy
+    type: proof
+    tags: [degrees, double counting]
+    related: [gt-002]
+    statement: |
+      Prove that in any finite graph $G = (V, E)$, $\displaystyle\sum_{v \in V}\deg(v) = 2|E|$. Deduce that the number of odd-degree vertices is even.
+    solution: |
+      Count pairs $(v, e)$ with $v$ an endpoint of edge $e$. Each vertex $v$ is in $\deg(v)$ such pairs, giving $\sum_v \deg(v)$. Each edge has exactly two endpoints, giving $2|E|$. (A loop counts twice towards its vertex's degree, so this still holds.)
+
+      Split the sum into even- and odd-degree vertices. The total and the even part are both even, so the sum of the odd degrees is even. A sum of odd numbers is even only if there is an even number of terms. $\blacksquare$
+
+  - id: gt-002
+    title: Handshakes at a party
+    subtopic: Degrees
+    difficulty: easy
+    type: compute
+    tags: [degrees, handshake lemma]
+    related: [gt-001]
+    statement: |
+      Is it possible for 9 people at a party to each shake hands with exactly 3 others? With exactly 4 others?
+    solution: |
+      Model people as vertices and handshakes as edges.
+
+      - **3 each: impossible.** The degree sum would be $9 \cdot 3 = 27$, which is odd, but it must equal $2|E|$.
+      - **4 each: possible.** Seat everyone in a circle, $0, 1, \dots, 8$, and let each person shake hands with the two people on either side: $i$ with $i\pm1$ and $i \pm 2 \pmod 9$. Everyone has degree 4.
+
+  - id: gt-003
+    title: Which degree sequences are graphic?
+    subtopic: Degrees
+    difficulty: medium
+    type: compute
+    tags: [degree sequences, havel-hakimi]
+    statement: |
+      Decide whether a simple graph exists with each degree sequence. If one does, describe it.
+
+      1. $(3, 3, 3, 3, 3)$
+      2. $(4, 4, 4, 1, 1)$
+      3. $(3, 3, 2, 2, 2)$
+    solution: |
+      1. **No.** The sum $15$ is odd.
+      2. **No.** On 5 vertices, a vertex of degree 4 is adjacent to every other vertex. With three such vertices, each degree-1 vertex would have degree at least 3.
+      3. **Yes.** Take the 5-cycle $a\,c\,b\,e\,d\,a$ (every vertex has degree 2) and add the chord $ab$. Then $a, b$ have degree 3 and $c, d, e$ have degree 2.
+
+  - id: gt-004
+    title: Two vertices of equal degree
+    subtopic: Degrees
+    difficulty: easy
+    type: proof
+    tags: [degrees, pigeonhole]
+    statement: |
+      Prove that every simple graph with $n \ge 2$ vertices has two vertices of the same degree.
+    solution: |
+      Degrees lie in $\{0, 1, \dots, n-1\}$. But $0$ and $n - 1$ cannot both occur: a vertex of degree $n-1$ is adjacent to every other vertex, so no vertex has degree $0$. So the $n$ degrees take at most $n - 1$ distinct values, and by pigeonhole two coincide. $\blacksquare$
+
+  - id: gt-005
+    title: Enough edges force connectivity
+    subtopic: Connectivity
+    difficulty: medium
+    type: proof
+    tags: [connectivity, extremal]
+    statement: |
+      Prove that a simple graph with $n$ vertices and more than $\binom{n-1}{2}$ edges is connected. Show the bound is sharp.
+    solution: |
+      Suppose $G$ is disconnected. Then $V$ splits into non-empty parts $A$ and $B$, $|A| = k$, $|B| = n-k$ with $1 \le k \le n - 1$, and no edges between them. So
+      $$|E| \le \binom k2 + \binom{n-k}{2} = \binom n2 - k(n-k).$$
+      Now $k(n-k) - (n-1) = (k-1)(n-k-1) \ge 0$, so $|E| \le \binom n2 - (n-1) = \binom{n-1}{2}$. Contrapositively, more edges than this forces connectivity.
+
+      **Sharp:** $K_{n-1}$ plus an isolated vertex has exactly $\binom{n-1}{2}$ edges and is disconnected. $\blacksquare$
+
+  - id: gt-006
+    title: Counting walks with the adjacency matrix
+    subtopic: Connectivity
+    difficulty: medium
+    type: compute
+    tags: [adjacency matrix, walks, triangles]
+    related: [la-021]
+    statement: |
+      Let $A$ be the adjacency matrix of a graph. It is a fact that $(A^k)_{ij}$ is the number of walks of length $k$ from $i$ to $j$. Explain why, and use it to show that $\tr(A^3) = 6 \times (\text{number of triangles})$. Check this for $K_4$.
+    solution: |
+      **Why.** Induct on $k$. $(A^{k+1})_{ij} = \sum_\ell (A^k)_{i\ell}A_{\ell j}$. A walk of length $k + 1$ from $i$ to $j$ is a walk of length $k$ from $i$ to some $\ell$ followed by an edge $\ell j$, and the sum counts exactly these.
+
+      **Triangles.** $(A^3)_{ii}$ counts closed walks $i \to a \to b \to i$. In a simple graph these are exactly triangles through $i$ traversed in one of 2 directions. Summing over $i$, each triangle is counted once for each of its 3 vertices and 2 directions: $\tr(A^3) = 6T$.
+
+      **$K_4$.** $A = J - I$, where $J$ is the all-ones matrix and $J^2 = 4J$. Then $A^2 = J^2 - 2J + I = 2J + I$ and $A^3 = (2J + I)(J - I) = 2J^2 - 2J + J - I = 7J - I$. So $\tr(A^3) = 4 \cdot 6 = 24 = 6 \cdot 4$, and $K_4$ indeed has $\binom43 = 4$ triangles.
+
+  - id: gt-007
+    title: Trees have n − 1 edges
+    subtopic: Trees
+    difficulty: medium
+    type: proof
+    tags: [trees, induction, leaves]
+    related: [gt-008, gt-009]
+    statement: |
+      Prove that every tree with $n \ge 1$ vertices has exactly $n - 1$ edges. (You may use that every tree with at least 2 vertices has a leaf.)
+    solution: |
+      Induct on $n$. A tree with one vertex has no edges.
+
+      For $n \ge 2$, let $v$ be a leaf, with unique neighbour $u$. $T - v$ is still connected: a path between two other vertices never passes through $v$, since an interior vertex of a path has degree at least 2. It is still acyclic. So $T - v$ is a tree with $n - 1$ vertices and, by hypothesis, $n - 2$ edges. Adding back $v$ and the edge $uv$ gives $n - 1$ edges. $\blacksquare$
+
+  - id: gt-008
+    title: Trees have at least two leaves
+    subtopic: Trees
+    difficulty: easy
+    type: proof
+    tags: [trees, longest path, leaves]
+    related: [gt-007]
+    statement: |
+      Prove that every tree with at least two vertices has at least two leaves.
+    solution: |
+      A tree with $\ge 2$ vertices is connected, so it has an edge and hence a path with at least one edge. Let $P = v_0 v_1 \cdots v_k$ be a longest path ($k \ge 1$).
+
+      Consider $v_0$. It is adjacent to $v_1$. If it were adjacent to a vertex $w$ not on $P$, then $w v_0 \cdots v_k$ would be a longer path. If it were adjacent to some $v_i$ with $i \ge 2$, then $v_0 v_1 \cdots v_i v_0$ would be a cycle. So $\deg v_0 = 1$, and by the same argument $\deg v_k = 1$. Since $v_0 \ne v_k$, there are two leaves. $\blacksquare$
+
+  - id: gt-009
+    title: Connected with n − 1 edges means tree
+    subtopic: Trees
+    difficulty: medium
+    type: proof
+    tags: [trees, spanning tree]
+    related: [gt-007, gt-013]
+    statement: |
+      Prove that a connected graph with $n$ vertices and $n - 1$ edges is a tree.
+    solution: |
+      Let $G$ be connected with $n - 1$ edges. If $G$ had a cycle, removing one edge of that cycle would leave $G$ connected: any walk using the removed edge $xy$ can detour around the rest of the cycle. Repeat while cycles remain. The process ends, since edges are finite, at a connected acyclic spanning subgraph: a tree on $n$ vertices, which has $n - 1$ edges.
+
+      But we removed at least one edge, so the tree has at most $n - 2$ edges, a contradiction. Hence $G$ is acyclic, so it is a tree. $\blacksquare$
+
+  - id: gt-010
+    title: Unique paths in trees
+    subtopic: Trees
+    difficulty: easy
+    type: proof
+    tags: [trees, paths, cycles]
+    statement: |
+      Prove that in a tree there is exactly one path between any two vertices.
+    solution: |
+      A path exists because trees are connected. Suppose $P$ and $Q$ are two different paths from $u$ to $v$. Follow them from $u$ until they first differ: say they agree up to vertex $x$, and then $P$ goes to $p$ and $Q$ goes to $q \ne p$. (This happens because two different paths from $u$ to $v$ can't be such that one is an initial segment of the other.) Let $y$ be the first vertex after $x$ on $P$ that also lies on $Q$ after $x$; one exists because $v$ is on both. The portion of $P$ from $x$ to $y$ and the portion of $Q$ from $y$ back to $x$ share only $x$ and $y$, so together they form a cycle. This contradicts acyclicity. $\blacksquare$
+
+  - id: gt-011
+    title: Counting leaves
+    subtopic: Trees
+    difficulty: easy
+    type: compute
+    tags: [trees, handshake lemma]
+    statement: |
+      A tree has exactly 10 vertices of degree 3 and every other vertex is a leaf. How many leaves does it have?
+    solution: |
+      Let $L$ be the number of leaves, so $n = 10 + L$ and $|E| = n - 1 = 9 + L$. By the handshake lemma,
+      $$10\cdot 3 + L\cdot 1 = 2(9 + L) \implies 30 + L = 18 + 2L \implies L = 12.$$
+
+  - id: gt-012
+    title: Labelled trees on four vertices
+    subtopic: Trees
+    difficulty: medium
+    type: compute
+    tags: [trees, counting, cayley]
+    statement: |
+      How many trees are there with vertex set $\{1, 2, 3, 4\}$? Compare with Cayley's formula $n^{n-2}$.
+    solution: |
+      A tree on 4 vertices has 3 edges. Its degrees sum to 6, and the shape is either a path or a star.
+
+      - **Stars** $K_{1,3}$: determined by the centre, giving $4$.
+      - **Paths** $P_4$: an ordering of the 4 vertices, with each path counted twice (forwards and backwards), giving $4!/2 = 12$.
+
+      Total **16** $= 4^{4-2}$, as Cayley's formula predicts.
+
+  - id: gt-013
+    title: Spanning trees exist
+    subtopic: Trees
+    difficulty: medium
+    type: proof
+    tags: [spanning tree, connectivity]
+    related: [gt-009]
+    statement: |
+      Prove that every connected finite graph has a spanning tree.
+    solution: |
+      Among all connected spanning subgraphs of $G$ (there is at least one, $G$ itself), choose one, $H$, with the fewest edges. If $H$ had a cycle, deleting an edge $xy$ of that cycle would keep $H$ connected (any walk through $xy$ can use the rest of the cycle instead), contradicting minimality. So $H$ is connected and acyclic, i.e. a spanning tree. $\blacksquare$
+
+  - id: gt-014
+    title: Walks contain paths
+    subtopic: Connectivity
+    difficulty: easy
+    type: proof
+    tags: [walks, paths]
+    statement: |
+      Prove that if a graph contains a walk from $u$ to $v$, then it contains a path from $u$ to $v$.
+    solution: |
+      Among all $u$–$v$ walks choose a shortest one, $W = w_0 w_1 \cdots w_k$. If some vertex repeated, $w_i = w_j$ with $i < j$, then $w_0 \cdots w_i w_{j+1} \cdots w_k$ would be a shorter $u$–$v$ walk. So no vertex repeats and $W$ is a path. $\blacksquare$
+
+  - id: gt-015
+    title: Bipartite iff no odd cycles
+    subtopic: Connectivity
+    difficulty: hard
+    type: proof
+    tags: [bipartite, cycles, distance]
+    source: König, 1936
+    hints:
+      - |
+        First show that a closed walk of odd length contains an odd cycle.
+      - |
+        For the converse, colour each vertex by the parity of its distance from a fixed root.
+    statement: |
+      Prove that a graph is bipartite if and only if it contains no cycle of odd length.
+    solution: |
+      **($\Rightarrow$)** Along any cycle, the sides alternate, so returning to the start takes an even number of steps.
+
+      **Lemma.** Every closed walk of odd length contains an odd cycle. Induct on the length. If no vertex repeats (other than start = end), the walk is a cycle. Otherwise, splitting at a repeated vertex gives two shorter closed walks whose lengths add to an odd number, so one of them is odd and contains an odd cycle by hypothesis.
+
+      **($\Leftarrow$)** It suffices to 2-colour each component. Fix a vertex $r$ and colour $x$ by the parity of $d(r, x)$. Suppose an edge $xy$ joined two vertices of the same colour. Since $|d(r,x) - d(r,y)| \le 1$ for adjacent vertices, $d(r,x) = d(r,y) = d$. Then a shortest $r$–$x$ path, the edge $xy$, and a shortest $y$–$r$ path form a closed walk of length $2d + 1$, which is odd. By the lemma, $G$ has an odd cycle, a contradiction. $\blacksquare$
+
+  - id: gt-016
+    title: A graph or its complement is connected
+    subtopic: Connectivity
+    difficulty: medium
+    type: proof
+    tags: [complement, connectivity]
+    statement: |
+      Prove that for every graph $G$, at least one of $G$ and its complement $\overline G$ is connected.
+    solution: |
+      Suppose $G$ is disconnected; we show $\overline G$ is connected. Take vertices $u, v$.
+
+      - If $u, v$ are in different components of $G$, they are not adjacent in $G$, so $uv$ is an edge of $\overline G$.
+      - If they are in the same component $C$, pick $w$ in another component (one exists, as $G$ is disconnected). Then $uw$ and $wv$ are non-edges of $G$, so $u\,w\,v$ is a path in $\overline G$. $\blacksquare$
+
+  - id: gt-017
+    title: Euler's theorem on circuits
+    subtopic: Euler & Hamilton
+    difficulty: hard
+    type: proof
+    tags: [eulerian, induction, cycles]
+    source: Euler, 1736
+    related: [gt-018]
+    hints:
+      - |
+        For sufficiency: a graph with minimum degree $\ge 2$ contains a cycle. Remove a cycle's edges, then apply induction to each remaining component.
+    statement: |
+      Let $G$ be a connected graph with at least one edge. Prove that $G$ has an Eulerian circuit (a closed walk using every edge exactly once) if and only if every vertex has even degree.
+    solution: |
+      **($\Rightarrow$)** Traverse the circuit. Each time it passes through a vertex it uses one edge in and one edge out, and the start/end pair up in the same way. Every edge is used exactly once, so each degree is even.
+
+      **($\Leftarrow$)** Induct on $|E|$. Every vertex has even degree, and since $G$ is connected with an edge, every degree is at least 2. Then $G$ contains a cycle $C$: take a longest path; its endpoint has a second neighbour, which must lie on the path.
+
+      Delete the edges of $C$. Every degree drops by $0$ or $2$, so it stays even. Each component of what remains that has an edge has fewer edges than $G$, so by hypothesis it has an Eulerian circuit. Each such component shares a vertex with $C$, since $G$ was connected.
+
+      Now walk around $C$. The first time you reach a vertex of some component, detour around that component's Eulerian circuit and return to the same vertex, then continue along $C$. This uses every edge exactly once. $\blacksquare$
+
+  - id: gt-018
+    title: Euler trails in small graphs
+    subtopic: Euler & Hamilton
+    difficulty: easy
+    type: compute
+    tags: [eulerian, degrees]
+    related: [gt-017]
+    statement: |
+      A connected graph has an Euler **trail** (not necessarily closed) iff it has $0$ or $2$ odd-degree vertices. Decide which of $K_4$, $K_5$, $K_{2,3}$ have an Euler circuit, an Euler trail, or neither.
+    solution: |
+      - $K_4$: all four vertices have degree 3, so 4 odd vertices: **neither**.
+      - $K_5$: all degrees 4: **Euler circuit**.
+      - $K_{2,3}$: the two vertices on the small side have degree 3, the other three degree 2. Exactly two odd vertices: **Euler trail** (starting and ending at the degree-3 vertices), no circuit.
+
+  - id: gt-019
+    title: Hypercubes are Hamiltonian
+    subtopic: Euler & Hamilton
+    difficulty: medium
+    type: proof
+    tags: [hamiltonian, hypercube, gray code, induction]
+    statement: |
+      The hypercube $Q_n$ has vertex set $\{0,1\}^n$, with two strings adjacent iff they differ in exactly one position. Prove that $Q_n$ has a Hamiltonian cycle for every $n \ge 2$.
+    solution: |
+      Induct on $n$. $Q_2$ is the 4-cycle $00, 01, 11, 10$.
+
+      Suppose $v_1, v_2, \dots, v_{2^n}$ is a Hamiltonian cycle of $Q_n$: consecutive strings differ in one bit, as do $v_{2^n}$ and $v_1$. In $Q_{n+1}$ take
+      $$0v_1,\ 0v_2,\ \dots,\ 0v_{2^n},\ 1v_{2^n},\ 1v_{2^n - 1},\ \dots,\ 1v_1,$$
+      and back to $0v_1$. Each step changes one bit: within each half by hypothesis, and at the two joins ($0v_{2^n} \to 1v_{2^n}$ and $1v_1 \to 0v_1$) only the first bit changes. All $2^{n+1}$ strings appear exactly once. $\blacksquare$
+
+      (This is the binary reflected Gray code.)
+
+  - id: gt-020
+    title: Hamiltonian complete bipartite graphs
+    subtopic: Euler & Hamilton
+    difficulty: medium
+    type: proof
+    tags: [hamiltonian, bipartite]
+    statement: |
+      Prove that $K_{m,n}$ (with $m, n \ge 1$) has a Hamiltonian cycle if and only if $m = n \ge 2$.
+    solution: |
+      **($\Rightarrow$)** A cycle in a bipartite graph alternates between the parts, so it contains equally many vertices from each. A Hamiltonian cycle contains all vertices, so $m = n$. A cycle has at least 4 vertices in a bipartite graph, so $m = n \ge 2$.
+
+      **($\Leftarrow$)** With parts $\{a_1, \dots, a_n\}$ and $\{b_1, \dots, b_n\}$, $n \ge 2$, the cycle $a_1 b_1 a_2 b_2 \cdots a_n b_n a_1$ uses only edges between the parts, all of which exist, and visits every vertex once. $\blacksquare$
+
+  - id: gt-021
+    title: Euler's formula for planar graphs
+    subtopic: Colouring & planarity
+    difficulty: hard
+    type: proof
+    tags: [planar, euler formula, induction]
+    source: Euler
+    related: [gt-022, gt-023]
+    statement: |
+      Prove that for a connected plane graph with $v$ vertices, $e$ edges and $f$ faces (including the outer face), $v - e + f = 2$. You may use the Jordan curve theorem: a cycle drawn in the plane separates it into exactly two regions.
+    solution: |
+      Induct on $e$.
+
+      **If $G$ is a tree**, then $e = v - 1$, and since there is no cycle there is only one face, $f = 1$. So $v - e + f = v - (v-1) + 1 = 2$.
+
+      **Otherwise** $G$ has a cycle $C$; let $xy$ be an edge of $C$. By the Jordan curve theorem $C$ separates the plane into an inside and an outside, so the two sides of $xy$ lie in different faces. Deleting $xy$ merges these two faces into one, and $G - xy$ is still connected (go around the rest of $C$). So $G - xy$ has $v$ vertices, $e - 1$ edges, $f - 1$ faces, and by hypothesis
+      $$v - (e-1) + (f - 1) = 2 \implies v - e + f = 2. \qquad \blacksquare$$
+
+  - id: gt-022
+    title: K5 is not planar
+    subtopic: Colouring & planarity
+    difficulty: medium
+    type: proof
+    tags: [planar, euler formula]
+    related: [gt-021, gt-023]
+    statement: |
+      Prove that a simple planar graph with $v \ge 3$ vertices has at most $3v - 6$ edges, and deduce that $K_5$ is not planar.
+    solution: |
+      We may assume $G$ is connected (adding edges to connect components keeps it planar and only increases $e$). If $e < 3$, then $e \le 2 \le 3v - 6$ since $v \ge 3$. Otherwise each face is bounded by at least 3 edges (no loops or multiple edges), and each edge borders at most 2 faces, so counting edge–face incidences gives $3f \le 2e$. By Euler's formula,
+      $$2 = v - e + f \le v - e + \tfrac23 e \implies e \le 3v - 6.$$
+      $K_5$ has $v = 5$ and $e = 10 > 9 = 3\cdot5 - 6$, so it is not planar. $\blacksquare$
+
+  - id: gt-023
+    title: K3,3 is not planar
+    subtopic: Colouring & planarity
+    difficulty: medium
+    type: proof
+    tags: [planar, euler formula, bipartite]
+    related: [gt-022]
+    statement: |
+      Prove that $K_{3,3}$ is not planar.
+    solution: |
+      Suppose it had a plane drawing. It is connected with $v = 6$, $e = 9$, so by Euler's formula $f = 2 - v + e = 5$.
+
+      $K_{3,3}$ is bipartite, so it has no odd cycles, and in particular no triangles. Every face is therefore bounded by at least 4 edges. Each edge borders at most 2 faces, so $4f \le 2e$, i.e. $20 \le 18$. Contradiction. $\blacksquare$
+
+  - id: gt-024
+    title: A vertex of degree at most five
+    subtopic: Colouring & planarity
+    difficulty: easy
+    type: proof
+    tags: [planar, degrees]
+    related: [gt-022, gt-025]
+    statement: |
+      Prove that every simple planar graph has a vertex of degree at most 5.
+    solution: |
+      If $v \le 2$ every degree is at most 1. Otherwise $e \le 3v - 6$. If every vertex had degree $\ge 6$, then by the handshake lemma $2e \ge 6v$, so $e \ge 3v > 3v - 6$. Contradiction. $\blacksquare$
+
+  - id: gt-025
+    title: The six colour theorem
+    subtopic: Colouring & planarity
+    difficulty: medium
+    type: proof
+    tags: [colouring, planar, induction]
+    related: [gt-024]
+    statement: |
+      Prove that every simple planar graph can be properly coloured with 6 colours.
+    solution: |
+      Induct on the number of vertices. A graph with at most 6 vertices is trivially 6-colourable.
+
+      Let $G$ be planar. By the previous result it has a vertex $v$ with $\deg v \le 5$. $G - v$ is planar with fewer vertices, so by hypothesis it has a proper 6-colouring. The at most 5 neighbours of $v$ use at most 5 colours, so a sixth colour is free for $v$. This gives a proper 6-colouring of $G$. $\blacksquare$
+
+  - id: gt-026
+    title: Chromatic numbers
+    subtopic: Colouring & planarity
+    difficulty: easy
+    type: compute
+    tags: [colouring, chromatic number]
+    statement: |
+      Find the chromatic number of $K_n$, $C_5$, $C_6$, $K_{3,4}$ and the wheel $W_5$ (a 5-cycle plus a hub adjacent to all five rim vertices).
+    solution: |
+      - $\chi(K_n) = n$: all vertices are mutually adjacent.
+      - $\chi(C_6) = 2$: alternate colours around the even cycle.
+      - $\chi(C_5) = 3$: an odd cycle is not bipartite, so needs at least 3; colour $1,2,1,2,3$.
+      - $\chi(K_{3,4}) = 2$: bipartite with at least one edge.
+      - $\chi(W_5) = 4$: the rim is $C_5$ and needs 3 colours. The hub is adjacent to every rim vertex, so it needs a 4th.
+
+  - id: gt-027
+    title: Greedy colouring
+    subtopic: Colouring & planarity
+    difficulty: easy
+    type: proof
+    tags: [colouring, greedy algorithm, max degree]
+    statement: |
+      Prove that every graph with maximum degree $\Delta$ satisfies $\chi(G) \le \Delta + 1$.
+    solution: |
+      List the vertices in any order and colour them one at a time, giving each the smallest colour in $\{1, \dots, \Delta + 1\}$ not used by its already-coloured neighbours. A vertex has at most $\Delta$ neighbours, so at most $\Delta$ colours are forbidden and one is always free. The result is a proper colouring with at most $\Delta + 1$ colours. $\blacksquare$
+
+  - id: gt-028
+    title: A recursive bound for Ramsey numbers
+    subtopic: Matchings & Ramsey
+    difficulty: hard
+    type: proof
+    tags: [ramsey, pigeonhole, induction]
+    source: Erdős–Szekeres, 1935
+    related: [cb-014]
+    statement: |
+      Let $R(s,t)$ be the least $N$ such that every red/blue colouring of the edges of $K_N$ contains a red $K_s$ or a blue $K_t$. Prove that for $s, t \ge 3$,
+      $$R(s,t) \le R(s-1,t) + R(s, t-1),$$
+      and deduce that $R(s, t)$ exists for all $s, t \ge 2$ and that $R(3,3) \le 6$.
+    solution: |
+      **Base values.** $R(s, 2) = s$: in a colouring of $K_s$, either some edge is blue (a blue $K_2$) or all are red (a red $K_s$); and $K_{s-1}$ all red has neither. Similarly $R(2, t) = t$.
+
+      **The bound.** Assume $R(s-1,t)$ and $R(s,t-1)$ exist, and let $N = R(s-1,t) + R(s,t-1)$. Colour the edges of $K_N$ and pick a vertex $v$. It has $N - 1$ neighbours, split into red-neighbours and blue-neighbours. If there were fewer than $R(s-1,t)$ red-neighbours and fewer than $R(s,t-1)$ blue-neighbours, there would be at most $N - 2$ neighbours in total. So one of the following holds:
+
+      - At least $R(s-1,t)$ red-neighbours. Among them there is a red $K_{s-1}$, and adding $v$ gives a red $K_s$; or there is a blue $K_t$.
+      - At least $R(s,t-1)$ blue-neighbours. Among them there is a red $K_s$, or a blue $K_{t-1}$ which together with $v$ gives a blue $K_t$.
+
+      **Existence** follows by induction on $s + t$ from the base values. In particular $R(3,3) \le R(2,3) + R(3,2) = 3 + 3 = 6$. $\blacksquare$
+
+  - id: gt-029
+    title: Hall's marriage theorem
+    subtopic: Matchings & Ramsey
+    difficulty: hard
+    type: proof
+    tags: [matchings, hall, induction]
+    source: Hall, 1935
+    related: [gt-030]
+    hints:
+      - |
+        Induct on $|X|$. Split into cases according to whether some non-empty proper $S \subsetneq X$ has $|N(S)| = |S|$ exactly.
+    statement: |
+      Let $G$ be a bipartite graph with parts $X$ and $Y$. For $S \subseteq X$ let $N(S)$ be the set of neighbours of $S$. Prove that $G$ has a matching covering every vertex of $X$ if and only if $|N(S)| \ge |S|$ for every $S \subseteq X$.
+    solution: |
+      **($\Rightarrow$)** A matching sends the vertices of $S$ to $|S|$ distinct neighbours.
+
+      **($\Leftarrow$)** Induct on $|X|$. If $|X| = 1$, its vertex has a neighbour. Assume Hall's condition and $|X| \ge 2$.
+
+      **Case 1:** $|N(S)| \ge |S| + 1$ for every non-empty $S \subsetneq X$. Pick any $x \in X$ and a neighbour $y$, match them, and delete both. In the remaining graph, any non-empty $S \subseteq X \setminus \{x\}$ has lost at most one neighbour ($y$), so $|N'(S)| \ge |S|$. By induction the rest of $X$ can be matched.
+
+      **Case 2:** some non-empty $S \subsetneq X$ has $|N(S)| = |S|$. The subgraph on $S \cup N(S)$ satisfies Hall's condition (neighbourhoods of subsets of $S$ lie in $N(S)$), so by induction $S$ can be matched into $N(S)$. Now consider $G'$ on $(X \setminus S) \cup (Y \setminus N(S))$. For $T \subseteq X \setminus S$,
+      $$|N_{G'}(T)| = |N(T \cup S)| - |N(S)| \ge |T| + |S| - |S| = |T|.$$
+      By induction $X \setminus S$ can be matched into $Y \setminus N(S)$. The two matchings use disjoint vertices, so together they cover $X$. $\blacksquare$
+
+  - id: gt-030
+    title: Regular bipartite graphs have perfect matchings
+    subtopic: Matchings & Ramsey
+    difficulty: medium
+    type: proof
+    tags: [matchings, hall, regular graphs]
+    related: [gt-029]
+    statement: |
+      Let $G$ be a $k$-regular bipartite graph with $k \ge 1$. Prove that $G$ has a perfect matching.
+    solution: |
+      Let the parts be $X, Y$. Counting edges from each side gives $k|X| = |E| = k|Y|$, so $|X| = |Y|$.
+
+      **Hall's condition.** Let $S \subseteq X$. Exactly $k|S|$ edges leave $S$, and all of them end in $N(S)$. Each vertex of $N(S)$ is the endpoint of exactly $k$ edges in total, so $k|S| \le k|N(S)|$, i.e. $|N(S)| \ge |S|$.
+
+      By Hall's theorem there is a matching covering $X$. Since $|X| = |Y|$, it covers $Y$ as well: a perfect matching. $\blacksquare$

@@ -1,0 +1,509 @@
+topic:
+  id: discrete
+  name: Discrete maths
+  order: 5
+  prefix: dm
+  blurb: Relations, equivalence relations and partitions, partial orders, cardinality and countability, and recurrence relations.
+  subtopics: [Relations, Equivalence relations, Partial orders, Cardinality, Recurrences]
+
+problems:
+  - id: dm-001
+    title: Properties of relations
+    subtopic: Relations
+    difficulty: easy
+    type: compute
+    tags: [relations, reflexive, symmetric, transitive]
+    related: [cb-028]
+    statement: |
+      For each relation on $\Z$, decide whether it is reflexive, symmetric, antisymmetric and transitive.
+
+      1. $a \mathrel R b \iff a \le b$
+      2. $a \mathrel R b \iff |a - b| \le 1$
+      3. $a \mathrel R b \iff ab > 0$
+      4. $a \mathrel R b \iff a \mid b$
+    solution: |
+      1. Reflexive, antisymmetric, transitive. Not symmetric ($1 \le 2$ but $2 \not\le 1$).
+      2. Reflexive and symmetric. Not antisymmetric ($0R1$ and $1R0$). Not transitive ($0R1$, $1R2$, but not $0R2$).
+      3. Not reflexive ($0 \cdot 0 = 0$). Symmetric. Transitive: $ab > 0$ and $bc > 0$ mean $a, b$ have the same sign and $b, c$ have the same sign (all non-zero), so $a, c$ do and $ac > 0$. Not antisymmetric ($1R2$, $2R1$).
+      4. Reflexive ($a = a\cdot 1$, including $0 \mid 0$). Transitive. Not symmetric ($1 \mid 2$). Not antisymmetric on $\Z$: $1 \mid -1$ and $-1 \mid 1$ but $1 \ne -1$.
+
+  - id: dm-002
+    title: Transitivity via composition
+    subtopic: Relations
+    difficulty: easy
+    type: proof
+    tags: [relations, composition, transitive]
+    statement: |
+      For a relation $R$ on $A$, define $R \circ R = \{(a, c) : \exists b\ (a,b) \in R \text{ and } (b,c) \in R\}$. Prove that $R$ is transitive if and only if $R \circ R \subseteq R$.
+    solution: |
+      **($\Rightarrow$)** Let $(a, c) \in R\circ R$. Then $(a, b), (b, c) \in R$ for some $b$, and transitivity gives $(a, c) \in R$.
+
+      **($\Leftarrow$)** If $(a, b), (b, c) \in R$, then by definition $(a, c) \in R \circ R \subseteq R$. $\blacksquare$
+
+  - id: dm-003
+    title: Symmetric and transitive but not reflexive
+    subtopic: Relations
+    difficulty: medium
+    type: proof
+    tags: [relations, fallacy, counterexample]
+    statement: |
+      Find the error in this "proof" that every symmetric, transitive relation $R$ on $A$ is reflexive:
+
+      > Let $a \in A$ and take $b$ with $aRb$. By symmetry $bRa$. By transitivity $aRa$.
+
+      Give a counterexample, and state a correct version of the result.
+    solution: |
+      The proof assumes that for each $a$ there **is** some $b$ with $aRb$. Nothing guarantees this.
+
+      **Counterexample.** $A = \{1, 2\}$, $R = \{(1,1)\}$. $R$ is symmetric and transitive, but $(2,2) \notin R$.
+
+      **Correct version.** If $R$ is symmetric and transitive and every $a \in A$ is related to at least one element, then $R$ is reflexive; the argument above then proves it. $\blacksquare$
+
+  - id: dm-004
+    title: Transitive closure
+    subtopic: Relations
+    difficulty: easy
+    type: compute
+    tags: [relations, transitive closure]
+    statement: |
+      Let $R = \{(1,2), (2,3), (3,4), (4,2)\}$ on $\{1,2,3,4\}$. Find the transitive closure of $R$: the smallest transitive relation containing $R$.
+    solution: |
+      $(a, b)$ is in the closure iff there is a path $a \to \cdots \to b$ of length $\ge 1$ in the directed graph of $R$.
+
+      - From 1: $1 \to 2 \to 3 \to 4 \to 2$ reaches $2, 3, 4$.
+      - From 2, 3 or 4: the cycle $2 \to 3 \to 4 \to 2$ reaches $2, 3, 4$.
+
+      So the closure is $\{(1,2),(1,3),(1,4)\} \cup \{(a, b) : a, b \in \{2,3,4\}\}$: 12 pairs.
+
+  - id: dm-005
+    title: Congruence is an equivalence relation
+    subtopic: Equivalence relations
+    difficulty: easy
+    type: proof
+    tags: [equivalence relations, congruences]
+    statement: |
+      Fix $n \ge 1$. Prove that $a \sim b \iff n \mid a - b$ is an equivalence relation on $\Z$, and describe its equivalence classes.
+    solution: |
+      - **Reflexive:** $a - a = 0 = n \cdot 0$.
+      - **Symmetric:** if $a - b = nk$ then $b - a = n(-k)$.
+      - **Transitive:** if $a - b = nk$ and $b - c = nl$ then $a - c = n(k + l)$.
+
+      By the division algorithm, every $a$ has a unique remainder $r \in \{0, \dots, n-1\}$, and $a \sim r$. Two remainders in that range are equivalent only if equal. So there are exactly $n$ classes, $[0], [1], \dots, [n-1]$, with $[r] = \{r + nk : k \in \Z\}$. $\blacksquare$
+
+  - id: dm-006
+    title: Equivalence classes partition a set
+    subtopic: Equivalence relations
+    difficulty: medium
+    type: proof
+    tags: [equivalence relations, partitions]
+    statement: |
+      Let $\sim$ be an equivalence relation on $A$ and $[a] = \{x \in A : x \sim a\}$. Prove that
+
+      1. every $a \in A$ lies in some class,
+      2. for $a, b \in A$, either $[a] = [b]$ or $[a] \cap [b] = \varnothing$.
+    solution: |
+      1. $a \sim a$ by reflexivity, so $a \in [a]$.
+
+      2. Suppose $[a] \cap [b] \ne \varnothing$, say $c \sim a$ and $c \sim b$. By symmetry $a \sim c$, and by transitivity $a \sim b$.
+
+      Now if $x \in [a]$, then $x \sim a$ and $a \sim b$ give $x \sim b$, so $x \in [b]$. Hence $[a] \subseteq [b]$. By symmetry ($b \sim a$) the reverse holds too, so $[a] = [b]$. $\blacksquare$
+
+  - id: dm-007
+    title: Building the rationals
+    subtopic: Equivalence relations
+    difficulty: medium
+    type: proof
+    tags: [equivalence relations, construction of Q]
+    statement: |
+      On $X = \Z \times (\Z\setminus\{0\})$ define $(a, b) \sim (c, d) \iff ad = bc$. Prove that $\sim$ is an equivalence relation. Where is $b \neq 0$ used?
+    solution: |
+      - **Reflexive:** $ab = ba$.
+      - **Symmetric:** $ad = bc \Rightarrow cb = da$.
+      - **Transitive:** suppose $ad = bc$ and $cf = de$. Multiply the first by $f$: $adf = bcf = b(de)$. So $d(af - be) = 0$. Since $d \ne 0$ and $\Z$ has no zero divisors, $af = be$, i.e. $(a,b) \sim (e,f)$.
+
+      The non-zero second coordinate is used exactly to cancel $d$ in transitivity. If $(0,0)$ were allowed, then $(1,1) \sim (0,0) \sim (2,1)$ but $(1,1) \not\sim (2,1)$. $\blacksquare$
+
+      The classes are the rational numbers: $[(a,b)]$ is "$a/b$".
+
+  - id: dm-008
+    title: How many equivalence relations?
+    subtopic: Equivalence relations
+    difficulty: medium
+    type: compute
+    tags: [equivalence relations, partitions, bell numbers]
+    related: [dm-006]
+    statement: |
+      How many equivalence relations are there on $\{1, 2, 3, 4\}$?
+    solution: |
+      Equivalence relations correspond exactly to partitions (the classes form a partition; conversely "in the same block" is an equivalence relation). Count partitions by block sizes:
+
+      | block sizes | count |
+      |---|---|
+      | $4$ | $1$ |
+      | $3 + 1$ | $4$ (choose the singleton) |
+      | $2 + 2$ | $3$ (pair containing 1: $\{1,2\},\{1,3\},\{1,4\}$) |
+      | $2 + 1 + 1$ | $\binom42 = 6$ |
+      | $1+1+1+1$ | $1$ |
+
+      Total: **15** (the Bell number $B_4$).
+
+  - id: dm-009
+    title: Kernels of functions
+    subtopic: Equivalence relations
+    difficulty: medium
+    type: proof
+    tags: [equivalence relations, functions, quotient]
+    statement: |
+      Let $f : A \to B$. Define $a \sim a' \iff f(a) = f(a')$. Prove that $\sim$ is an equivalence relation and that $\bar f([a]) = f(a)$ is a well-defined bijection from the set of equivalence classes $A/{\sim}$ onto $f(A)$.
+    solution: |
+      $\sim$ inherits reflexivity, symmetry and transitivity from equality in $B$.
+
+      **Well defined:** if $[a] = [a']$ then $a \sim a'$, i.e. $f(a) = f(a')$, so $\bar f$ doesn't depend on the representative.
+
+      **Injective:** $\bar f([a]) = \bar f([a'])$ means $f(a) = f(a')$, so $a \sim a'$ and $[a] = [a']$.
+
+      **Surjective onto $f(A)$:** any $f(a) \in f(A)$ equals $\bar f([a])$. $\blacksquare$
+
+  - id: dm-010
+    title: Divisibility as a partial order
+    subtopic: Partial orders
+    difficulty: easy
+    type: proof
+    tags: [partial orders, divisibility]
+    related: [dm-001]
+    statement: |
+      Prove that divisibility is a partial order on $\Z_{>0}$ but not a total order.
+    solution: |
+      - **Reflexive:** $a = a \cdot 1$.
+      - **Antisymmetric:** if $a \mid b$ and $b \mid a$ with $a, b > 0$, then $a \le b$ and $b \le a$ (a positive divisor is at most the number), so $a = b$.
+      - **Transitive:** $b = ak$, $c = bl$ give $c = a(kl)$.
+
+      **Not total:** $2 \nmid 3$ and $3 \nmid 2$. $\blacksquare$
+
+  - id: dm-011
+    title: Maximal and minimal elements
+    subtopic: Partial orders
+    difficulty: easy
+    type: compute
+    tags: [partial orders, hasse diagram]
+    statement: |
+      Let $S = \{2, 3, 4, 6, 8, 12, 18\}$ ordered by divisibility. Find all minimal and maximal elements and any least or greatest element. Describe the Hasse diagram.
+    solution: |
+      Covering relations (edges of the Hasse diagram): $2 - 4$, $2 - 6$, $3 - 6$, $4 - 8$, $4 - 12$, $6 - 12$, $6 - 18$.
+
+      - **Minimal:** $2, 3$ (nothing else in $S$ divides them).
+      - **Maximal:** $8, 12, 18$ (they divide nothing else in $S$).
+      - **No least element** ($2 \nmid 3$) and **no greatest element** ($8 \nmid 18$).
+
+  - id: dm-012
+    title: Finite posets have minimal elements
+    subtopic: Partial orders
+    difficulty: easy
+    type: proof
+    tags: [partial orders, finiteness]
+    related: [dm-014]
+    statement: |
+      Prove that every non-empty finite partially ordered set $(P, \preceq)$ has a minimal element.
+    solution: |
+      Pick any $a_1 \in P$. If $a_1$ is not minimal, there is $a_2 \prec a_1$. If $a_2$ is not minimal, pick $a_3 \prec a_2$, and so on.
+
+      By transitivity $a_j \prec a_i$ whenever $j > i$, and by antisymmetry this forces $a_j \ne a_i$ (if $a_j = a_i$ we'd have $a_i \prec a_i$). So the $a_i$ are distinct. Since $P$ is finite, the process must stop, and it stops only at a minimal element. $\blacksquare$
+
+  - id: dm-013
+    title: The lexicographic order
+    subtopic: Partial orders
+    difficulty: medium
+    type: proof
+    tags: [total orders, well-ordering, lexicographic]
+    statement: |
+      On $\N \times \N$ define $(a, b) \preceq (c, d)$ iff $a < c$, or $a = c$ and $b \le d$. Prove that $\preceq$ is a total order, and that every non-empty subset has a least element.
+    solution: |
+      **Reflexive:** $a = a$, $b \le b$.
+
+      **Antisymmetric:** if $(a,b) \preceq (c,d) \preceq (a,b)$, then $a \le c \le a$, so $a = c$, and then $b \le d \le b$, so $b = d$.
+
+      **Transitive:** suppose $(a,b) \preceq (c,d) \preceq (e,f)$. If $a < c$ or $c < e$ then $a < e$. Otherwise $a = c = e$ and $b \le d \le f$.
+
+      **Total:** if $a \ne c$, one of $a < c$, $c < a$ holds; if $a = c$, compare $b, d$.
+
+      **Least elements.** Let $S \ne \varnothing$. Let $a_0$ be the least first coordinate occurring in $S$, and $b_0$ the least $b$ with $(a_0, b) \in S$ (both exist by well-ordering of $\N$). Then $(a_0, b_0) \preceq$ every element of $S$. $\blacksquare$
+
+  - id: dm-014
+    title: Every finite partial order extends to a total order
+    subtopic: Partial orders
+    difficulty: hard
+    type: proof
+    tags: [partial orders, topological sort, induction]
+    related: [dm-012]
+    hints:
+      - |
+        Remove a minimal element and induct.
+    statement: |
+      Let $(P, \preceq)$ be a finite poset. Prove that the elements of $P$ can be listed as $p_1, \dots, p_n$ so that $p_i \preceq p_j$ implies $i \le j$. (This is a *topological sort*.)
+    solution: |
+      Induction on $n = |P|$; $n = 0$ is trivial.
+
+      For $n \ge 1$, let $m$ be a minimal element of $P$. The set $P' = P \setminus \{m\}$ with the restricted order is a poset of size $n - 1$, so it has a valid listing $q_1, \dots, q_{n-1}$. List $P$ as $m, q_1, \dots, q_{n-1}$.
+
+      Check: suppose $x \preceq y$ with $x \neq y$.
+
+      - If neither is $m$, the order of $x, y$ is correct by the hypothesis on $P'$.
+      - If $x = m$, it is listed first, so before $y$.
+      - $y = m$ is impossible: $x \preceq m$ with $x \ne m$ contradicts minimality of $m$. $\blacksquare$
+
+  - id: dm-015
+    title: The integers are countable
+    subtopic: Cardinality
+    difficulty: easy
+    type: proof
+    tags: [countability, bijection]
+    statement: |
+      Give an explicit bijection $f : \N \to \Z$ (with $0 \in \N$), and prove it is one.
+    solution: |
+      Define $f(n) = n/2$ if $n$ is even and $f(n) = -(n+1)/2$ if $n$ is odd. So $f$ lists $0, -1, 1, -2, 2, \dots$
+
+      **Inverse.** $g(m) = 2m$ for $m \ge 0$ and $g(m) = -2m - 1$ for $m < 0$. For even $n$, $g(f(n)) = g(n/2) = n$; for odd $n$, $f(n) < 0$ and $g(f(n)) = (n+1) - 1 = n$. For $m \ge 0$, $f(g(m)) = f(2m) = m$; for $m < 0$, $-2m-1$ is odd and $f(-2m-1) = -(-2m)/2 = m$. A function with a two-sided inverse is a bijection. $\blacksquare$
+
+  - id: dm-016
+    title: The reals are uncountable
+    subtopic: Cardinality
+    difficulty: medium
+    type: proof
+    tags: [diagonal argument, uncountability]
+    source: Cantor, 1891
+    related: [lg-027, dm-019]
+    hints:
+      - |
+        Build a decimal using only the digits 4 and 5, so it has a unique decimal expansion.
+    statement: |
+      Prove that the interval $(0,1)$ is uncountable.
+    solution: |
+      Suppose $r_1, r_2, r_3, \dots$ lists every element of $(0,1)$. Write each $r_n$ in decimal, $r_n = 0.a_{n1}a_{n2}a_{n3}\ldots$, choosing the expansion that does not end in recurring 9s.
+
+      Define $x = 0.d_1 d_2 d_3\ldots$ with
+      $$d_n = \begin{cases} 5 & \text{if } a_{nn} \ne 5,\\ 4 & \text{if } a_{nn} = 5.\end{cases}$$
+      Then $x \in (0,1)$, and since its digits are all 4s and 5s, it has only one decimal expansion. For every $n$, $x$ and $r_n$ differ in the $n$th digit of their (non-9-ending) expansions, so $x \ne r_n$. Thus $x$ is not on the list, a contradiction. $\blacksquare$
+
+  - id: dm-017
+    title: The rationals are countable
+    subtopic: Cardinality
+    difficulty: medium
+    type: proof
+    tags: [countability, injection]
+    related: [dm-018]
+    statement: |
+      Using the fact that a set is countable if and only if it injects into $\N$, prove that $\Q$ is countable.
+    solution: |
+      Every rational has a unique representation $p/q$ in lowest terms with $q \ge 1$. Define
+      $$f(p/q) = 2^{|p|}\,3^{q}\,5^{s}, \qquad s = \begin{cases}1 & p < 0\\ 0 & p \ge 0.\end{cases}$$
+      If $f(p/q) = f(p'/q')$ then by uniqueness of prime factorisation $|p| = |p'|$, $q = q'$ and the signs agree, so $p/q = p'/q'$. Thus $f : \Q \to \N$ is injective and $\Q$ is countable. $\blacksquare$
+
+  - id: dm-018
+    title: A bijection from N×N to N
+    subtopic: Cardinality
+    difficulty: medium
+    type: proof
+    tags: [countability, bijection]
+    related: [in-029, dm-017]
+    statement: |
+      Prove that $f : \N \times \N \to \N$, $f(m, n) = 2^m(2n+1) - 1$ is a bijection (with $0 \in \N$).
+    solution: |
+      It suffices to show that every positive integer $k$ can be written as $2^m(2n+1)$ with $m, n \in \N$ in **exactly one** way, since then $k - 1$ ranges over $\N$ exactly once.
+
+      **Existence.** Let $2^m$ be the largest power of 2 dividing $k$; then $k/2^m$ is odd, so equals $2n + 1$ for some $n \ge 0$.
+
+      **Uniqueness.** If $2^m(2n+1) = 2^{m'}(2n'+1)$ with, say, $m < m'$, then $2n + 1 = 2^{m'-m}(2n'+1)$ is even, impossible. So $m = m'$, and cancelling gives $n = n'$. $\blacksquare$
+
+  - id: dm-019
+    title: Closed and open intervals have the same size
+    subtopic: Cardinality
+    difficulty: hard
+    type: proof
+    tags: [bijection, hilbert hotel, cardinality]
+    related: [dm-016]
+    hints:
+      - |
+        Pick a sequence inside $[0,1]$ and shift it along by two places, like Hilbert's hotel.
+    statement: |
+      Give explicit bijections $[0,1] \to (0,1)$ and $(0, 1) \to \R$.
+    solution: |
+      **$[0,1] \to (0,1)$.** Let $s_0 = 0$, $s_1 = 1$ and $s_k = \frac1k$ for $k \ge 2$. Define
+      $$g(x) = \begin{cases} s_{k+2} = \frac{1}{k+2} & \text{if } x = s_k \text{ for some } k \ge 0,\\ x & \text{otherwise.}\end{cases}$$
+      So $0 \mapsto \frac12$, $1 \mapsto \frac13$, $\frac12 \mapsto \frac14$, and so on. The $s_k$ are distinct, and $g$ maps $\{s_0, s_1, s_2, \dots\}$ bijectively onto $\{s_2, s_3, \dots\} \subseteq (0,1)$ while fixing everything else in $(0,1)$. Hence $g$ is a bijection onto $(0,1)$.
+
+      **$(0,1) \to \R$.** $h(x) = \tan\big(\pi(x - \tfrac12)\big)$. The map $x \mapsto \pi(x - \frac12)$ is a bijection $(0,1) \to (-\frac\pi2, \frac\pi2)$, and $\tan$ is a continuous strictly increasing function from this interval onto $\R$ (it tends to $\pm\infty$ at the ends). $\blacksquare$
+
+  - id: dm-020
+    title: A first-order recurrence
+    subtopic: Recurrences
+    difficulty: easy
+    type: compute
+    tags: [recurrence, closed form]
+    related: [in-025]
+    statement: |
+      Solve $a_n = 3a_{n-1} + 2$ for $n \ge 1$, with $a_0 = 1$.
+    solution: |
+      Look for a constant solution: $c = 3c + 2$ gives $c = -1$. Then $b_n = a_n + 1$ satisfies $b_n = 3b_{n-1}$ with $b_0 = 2$, so $b_n = 2 \cdot 3^n$ and
+      $$a_n = 2\cdot 3^n - 1.$$
+      Check: $a_1 = 5 = 3 \cdot 1 + 2$, $a_2 = 17 = 3\cdot 5 + 2$.
+
+  - id: dm-021
+    title: A second-order linear recurrence
+    subtopic: Recurrences
+    difficulty: easy
+    type: compute
+    tags: [recurrence, characteristic equation]
+    related: [dm-022, dm-023]
+    statement: |
+      Solve $a_n = 5a_{n-1} - 6a_{n-2}$ for $n \ge 2$, with $a_0 = 1$, $a_1 = 4$.
+    solution: |
+      The characteristic equation $x^2 - 5x + 6 = 0$ has roots $2$ and $3$, so $a_n = A\cdot 2^n + B \cdot 3^n$. The initial conditions give $A + B = 1$ and $2A + 3B = 4$, so $B = 2$, $A = -1$:
+      $$a_n = 2\cdot 3^n - 2^n.$$
+      Check: $a_2 = 18 - 4 = 14 = 5\cdot4 - 6\cdot1$.
+
+  - id: dm-022
+    title: Binet's formula
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [fibonacci, recurrence, strong induction]
+    source: Binet, 1843
+    related: [in-019, dm-021]
+    statement: |
+      Let $\varphi = \frac{1 + \sqrt 5}2$ and $\psi = \frac{1 - \sqrt5}{2}$. Prove that the Fibonacci numbers ($F_1 = F_2 = 1$, $F_{n} = F_{n-1} + F_{n-2}$) satisfy
+      $$F_n = \frac{\varphi^n - \psi^n}{\sqrt 5}.$$
+    solution: |
+      $\varphi$ and $\psi$ are the roots of $x^2 = x + 1$, and $\varphi + \psi = 1$, $\varphi - \psi = \sqrt5$.
+
+      **Bases.** $n = 1$: $\frac{\varphi - \psi}{\sqrt 5} = 1$. $n = 2$: $\frac{\varphi^2 - \psi^2}{\sqrt5} = \frac{(\varphi - \psi)(\varphi + \psi)}{\sqrt 5} = 1$.
+
+      **Step.** Assume the formula for $n - 1$ and $n - 2$ ($n \ge 3$). Then
+      $$F_n = \frac{\varphi^{n-1} + \varphi^{n-2} - (\psi^{n-1} + \psi^{n-2})}{\sqrt5} = \frac{\varphi^{n-2}(\varphi + 1) - \psi^{n-2}(\psi + 1)}{\sqrt 5} = \frac{\varphi^n - \psi^n}{\sqrt 5},$$
+      using $\varphi + 1 = \varphi^2$ and $\psi + 1 = \psi^2$. $\blacksquare$
+
+  - id: dm-023
+    title: A repeated root
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, characteristic equation, repeated root]
+    related: [dm-021]
+    statement: |
+      Solve $a_n = 4a_{n-1} - 4a_{n-2}$ with $a_0 = 1$, $a_1 = 4$. Verify directly that $n2^n$ satisfies the recurrence.
+    solution: |
+      $x^2 - 4x + 4 = (x-2)^2$ has the repeated root $2$, so try $a_n = (A + Bn)2^n$.
+
+      **Check that $n 2^n$ works:** $4(n-1)2^{n-1} - 4(n-2)2^{n-2} = 2^n\big(2(n-1) - (n-2)\big) = n 2^n$.
+
+      Initial conditions: $a_0 = A = 1$, $a_1 = 2(A + B) = 4$, so $B = 1$:
+      $$a_n = (n+1)2^n.$$
+
+  - id: dm-024
+    title: Tower of Hanoi
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [recurrence, optimality, induction]
+    source: Lucas, 1883
+    statement: |
+      $n$ discs of different sizes sit on the first of three pegs, largest at the bottom. A move takes the top disc of one peg to another peg, never placing a disc on a smaller one. Prove that the minimum number of moves to transfer the tower to the third peg is $2^n - 1$.
+    solution: |
+      Let $H_n$ be the minimum. $H_1 = 1$.
+
+      **Upper bound.** Move the top $n-1$ discs to the middle peg ($H_{n-1}$ moves), the largest disc to peg 3 (1 move), then the $n-1$ discs onto it ($H_{n-1}$). So $H_n \le 2H_{n-1} + 1$.
+
+      **Lower bound.** The largest disc must move at least once. When it first moves, the other $n - 1$ discs must all be on one other peg (none can be on top of it or on its target), which takes at least $H_{n-1}$ moves. After its last move, those $n - 1$ discs must be moved onto it, another $H_{n-1}$ at least. So $H_n \ge 2H_{n-1} + 1$.
+
+      Hence $H_n = 2H_{n-1} + 1$, $H_1 = 1$, and by induction $H_n = 2^n - 1$ (as $2(2^{n-1} - 1) + 1 = 2^n - 1$). $\blacksquare$
+
+  - id: dm-025
+    title: The merge-sort recurrence
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, divide and conquer, algorithms]
+    statement: |
+      Solve $T(n) = 2T(n/2) + n$, $T(1) = 0$, for $n$ a power of 2.
+    solution: |
+      Write $n = 2^k$ and $S_k = T(2^k)/2^k$. Dividing the recurrence by $2^k$:
+      $$S_k = S_{k-1} + 1, \qquad S_0 = 0,$$
+      so $S_k = k$ and $T(2^k) = k\,2^k$. That is,
+      $$T(n) = n\log_2 n.$$
+
+  - id: dm-026
+    title: Strings without consecutive ones
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [recurrence, fibonacci, strings]
+    related: [cb-027]
+    statement: |
+      Prove that the number $b_n$ of binary strings of length $n \ge 1$ with no two consecutive 1s is $F_{n+2}$.
+    solution: |
+      $b_1 = 2$ (0, 1) and $b_2 = 3$ (00, 01, 10), matching $F_3 = 2$ and $F_4 = 3$.
+
+      For $n \ge 3$, a valid string either ends in $0$ (and its first $n-1$ characters are any valid string) or ends in $1$, in which case it must end in $01$ and its first $n - 2$ characters are any valid string. So $b_n = b_{n-1} + b_{n-2}$. This is the Fibonacci recurrence with matching starting values, so $b_n = F_{n+2}$ by strong induction. $\blacksquare$
+
+  - id: dm-027
+    title: Finite subsets of N are countable
+    subtopic: Cardinality
+    difficulty: medium
+    type: proof
+    tags: [countability, binary, bijection]
+    related: [in-029, lg-027]
+    statement: |
+      Prove that the set $\mathcal F$ of **finite** subsets of $\N$ is countable by exhibiting a bijection $\mathcal F \to \N$. Contrast this with $\mathcal P(\N)$.
+    solution: |
+      Define $\beta(A) = \sum_{a \in A} 2^a$, so $\beta(\varnothing) = 0$.
+
+      - **Surjective:** every $n \ge 1$ is a sum of distinct powers of 2, $n = 2^{a_1} + \cdots + 2^{a_k}$, so $n = \beta(\{a_1, \dots, a_k\})$.
+      - **Injective:** if $A \ne B$, let $m$ be the largest element of $A \triangle B$, say $m \in A$. Elements above $m$ contribute equally to both sums, and the elements of $B$ below $m$ contribute at most $2^0 + \cdots + 2^{m-1} = 2^m - 1 < 2^m$. So $\beta(A) > \beta(B)$.
+
+      By contrast $\mathcal P(\N)$ is uncountable, by Cantor's theorem: there is no surjection from $\N$ onto it. The infinite subsets are what make the difference. $\blacksquare$
+
+  - id: dm-028
+    title: Injective iff surjective for finite sets
+    subtopic: Cardinality
+    difficulty: easy
+    type: proof
+    tags: [pigeonhole, functions, finite sets]
+    statement: |
+      Let $A, B$ be finite with $|A| = |B| = n$ and let $f : A \to B$. Prove that $f$ is injective if and only if it is surjective. Show this fails for infinite sets.
+    solution: |
+      **Injective $\Rightarrow$ surjective.** If $f$ is injective then $|f(A)| = |A| = n = |B|$, and a subset of $B$ with as many elements as $B$ is $B$ itself.
+
+      **Surjective $\Rightarrow$ injective.** If $f$ is not injective, two elements share an image, so $|f(A)| \le n - 1 < |B|$ and $f$ is not surjective.
+
+      **Infinite.** $f : \N \to \N$, $f(n) = n + 1$ is injective but misses $0$. And $g(n) = \lfloor n / 2 \rfloor$ is surjective but not injective. $\blacksquare$
+
+  - id: dm-029
+    title: Counting functions
+    subtopic: Cardinality
+    difficulty: easy
+    type: compute
+    tags: [functions, counting, injections]
+    related: [cb-018]
+    statement: |
+      Let $|A| = 3$ and $|B| = 5$. How many functions $A \to B$ are there? How many are injective? How many functions $B \to A$ are surjective?
+    solution: |
+      - **All functions $A \to B$:** each of 3 elements has 5 choices: $5^3 = 125$.
+      - **Injective:** $5 \cdot 4 \cdot 3 = 60$.
+      - **Surjections $B \to A$:** by inclusion–exclusion, $3^5 - \binom31 2^5 + \binom32 1^5 = 243 - 96 + 3 = 150$.
+
+  - id: dm-030
+    title: Solving a recurrence with generating functions
+    subtopic: Recurrences
+    difficulty: hard
+    type: compute
+    tags: [generating functions, recurrence, partial fractions]
+    related: [dm-021]
+    statement: |
+      Use the generating function $A(x) = \sum_{n \ge 0} a_n x^n$ to solve $a_n = a_{n-1} + 2a_{n-2}$ for $n \ge 2$, with $a_0 = 0$, $a_1 = 1$.
+    solution: |
+      Multiply the recurrence by $x^n$ and sum over $n \ge 2$:
+      $$A(x) - a_0 - a_1x = x\big(A(x) - a_0\big) + 2x^2A(x).$$
+      With $a_0 = 0$, $a_1 = 1$: $A(x)(1 - x - 2x^2) = x$, so
+      $$A(x) = \frac{x}{(1 - 2x)(1 + x)} = \frac13\left(\frac{1}{1 - 2x} - \frac{1}{1 + x}\right).$$
+      Expanding each geometric series,
+      $$a_n = \frac{2^n - (-1)^n}{3}.$$
+      Check: $a_2 = 1$, $a_3 = 3 = 1 + 2\cdot1$, $a_4 = 5 = 3 + 2\cdot 1$.

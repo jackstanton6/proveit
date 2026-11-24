@@ -1,0 +1,465 @@
+topic:
+  id: multivariable
+  name: Multivariable calculus
+  order: 12
+  prefix: mv
+  blurb: Limits and continuity in several variables, partial derivatives, optimisation and Lagrange multipliers, multiple integrals, and vector calculus.
+  subtopics: [Limits & continuity, Partial derivatives, Optimisation, Multiple integrals, Vector calculus]
+
+problems:
+  - id: mv-001
+    title: A limit that depends on direction
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: proof
+    tags: [limits, paths, two variables]
+    related: [mv-002, mv-005]
+    statement: |
+      Prove that $\displaystyle\lim_{(x,y)\to(0,0)}\frac{xy}{x^2 + y^2}$ does not exist.
+    solution: |
+      Along the line $y = mx$ with $x \ne 0$,
+      $$\frac{x\cdot mx}{x^2 + m^2x^2} = \frac{m}{1 + m^2},$$
+      a constant that depends on $m$: it is $0$ along $y = 0$ and $\frac12$ along $y = x$. If the limit existed, every path into the origin would give the same value. $\blacksquare$
+
+  - id: mv-002
+    title: A limit that exists
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: proof
+    tags: [limits, squeeze, polar coordinates]
+    related: [mv-001]
+    statement: |
+      Prove that $\displaystyle\lim_{(x,y)\to(0,0)}\frac{x^2y}{x^2 + y^2} = 0$.
+    solution: |
+      For $(x,y) \ne (0,0)$, $\frac{x^2}{x^2 + y^2} \le 1$, so
+      $$\left|\frac{x^2y}{x^2+y^2}\right| \le |y| \le \sqrt{x^2 + y^2}.$$
+      Given $\eps > 0$, take $\delta = \eps$: if $0 < \sqrt{x^2+y^2} < \delta$, the expression has absolute value less than $\eps$. $\blacksquare$
+
+  - id: mv-003
+    title: Every line agrees, but no limit
+    subtopic: Limits & continuity
+    difficulty: medium
+    type: proof
+    tags: [limits, paths, parabola]
+    related: [mv-001]
+    statement: |
+      Let $f(x,y) = \dfrac{x^2y}{x^4 + y^2}$ for $(x,y) \ne (0,0)$. Show that $f \to 0$ along every straight line through the origin, but that $\lim_{(x,y)\to(0,0)}f$ does not exist.
+    solution: |
+      **Lines.** Along $x = 0$, $f = 0$. Along $y = mx$ with $m \ne 0$,
+      $$f = \frac{mx^3}{x^4 + m^2x^2} = \frac{mx}{x^2 + m^2} \to 0.$$
+      (Along $y = 0$, $f = 0$ too.)
+
+      **Parabola.** Along $y = x^2$, $f = \dfrac{x^4}{2x^4} = \dfrac12$ for every $x \ne 0$. Two paths into the origin give different limits ($0$ and $\frac12$), so the limit does not exist. $\blacksquare$
+
+  - id: mv-004
+    title: Partial derivatives and Clairaut
+    subtopic: Partial derivatives
+    difficulty: easy
+    type: compute
+    tags: [partial derivatives, mixed partials, clairaut]
+    statement: |
+      Let $f(x,y) = x^2y^3 + e^{xy}$. Compute $f_x$, $f_y$, $f_{xy}$ and $f_{yx}$, and check that the mixed partials agree.
+    solution: |
+      $$f_x = 2xy^3 + ye^{xy}, \qquad f_y = 3x^2y^2 + xe^{xy}.$$
+      $$f_{xy} = \partial_y(f_x) = 6xy^2 + e^{xy} + xye^{xy}, \qquad f_{yx} = \partial_x(f_y) = 6xy^2 + e^{xy} + xye^{xy}.$$
+      They agree, as Clairaut's theorem guarantees for functions with continuous second partials.
+
+  - id: mv-005
+    title: Partials exist but the function is discontinuous
+    subtopic: Partial derivatives
+    difficulty: medium
+    type: proof
+    tags: [partial derivatives, continuity, differentiability]
+    related: [mv-001]
+    statement: |
+      Let $f(x,y) = \dfrac{xy}{x^2+y^2}$ for $(x,y) \ne (0,0)$ and $f(0,0) = 0$. Prove that $f_x(0,0)$ and $f_y(0,0)$ both exist, yet $f$ is not continuous at the origin. What does this say about the relationship between partial derivatives and differentiability?
+    solution: |
+      $f(x, 0) = 0$ for all $x$, so $f_x(0,0) = \lim_{h\to0}\frac{f(h,0) - f(0,0)}{h} = 0$. Similarly $f(0,y) = 0$ gives $f_y(0,0) = 0$.
+
+      But along $y = x$, $f = \frac12$ for $x \ne 0$, which doesn't tend to $f(0,0) = 0$. So $f$ is not continuous at the origin.
+
+      A differentiable function is continuous, so $f$ is not differentiable at $(0,0)$ even though both partial derivatives exist there. Partial derivatives only see the two axis directions. (Continuous partials near a point **do** imply differentiability.) $\blacksquare$
+
+  - id: mv-006
+    title: The chain rule in polar coordinates
+    subtopic: Partial derivatives
+    difficulty: medium
+    type: proof
+    tags: [chain rule, polar coordinates]
+    statement: |
+      Let $z = f(x,y)$ be differentiable, with $x = r\cos\theta$, $y = r\sin\theta$. Prove that for $r > 0$,
+      $$\left(\frac{\partial z}{\partial r}\right)^2 + \frac1{r^2}\left(\frac{\partial z}{\partial\theta}\right)^2 = \left(\frac{\partial z}{\partial x}\right)^2 + \left(\frac{\partial z}{\partial y}\right)^2.$$
+    solution: |
+      By the chain rule,
+      $$z_r = z_x\cos\theta + z_y\sin\theta, \qquad z_\theta = -z_xr\sin\theta + z_yr\cos\theta.$$
+      So $\frac1rz_\theta = -z_x\sin\theta + z_y\cos\theta$. Squaring and adding, the cross terms $\pm2z_xz_y\sin\theta\cos\theta$ cancel, leaving
+      $$z_r^2 + \frac1{r^2}z_\theta^2 = z_x^2(\cos^2\theta + \sin^2\theta) + z_y^2(\sin^2\theta + \cos^2\theta) = z_x^2 + z_y^2. \qquad\blacksquare$$
+
+  - id: mv-007
+    title: Directional derivatives
+    subtopic: Partial derivatives
+    difficulty: easy
+    type: compute
+    tags: [gradient, directional derivative]
+    related: [mv-008]
+    statement: |
+      Let $f(x,y) = x^2 + 3xy$. Find the directional derivative of $f$ at $(1,2)$ in the direction of $(3,4)$, and the maximum rate of increase of $f$ at that point.
+    solution: |
+      $\nabla f = (2x + 3y,\ 3x)$, so $\nabla f(1,2) = (8, 3)$. The unit vector in the direction $(3,4)$ is $u = \left(\frac35, \frac45\right)$, so
+      $$D_uf(1,2) = \nabla f\cdot u = \frac{24}5 + \frac{12}5 = \frac{36}{5}.$$
+      The maximum rate of increase is $\norm{\nabla f(1,2)} = \sqrt{64 + 9} = \sqrt{73}$, in the direction of $(8,3)$.
+
+  - id: mv-008
+    title: The gradient points uphill
+    subtopic: Partial derivatives
+    difficulty: easy
+    type: proof
+    tags: [gradient, cauchy-schwarz, steepest ascent]
+    related: [la-028, mv-007]
+    statement: |
+      Let $f$ be differentiable at $p$ with $\nabla f(p) \ne 0$. Prove that among unit vectors $u$, the directional derivative $D_uf(p)$ is maximised when $u = \nabla f(p)/\norm{\nabla f(p)}$, with maximum value $\norm{\nabla f(p)}$.
+    solution: |
+      For differentiable $f$, $D_uf(p) = \nabla f(p)\cdot u$. By Cauchy–Schwarz,
+      $$\nabla f(p)\cdot u \le \norm{\nabla f(p)}\,\norm u = \norm{\nabla f(p)},$$
+      with equality iff $u$ is a non-negative multiple of $\nabla f(p)$. For a unit vector, that means $u = \nabla f(p)/\norm{\nabla f(p)}$. $\blacksquare$
+
+  - id: mv-009
+    title: Tangent planes and linear approximation
+    subtopic: Partial derivatives
+    difficulty: easy
+    type: compute
+    tags: [tangent plane, linearisation]
+    statement: |
+      Find the tangent plane to $z = x^2 + y^2$ at $(1, 2, 5)$, and use the linearisation of $g(x,y) = \sqrt{x^2+y^2}$ at $(3,4)$ to estimate $\sqrt{3.02^2 + 3.97^2}$.
+    solution: |
+      **Tangent plane.** $z_x = 2x = 2$ and $z_y = 2y = 4$ at $(1,2)$, so
+      $$z = 5 + 2(x - 1) + 4(y - 2).$$
+
+      **Estimate.** $g_x = \frac{x}{\sqrt{x^2+y^2}} = \frac35$ and $g_y = \frac45$ at $(3,4)$, where $g = 5$. So
+      $$g(3.02, 3.97) \approx 5 + \frac35(0.02) + \frac45(-0.03) = 5 + 0.012 - 0.024 = 4.988.$$
+      (The true value is $4.98812\ldots$)
+
+  - id: mv-010
+    title: Implicit partial derivatives
+    subtopic: Partial derivatives
+    difficulty: medium
+    type: compute
+    tags: [implicit differentiation, implicit function theorem]
+    statement: |
+      The equation $x^2 + y^2 + z^2 = 3xyz$ defines $z$ implicitly as a function of $(x,y)$ near $(1,1,1)$. Find $\frac{\partial z}{\partial x}$ and $\frac{\partial z}{\partial y}$ there.
+    solution: |
+      Let $F = x^2 + y^2 + z^2 - 3xyz$. Then $\frac{\partial z}{\partial x} = -\frac{F_x}{F_z}$, valid where $F_z \ne 0$, with
+      $$F_x = 2x - 3yz, \qquad F_y = 2y - 3xz, \qquad F_z = 2z - 3xy.$$
+      At $(1,1,1)$: $F_x = F_y = F_z = -1$, so
+      $$\frac{\partial z}{\partial x} = -\frac{-1}{-1} = -1, \qquad \frac{\partial z}{\partial y} = -1.$$
+
+  - id: mv-011
+    title: Euler's theorem for homogeneous functions
+    subtopic: Partial derivatives
+    difficulty: medium
+    type: proof
+    tags: [homogeneous functions, chain rule]
+    source: Euler
+    statement: |
+      A differentiable $f : \R^2 \setminus\{0\} \to \R$ is homogeneous of degree $k$ if $f(tx, ty) = t^kf(x,y)$ for all $t > 0$. Prove that then
+      $$xf_x(x,y) + yf_y(x,y) = kf(x,y).$$
+    solution: |
+      Fix $(x,y)$ and differentiate both sides of $f(tx, ty) = t^kf(x,y)$ with respect to $t$. By the chain rule,
+      $$xf_x(tx, ty) + yf_y(tx, ty) = kt^{k-1}f(x,y).$$
+      Setting $t = 1$ gives the result. $\blacksquare$
+
+      (Example: $f = x^2 + 3xy$ has degree 2, and $x(2x + 3y) + y(3x) = 2(x^2 + 3xy)$.)
+
+  - id: mv-012
+    title: Harmonic functions
+    subtopic: Partial derivatives
+    difficulty: easy
+    type: compute
+    tags: [laplace equation, second derivatives]
+    statement: |
+      A function $u$ is harmonic if $u_{xx} + u_{yy} = 0$. Check that $u = \ln(x^2 + y^2)$ (away from the origin) and $v = e^x\sin y$ are harmonic.
+    solution: |
+      **$u$.** $u_x = \dfrac{2x}{x^2+y^2}$, so
+      $$u_{xx} = \frac{2(x^2+y^2) - 4x^2}{(x^2+y^2)^2} = \frac{2y^2 - 2x^2}{(x^2+y^2)^2}.$$
+      By symmetry $u_{yy} = \dfrac{2x^2 - 2y^2}{(x^2+y^2)^2}$, and the sum is $0$.
+
+      **$v$.** $v_{xx} = e^x\sin y$ and $v_{yy} = -e^x\sin y$, which sum to $0$.
+
+  - id: mv-013
+    title: Classifying critical points
+    subtopic: Optimisation
+    difficulty: easy
+    type: compute
+    tags: [critical points, second derivative test, hessian]
+    related: [mv-015]
+    statement: |
+      Find and classify the critical points of $f(x,y) = x^3 - 3x + y^2$.
+    solution: |
+      $f_x = 3x^2 - 3 = 0$ and $f_y = 2y = 0$ give $(\pm1, 0)$. The Hessian is $\begin{pmatrix}6x & 0\\0&2\end{pmatrix}$, with determinant $D = 12x$.
+
+      - $(1, 0)$: $D = 12 > 0$ and $f_{xx} = 6 > 0$: **local minimum**, $f = -2$.
+      - $(-1,0)$: $D = -12 < 0$: **saddle point**.
+
+  - id: mv-014
+    title: A quartic surface
+    subtopic: Optimisation
+    difficulty: medium
+    type: compute
+    tags: [critical points, second derivative test]
+    related: [mv-013]
+    statement: |
+      Find and classify the critical points of $f(x,y) = x^4 + y^4 - 4xy$.
+    solution: |
+      $f_x = 4x^3 - 4y = 0$ and $f_y = 4y^3 - 4x = 0$ give $y = x^3$ and $x = y^3 = x^9$. So $x(x^8 - 1) = 0$, i.e. $x \in \{0, 1, -1\}$: the points $(0,0)$, $(1,1)$, $(-1,-1)$.
+
+      The Hessian is $\begin{pmatrix}12x^2 & -4\\-4 & 12y^2\end{pmatrix}$, with $D = 144x^2y^2 - 16$.
+
+      - $(0,0)$: $D = -16 < 0$: **saddle**.
+      - $(\pm1, \pm1)$: $D = 128 > 0$ and $f_{xx} = 12 > 0$: **local minima**, with $f = -2$. These are in fact global minima, since $f \to \infty$ as $\norm{(x,y)} \to \infty$.
+
+  - id: mv-015
+    title: Why the second derivative test works
+    subtopic: Optimisation
+    difficulty: hard
+    type: proof
+    tags: [quadratic forms, second derivative test, completing the square]
+    related: [mv-013, la-024]
+    statement: |
+      Let $Q(h,k) = ah^2 + 2bhk + ck^2$. Prove that $Q(h,k) > 0$ for all $(h,k) \ne (0,0)$ if and only if $a > 0$ and $ac - b^2 > 0$. (Applied to the Hessian, this is the second derivative test for a local minimum.)
+    solution: |
+      **($\Leftarrow$)** With $a > 0$, complete the square:
+      $$Q(h,k) = a\left(h + \frac bak\right)^2 + \frac{ac - b^2}{a}k^2.$$
+      Both terms are $\ge 0$. If $k \ne 0$ the second is $> 0$; if $k = 0$ then $h \ne 0$ and the first is $ah^2 > 0$.
+
+      **($\Rightarrow$)** $Q(1, 0) = a > 0$. Then, using the same identity with $(h,k) = (-b/a, 1)$, the first term vanishes and $Q = \frac{ac - b^2}{a} > 0$, so $ac - b^2 > 0$. $\blacksquare$
+
+  - id: mv-016
+    title: Lagrange multipliers on a sphere
+    subtopic: Optimisation
+    difficulty: easy
+    type: compute
+    tags: [lagrange multipliers, constrained optimisation]
+    related: [la-028]
+    statement: |
+      Find the maximum and minimum of $f = x + 2y + 3z$ on the sphere $x^2 + y^2 + z^2 = 14$.
+    solution: |
+      $\nabla f = \lambda\nabla g$ gives $(1, 2, 3) = 2\lambda(x,y,z)$, so $(x,y,z) = t(1,2,3)$. The constraint gives $14t^2 = 14$, so $t = \pm1$.
+
+      - $(1,2,3)$: $f = 14$, the **maximum**.
+      - $(-1,-2,-3)$: $f = -14$, the **minimum**.
+
+      (The sphere is closed and bounded, so extremes exist. Alternatively, by Cauchy–Schwarz, $|f| \le \sqrt{14}\cdot\sqrt{14}$.)
+
+  - id: mv-017
+    title: The best box
+    subtopic: Optimisation
+    difficulty: medium
+    type: compute
+    tags: [lagrange multipliers, volume, symmetry]
+    statement: |
+      Find the dimensions of the closed rectangular box of surface area 6 with the largest volume.
+    solution: |
+      Maximise $V = xyz$ subject to $S = 2(xy + yz + zx) = 6$, with $x, y, z > 0$. $\nabla V = \lambda\nabla S$ gives
+      $$yz = 2\lambda(y + z),\quad xz = 2\lambda(x + z),\quad xy = 2\lambda(x + y).$$
+      Multiplying these by $x$, $y$, $z$ respectively, each left side becomes $xyz$, so
+      $$x(y + z) = y(x + z) = z(x + y) \implies xz = yz,\ xy = xz \implies x = y = z.$$
+      Then $6x^2 = 6$ gives $x = 1$: a **unit cube**, $V = 1$.
+
+      This is the maximum. On the constraint surface $xy, yz, zx \le 3$. If $x \to 0$ then $V = x(yz) \le 3x \to 0$; if $x \to \infty$ then $y, z \le 3/x$, so $V \le 9/x \to 0$. The same holds for $y$ and $z$. So $V$ is small near the edges of the surface, the maximum is attained at a critical point, and there is only one.
+
+  - id: mv-018
+    title: AM–GM by Lagrange multipliers
+    subtopic: Optimisation
+    difficulty: medium
+    type: proof
+    tags: [lagrange multipliers, am-gm, inequalities]
+    related: [in-016]
+    statement: |
+      Use Lagrange multipliers to show that for $x, y, z \ge 0$ with $x + y + z = 3$, $xyz \le 1$. Deduce AM–GM for three variables: $\sqrt[3]{abc} \le \frac{a+b+c}{3}$ for $a,b,c \ge 0$.
+    solution: |
+      The constraint set (a closed triangle) is compact and $f = xyz$ is continuous, so a maximum exists. On the boundary some variable is $0$, so $f = 0$; and $f(1,1,1) = 1 > 0$, so the maximum is at an interior point, where $\nabla f = \lambda\nabla g$:
+      $$yz = xz = xy = \lambda.$$
+      For positive $x,y,z$ this forces $x = y = z = 1$. So the maximum is $1$.
+
+      **AM–GM.** If $a + b + c = 0$ it is trivial. Otherwise let $s = \frac{a+b+c}3 > 0$ and $(x,y,z) = (a,b,c)/s$, so $x+y+z = 3$. Then $\frac{abc}{s^3} = xyz \le 1$, i.e. $\sqrt[3]{abc} \le s$. $\blacksquare$
+
+  - id: mv-019
+    title: The least-squares line
+    subtopic: Optimisation
+    difficulty: medium
+    type: compute
+    tags: [least squares, critical points, normal equations]
+    statement: |
+      Find the line $y = ax + b$ minimising $E(a,b) = \sum_i(y_i - ax_i - b)^2$ for the data $(0,1), (1,3), (2,4)$.
+    solution: |
+      Setting $E_a = E_b = 0$ gives the normal equations
+      $$a\sum x_i^2 + b\sum x_i = \sum x_iy_i, \qquad a\sum x_i + nb = \sum y_i.$$
+      Here $n = 3$, $\sum x_i = 3$, $\sum y_i = 8$, $\sum x_i^2 = 5$, $\sum x_iy_i = 11$:
+      $$5a + 3b = 11, \qquad 3a + 3b = 8.$$
+      Subtracting gives $2a = 3$, so $a = \frac32$ and $b = \frac76$. The line is $y = \frac32x + \frac76$. ($E$ is a convex quadratic, so this critical point is the minimum.)
+
+  - id: mv-020
+    title: Reversing the order of integration
+    subtopic: Multiple integrals
+    difficulty: medium
+    type: compute
+    tags: [double integrals, fubini, order of integration]
+    statement: |
+      Evaluate $\displaystyle\int_0^1\int_x^1e^{y^2}\,dy\,dx$.
+    solution: |
+      $e^{y^2}$ has no elementary antiderivative, so swap the order. The region is $0 \le x \le y \le 1$, i.e. $0 \le y \le 1$, $0 \le x \le y$:
+      $$\int_0^1\int_0^ye^{y^2}\,dx\,dy = \int_0^1ye^{y^2}\,dy = \left[\tfrac12e^{y^2}\right]_0^1 = \frac{e - 1}{2}.$$
+
+  - id: mv-021
+    title: Polar coordinates
+    subtopic: Multiple integrals
+    difficulty: easy
+    type: compute
+    tags: [double integrals, polar coordinates]
+    related: [mv-022]
+    statement: |
+      Evaluate $\displaystyle\iint_{x^2+y^2\le1}e^{-(x^2+y^2)}\,dA$.
+    solution: |
+      In polar coordinates $dA = r\,dr\,d\theta$:
+      $$\int_0^{2\pi}\int_0^1e^{-r^2}r\,dr\,d\theta = 2\pi\left[-\tfrac12e^{-r^2}\right]_0^1 = \pi\left(1 - e^{-1}\right).$$
+
+  - id: mv-022
+    title: The Gaussian integral
+    subtopic: Multiple integrals
+    difficulty: hard
+    type: proof
+    tags: [gaussian integral, polar coordinates, improper integrals]
+    related: [mv-021]
+    hints:
+      - |
+        Square the integral, write it as a double integral over the plane, and squeeze the square $[-R,R]^2$ between two discs.
+    statement: |
+      Prove that $\displaystyle\int_{-\infty}^\infty e^{-x^2}\,dx = \sqrt\pi$.
+    solution: |
+      The integral converges, since $e^{-x^2} \le e^{-|x| + 1}$ for all $x$. Let $I_R = \int_{-R}^Re^{-x^2}\,dx$. By Fubini,
+      $$I_R^2 = \iint_{[-R,R]^2}e^{-(x^2+y^2)}\,dA.$$
+      The square contains the disc of radius $R$ and is contained in the disc of radius $R\sqrt2$, and the integrand is positive, so
+      $$\pi\left(1 - e^{-R^2}\right) \le I_R^2 \le \pi\left(1 - e^{-2R^2}\right),$$
+      using the polar computation $\iint_{r\le\rho}e^{-r^2}dA = \pi(1 - e^{-\rho^2})$. Both bounds tend to $\pi$, so $I_R^2 \to \pi$, and since $I_R > 0$, $I_R \to \sqrt\pi$. $\blacksquare$
+
+  - id: mv-023
+    title: Volume under a paraboloid
+    subtopic: Multiple integrals
+    difficulty: easy
+    type: compute
+    tags: [volume, polar coordinates]
+    statement: |
+      Find the volume of the solid between the paraboloid $z = 4 - x^2 - y^2$ and the plane $z = 0$.
+    solution: |
+      The paraboloid meets $z = 0$ on the circle $r = 2$. In polar coordinates,
+      $$V = \int_0^{2\pi}\int_0^2(4 - r^2)\,r\,dr\,d\theta = 2\pi\left[2r^2 - \frac{r^4}4\right]_0^2 = 2\pi(8 - 4) = 8\pi.$$
+
+  - id: mv-024
+    title: Spherical coordinates
+    subtopic: Multiple integrals
+    difficulty: medium
+    type: compute
+    tags: [jacobian, spherical coordinates, volume]
+    statement: |
+      With $x = \rho\sin\phi\cos\theta$, $y = \rho\sin\phi\sin\theta$, $z = \rho\cos\phi$, compute the Jacobian determinant $\frac{\partial(x,y,z)}{\partial(\rho,\phi,\theta)}$ and use it to find the volume of a ball of radius $R$.
+    solution: |
+      $$\det\begin{pmatrix}\sin\phi\cos\theta & \rho\cos\phi\cos\theta & -\rho\sin\phi\sin\theta\\ \sin\phi\sin\theta & \rho\cos\phi\sin\theta & \rho\sin\phi\cos\theta\\ \cos\phi & -\rho\sin\phi & 0\end{pmatrix}.$$
+      Expanding along the bottom row:
+      $$\cos\phi\cdot\rho^2\sin\phi\cos\phi(\cos^2\theta + \sin^2\theta) + \rho\sin\phi\cdot\rho\sin^2\phi(\cos^2\theta + \sin^2\theta) = \rho^2\sin\phi.$$
+      So
+      $$V = \int_0^{2\pi}\int_0^\pi\int_0^R\rho^2\sin\phi\,d\rho\,d\phi\,d\theta = 2\pi\cdot2\cdot\frac{R^3}3 = \frac43\pi R^3.$$
+
+  - id: mv-025
+    title: A linear change of variables
+    subtopic: Multiple integrals
+    difficulty: medium
+    type: compute
+    tags: [change of variables, jacobian]
+    statement: |
+      Evaluate $\displaystyle\iint_R(x + y)^2\,dA$, where $R$ is the square $|x + y| \le 1$, $|x - y| \le 1$.
+    solution: |
+      Let $u = x + y$ and $v = x - y$, so $R$ becomes $[-1,1]^2$. Then $x = \frac{u+v}2$, $y = \frac{u - v}2$, and
+      $$\left|\frac{\partial(x,y)}{\partial(u,v)}\right| = \left|\det\begin{pmatrix}\frac12&\frac12\\\frac12&-\frac12\end{pmatrix}\right| = \frac12.$$
+      So
+      $$\iint_R(x+y)^2\,dA = \int_{-1}^1\int_{-1}^1u^2\cdot\frac12\,dv\,du = \frac12\cdot\frac23\cdot2 = \frac23.$$
+
+  - id: mv-026
+    title: When Fubini fails
+    subtopic: Multiple integrals
+    difficulty: hard
+    type: proof
+    tags: [fubini, iterated integrals, counterexample]
+    statement: |
+      Let $f(x,y) = \dfrac{x^2 - y^2}{(x^2+y^2)^2}$. Show that
+      $$\int_0^1\int_0^1f\,dy\,dx = \frac\pi4 \qquad\text{but}\qquad \int_0^1\int_0^1f\,dx\,dy = -\frac\pi4,$$
+      and explain why this doesn't contradict Fubini's theorem.
+    solution: |
+      Since $\frac{\partial}{\partial y}\frac{y}{x^2+y^2} = \frac{x^2 - y^2}{(x^2+y^2)^2}$, for fixed $x > 0$,
+      $$\int_0^1f\,dy = \left[\frac{y}{x^2+y^2}\right]_0^1 = \frac1{1 + x^2}, \qquad \int_0^1\frac{dx}{1+x^2} = \frac\pi4.$$
+      Since $f(y,x) = -f(x,y)$, the other order gives $-\frac\pi4$.
+
+      Fubini requires $\iint|f| < \infty$, and that fails here. In polar coordinates $|f| = \frac{|\cos 2\theta|}{r^2}$, so near the origin $\iint|f|\,dA$ behaves like $\int\frac{1}{r^2}\,r\,dr = \int\frac{dr}r$, which diverges. $\blacksquare$
+
+  - id: mv-027
+    title: Path dependence of a line integral
+    subtopic: Vector calculus
+    difficulty: medium
+    type: compute
+    tags: [line integrals, work, conservative fields]
+    related: [mv-030]
+    statement: |
+      Compute $\displaystyle\int_C\mathbf F\cdot d\mathbf r$ for $\mathbf F = (x^2, xy)$ from $(0,0)$ to $(1,1)$ along (a) the line $y = x$ and (b) the parabola $y = x^2$. Is $\mathbf F$ conservative?
+    solution: |
+      (a) $\mathbf r(t) = (t,t)$, $d\mathbf r = (1,1)\,dt$: $\displaystyle\int_0^1(t^2 + t^2)\,dt = \frac23$.
+
+      (b) $\mathbf r(t) = (t, t^2)$, $d\mathbf r = (1, 2t)\,dt$, $\mathbf F = (t^2, t^3)$: $\displaystyle\int_0^1(t^2 + 2t^4)\,dt = \frac13 + \frac25 = \frac{11}{15}$.
+
+      The answers differ, so $\mathbf F$ is **not** conservative. Consistent with this, $\partial_x(xy) = y \ne 0 = \partial_y(x^2)$.
+
+  - id: mv-028
+    title: Div of curl and curl of grad
+    subtopic: Vector calculus
+    difficulty: easy
+    type: proof
+    tags: [divergence, curl, identities, clairaut]
+    statement: |
+      For $C^2$ functions, prove that $\nabla\times(\nabla f) = \mathbf 0$ and $\nabla\cdot(\nabla\times\mathbf F) = 0$.
+    solution: |
+      **Curl of a gradient.** The first component of $\nabla\times(f_x, f_y, f_z)$ is $f_{zy} - f_{yz} = 0$ by equality of mixed partials (Clairaut). The other components are the same with the variables permuted.
+
+      **Divergence of a curl.** With $\mathbf F = (P, Q, R)$,
+      $$\nabla\cdot(\nabla\times\mathbf F) = \partial_x(R_y - Q_z) + \partial_y(P_z - R_x) + \partial_z(Q_x - P_y).$$
+      The terms cancel in pairs: $R_{yx} - R_{xy}$, $Q_{xz} - Q_{zx}$, $P_{zy} - P_{yz}$. $\blacksquare$
+
+  - id: mv-029
+    title: Area by Green's theorem
+    subtopic: Vector calculus
+    difficulty: medium
+    type: compute
+    tags: [greens theorem, area, ellipse]
+    statement: |
+      Use Green's theorem to show that the area enclosed by a positively oriented simple closed curve $C$ is $\frac12\oint_C(x\,dy - y\,dx)$, and use it to find the area of the ellipse $\frac{x^2}{a^2} + \frac{y^2}{b^2} = 1$.
+    solution: |
+      Green: $\oint_C(P\,dx + Q\,dy) = \iint_D(Q_x - P_y)\,dA$. With $P = -\frac y2$ and $Q = \frac x2$, the integrand is $\frac12 + \frac12 = 1$, giving the area of $D$.
+
+      **Ellipse.** $x = a\cos t$, $y = b\sin t$ for $0 \le t \le 2\pi$:
+      $$\frac12\int_0^{2\pi}\big(a\cos t\cdot b\cos t + b\sin t\cdot a\sin t\big)\,dt = \frac12\int_0^{2\pi}ab\,dt = \pi ab.$$
+
+  - id: mv-030
+    title: Curl-free but not conservative
+    subtopic: Vector calculus
+    difficulty: hard
+    type: proof
+    tags: [conservative fields, potential functions, topology]
+    related: [mv-027, mv-028]
+    statement: |
+      1. Find a potential function for $\mathbf F = (2xy + z^2,\ x^2,\ 2xz)$.
+      2. Let $\mathbf G = \left(\dfrac{-y}{x^2+y^2}, \dfrac{x}{x^2+y^2}\right)$ on $\R^2\setminus\{0\}$. Show that $\partial_xG_2 = \partial_yG_1$, but that $\mathbf G$ is not conservative.
+    solution: |
+      1. Integrating $f_x = 2xy + z^2$ gives $f = x^2y + xz^2 + h(y,z)$. Then $f_y = x^2 + h_y$ forces $h_y = 0$, and $f_z = 2xz + h_z$ forces $h_z = 0$. So $f = x^2y + xz^2$ (plus a constant), and one checks $\nabla f = \mathbf F$.
+
+      2. With $r^2 = x^2 + y^2$,
+      $$\partial_x\frac{x}{r^2} = \frac{r^2 - 2x^2}{r^4} = \frac{y^2 - x^2}{r^4}, \qquad \partial_y\frac{-y}{r^2} = \frac{-(r^2) + 2y^2}{r^4} = \frac{y^2 - x^2}{r^4},$$
+      which are equal. But around the unit circle $\mathbf r = (\cos t, \sin t)$,
+      $$\oint\mathbf G\cdot d\mathbf r = \int_0^{2\pi}(\sin^2t + \cos^2t)\,dt = 2\pi \ne 0.$$
+      A conservative field has zero circulation around every closed curve, so $\mathbf G$ is not conservative. The equal-partials test only guarantees a potential on a **simply connected** domain, and the punctured plane has a hole. (Locally, $\mathbf G = \nabla\theta$, but the angle $\theta$ can't be defined continuously all the way around the origin.) $\blacksquare$

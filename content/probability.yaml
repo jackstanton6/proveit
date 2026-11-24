@@ -1,0 +1,451 @@
+topic:
+  id: probability
+  name: Probability
+  order: 8
+  prefix: pr
+  blurb: Probability axioms, conditional probability and Bayes, expectation and variance, standard distributions, and the classic inequalities.
+  subtopics: [Axioms & counting, Conditional probability, Expectation & variance, Distributions, Inequalities & limits]
+
+problems:
+  - id: pr-001
+    title: Consequences of the axioms
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: proof
+    tags: [axioms, complement, monotonicity]
+    statement: |
+      Using only the axioms ($\P(A) \ge 0$, $\P(\Omega) = 1$, and additivity for disjoint events), prove that
+
+      1. $\P(A^c) = 1 - \P(A)$, and hence $\P(\varnothing) = 0$,
+      2. if $A \subseteq B$ then $\P(A) \le \P(B)$.
+    solution: |
+      1. $A$ and $A^c$ are disjoint with union $\Omega$, so $\P(A) + \P(A^c) = 1$. With $A = \Omega$, $\P(\varnothing) = 1 - 1 = 0$.
+      2. $B = A \cup (B \setminus A)$ is a disjoint union, so $\P(B) = \P(A) + \P(B \setminus A) \ge \P(A)$. $\blacksquare$
+
+  - id: pr-002
+    title: The birthday problem
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: compute
+    tags: [complement, counting, birthday]
+    statement: |
+      Assuming birthdays are independent and uniform over 365 days, find the probability that in a group of 23 people at least two share a birthday.
+    solution: |
+      The probability that all 23 birthdays are different is
+      $$\frac{365}{365}\cdot\frac{364}{365}\cdots\frac{343}{365} = \prod_{i=0}^{22}\left(1 - \frac{i}{365}\right) \approx 0.4927.$$
+      So the probability of a shared birthday is about $1 - 0.4927 = 0.5073$, just over a half.
+
+      (For a quick estimate, $1 - x \approx e^{-x}$ gives $\exp\!\left(-\sum_{i<23} \frac{i}{365}\right) = e^{-253/365} \approx 0.50$.)
+
+  - id: pr-003
+    title: Two dice
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: compute
+    tags: [uniform probability, dice]
+    statement: |
+      Two fair dice are rolled. Find the probability that
+
+      1. the sum is 7,
+      2. at least one die shows a six,
+      3. the maximum of the two is exactly 4.
+    solution: |
+      There are 36 equally likely outcomes.
+
+      1. The pairs $(1,6), (2,5), \dots, (6,1)$: $6/36 = 1/6$.
+      2. Complement: neither is a six in $25$ outcomes, so $1 - 25/36 = 11/36$.
+      3. $\P(\max \le 4) - \P(\max \le 3) = \frac{16}{36} - \frac{9}{36} = \frac{7}{36}$.
+
+  - id: pr-004
+    title: The union bound
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: proof
+    tags: [union bound, inclusion-exclusion, induction]
+    related: [pr-029]
+    statement: |
+      Prove that $\P(A \cup B) = \P(A) + \P(B) - \P(A \cap B)$, and deduce by induction that $\P(A_1 \cup \cdots \cup A_n) \le \sum_{i=1}^n \P(A_i)$.
+    solution: |
+      $A \cup B$ is the disjoint union of $A$ and $B \setminus A$, and $B$ is the disjoint union of $A \cap B$ and $B \setminus A$. So
+      $$\P(A \cup B) = \P(A) + \P(B \setminus A) = \P(A) + \P(B) - \P(A \cap B).$$
+      In particular $\P(A\cup B) \le \P(A) + \P(B)$. For $n$ events, assuming the bound for $n - 1$,
+      $$\P\Big(\bigcup_{i=1}^n A_i\Big) \le \P\Big(\bigcup_{i=1}^{n-1}A_i\Big) + \P(A_n) \le \sum_{i=1}^n \P(A_i). \qquad \blacksquare$$
+
+  - id: pr-005
+    title: A positive test result
+    subtopic: Conditional probability
+    difficulty: easy
+    type: compute
+    tags: [bayes, base rate]
+    statement: |
+      A disease affects 1% of a population. A test detects it in 95% of people who have it, and gives a false positive for 10% of people who don't. A randomly chosen person tests positive. What is the probability they have the disease?
+    solution: |
+      Let $D$ be "has the disease" and $+$ "tests positive". By the law of total probability,
+      $$\P(+) = 0.95 \cdot 0.01 + 0.10 \cdot 0.99 = 0.0095 + 0.099 = 0.1085.$$
+      By Bayes,
+      $$\P(D \mid +) = \frac{\P(+ \mid D)\P(D)}{\P(+)} = \frac{0.0095}{0.1085} \approx 0.088.$$
+      Only about **8.8%**: false positives from the large healthy group swamp the true positives.
+
+  - id: pr-006
+    title: Monty Hall
+    subtopic: Conditional probability
+    difficulty: medium
+    type: compute
+    tags: [bayes, conditioning]
+    statement: |
+      A car is behind one of three doors, uniformly at random, with goats behind the other two. You pick door 1. The host, who knows where the car is, opens one of doors 2 and 3 to reveal a goat, choosing at random if both hide goats. Suppose he opens door 3. Should you switch to door 2?
+    solution: |
+      Let $C_i$ be "car behind door $i$" and $H_3$ "host opens door 3". Then
+      $$\P(H_3 \mid C_1) = \tfrac12, \quad \P(H_3\mid C_2) = 1, \quad \P(H_3 \mid C_3) = 0,$$
+      so $\P(H_3) = \frac13\left(\frac12 + 1 + 0\right) = \frac12$, and
+      $$\P(C_2 \mid H_3) = \frac{\frac13 \cdot 1}{\frac12} = \frac23, \qquad \P(C_1 \mid H_3) = \frac{\frac13\cdot\frac12}{\frac12} = \frac13.$$
+      **Switch:** it wins with probability $2/3$. Intuitively, sticking wins only if your first pick was right, which happens $1/3$ of the time.
+
+  - id: pr-007
+    title: Independence and complements
+    subtopic: Conditional probability
+    difficulty: easy
+    type: proof
+    tags: [independence, complement]
+    statement: |
+      Prove that if $A$ and $B$ are independent then so are $A$ and $B^c$, and so are $A^c$ and $B^c$.
+    solution: |
+      $A$ is the disjoint union of $A \cap B$ and $A \cap B^c$, so
+      $$\P(A \cap B^c) = \P(A) - \P(A)\P(B) = \P(A)\big(1 - \P(B)\big) = \P(A)\P(B^c).$$
+      Applying this to the independent pair $B^c, A$ (with the roles swapped) gives that $B^c$ and $A^c$ are independent. $\blacksquare$
+
+  - id: pr-008
+    title: Pairwise but not mutually independent
+    subtopic: Conditional probability
+    difficulty: medium
+    type: proof
+    tags: [independence, counterexample]
+    statement: |
+      Give three events that are pairwise independent but not mutually independent, and verify both claims.
+    solution: |
+      Toss two fair coins: $\Omega = \{HH, HT, TH, TT\}$, each with probability $\frac14$. Let
+      $$A = \{HH, HT\}\ (\text{first is }H),\quad B = \{HH, TH\}\ (\text{second is }H), \quad C = \{HH, TT\}\ (\text{they match}).$$
+      Each has probability $\frac12$. Each pairwise intersection is $\{HH\}$, with probability $\frac14 = \frac12\cdot\frac12$, so they are pairwise independent. But
+      $$\P(A \cap B \cap C) = \P(\{HH\}) = \tfrac14 \ne \tfrac18 = \P(A)\P(B)\P(C).$$
+      So they are not mutually independent. (Any two of them determine the third.) $\blacksquare$
+
+  - id: pr-009
+    title: Two urns
+    subtopic: Conditional probability
+    difficulty: easy
+    type: compute
+    tags: [total probability, bayes]
+    statement: |
+      Urn 1 contains 3 red and 2 blue balls; urn 2 contains 1 red and 4 blue. An urn is chosen with a fair coin and a ball is drawn from it. Find $\P(\text{red})$ and $\P(\text{urn 1} \mid \text{red})$.
+    solution: |
+      By total probability,
+      $$\P(R) = \tfrac12 \cdot \tfrac35 + \tfrac12\cdot\tfrac15 = \tfrac25.$$
+      By Bayes,
+      $$\P(U_1 \mid R) = \frac{\frac12\cdot\frac35}{\frac25} = \frac{3/10}{4/10} = \frac34.$$
+
+  - id: pr-010
+    title: Gambler's ruin
+    subtopic: Conditional probability
+    difficulty: hard
+    type: proof
+    tags: [first-step analysis, recurrence, random walk]
+    related: [dm-021]
+    hints:
+      - |
+        Condition on the first toss to get $p_k = \frac12 p_{k-1} + \frac12 p_{k+1}$.
+    statement: |
+      A gambler starts with $\$k$ and repeatedly bets $\$1$ on a fair coin, stopping on reaching $\$0$ or $\$N$ ($0 \le k \le N$). Assuming the game ends with probability 1, prove that the probability $p_k$ of reaching $\$N$ is $k/N$.
+    solution: |
+      Clearly $p_0 = 0$ and $p_N = 1$. For $0 < k < N$, condition on the first toss: with probability $\frac12$ the fortune becomes $k+1$, and with probability $\frac12$ it becomes $k-1$, after which the game restarts from there. By total probability,
+      $$p_k = \tfrac12 p_{k+1} + \tfrac12 p_{k-1}, \quad\text{i.e.}\quad p_{k+1} - p_k = p_k - p_{k-1}.$$
+      So the differences $p_{k} - p_{k-1}$ all equal some constant $c$, and $p_k = kc$. Then $p_N = Nc = 1$ gives $c = 1/N$ and $p_k = k/N$. $\blacksquare$
+
+  - id: pr-011
+    title: Linearity of expectation
+    subtopic: Expectation & variance
+    difficulty: easy
+    type: proof
+    tags: [expectation, linearity]
+    statement: |
+      Let $X, Y$ be random variables on a finite sample space $\Omega$. Prove that $\E[aX + bY] = a\E[X] + b\E[Y]$, **without** assuming independence.
+    solution: |
+      On a finite sample space, $\E[Z] = \sum_{\omega \in \Omega} Z(\omega)\P(\{\omega\})$. Hence
+      $$\E[aX + bY] = \sum_\omega \big(aX(\omega) + bY(\omega)\big)\P(\{\omega\}) = a\sum_\omega X(\omega)\P(\{\omega\}) + b\sum_\omega Y(\omega)\P(\{\omega\}),$$
+      which is $a\E[X] + b\E[Y]$. No independence was used. $\blacksquare$
+
+  - id: pr-012
+    title: The hat-check problem
+    subtopic: Expectation & variance
+    difficulty: medium
+    type: compute
+    tags: [indicators, linearity, derangements]
+    related: [cb-017, pr-011]
+    statement: |
+      $n$ people check their hats, and the hats are returned in a uniformly random order. Find the expected number of people who get their own hat back, and the limit as $n \to \infty$ of the probability that nobody does.
+    solution: |
+      Let $I_i$ be $1$ if person $i$ gets their own hat and $0$ otherwise. By symmetry $\P(I_i = 1) = \frac1n$. The number of matches is $X = \sum I_i$, so by linearity
+      $$\E[X] = \sum_{i=1}^n \frac1n = 1,$$
+      for every $n$, even though the $I_i$ are dependent.
+
+      Nobody matches exactly when the permutation is a derangement, so
+      $$\P(X = 0) = \frac{D_n}{n!} = \sum_{k=0}^n \frac{(-1)^k}{k!} \longrightarrow e^{-1} \approx 0.368.$$
+
+  - id: pr-013
+    title: Coin flips
+    subtopic: Expectation & variance
+    difficulty: easy
+    type: compute
+    tags: [binomial, expectation, variance, indicators]
+    statement: |
+      A fair coin is flipped $n$ times. Find the mean and variance of the number of heads $X$, and of the number of times $Y$ that a head is immediately followed by a tail.
+    solution: |
+      **Heads.** $X = \sum_{i=1}^n I_i$ with $I_i$ independent Bernoulli$(\frac12)$, so $\E X = \frac n2$ and $\Var X = n\cdot\frac14 = \frac n4$.
+
+      **Head-then-tail.** Let $J_i = 1$ if flips $i, i+1$ are $HT$, for $1 \le i \le n - 1$. Then $\P(J_i = 1) = \frac14$, so $\E Y = \frac{n-1}{4}$.
+
+      For the variance, $\Var Y = \sum_i \Var J_i + 2\sum_{i<j}\Cov(J_i, J_j)$. $\Var J_i = \frac14\cdot\frac34 = \frac3{16}$. Non-adjacent $J_i, J_j$ involve disjoint flips, so they are independent. Adjacent ones can't both be 1 ($HT$ at $i$ needs flip $i+1 = T$; $HT$ at $i+1$ needs it to be $H$), so $\Cov = 0 - \frac1{16}$. There are $n - 2$ adjacent pairs, so for $n \ge 2$
+      $$\Var Y = \frac{3(n-1)}{16} - \frac{2(n-2)}{16} = \frac{n+1}{16}.$$
+
+  - id: pr-014
+    title: The coupon collector
+    subtopic: Expectation & variance
+    difficulty: medium
+    type: compute
+    tags: [geometric, linearity, harmonic numbers]
+    related: [pr-015]
+    statement: |
+      Each cereal box contains one of $n$ coupons, uniformly at random. Find the expected number of boxes needed to collect all $n$. How many rolls of a fair die does it take, on average, to see every face?
+    solution: |
+      Let $T_i$ be the number of boxes needed to go from $i - 1$ distinct coupons to $i$. While you have $i - 1$, each box is new with probability $p_i = \frac{n - i + 1}{n}$, so $T_i$ is geometric with mean $\frac{1}{p_i} = \frac{n}{n-i+1}$. By linearity,
+      $$\E[T] = \sum_{i=1}^n \frac{n}{n - i + 1} = n\left(1 + \frac12 + \cdots + \frac1n\right) = nH_n \approx n\ln n.$$
+
+      **Die:** $6H_6 = 6\cdot\frac{49}{20} = 14.7$ rolls.
+
+  - id: pr-015
+    title: Mean of a geometric distribution
+    subtopic: Distributions
+    difficulty: medium
+    type: proof
+    tags: [geometric, tail sum]
+    related: [pr-019, pr-014]
+    statement: |
+      Let $X$ be the number of independent trials, each succeeding with probability $p \in (0,1]$, up to and including the first success. Prove that $\E[X] = 1/p$.
+    solution: |
+      $X \ge k$ iff the first $k - 1$ trials all fail, so $\P(X \ge k) = (1-p)^{k-1}$ for $k \ge 1$. Using $\E[X] = \sum_{k\ge1}\P(X \ge k)$ for $\N$-valued $X$,
+      $$\E[X] = \sum_{k \ge 1}(1-p)^{k-1} = \frac{1}{1 - (1-p)} = \frac1p. \qquad \blacksquare$$
+
+  - id: pr-016
+    title: The variance formula
+    subtopic: Expectation & variance
+    difficulty: easy
+    type: proof
+    tags: [variance, linearity]
+    statement: |
+      Prove that $\Var(X) = \E[X^2] - (\E X)^2$ and that $\Var(aX + b) = a^2\Var(X)$.
+    solution: |
+      Let $\mu = \E X$. By linearity,
+      $$\Var X = \E[(X - \mu)^2] = \E[X^2] - 2\mu\E[X] + \mu^2 = \E[X^2] - \mu^2.$$
+      For the second, $\E[aX+b] = a\mu + b$, so $(aX + b) - (a\mu + b) = a(X - \mu)$ and $\Var(aX+b) = \E[a^2(X - \mu)^2] = a^2\Var X$. $\blacksquare$
+
+  - id: pr-017
+    title: Variance of a sum of independent variables
+    subtopic: Expectation & variance
+    difficulty: medium
+    type: proof
+    tags: [variance, independence, covariance]
+    statement: |
+      Let $X$ and $Y$ be independent discrete random variables with finite variance. Prove that $\E[XY] = \E[X]\E[Y]$ and hence $\Var(X + Y) = \Var X + \Var Y$.
+    solution: |
+      By independence $\P(X = x, Y = y) = \P(X=x)\P(Y=y)$, so
+      $$\E[XY] = \sum_{x,y} xy\,\P(X=x)\P(Y=y) = \Big(\sum_x x\P(X=x)\Big)\Big(\sum_y y\P(Y=y)\Big) = \E X\,\E Y.$$
+      (The double sum converges absolutely since $\E|X|$ and $\E|Y|$ are finite, so we may rearrange it.) Then
+      $$\Var(X+Y) = \E[(X+Y)^2] - (\E X + \E Y)^2 = \Var X + \Var Y + 2\big(\E[XY] - \E X\,\E Y\big),$$
+      and the last term is $0$. $\blacksquare$
+
+  - id: pr-018
+    title: Expected inversions
+    subtopic: Expectation & variance
+    difficulty: medium
+    type: compute
+    tags: [permutations, indicators, linearity]
+    statement: |
+      An inversion of a permutation $\sigma$ of $\{1, \dots, n\}$ is a pair $i < j$ with $\sigma(i) > \sigma(j)$. Find the expected number of inversions of a uniformly random permutation.
+    solution: |
+      For each pair $i < j$ let $I_{ij}$ indicate an inversion. Swapping the values at positions $i$ and $j$ is a bijection between permutations with and without this inversion, so $\P(I_{ij} = 1) = \frac12$. By linearity,
+      $$\E[\#\text{inversions}] = \binom n2 \cdot \frac12 = \frac{n(n-1)}{4}.$$
+      (This is the average number of swaps insertion sort makes.)
+
+  - id: pr-019
+    title: The tail-sum formula
+    subtopic: Expectation & variance
+    difficulty: medium
+    type: proof
+    tags: [expectation, tail sum, double counting]
+    related: [pr-015]
+    statement: |
+      Let $X$ take values in $\{0, 1, 2, \dots\}$. Prove that $\displaystyle\E[X] = \sum_{k=1}^\infty \P(X \ge k)$.
+    solution: |
+      Write $m = \sum_{k=1}^\infty \mathbf 1[m \ge k]$ for each $m \ge 0$. Then
+      $$\sum_{k=1}^\infty \P(X \ge k) = \sum_{k=1}^\infty\sum_{m=k}^\infty \P(X = m) = \sum_{m=0}^\infty \P(X = m)\sum_{k=1}^{m} 1 = \sum_{m=0}^\infty m\,\P(X=m) = \E[X].$$
+      Swapping the order of summation is valid because all terms are non-negative (both sides may be $+\infty$). $\blacksquare$
+
+  - id: pr-020
+    title: Mean of the binomial distribution
+    subtopic: Distributions
+    difficulty: easy
+    type: proof
+    tags: [binomial, expectation]
+    related: [cb-021]
+    statement: |
+      Let $X \sim \mathrm{Bin}(n, p)$, i.e. $\P(X = k) = \binom nk p^k(1-p)^{n-k}$. Prove that these probabilities sum to 1 and that $\E X = np$, by direct computation.
+    solution: |
+      By the binomial theorem, $\sum_k \binom nk p^k (1-p)^{n-k} = (p + 1 - p)^n = 1$.
+
+      For the mean, use $k\binom nk = n\binom{n-1}{k-1}$:
+      $$\E X = \sum_{k=1}^n n\binom{n-1}{k-1}p^k(1-p)^{n-k} = np\sum_{j=0}^{n-1}\binom{n-1}{j}p^j(1-p)^{n-1-j} = np. \qquad\blacksquare$$
+
+      (Alternatively, $X$ is a sum of $n$ Bernoulli$(p)$ indicators.)
+
+  - id: pr-021
+    title: Poisson as a limit of binomials
+    subtopic: Distributions
+    difficulty: hard
+    type: proof
+    tags: [poisson, binomial, limits]
+    related: [ca-020]
+    statement: |
+      Fix $\lambda > 0$ and $k \ge 0$. Prove that
+      $$\binom nk\left(\frac\lambda n\right)^k\left(1 - \frac\lambda n\right)^{n-k} \longrightarrow e^{-\lambda}\frac{\lambda^k}{k!} \quad\text{as } n \to \infty.$$
+    solution: |
+      Rewrite the left side as
+      $$\frac{\lambda^k}{k!}\cdot\underbrace{\frac{n(n-1)\cdots(n-k+1)}{n^k}}_{(a)}\cdot\underbrace{\left(1 - \frac\lambda n\right)^n}_{(b)}\cdot\underbrace{\left(1 - \frac\lambda n\right)^{-k}}_{(c)}.$$
+      - $(a) = \prod_{j=0}^{k-1}\left(1 - \frac jn\right) \to 1$, a fixed finite product of terms tending to 1.
+      - $(b) \to e^{-\lambda}$, by the standard limit $\left(1 + \frac xn\right)^n \to e^x$.
+      - $(c) \to 1$, since $k$ is fixed and $1 - \lambda/n \to 1$.
+
+      Multiplying the limits gives $e^{-\lambda}\lambda^k/k!$. $\blacksquare$
+
+  - id: pr-022
+    title: The geometric distribution is memoryless
+    subtopic: Distributions
+    difficulty: easy
+    type: proof
+    tags: [geometric, memoryless, conditioning]
+    related: [pr-015]
+    statement: |
+      Let $X$ be geometric with success probability $p$ (number of trials up to the first success). Prove that $\P(X > m + n \mid X > m) = \P(X > n)$ for all $m, n \ge 0$.
+    solution: |
+      $X > j$ iff the first $j$ trials fail, so $\P(X > j) = (1-p)^j$. Since $\{X > m+n\} \subseteq \{X > m\}$,
+      $$\P(X > m+n \mid X > m) = \frac{(1-p)^{m+n}}{(1-p)^m} = (1-p)^n = \P(X > n). \qquad \blacksquare$$
+
+  - id: pr-023
+    title: Mean and variance of the exponential
+    subtopic: Distributions
+    difficulty: medium
+    type: compute
+    tags: [exponential, continuous, integration by parts]
+    statement: |
+      Let $X$ have density $f(x) = \lambda e^{-\lambda x}$ for $x \ge 0$. Compute $\E X$ and $\Var X$.
+    solution: |
+      By parts, with $u = x$ and $dv = \lambda e^{-\lambda x}dx$:
+      $$\E X = \int_0^\infty x\lambda e^{-\lambda x}\,dx = \Big[-xe^{-\lambda x}\Big]_0^\infty + \int_0^\infty e^{-\lambda x}dx = 0 + \frac1\lambda.$$
+      Similarly,
+      $$\E X^2 = \Big[-x^2e^{-\lambda x}\Big]_0^\infty + \int_0^\infty 2xe^{-\lambda x}dx = \frac2\lambda\E X = \frac{2}{\lambda^2}.$$
+      So $\Var X = \frac{2}{\lambda^2} - \frac{1}{\lambda^2} = \frac{1}{\lambda^2}$.
+
+  - id: pr-024
+    title: Distance between two random points
+    subtopic: Distributions
+    difficulty: medium
+    type: compute
+    tags: [uniform, double integral, symmetry]
+    statement: |
+      $X$ and $Y$ are independent and uniform on $[0,1]$. Find $\E|X - Y|$.
+    solution: |
+      The joint density is $1$ on the unit square. By symmetry in $x \leftrightarrow y$,
+      $$\E|X - Y| = 2\int_0^1\int_0^x (x - y)\,dy\,dx = 2\int_0^1 \frac{x^2}{2}\,dx = \frac13.$$
+
+  - id: pr-025
+    title: Markov's inequality
+    subtopic: Inequalities & limits
+    difficulty: easy
+    type: proof
+    tags: [markov, inequalities]
+    related: [pr-026]
+    statement: |
+      Let $X \ge 0$ be a random variable and $a > 0$. Prove that $\P(X \ge a) \le \dfrac{\E X}{a}$.
+    solution: |
+      Let $I = \mathbf 1[X \ge a]$. Pointwise, $aI \le X$: if $X \ge a$ then $aI = a \le X$, and otherwise $aI = 0 \le X$. Taking expectations (which preserves $\le$), $a\P(X \ge a) \le \E X$. $\blacksquare$
+
+  - id: pr-026
+    title: Chebyshev's inequality
+    subtopic: Inequalities & limits
+    difficulty: medium
+    type: proof
+    tags: [chebyshev, markov, variance]
+    related: [pr-025, pr-027]
+    statement: |
+      Let $X$ have mean $\mu$ and finite variance $\sigma^2$. Prove that for every $t > 0$,
+      $$\P(|X - \mu| \ge t) \le \frac{\sigma^2}{t^2}.$$
+    solution: |
+      $|X - \mu| \ge t$ iff $(X - \mu)^2 \ge t^2$. Apply Markov's inequality to the non-negative variable $(X - \mu)^2$:
+      $$\P\big((X-\mu)^2 \ge t^2\big) \le \frac{\E[(X - \mu)^2]}{t^2} = \frac{\sigma^2}{t^2}. \qquad \blacksquare$$
+
+  - id: pr-027
+    title: The weak law of large numbers
+    subtopic: Inequalities & limits
+    difficulty: medium
+    type: proof
+    tags: [law of large numbers, chebyshev]
+    related: [pr-026, pr-017]
+    statement: |
+      Let $X_1, X_2, \dots$ be independent with common mean $\mu$ and variance $\sigma^2$, and $\bar X_n = \frac1n(X_1 + \cdots + X_n)$. Prove that for every $\eps > 0$, $\P(|\bar X_n - \mu| \ge \eps) \to 0$ as $n \to \infty$.
+    solution: |
+      By linearity $\E\bar X_n = \mu$. By independence the variances add, so
+      $$\Var\bar X_n = \frac{1}{n^2}\cdot n\sigma^2 = \frac{\sigma^2}{n}.$$
+      By Chebyshev,
+      $$\P(|\bar X_n - \mu| \ge \eps) \le \frac{\sigma^2}{n\eps^2} \to 0. \qquad \blacksquare$$
+
+  - id: pr-028
+    title: Large cuts exist
+    subtopic: Inequalities & limits
+    difficulty: medium
+    type: proof
+    tags: [probabilistic method, graphs, expectation]
+    statement: |
+      Prove that every graph with $m$ edges has a bipartite subgraph with at least $m/2$ edges. (Equivalently, its vertices can be split into two sets with at least $m/2$ edges between them.)
+    solution: |
+      Put each vertex independently into $L$ or $R$ with probability $\frac12$ each. An edge $uv$ crosses between the sets iff $u, v$ land on different sides, which has probability $\frac12$. By linearity, the expected number of crossing edges is $m/2$.
+
+      A random variable cannot always be below its mean, so some split has at least $m/2$ crossing edges. Keeping just those edges gives a bipartite subgraph. $\blacksquare$
+
+  - id: pr-029
+    title: A Ramsey lower bound
+    subtopic: Inequalities & limits
+    difficulty: hard
+    type: proof
+    tags: [probabilistic method, ramsey, union bound]
+    source: Erdős, 1947
+    related: [gt-028, pr-004]
+    hints:
+      - |
+        Colour each edge of $K_n$ red or blue at random and bound the probability that some $k$-set is monochromatic.
+    statement: |
+      Prove that for $k \ge 3$ there is a red/blue colouring of the edges of $K_n$, with $n = \lfloor 2^{k/2}\rfloor$, containing no monochromatic $K_k$. Hence $R(k,k) > 2^{k/2}$.
+    solution: |
+      If $n < k$ there is no $K_k$ at all, so assume $n \ge k$. Colour each edge red or blue independently with probability $\frac12$. A fixed $k$-set is monochromatic with probability $2\cdot2^{-\binom k2}$. By the union bound,
+      $$\P(\text{some monochromatic } K_k) \le \binom nk 2^{1 - \binom k2} < \frac{n^k}{k!}2^{1 - \frac{k(k-1)}{2}} \le \frac{2^{k^2/2}\,2^{1 - k^2/2 + k/2}}{k!} = \frac{2^{1 + k/2}}{k!}.$$
+      For $k = 3$ this is $\frac{2^{2.5}}{6} \approx 0.94 < 1$. Going from $k$ to $k + 1$ multiplies it by $\frac{\sqrt2}{k+1} < 1$, so it is $< 1$ for all $k \ge 3$. Hence with positive probability no $K_k$ is monochromatic, so such a colouring exists. $\blacksquare$
+
+  - id: pr-030
+    title: Expected maximum of two dice
+    subtopic: Expectation & variance
+    difficulty: easy
+    type: compute
+    tags: [tail sum, dice, expectation]
+    related: [pr-019, pr-003]
+    statement: |
+      Two fair dice are rolled. Find the expected value of the larger of the two numbers.
+    solution: |
+      Let $M$ be the maximum. $\P(M \le j) = (j/6)^2$, so $\P(M \ge k) = 1 - \left(\frac{k-1}{6}\right)^2$. By the tail-sum formula,
+      $$\E M = \sum_{k=1}^6\left(1 - \frac{(k-1)^2}{36}\right) = 6 - \frac{0 + 1 + 4 + 9 + 16 + 25}{36} = 6 - \frac{55}{36} = \frac{161}{36} \approx 4.47.$$
