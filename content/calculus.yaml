@@ -475,3 +475,1682 @@ problems:
       This is a Riemann sum:
       $$\sum_{j=1}^n\frac1{n+j} = \frac1n\sum_{j=1}^n\frac{1}{1 + j/n} \to \int_0^1\frac{dx}{1+x} = \ln 2,$$
       since $\frac{1}{1+x}$ is continuous and hence integrable. Finally $S_{2n+1} = S_{2n} + \frac1{2n+1} \to \ln 2$ as well. Both the even and odd partial sums tend to $\ln 2$, so $S_m \to \ln 2$. $\blacksquare$
+
+  - id: ca-031
+    title: Limits by cancelling
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: compute
+    tags: [limits, factorising, rationalising]
+    related: [ca-003]
+    statement: |
+      Evaluate
+      $$\text{(a) }\lim_{x\to2}\frac{x^2 - 4}{x - 2},\qquad \text{(b) }\lim_{x\to1}\frac{x^3 - 1}{x - 1},\qquad\text{(c) }\lim_{x\to0}\frac{\sqrt{x + 4} - 2}{x}.$$
+    solution: |
+      (a) For $x \ne 2$ the quotient is $x + 2 \to 4$.
+
+      (b) $x^3 - 1 = (x-1)(x^2 + x + 1)$, so the quotient is $x^2 + x + 1 \to 3$.
+
+      (c) Rationalise: $\dfrac{(x + 4) - 4}{x(\sqrt{x+4} + 2)} = \dfrac{1}{\sqrt{x+4} + 2} \to \dfrac14$.
+
+  - id: ca-032
+    title: The square root is continuous at 4
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: proof
+    tags: [epsilon-delta, square roots]
+    related: [ca-002]
+    statement: |
+      Prove from the definition that $\displaystyle\lim_{x\to4}\sqrt x = 2$.
+    solution: |
+      For $x \ge 0$,
+      $$|\sqrt x - 2| = \frac{|x - 4|}{\sqrt x + 2} \le \frac{|x - 4|}{2}.$$
+      Given $\eps > 0$, take $\delta = \min(4, 2\eps)$. If $0 < |x - 4| < \delta$ then $x > 0$ (so $\sqrt x$ is defined) and $|\sqrt x - 2| < \frac{2\eps}{2} = \eps$. $\blacksquare$
+
+  - id: ca-033
+    title: The limit of 1/x at 2
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: proof
+    tags: [epsilon-delta]
+    related: [ca-002]
+    statement: |
+      Prove from the definition that $\displaystyle\lim_{x\to2}\frac1x = \frac12$.
+    solution: |
+      $\left|\frac1x - \frac12\right| = \frac{|x - 2|}{2|x|}$. If $|x - 2| < 1$ then $x > 1$, so this is less than $\frac{|x-2|}{2}$.
+
+      Given $\eps > 0$, take $\delta = \min(1, 2\eps)$. Then $0 < |x - 2| < \delta$ gives $\left|\frac1x - \frac12\right| < \frac{\delta}{2} \le \eps$. $\blacksquare$
+
+  - id: ca-034
+    title: Rational functions at infinity
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: compute
+    tags: [limits at infinity, rational functions]
+    statement: |
+      Evaluate $\displaystyle\lim_{x\to\infty}\frac{3x^2 + 1}{2x^2 - x}$ and $\displaystyle\lim_{x\to\infty}\frac{x^3 - 5}{x^4 + 1}$, and state the general rule.
+    solution: |
+      Divide numerator and denominator by the highest power of $x$ in the denominator:
+      $$\frac{3 + 1/x^2}{2 - 1/x} \to \frac32, \qquad \frac{1/x - 5/x^4}{1 + 1/x^4} \to 0.$$
+
+      **Rule.** For polynomials $p, q$ of degrees $m, n$ with leading coefficients $a, b$: $p/q \to a/b$ if $m = n$, $\to 0$ if $m < n$, and $\to\pm\infty$ if $m > n$.
+
+  - id: ca-035
+    title: A difference of large quantities
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: compute
+    tags: [limits at infinity, rationalising]
+    statement: |
+      Evaluate $\displaystyle\lim_{x\to\infty}\left(\sqrt{x^2 + x} - x\right)$.
+    solution: |
+      $$\sqrt{x^2 + x} - x = \frac{x}{\sqrt{x^2 + x} + x} = \frac{1}{\sqrt{1 + 1/x} + 1} \to \frac12.$$
+      (An "$\infty - \infty$" form can have any limit; here the $x$ terms cancel and the $\frac12$ comes from $\sqrt{x^2 + x} \approx x + \frac12$.)
+
+  - id: ca-036
+    title: Ratios of sines
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: compute
+    tags: [trigonometric limits]
+    related: [ca-003, ca-052]
+    statement: |
+      Evaluate $\displaystyle\lim_{x\to0}\frac{\sin5x}{\sin3x}$ and $\displaystyle\lim_{x\to0}\frac{x}{\tan x}$.
+    solution: |
+      $$\frac{\sin5x}{\sin3x} = \frac53\cdot\frac{\sin5x}{5x}\cdot\frac{3x}{\sin3x} \to \frac53\cdot1\cdot1 = \frac53.$$
+      $$\frac{x}{\tan x} = \frac{x}{\sin x}\cos x \to 1\cdot1 = 1.$$
+
+  - id: ca-037
+    title: The limit defining e
+    subtopic: Limits & continuity
+    difficulty: medium
+    type: proof
+    tags: [limits, exponential, logarithm]
+    related: [ca-020]
+    statement: |
+      Prove that $\displaystyle\lim_{x\to0}(1 + x)^{1/x} = e$, using that $\ln$ is differentiable at 1 with derivative 1.
+    solution: |
+      For $-1 < x$, $x \ne 0$:
+      $$\ln\left((1 + x)^{1/x}\right) = \frac{\ln(1 + x) - \ln 1}{x} \to \ln'(1) = 1$$
+      as $x \to 0$ (from either side). Since $\exp$ is continuous, $(1 + x)^{1/x} = \exp\left(\frac{\ln(1+x)}{x}\right) \to e^1$. $\blacksquare$
+
+  - id: ca-038
+    title: The limit of a product
+    subtopic: Limits & continuity
+    difficulty: medium
+    type: proof
+    tags: [epsilon-delta, limit laws]
+    related: [ca-054]
+    statement: |
+      Prove that if $f(x) \to L$ and $g(x) \to M$ as $x \to a$, then $f(x)g(x) \to LM$.
+    solution: |
+      $$|fg - LM| = |f(g - M) + M(f - L)| \le |f|\,|g - M| + |M|\,|f - L|.$$
+      Let $\eps > 0$. Choose $\delta_1$ with $|f - L| < 1$ (so $|f| < |L| + 1$) for $0 < |x - a| < \delta_1$; $\delta_2$ with $|g - M| < \frac{\eps}{2(|L| + 1)}$; and $\delta_3$ with $|f - L| < \frac{\eps}{2(|M| + 1)}$. For $0 < |x - a| < \min(\delta_1, \delta_2, \delta_3)$,
+      $$|fg - LM| < (|L|+1)\frac{\eps}{2(|L|+1)} + |M|\frac{\eps}{2(|M|+1)} < \eps. \qquad\blacksquare$$
+
+  - id: ca-039
+    title: Limits through sequences
+    subtopic: Limits & continuity
+    difficulty: medium
+    type: proof
+    tags: [limits, sequences, heine]
+    related: [ca-004]
+    statement: |
+      Prove that $\lim_{x\to a}f(x) = L$ if and only if $f(x_n) \to L$ for every sequence $x_n \to a$ with $x_n \ne a$.
+    solution: |
+      **($\Rightarrow$)** Let $\eps > 0$ and $\delta$ be as in the definition. Since $x_n \to a$, there is $N$ with $0 < |x_n - a| < \delta$ for $n \ge N$, hence $|f(x_n) - L| < \eps$.
+
+      **($\Leftarrow$)** Suppose the limit is not $L$. Then for some $\eps > 0$ and every $\delta = \frac1n$ there is $x_n$ with $0 < |x_n - a| < \frac1n$ and $|f(x_n) - L| \ge \eps$. Then $x_n \to a$, $x_n \ne a$, but $f(x_n) \not\to L$. $\blacksquare$
+
+      (This is the standard way to show a limit does not exist: find two sequences with different limits, as in ca-004.)
+
+  - id: ca-040
+    title: Composites of continuous functions
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: proof
+    tags: [continuity, composition, epsilon-delta]
+    statement: |
+      Prove that if $f$ is continuous at $a$ and $g$ is continuous at $f(a)$, then $g\circ f$ is continuous at $a$.
+    solution: |
+      Let $\eps > 0$. By continuity of $g$ at $b = f(a)$ there is $\eta > 0$ with $|g(y) - g(b)| < \eps$ whenever $|y - b| < \eta$. By continuity of $f$ there is $\delta > 0$ with $|f(x) - b| < \eta$ whenever $|x - a| < \delta$. Then $|x - a| < \delta$ gives $|g(f(x)) - g(f(a))| < \eps$. $\blacksquare$
+
+  - id: ca-041
+    title: Two continuous functions with kinks
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: proof
+    tags: [continuity, absolute value]
+    related: [ca-004]
+    statement: |
+      Prove that $|x|$ is continuous everywhere, and that $f(x) = x\sin\frac1x$ ($x \ne 0$), $f(0) = 0$, is continuous at $0$.
+    solution: |
+      **$|x|$.** By the reverse triangle inequality $\big||x| - |a|\big| \le |x - a|$, so $\delta = \eps$ works.
+
+      **$f$ at 0.** $|f(x) - f(0)| = |x|\,\left|\sin\frac1x\right| \le |x|$, so again $\delta = \eps$ works. $\blacksquare$
+
+  - id: ca-042
+    title: Continuous at exactly one point
+    subtopic: Limits & continuity
+    difficulty: medium
+    type: proof
+    tags: [continuity, rationals, density]
+    statement: |
+      Let $f(x) = x$ for rational $x$ and $f(x) = 0$ for irrational $x$. Prove that $f$ is continuous at $0$ and at no other point.
+    solution: |
+      **At 0.** $|f(x)| \le |x|$ for all $x$, so $f(x) \to 0 = f(0)$.
+
+      **At $a \ne 0$.** There are rationals $q_n \to a$ and irrationals $r_n \to a$ (both are dense). Then $f(q_n) = q_n \to a$ and $f(r_n) = 0$. These limits differ, so $f$ has no limit at $a$ (ca-039) and is not continuous there. $\blacksquare$
+
+  - id: ca-043
+    title: Thomae's function
+    subtopic: Limits & continuity
+    difficulty: hard
+    type: proof
+    tags: [continuity, rationals, popcorn function]
+    source: Thomae, 1875
+    related: [ca-042]
+    hints:
+      - |
+        Near an irrational point there are only finitely many rationals with small denominator.
+    statement: |
+      Define $f(x) = \frac1q$ if $x = \frac pq$ in lowest terms with $q > 0$, and $f(x) = 0$ if $x$ is irrational. Prove that $f$ is continuous at every irrational and discontinuous at every rational.
+    solution: |
+      **Rationals.** If $r = \frac pq$, then $f(r) = \frac1q > 0$, but irrationals $x_n \to r$ have $f(x_n) = 0 \not\to f(r)$.
+
+      **Irrationals.** Let $a$ be irrational and $\eps > 0$; choose $N$ with $\frac1N < \eps$. In $(a - 1, a + 1)$ there are only finitely many rationals with denominator at most $N$ (for each $q \le N$, at most $2q + 1$ fractions $\frac pq$). None of them equals $a$, so we can choose $\delta \in (0, 1)$ smaller than the distance from $a$ to each. For $|x - a| < \delta$, either $x$ is irrational and $f(x) = 0$, or $x = \frac pq$ with $q > N$ and $f(x) < \frac1N < \eps$. So $|f(x) - f(a)| < \eps$. $\blacksquare$
+
+  - id: ca-044
+    title: One-sided limits
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: compute
+    tags: [one-sided limits, floor function]
+    statement: |
+      Find the one-sided limits at $0$ of $\frac{|x|}{x}$, and at an integer $n$ of $\lfloor x\rfloor$. Do the two-sided limits exist?
+    solution: |
+      $\frac{|x|}{x}$ is $1$ for $x > 0$ and $-1$ for $x < 0$: right limit $1$, left limit $-1$, so no two-sided limit.
+
+      For $n - 1 \le x < n$, $\lfloor x\rfloor = n - 1$, and for $n \le x < n + 1$ it is $n$. So the left limit at $n$ is $n - 1$, the right limit is $n$, and there is no two-sided limit. A two-sided limit exists iff both one-sided limits exist and agree.
+
+  - id: ca-045
+    title: Kinds of discontinuity
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: compute
+    tags: [continuity, discontinuities]
+    related: [ca-004]
+    statement: |
+      Classify the behaviour at the given point as removable, jump, infinite or oscillating: (a) $\frac{x^2 - 1}{x - 1}$ at $1$; (b) $\frac{|x|}{x}$ at $0$; (c) $\frac1x$ at $0$; (d) $\sin\frac1x$ at $0$. For any removable one, say how to remove it.
+    solution: |
+      (a) **Removable**: the limit is $2$; define the value at 1 to be 2 (giving $x + 1$).
+
+      (b) **Jump**: one-sided limits $\pm1$ exist but differ.
+
+      (c) **Infinite**: $\frac1x \to \pm\infty$ from the right/left.
+
+      (d) **Oscillating**: no one-sided limits exist (ca-004), although the function stays bounded.
+
+  - id: ca-046
+    title: The horizontal chord theorem
+    subtopic: Limits & continuity
+    difficulty: medium
+    type: proof
+    tags: [intermediate value theorem]
+    statement: |
+      Let $f$ be continuous on $[0, 1]$ with $f(0) = f(1)$. Prove that $f\left(x + \frac12\right) = f(x)$ for some $x \in \left[0, \frac12\right]$.
+    solution: |
+      Let $g(x) = f(x + \frac12) - f(x)$ on $[0, \frac12]$, which is continuous. Then
+      $$g(0) + g\left(\tfrac12\right) = f\left(\tfrac12\right) - f(0) + f(1) - f\left(\tfrac12\right) = 0.$$
+      So $g(0)$ and $g(\frac12)$ are negatives of each other. If either is 0 we're done; otherwise they have opposite signs and the IVT gives a zero of $g$ in between. $\blacksquare$
+
+      (So the graph has a horizontal chord of length $\frac12$. The same works for length $\frac1n$, but by Lévy's universal chord theorem no other length is guaranteed: $\frac25$ can fail.)
+
+  - id: ca-047
+    title: Antipodal points with equal temperature
+    subtopic: Limits & continuity
+    difficulty: medium
+    type: proof
+    tags: [intermediate value theorem, periodic functions]
+    statement: |
+      The temperature $T(\theta)$ around the equator is a continuous function of longitude $\theta$, with period $2\pi$. Prove that at some moment two antipodal points have the same temperature.
+    solution: |
+      Let $g(\theta) = T(\theta + \pi) - T(\theta)$. Then $g(\pi) = T(2\pi) - T(\pi) = T(0) - T(\pi) = -g(0)$. So either $g(0) = 0$ or $g(0)$ and $g(\pi)$ have opposite signs, and by the IVT $g(\theta) = 0$ for some $\theta \in [0, \pi]$. $\blacksquare$
+
+  - id: ca-048
+    title: Continuous injections are monotone
+    subtopic: Limits & continuity
+    difficulty: hard
+    type: proof
+    tags: [intermediate value theorem, injective, monotone]
+    related: [lg-218]
+    hints:
+      - |
+        Fix $a_0 < b_0$ with $f(a_0) < f(b_0)$. For $x < y$, slide $(a_0, b_0)$ to $(x, y)$ continuously and watch the sign of the difference.
+    statement: |
+      Let $f$ be continuous and injective on an interval $I$. Prove that $f$ is strictly monotone.
+    solution: |
+      If $I$ has fewer than two points there is nothing to prove. Fix $a_0 < b_0$ in $I$; by injectivity $f(a_0) \ne f(b_0)$, say $f(a_0) < f(b_0)$ (otherwise replace $f$ by $-f$). We show $f(x) < f(y)$ whenever $x < y$ in $I$.
+
+      For $t \in [0, 1]$ let $u(t) = (1 - t)a_0 + tx$ and $v(t) = (1 - t)b_0 + ty$. Both lie in $I$ (it is convex), and $u(t) < v(t)$ because $a_0 < b_0$ and $x < y$. Let $h(t) = f(v(t)) - f(u(t))$, a continuous function. By injectivity $h(t) \ne 0$ for all $t$. Since $h(0) > 0$, the IVT forces $h(1) > 0$, i.e. $f(y) > f(x)$. $\blacksquare$
+
+  - id: ca-049
+    title: A maximum on an unbounded interval
+    subtopic: Limits & continuity
+    difficulty: medium
+    type: proof
+    tags: [extreme value theorem, unbounded domains]
+    statement: |
+      Prove that $f(x) = xe^{-x}$ attains a maximum on $[0, \infty)$ and find it. (The extreme value theorem only applies to closed bounded intervals.)
+    solution: |
+      For $x \ge 0$, $e^x \ge \frac{x^2}{2}$ (from the series, or in-118), so $f(x) \le \frac2x$. For $x \ge 2e$ this gives $f(x) \le \frac1e$, and $f(1) = \frac1e$.
+
+      On $[0, 2e]$, $f$ is continuous, so it attains a maximum $M \ge f(1) = \frac1e$. Every $x > 2e$ has $f(x) \le \frac1e \le M$, so $M$ is the maximum on all of $[0, \infty)$.
+
+      $f'(x) = (1 - x)e^{-x}$ vanishes only at $x = 1$, and the endpoints give $f(0) = 0$, $f(2e) < \frac1e$. So the maximum is $f(1) = \frac1e$. $\blacksquare$
+
+  - id: ca-050
+    title: More squeezes
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: proof
+    tags: [squeeze theorem]
+    related: [ca-004]
+    statement: |
+      Prove that $\displaystyle\lim_{x\to0}x^2\cos\frac{1}{x^2} = 0$ and $\displaystyle\lim_{x\to\infty}\frac{\sin x}{x} = 0$.
+    solution: |
+      $\left|x^2\cos\frac1{x^2}\right| \le x^2 \to 0$, and $\left|\frac{\sin x}{x}\right| \le \frac1x \to 0$ as $x \to \infty$. In each case the squeeze theorem applies. $\blacksquare$
+
+  - id: ca-051
+    title: Trigonometric limits from sin x / x
+    subtopic: Limits & continuity
+    difficulty: medium
+    type: compute
+    tags: [trigonometric limits]
+    related: [ca-003]
+    statement: |
+      Using $\frac{\sin x}{x} \to 1$ and $\frac{1 - \cos x}{x^2} \to \frac12$, evaluate $\displaystyle\lim_{x\to0}\frac{1 - \cos x}{x}$ and $\displaystyle\lim_{x\to0}\frac{\tan x - \sin x}{x^3}$.
+    solution: |
+      $\frac{1 - \cos x}{x} = \frac{1 - \cos x}{x^2}\cdot x \to \frac12\cdot0 = 0$.
+
+      $\tan x - \sin x = \sin x\left(\frac1{\cos x} - 1\right) = \frac{\sin x(1 - \cos x)}{\cos x}$, so
+      $$\frac{\tan x - \sin x}{x^3} = \frac{\sin x}{x}\cdot\frac{1 - \cos x}{x^2}\cdot\frac1{\cos x} \to 1\cdot\frac12\cdot1 = \frac12.$$
+
+  - id: ca-052
+    title: Why sin x / x → 1
+    subtopic: Limits & continuity
+    difficulty: medium
+    type: proof
+    tags: [trigonometric limits, squeeze theorem, geometry]
+    related: [ca-003]
+    statement: |
+      Using areas in the unit circle, prove that $\sin x < x < \tan x$ for $0 < x < \frac\pi2$, and deduce $\frac{\sin x}{x} \to 1$ as $x \to 0$.
+    solution: |
+      Let $O$ be the centre, $A = (1, 0)$, $B = (\cos x, \sin x)$, and $T = (1, \tan x)$ where $OB$ meets the tangent at $A$. Then
+      $$\text{triangle } OAB \subset \text{sector } OAB \subset \text{triangle } OAT,$$
+      with areas $\frac12\sin x < \frac12x < \frac12\tan x$.
+
+      Dividing by $\frac12\sin x > 0$ and inverting: $\cos x < \frac{\sin x}{x} < 1$. As $x \to 0^+$, $\cos x \to 1$, so by squeezing $\frac{\sin x}{x} \to 1$. Since $\frac{\sin x}{x}$ is even, the same holds as $x \to 0^-$. $\blacksquare$
+
+  - id: ca-053
+    title: Polynomials are continuous
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: proof
+    tags: [continuity, limit laws, polynomials]
+    related: [ca-038]
+    statement: |
+      Using the limit laws for sums, products and quotients, prove that every polynomial is continuous on $\R$, and every rational function is continuous where its denominator is non-zero.
+    solution: |
+      Constant functions and $x$ are continuous. By the product law, $x^k = x\cdots x$ is continuous (induction on $k$), and so is $cx^k$. By the sum law, finite sums $\sum c_kx^k$ are continuous. For $p/q$ with $q(a) \ne 0$, the quotient law gives $\frac{p(x)}{q(x)} \to \frac{p(a)}{q(a)}$. $\blacksquare$
+
+  - id: ca-054
+    title: Functions with limits are locally bounded
+    subtopic: Limits & continuity
+    difficulty: easy
+    type: proof
+    tags: [limits, boundedness]
+    related: [ca-038]
+    statement: |
+      Prove that if $\lim_{x\to a}f(x) = L$ then there is $\delta > 0$ such that $f$ is bounded on $\{x : 0 < |x - a| < \delta\}$. Show that $\frac1x$ has no limit at $0$ using this.
+    solution: |
+      With $\eps = 1$ there is $\delta$ such that $0 < |x - a| < \delta$ implies $|f(x) - L| < 1$, so $|f(x)| < |L| + 1$.
+
+      $\frac1x$ is unbounded on every punctured neighbourhood $0 < |x| < \delta$: given any $M > 0$, a point $0 < x < \min(\delta, \frac1M)$ has $\frac1x > M$. So it has no limit at $0$. $\blacksquare$
+
+  - id: ca-055
+    title: Derivatives from first principles
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [definition of derivative]
+    statement: |
+      Using the definition, differentiate $\sqrt x$ (for $x > 0$) and $\frac1x$ (for $x \ne 0$).
+    solution: |
+      $$\frac{\sqrt{x + h} - \sqrt x}{h} = \frac{(x + h) - x}{h(\sqrt{x+h} + \sqrt x)} = \frac{1}{\sqrt{x+h} + \sqrt x} \to \frac{1}{2\sqrt x}.$$
+      $$\frac{\frac1{x+h} - \frac1x}{h} = \frac{x - (x+h)}{hx(x+h)} = -\frac{1}{x(x+h)} \to -\frac1{x^2}.$$
+
+  - id: ca-056
+    title: The quotient rule
+    subtopic: Differentiation
+    difficulty: easy
+    type: proof
+    tags: [quotient rule, product rule]
+    related: [ca-007]
+    statement: |
+      Prove that if $f, g$ are differentiable at $x$ and $g(x) \ne 0$, then $\left(\frac fg\right)' = \frac{f'g - fg'}{g^2}$ at $x$.
+    solution: |
+      First, $\frac1g$: since $g$ is continuous at $x$ and $g(x) \ne 0$, $g(x+h) \ne 0$ for small $h$, and
+      $$\frac{\frac1{g(x+h)} - \frac1{g(x)}}{h} = -\frac{g(x+h) - g(x)}{h}\cdot\frac1{g(x+h)g(x)} \to -\frac{g'(x)}{g(x)^2}.$$
+      Then by the product rule $\left(f\cdot\frac1g\right)' = \frac{f'}{g} - \frac{fg'}{g^2} = \frac{f'g - fg'}{g^2}$. $\blacksquare$
+
+  - id: ca-057
+    title: The chain rule
+    subtopic: Differentiation
+    difficulty: medium
+    type: proof
+    tags: [chain rule, definition of derivative]
+    hints:
+      - |
+        The naive proof divides by $f(a+h) - f(a)$, which might be zero. Use an auxiliary function that is continuous at 0 instead.
+    statement: |
+      Prove that if $f$ is differentiable at $a$ and $g$ is differentiable at $b = f(a)$, then $g\circ f$ is differentiable at $a$ with derivative $g'(b)f'(a)$.
+    solution: |
+      Define $\varphi(k) = \frac{g(b + k) - g(b)}{k}$ for $k \ne 0$ and $\varphi(0) = g'(b)$. Then $\varphi$ is continuous at $0$, and $g(b + k) - g(b) = \varphi(k)\,k$ for **all** $k$, including $k = 0$.
+
+      With $k = f(a + h) - f(a)$,
+      $$\frac{g(f(a+h)) - g(f(a))}{h} = \varphi\big(f(a+h) - f(a)\big)\cdot\frac{f(a+h) - f(a)}{h}.$$
+      As $h \to 0$, $f(a+h) - f(a) \to 0$ (differentiable implies continuous), so the first factor tends to $\varphi(0) = g'(b)$, and the second tends to $f'(a)$. $\blacksquare$
+
+  - id: ca-058
+    title: The derivative of sine
+    subtopic: Differentiation
+    difficulty: medium
+    type: proof
+    tags: [trigonometric functions, definition of derivative]
+    related: [ca-003, ca-051]
+    statement: |
+      Prove from the definition that $\frac{d}{dx}\sin x = \cos x$, using $\frac{\sin h}h \to 1$ and $\frac{1 - \cos h}{h} \to 0$.
+    solution: |
+      By the addition formula,
+      $$\frac{\sin(x+h) - \sin x}{h} = \sin x\cdot\frac{\cos h - 1}{h} + \cos x\cdot\frac{\sin h}{h} \to \sin x\cdot0 + \cos x\cdot1 = \cos x. \qquad\blacksquare$$
+      (The same method gives $\frac{d}{dx}\cos x = -\sin x$.)
+
+  - id: ca-059
+    title: Derivatives of inverse functions
+    subtopic: Differentiation
+    difficulty: medium
+    type: proof
+    tags: [inverse functions, chain rule]
+    related: [ca-008]
+    statement: |
+      Let $f$ be continuous and strictly increasing on an open interval, differentiable at $a$ with $f'(a) \ne 0$, and let $b = f(a)$. Assuming $f^{-1}$ is continuous, prove $(f^{-1})'(b) = \frac{1}{f'(a)}$. Deduce the derivatives of $\ln x$ and $\arcsin x$.
+    solution: |
+      For small $h \ne 0$ let $k = f^{-1}(b + h) - a$. Then $k \ne 0$ (injectivity), $k \to 0$ as $h \to 0$ (continuity of $f^{-1}$), and $h = f(a + k) - f(a)$. So
+      $$\frac{f^{-1}(b+h) - f^{-1}(b)}{h} = \frac{k}{f(a+k) - f(a)} \to \frac1{f'(a)}.$$
+
+      - $\ln = \exp^{-1}$: $\ln'(y) = \frac1{\exp(\ln y)} = \frac1y$.
+      - $\arcsin$ on $(-1, 1)$, inverse of $\sin$ on $(-\frac\pi2, \frac\pi2)$: $\arcsin'(y) = \frac{1}{\cos(\arcsin y)} = \frac{1}{\sqrt{1 - y^2}}$, taking the positive root as $\cos > 0$ there. $\blacksquare$
+
+  - id: ca-060
+    title: Exponentials with any base
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [exponential, chain rule]
+    statement: |
+      Given $\frac{d}{dx}e^x = e^x$, find the derivatives of $a^x$ ($a > 0$), $x^a$ ($x > 0$, $a$ real) and $\log_ax$.
+    solution: |
+      $a^x = e^{x\ln a}$, so $\frac{d}{dx}a^x = (\ln a)a^x$.
+
+      $x^a = e^{a\ln x}$, so $\frac{d}{dx}x^a = \frac{a}{x}x^a = ax^{a-1}$.
+
+      $\log_ax = \frac{\ln x}{\ln a}$, so its derivative is $\frac{1}{x\ln a}$.
+
+  - id: ca-061
+    title: Smoothing a corner
+    subtopic: Differentiation
+    difficulty: easy
+    type: proof
+    tags: [differentiability, absolute value]
+    statement: |
+      Prove that $|x|$ is not differentiable at 0, but $x|x|$ is differentiable everywhere with derivative $2|x|$.
+    solution: |
+      $\frac{|h| - 0}{h} = \pm1$ for $h \gtrless 0$, which has no limit.
+
+      For $x|x|$ at $0$: $\frac{h|h|}{h} = |h| \to 0$. For $x > 0$ it is $x^2$, with derivative $2x$; for $x < 0$ it is $-x^2$, with derivative $-2x$. In all cases the derivative is $2|x|$. $\blacksquare$
+
+  - id: ca-062
+    title: Differentiable implies continuous
+    subtopic: Differentiation
+    difficulty: easy
+    type: proof
+    tags: [differentiability, continuity]
+    related: [ca-061]
+    statement: |
+      Prove that if $f$ is differentiable at $a$ then $f$ is continuous at $a$. Is the converse true?
+    solution: |
+      For $h \ne 0$, $f(a + h) - f(a) = h\cdot\frac{f(a+h) - f(a)}{h} \to 0\cdot f'(a) = 0$.
+
+      The converse is false: $|x|$ is continuous but not differentiable at $0$ (ca-061). $\blacksquare$
+
+  - id: ca-063
+    title: nth derivatives
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [higher derivatives, induction]
+    related: [ca-011]
+    statement: |
+      Find, and prove by induction, formulas for the $n$th derivatives of $xe^x$, $\sin x$ and $\frac{1}{1 - x}$.
+    solution: |
+      - $(xe^x)^{(n)} = (x + n)e^x$: true for $n = 0$, and $\frac{d}{dx}(x + n)e^x = (x + n + 1)e^x$.
+      - $(\sin x)^{(n)} = \sin\left(x + \frac{n\pi}{2}\right)$: true for $n = 0$, and $\frac{d}{dx}\sin(x + \theta) = \cos(x + \theta) = \sin(x + \theta + \frac\pi2)$.
+      - $\left(\frac1{1-x}\right)^{(n)} = \frac{n!}{(1 - x)^{n+1}}$: true for $n = 0$, and $\frac{d}{dx}n!(1-x)^{-(n+1)} = (n+1)!\,(1-x)^{-(n+2)}$.
+
+  - id: ca-064
+    title: A tangent to an ellipse
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [implicit differentiation, tangent lines]
+    related: [ca-009]
+    statement: |
+      Find the tangent line to $x^2 + xy + y^2 = 7$ at $(1, 2)$.
+    solution: |
+      $(1,2)$ is on the curve: $1 + 2 + 4 = 7$. Differentiating, $2x + y + xy' + 2yy' = 0$, so $y' = -\frac{2x + y}{x + 2y}$. At $(1, 2)$: $y' = -\frac45$. The tangent is $y - 2 = -\frac45(x - 1)$, i.e. $4x + 5y = 14$.
+
+  - id: ca-065
+    title: A sliding ladder
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [related rates]
+    statement: |
+      A 5 m ladder leans against a wall. Its foot slides away from the wall at 1 m/s. How fast is the top sliding down when the foot is 3 m from the wall?
+    solution: |
+      With foot at distance $x$ and top at height $y$: $x^2 + y^2 = 25$, so $2xx' + 2yy' = 0$. When $x = 3$, $y = 4$, and with $x' = 1$:
+      $$y' = -\frac{xx'}{y} = -\frac34.$$
+      The top slides down at $\frac34$ m/s.
+
+  - id: ca-066
+    title: The largest rectangle in a circle
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [optimisation]
+    related: [ca-010]
+    statement: |
+      Find the rectangle of largest area inscribed in a circle of radius $r$.
+    solution: |
+      Its diagonal is a diameter. With half-sides $r\cos\theta$, $r\sin\theta$ ($0 < \theta < \frac\pi2$), the area is
+      $$A(\theta) = 4r^2\cos\theta\sin\theta = 2r^2\sin2\theta,$$
+      which is largest when $\sin 2\theta = 1$, $\theta = \frac\pi4$. So the best rectangle is a **square** of area $2r^2$.
+
+  - id: ca-067
+    title: Closest point on a parabola
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [optimisation, distance]
+    statement: |
+      Find the points of $y = x^2$ closest to $(0, 3)$.
+    solution: |
+      Minimise the squared distance $D(x) = x^2 + (x^2 - 3)^2$. Then
+      $$D'(x) = 2x + 4x(x^2 - 3) = 2x(2x^2 - 5),$$
+      zero at $x = 0$ and $x = \pm\sqrt{5/2}$. $D(0) = 9$ and $D(\pm\sqrt{5/2}) = \frac52 + \frac14 = \frac{11}4$. As $D \to \infty$ when $|x| \to \infty$, the minimum is at $x = \pm\sqrt{5/2}$: the points $\left(\pm\sqrt{5/2}, \frac52\right)$, at distance $\frac{\sqrt{11}}{2}$.
+
+  - id: ca-068
+    title: Snell's law from Fermat's principle
+    subtopic: Differentiation
+    difficulty: medium
+    type: proof
+    tags: [optimisation, physics]
+    source: Fermat
+    statement: |
+      Light travels from $A = (0, a)$ to $B = (d, -b)$ ($a, b, d > 0$), with speed $v_1$ above the $x$-axis and $v_2$ below, crossing the axis at $(x, 0)$. Show that the travel time is minimised when $\frac{\sin\theta_1}{v_1} = \frac{\sin\theta_2}{v_2}$, where $\theta_1, \theta_2$ are the angles the two segments make with the vertical.
+    solution: |
+      $$T(x) = \frac{\sqrt{a^2 + x^2}}{v_1} + \frac{\sqrt{b^2 + (d - x)^2}}{v_2},\qquad T'(x) = \frac{x}{v_1\sqrt{a^2 + x^2}} - \frac{d - x}{v_2\sqrt{b^2 + (d-x)^2}}.$$
+      Here $\frac{x}{\sqrt{a^2 + x^2}} = \sin\theta_1$ and $\frac{d - x}{\sqrt{b^2 + (d-x)^2}} = \sin\theta_2$, so $T'(x) = 0$ iff $\frac{\sin\theta_1}{v_1} = \frac{\sin\theta_2}{v_2}$.
+
+      $T'$ is increasing (the first term increases with $x$ and the second decreases), negative at $x = 0$ and positive at $x = d$, so it has exactly one zero, which is the minimum. $\blacksquare$
+
+  - id: ca-069
+    title: Logarithmic differentiation
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [logarithmic differentiation]
+    related: [ca-008]
+    statement: |
+      Differentiate $y = (x^2 + 1)^{\sin x}$.
+    solution: |
+      $\ln y = \sin x\ln(x^2 + 1)$. Differentiating,
+      $$\frac{y'}{y} = \cos x\ln(x^2 + 1) + \frac{2x\sin x}{x^2 + 1},$$
+      so
+      $$y' = (x^2 + 1)^{\sin x}\left(\cos x\ln(x^2+1) + \frac{2x\sin x}{x^2 + 1}\right).$$
+
+  - id: ca-070
+    title: A tangent through a given point
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [tangent lines]
+    statement: |
+      Find all tangent lines to $y = x^3$ that pass through $(0, 2)$.
+    solution: |
+      The tangent at $(a, a^3)$ is $y = a^3 + 3a^2(x - a)$. It passes through $(0, 2)$ iff $2 = a^3 - 3a^3 = -2a^3$, i.e. $a = -1$. The tangent is $y = -1 + 3(x + 1) = 3x + 2$.
+
+  - id: ca-071
+    title: Sketching a quartic
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [critical points, concavity, inflection points]
+    statement: |
+      For $f(x) = x^4 - 4x^3$, find the critical points and classify them, and find the inflection points.
+    solution: |
+      $f'(x) = 4x^3 - 12x^2 = 4x^2(x - 3)$: critical points $0$ and $3$. $f'$ is negative on both sides of $0$, so $0$ is **not** an extremum; it changes from negative to positive at $3$, a **local (and global) minimum** $f(3) = -27$.
+
+      $f''(x) = 12x^2 - 24x = 12x(x - 2)$ changes sign at $0$ and $2$, so these are the **inflection points**: $(0, 0)$ and $(2, -16)$.
+
+  - id: ca-072
+    title: Darboux's theorem
+    subtopic: Differentiation
+    difficulty: hard
+    type: proof
+    tags: [derivatives, intermediate value property]
+    source: Darboux, 1875
+    related: [ca-006]
+    statement: |
+      Let $f$ be differentiable on $[a, b]$ (one-sided at the ends) with $f'(a) < \lambda < f'(b)$. Prove that $f'(c) = \lambda$ for some $c \in (a, b)$. (So derivatives have the intermediate value property even when they are not continuous.)
+    solution: |
+      Let $g(x) = f(x) - \lambda x$, so $g'(a) < 0 < g'(b)$. $g$ is continuous on $[a, b]$, so it attains a minimum at some $c$.
+
+      Since $g'(a) < 0$, $\frac{g(a + h) - g(a)}{h} < 0$ for small $h > 0$, so $g(a + h) < g(a)$: the minimum is not at $a$. Since $g'(b) > 0$, $g(b - h) < g(b)$ for small $h > 0$: the minimum is not at $b$. So $c \in (a, b)$ is an interior minimum and $g'(c) = 0$, i.e. $f'(c) = \lambda$. $\blacksquare$
+
+  - id: ca-073
+    title: Positive derivative but not increasing nearby
+    subtopic: Differentiation
+    difficulty: hard
+    type: proof
+    tags: [derivatives, counterexample, oscillation]
+    related: [ca-006]
+    statement: |
+      Let $f(x) = x + 2x^2\sin\frac1x$ for $x \ne 0$ and $f(0) = 0$. Prove that $f'(0) = 1 > 0$, but $f$ is not increasing on any interval containing $0$.
+    solution: |
+      $\frac{f(h)}{h} = 1 + 2h\sin\frac1h \to 1$, so $f'(0) = 1$.
+
+      For $x \ne 0$, $f'(x) = 1 + 4x\sin\frac1x - 2\cos\frac1x$. At $x_k = \frac1{2\pi k}$, $f'(x_k) = 1 + 0 - 2 = -1 < 0$. Since $f'$ is continuous on $(0, \infty)$, it is negative on a small interval around each $x_k$, where $f$ is strictly decreasing. Every interval containing 0 contains some $x_k$, so $f$ is not increasing on it. $\blacksquare$
+
+  - id: ca-074
+    title: Rational powers
+    subtopic: Differentiation
+    difficulty: easy
+    type: compute
+    tags: [implicit differentiation, power rule]
+    statement: |
+      Assuming $y = x^{p/q}$ ($x > 0$, integers $p$, $q > 0$) is differentiable, use $y^q = x^p$ to show $y' = \frac pqx^{p/q - 1}$.
+    solution: |
+      Differentiate $y^q = x^p$: $qy^{q-1}y' = px^{p-1}$. So
+      $$y' = \frac{p}{q}\cdot\frac{x^{p-1}}{y^{q-1}} = \frac pq\cdot\frac{x^{p-1}}{x^{p(q-1)/q}} = \frac pqx^{p - 1 - p + p/q} = \frac pqx^{p/q - 1}.$$
+
+  - id: ca-075
+    title: A vertical tangent
+    subtopic: Differentiation
+    difficulty: easy
+    type: proof
+    tags: [differentiability, cube root]
+    statement: |
+      Prove that $f(x) = x^{1/3}$ is continuous but not differentiable at $0$.
+    solution: |
+      Continuity: $|x^{1/3}| < \eps$ whenever $|x| < \eps^3$.
+
+      $\frac{f(h) - f(0)}{h} = h^{-2/3} \to +\infty$, so there is no finite derivative. Geometrically the graph has a vertical tangent at the origin. $\blacksquare$
+
+  - id: ca-076
+    title: Symmetry is inherited by derivatives
+    subtopic: Differentiation
+    difficulty: easy
+    type: proof
+    tags: [even and odd, periodic functions, chain rule]
+    statement: |
+      Let $f$ be differentiable on $\R$. Prove that if $f$ is even then $f'$ is odd, if $f$ is odd then $f'$ is even, and if $f$ has period $T$ then so does $f'$.
+    solution: |
+      Differentiate the identities with the chain rule:
+
+      - $f(-x) = f(x)$ gives $-f'(-x) = f'(x)$.
+      - $f(-x) = -f(x)$ gives $-f'(-x) = -f'(x)$.
+      - $f(x + T) = f(x)$ gives $f'(x + T) = f'(x)$. $\blacksquare$
+
+  - id: ca-077
+    title: Functions equal to their own derivative
+    subtopic: Differentiation
+    difficulty: medium
+    type: proof
+    tags: [differential equations, exponential, mean value theorem]
+    related: [ca-013]
+    statement: |
+      Prove that if $f'(x) = f(x)$ for all real $x$, then $f(x) = Ce^x$ for a constant $C$.
+    solution: |
+      Let $g(x) = f(x)e^{-x}$. Then $g'(x) = f'(x)e^{-x} - f(x)e^{-x} = 0$, so $g$ is constant (ca-013), say $C$. Hence $f(x) = Ce^x$. $\blacksquare$
+
+  - id: ca-078
+    title: The exponential functional equation
+    subtopic: Differentiation
+    difficulty: medium
+    type: proof
+    tags: [functional equations, exponential]
+    related: [ca-077, lg-249]
+    statement: |
+      Let $f : \R \to \R$ satisfy $f(x + y) = f(x)f(y)$, $f(0) = 1$, and suppose $f$ is differentiable at $0$ with $f'(0) = c$. Prove that $f(x) = e^{cx}$.
+    solution: |
+      For any $x$,
+      $$\frac{f(x + h) - f(x)}{h} = f(x)\cdot\frac{f(h) - 1}{h} \to cf(x),$$
+      so $f$ is differentiable everywhere with $f' = cf$. Then $g(x) = f(x)e^{-cx}$ has $g' = 0$, so $g \equiv g(0) = 1$. $\blacksquare$
+
+  - id: ca-079
+    title: Logarithm bounds from the MVT
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [mean value theorem, logarithm, inequalities]
+    related: [ca-015]
+    statement: |
+      Prove that $\dfrac{x - 1}{x} \le \ln x \le x - 1$ for all $x > 0$, with equality only at $x = 1$.
+    solution: |
+      At $x = 1$ all three are $0$. Otherwise the MVT gives $\ln x - \ln 1 = \frac{x - 1}{c}$ for some $c$ strictly between $1$ and $x$.
+
+      - $x > 1$: $1 < c < x$, so $\frac1x < \frac1c < 1$; multiplying by $x - 1 > 0$ gives strict inequalities.
+      - $0 < x < 1$: $x < c < 1$, so $1 < \frac1c < \frac1x$; multiplying by $x - 1 < 0$ reverses them: $\frac{x-1}{x} < \frac{x-1}{c} < x - 1$. $\blacksquare$
+
+  - id: ca-080
+    title: Arctangent bounds
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [mean value theorem, arctangent, inequalities]
+    related: [ca-014]
+    statement: |
+      Prove that $|\arctan a - \arctan b| \le |a - b|$ for all $a, b$, and $\dfrac{x}{1 + x^2} < \arctan x < x$ for $x > 0$.
+    solution: |
+      $\arctan'(t) = \frac{1}{1 + t^2} \in (0, 1]$. By the MVT, $\arctan a - \arctan b = \frac{a - b}{1 + c^2}$ for some $c$ between them, which gives the first claim.
+
+      For $x > 0$, $\arctan x = \frac{x}{1 + c^2}$ with $0 < c < x$, and $\frac1{1+x^2} < \frac1{1+c^2} < 1$. $\blacksquare$
+
+  - id: ca-081
+    title: Monotonicity and the sign of the derivative
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: proof
+    tags: [mean value theorem, monotone]
+    related: [ca-013]
+    statement: |
+      Let $f$ be differentiable on an interval $I$. Prove that $f$ is non-decreasing on $I$ iff $f' \ge 0$ on $I$, and that $f' > 0$ implies $f$ is strictly increasing. Is the converse of the last statement true?
+    solution: |
+      **$f' \ge 0 \Rightarrow$ non-decreasing.** For $x < y$, $f(y) - f(x) = f'(c)(y - x) \ge 0$. With $f' > 0$ this is $> 0$.
+
+      **Non-decreasing $\Rightarrow f' \ge 0$.** Every difference quotient $\frac{f(x+h) - f(x)}{h}$ is $\ge 0$ (numerator and denominator have the same sign or the numerator is 0), so the limit is $\ge 0$.
+
+      **Converse fails:** $x^3$ is strictly increasing but $f'(0) = 0$. $\blacksquare$
+
+  - id: ca-082
+    title: Counting real roots
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [roots, monotonicity, intermediate value theorem]
+    related: [ca-016]
+    statement: |
+      Prove that $x^4 + 4x - 1 = 0$ has exactly two real solutions.
+    solution: |
+      $f(x) = x^4 + 4x - 1$ has $f'(x) = 4(x^3 + 1)$, which is negative for $x < -1$ and positive for $x > -1$. So $f$ is strictly decreasing on $(-\infty, -1]$ and strictly increasing on $[-1, \infty)$, with minimum $f(-1) = -4 < 0$.
+
+      As $x \to \pm\infty$, $f(x) \to \infty$. By the IVT $f$ has a root on each side of $-1$, and by strict monotonicity only one on each side. $\blacksquare$
+
+  - id: ca-083
+    title: Roots of the derivative interlace
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: proof
+    tags: [rolle, polynomials, roots]
+    related: [ca-012]
+    statement: |
+      Prove that if a polynomial $p$ of degree $n$ has $n$ distinct real roots, then $p'$ has $n - 1$ distinct real roots, one strictly between each consecutive pair of roots of $p$.
+    solution: |
+      Let the roots be $r_1 < \cdots < r_n$. By Rolle, $p'$ vanishes at some $c_i \in (r_i, r_{i+1})$ for each $i = 1, \dots, n-1$. These intervals are disjoint, so the $c_i$ are distinct. Since $p'$ has degree $n - 1$, these are all its roots. $\blacksquare$
+
+  - id: ca-084
+    title: Cauchy's mean value theorem
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [cauchy mean value theorem, rolle]
+    related: [ca-085]
+    statement: |
+      Let $f, g$ be continuous on $[a, b]$ and differentiable on $(a, b)$. Prove that for some $c \in (a, b)$,
+      $$\big(f(b) - f(a)\big)g'(c) = \big(g(b) - g(a)\big)f'(c).$$
+    solution: |
+      Let $h(x) = \big(f(b) - f(a)\big)g(x) - \big(g(b) - g(a)\big)f(x)$. It is continuous on $[a,b]$ and differentiable on $(a,b)$, and
+      $$h(a) = f(b)g(a) - g(b)f(a) = h(b).$$
+      By Rolle, $h'(c) = 0$ for some $c \in (a, b)$, which is the claim. $\blacksquare$
+
+      (With $g(x) = x$ this is the ordinary MVT.)
+
+  - id: ca-085
+    title: L'Hôpital's rule
+    subtopic: Mean value theorem
+    difficulty: hard
+    type: proof
+    tags: [lhopital, cauchy mean value theorem]
+    related: [ca-084, ca-017]
+    statement: |
+      Let $f, g$ be differentiable on $(a, b)$ with $g'(x) \ne 0$ there, $f(x), g(x) \to 0$ as $x \to a^+$, and $\frac{f'(x)}{g'(x)} \to L$ as $x \to a^+$. Prove that $\frac{f(x)}{g(x)} \to L$ as $x \to a^+$.
+    solution: |
+      Set $f(a) = g(a) = 0$, making $f, g$ continuous on $[a, x]$ for each $x \in (a, b)$. Since $g' \ne 0$, Rolle shows $g(x) \ne g(a) = 0$. By Cauchy's MVT on $[a, x]$ there is $c_x \in (a, x)$ with
+      $$\frac{f(x)}{g(x)} = \frac{f(x) - f(a)}{g(x) - g(a)} = \frac{f'(c_x)}{g'(c_x)}.$$
+      As $x \to a^+$, $c_x \to a^+$, so the right side tends to $L$. $\blacksquare$
+
+  - id: ca-086
+    title: Convex functions lie above their tangents
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [convexity, mean value theorem, tangent lines]
+    related: [ca-087]
+    statement: |
+      Let $f$ be twice differentiable with $f'' \ge 0$ on an interval. Prove that $f(x) \ge f(a) + f'(a)(x - a)$ for all $x, a$ in the interval.
+    solution: |
+      $f'' \ge 0$ means $f'$ is non-decreasing (ca-081). By the MVT, $f(x) - f(a) = f'(c)(x - a)$ with $c$ between $a$ and $x$.
+
+      - $x > a$: $c > a$, so $f'(c) \ge f'(a)$, and multiplying by $x - a > 0$ gives the claim.
+      - $x < a$: $c < a$, so $f'(c) \le f'(a)$, and multiplying by $x - a < 0$ reverses it to $f'(c)(x - a) \ge f'(a)(x - a)$. $\blacksquare$
+
+  - id: ca-087
+    title: AM–GM from ln x ≤ x − 1
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [am-gm, logarithm, inequalities]
+    related: [ca-079, in-104]
+    statement: |
+      Use $\ln t \le t - 1$ (ca-079) to prove the AM–GM inequality for positive reals $a_1, \dots, a_n$.
+    solution: |
+      Let $A = \frac1n\sum a_i$. Apply the inequality to $t = a_i/A$ and sum:
+      $$\sum_{i=1}^n\ln\frac{a_i}{A} \le \sum_{i=1}^n\left(\frac{a_i}{A} - 1\right) = \frac{nA}{A} - n = 0.$$
+      So $\ln\frac{a_1\cdots a_n}{A^n} \le 0$, i.e. $a_1\cdots a_n \le A^n$. Equality needs $a_i/A = 1$ for every $i$. $\blacksquare$
+
+  - id: ca-088
+    title: Bounded derivatives and Lipschitz functions
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [lipschitz, mean value theorem]
+    related: [ca-014]
+    statement: |
+      Prove that if $|f'| \le M$ on an interval then $|f(x) - f(y)| \le M|x - y|$ there. Show that $\sqrt x$ on $[0, 1]$ satisfies no such inequality for any $M$.
+    solution: |
+      MVT: $|f(x) - f(y)| = |f'(c)|\,|x - y| \le M|x - y|$.
+
+      For $\sqrt x$, taking $y = 0$: $\frac{|\sqrt x - 0|}{|x - 0|} = \frac{1}{\sqrt x} \to \infty$ as $x \to 0^+$, so no $M$ works (even though $\sqrt x$ is continuous on $[0,1]$). $\blacksquare$
+
+  - id: ca-089
+    title: A differential inequality forces zero
+    subtopic: Mean value theorem
+    difficulty: hard
+    type: proof
+    tags: [mean value theorem, differential inequalities]
+    hints:
+      - |
+        On $[0, \frac12]$, look at where $|f|$ is largest.
+    statement: |
+      Let $f$ be differentiable on $\R$ with $f(0) = 0$ and $|f'(x)| \le |f(x)|$ for all $x$. Prove that $f \equiv 0$.
+    solution: |
+      On $[0, \frac12]$, $|f|$ is continuous, so it attains a maximum $M$ at some $x_0$. By the MVT, $f(x_0) = f(x_0) - f(0) = f'(c)x_0$ for some $c \in (0, x_0)$, so
+      $$M = |f(x_0)| \le |f'(c)|\cdot\tfrac12 \le |f(c)|\cdot\tfrac12 \le \tfrac M2.$$
+      Hence $M = 0$, so $f = 0$ on $[0, \frac12]$. In particular $f(\frac12) = 0$, and the same argument on $[\frac12, 1]$ gives $f = 0$ there, and so on; similarly on $[-\frac12, 0]$ and leftwards. So $f \equiv 0$. $\blacksquare$
+
+  - id: ca-090
+    title: Polynomial bounds for sine and cosine
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [inequalities, trigonometry, monotonicity]
+    statement: |
+      Prove that for $x \ge 0$: $\ \sin x \le x$, $\ \cos x \ge 1 - \frac{x^2}{2}$ and $\ \sin x \ge x - \frac{x^3}{6}$.
+    solution: |
+      Each time, the difference vanishes at $0$ and has non-negative derivative on $[0, \infty)$, hence is non-negative there (ca-081).
+
+      - $k(x) = x - \sin x$: $k' = 1 - \cos x \ge 0$.
+      - $g(x) = \cos x - 1 + \frac{x^2}{2}$: $g' = x - \sin x \ge 0$ by the first part.
+      - $h(x) = \sin x - x + \frac{x^3}{6}$: $h' = \cos x - 1 + \frac{x^2}{2} = g(x) \ge 0$. $\blacksquare$
+
+      (Continuing gives the alternating Taylor bounds.)
+
+  - id: ca-091
+    title: Bernoulli's inequality for real exponents
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [bernoulli, inequalities, derivatives]
+    related: [in-011]
+    statement: |
+      Prove that $(1 + x)^r \ge 1 + rx$ for all real $r \ge 1$ and $x > -1$.
+    solution: |
+      Let $g(x) = (1 + x)^r - 1 - rx$ on $(-1, \infty)$. Then $g(0) = 0$ and
+      $$g'(x) = r\left((1 + x)^{r-1} - 1\right).$$
+      Since $r - 1 \ge 0$, $(1 + x)^{r-1} \ge 1$ for $x \ge 0$ and $\le 1$ for $-1 < x \le 0$. So $g$ is non-increasing on $(-1, 0]$ and non-decreasing on $[0, \infty)$, and its minimum is $g(0) = 0$. $\blacksquare$
+
+  - id: ca-092
+    title: Estimating √101
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: compute
+    tags: [mean value theorem, approximation]
+    statement: |
+      Use the MVT to show $10.0497 < \sqrt{101} < 10.05$.
+    solution: |
+      $\sqrt{101} - \sqrt{100} = \frac{1}{2\sqrt c}$ for some $c \in (100, 101)$. So
+      $$\frac{1}{2\sqrt{101}} < \sqrt{101} - 10 < \frac{1}{2\sqrt{100}} = 0.05.$$
+      The upper bound gives $\sqrt{101} < 10.05$, and then $\frac{1}{2\sqrt{101}} > \frac{1}{20.1} > 0.04975$, so $\sqrt{101} > 10.04975$. (True value $10.04988\ldots$)
+
+  - id: ca-093
+    title: The fixed point of cosine
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: proof
+    tags: [intermediate value theorem, monotonicity, roots]
+    related: [ca-016]
+    statement: |
+      Prove that $x = \cos x$ has exactly one real solution.
+    solution: |
+      Let $g(x) = x - \cos x$. $g(0) = -1 < 0 < \frac\pi2 = g(\frac\pi2)$, so there is a root by the IVT.
+
+      $g'(x) = 1 + \sin x \ge 0$, so $g$ is non-decreasing. If $g(x) = g(y)$ with $x < y$, then $g$ would be constant on $[x, y]$, so $g' = 0$ throughout that interval; but $g' = 0$ only at the isolated points $-\frac\pi2 + 2k\pi$. So $g$ is strictly increasing and the root is unique ($x \approx 0.739$). $\blacksquare$
+
+  - id: ca-094
+    title: (1 + 1/x)ˣ increases
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [monotonicity, logarithm, exponential]
+    related: [in-228, ca-079]
+    statement: |
+      Prove that $\left(1 + \frac1x\right)^x$ is strictly increasing on $(0, \infty)$.
+    solution: |
+      Let $g(x) = x\ln\left(1 + \frac1x\right)$. Then
+      $$g'(x) = \ln\left(1 + \frac1x\right) + x\cdot\frac{-1/x^2}{1 + 1/x} = \ln\left(1 + \frac1x\right) - \frac{1}{x + 1}.$$
+      By ca-079 with $t = 1 + \frac1x > 1$: $\ln t > \frac{t - 1}{t} = \frac{1/x}{1 + 1/x} = \frac{1}{x+1}$. So $g' > 0$, and $e^g$ is strictly increasing. $\blacksquare$
+
+  - id: ca-095
+    title: Non-vanishing derivative implies injective
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: proof
+    tags: [rolle, injective]
+    statement: |
+      Prove that if $f$ is differentiable on an interval and $f'(x) \ne 0$ everywhere, then $f$ is injective.
+    solution: |
+      If $f(x) = f(y)$ with $x < y$, Rolle gives $c \in (x, y)$ with $f'(c) = 0$. $\blacksquare$
+
+      (Combined with Darboux (ca-072), $f'$ then has constant sign, so $f$ is strictly monotone.)
+
+  - id: ca-096
+    title: Convex functions have at most two zeros
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: proof
+    tags: [rolle, convexity, roots]
+    statement: |
+      Prove that if $f'' > 0$ on an interval, then $f$ has at most two zeros there.
+    solution: |
+      If $f$ had zeros $x_1 < x_2 < x_3$, Rolle would give zeros of $f'$ in $(x_1, x_2)$ and $(x_2, x_3)$, and then a zero of $f''$ between those. Contradiction. $\blacksquare$
+
+  - id: ca-097
+    title: At most one root in an interval
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [monotonicity, roots, cubics]
+    statement: |
+      Prove that for every real $c$, $x^3 - 3x + c = 0$ has at most one root in $[-1, 1]$.
+    solution: |
+      $f(x) = x^3 - 3x + c$ has $f'(x) = 3(x^2 - 1) < 0$ on $(-1, 1)$, so $f$ is strictly decreasing on $[-1, 1]$ (ca-081, using continuity at the ends). A strictly decreasing function takes the value 0 at most once. $\blacksquare$
+
+  - id: ca-098
+    title: Taylor's theorem with Lagrange remainder
+    subtopic: Mean value theorem
+    difficulty: hard
+    type: proof
+    tags: [taylor's theorem, rolle]
+    source: Lagrange
+    related: [ca-026, ca-134]
+    hints:
+      - |
+        Fix $x$ and consider $F(t) = f(x) - \sum_{k=0}^n\frac{f^{(k)}(t)}{k!}(x - t)^k - K\frac{(x-t)^{n+1}}{(n+1)!}$ as a function of $t$.
+    statement: |
+      Let $f$ have $n + 1$ derivatives on an interval containing $a$ and $x$. Prove that
+      $$f(x) = \sum_{k=0}^n\frac{f^{(k)}(a)}{k!}(x - a)^k + \frac{f^{(n+1)}(c)}{(n+1)!}(x - a)^{n+1}$$
+      for some $c$ between $a$ and $x$.
+    solution: |
+      If $x = a$ there is nothing to prove. Otherwise define, for $t$ between $a$ and $x$,
+      $$F(t) = f(x) - \sum_{k=0}^n\frac{f^{(k)}(t)}{k!}(x - t)^k - K\frac{(x - t)^{n+1}}{(n+1)!},$$
+      with the constant $K$ chosen so that $F(a) = 0$. Also $F(x) = f(x) - f(x) = 0$. By Rolle, $F'(c) = 0$ for some $c$ strictly between.
+
+      Differentiating the sum, the terms telescope:
+      $$\frac{d}{dt}\sum_{k=0}^n\frac{f^{(k)}(t)}{k!}(x-t)^k = \sum_{k=0}^n\frac{f^{(k+1)}(t)}{k!}(x-t)^k - \sum_{k=1}^n\frac{f^{(k)}(t)}{(k-1)!}(x-t)^{k-1} = \frac{f^{(n+1)}(t)}{n!}(x-t)^n.$$
+      So $F'(t) = -\frac{f^{(n+1)}(t)}{n!}(x-t)^n + K\frac{(x-t)^n}{n!}$, and $F'(c) = 0$ with $c \ne x$ gives $K = f^{(n+1)}(c)$. Then $F(a) = 0$ is the formula. $\blacksquare$
+
+  - id: ca-099
+    title: The limit of xˣ at 0
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: compute
+    tags: [limits, exponential, lhopital]
+    related: [ca-017]
+    statement: |
+      Evaluate $\displaystyle\lim_{x\to0^+}x^x$.
+    solution: |
+      $x^x = e^{x\ln x}$, and $x\ln x \to 0$ as $x \to 0^+$ (ca-017(b), via L'Hôpital on $\frac{\ln x}{1/x}$). By continuity of $\exp$, $x^x \to e^0 = 1$.
+
+  - id: ca-100
+    title: Secant slopes and increasing derivatives
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: proof
+    tags: [mean value theorem, convexity]
+    related: [ca-086]
+    statement: |
+      Prove that if $f'$ is non-decreasing on $[a, b]$ then $f'(a) \le \dfrac{f(b) - f(a)}{b - a} \le f'(b)$.
+    solution: |
+      By the MVT the middle quantity is $f'(c)$ for some $c \in (a, b)$, and $f'(a) \le f'(c) \le f'(b)$. $\blacksquare$
+
+  - id: ca-101
+    title: Finding the mean value point
+    subtopic: Mean value theorem
+    difficulty: easy
+    type: compute
+    tags: [mean value theorem]
+    statement: |
+      Find all $c$ satisfying the conclusion of the MVT for $f(x) = x^3$ on $[0, 2]$, and for $f(x) = x^2$ on $[a, b]$.
+    solution: |
+      **$x^3$ on $[0,2]$:** the secant slope is $\frac{8 - 0}{2} = 4$, and $3c^2 = 4$ gives $c = \frac{2}{\sqrt3} \approx 1.155 \in (0, 2)$.
+
+      **$x^2$ on $[a,b]$:** the slope is $\frac{b^2 - a^2}{b - a} = a + b$, and $2c = a + b$ gives $c = \frac{a+b}2$, the midpoint.
+
+  - id: ca-102
+    title: Derivative limits and differences
+    subtopic: Mean value theorem
+    difficulty: medium
+    type: proof
+    tags: [mean value theorem, limits at infinity]
+    statement: |
+      Let $f$ be differentiable on $(0, \infty)$ with $f'(x) \to L$ as $x \to \infty$. Prove that $f(x + 1) - f(x) \to L$. Deduce that $\sqrt{x+1} - \sqrt x \to 0$.
+    solution: |
+      By the MVT, $f(x + 1) - f(x) = f'(c_x)$ for some $c_x \in (x, x+1)$. As $x \to \infty$, $c_x \to \infty$, so $f'(c_x) \to L$.
+
+      For $\sqrt x$: $f'(x) = \frac1{2\sqrt x} \to 0$. $\blacksquare$
+
+  - id: ca-103
+    title: Integrating x cos x
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [integration by parts]
+    related: [ca-019]
+    statement: |
+      Evaluate $\displaystyle\int x\cos x\,dx$ and $\displaystyle\int_0^\pi x\sin x\,dx$.
+    solution: |
+      With $u = x$, $dv = \cos x\,dx$: $\int x\cos x\,dx = x\sin x - \int\sin x\,dx = x\sin x + \cos x + C$.
+
+      Similarly $\int x\sin x\,dx = -x\cos x + \sin x + C$, so $\int_0^\pi x\sin x\,dx = [-x\cos x + \sin x]_0^\pi = \pi$.
+
+  - id: ca-104
+    title: Integrating by parts against 1
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [integration by parts, logarithm, arctangent]
+    statement: |
+      Evaluate $\displaystyle\int\ln x\,dx$ and $\displaystyle\int\arctan x\,dx$.
+    solution: |
+      Write each as $\int1\cdot u\,dx$ with $dv = dx$.
+
+      $\int\ln x\,dx = x\ln x - \int x\cdot\frac1x\,dx = x\ln x - x + C$.
+
+      $\int\arctan x\,dx = x\arctan x - \int\frac{x}{1+x^2}\,dx = x\arctan x - \frac12\ln(1 + x^2) + C$.
+
+  - id: ca-105
+    title: Substitutions
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [substitution]
+    statement: |
+      Evaluate $\displaystyle\int xe^{x^2}\,dx$, $\displaystyle\int\tan x\,dx$ and $\displaystyle\int\frac{dx}{x\ln x}$ ($x > 1$).
+    solution: |
+      - $u = x^2$, $du = 2x\,dx$: $\frac12e^{x^2} + C$.
+      - $\tan x = \frac{\sin x}{\cos x}$, $u = \cos x$: $-\ln|\cos x| + C$.
+      - $u = \ln x$, $du = \frac{dx}x$: $\int\frac{du}{u} = \ln(\ln x) + C$.
+
+  - id: ca-106
+    title: A quarter of a circle
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [trigonometric substitution, area]
+    statement: |
+      Evaluate $\displaystyle\int_0^1\sqrt{1 - x^2}\,dx$ by substitution, and check the answer geometrically.
+    solution: |
+      Put $x = \sin\theta$, $dx = \cos\theta\,d\theta$, $\theta$ from $0$ to $\frac\pi2$, where $\sqrt{1 - \sin^2\theta} = \cos\theta \ge 0$:
+      $$\int_0^{\pi/2}\cos^2\theta\,d\theta = \int_0^{\pi/2}\frac{1 + \cos2\theta}{2}\,d\theta = \frac\pi4.$$
+      Geometrically, it is the area of a quarter of the unit disc.
+
+  - id: ca-107
+    title: Integrating sin²
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [trigonometric integrals, double angle]
+    statement: |
+      Find $\displaystyle\int\sin^2x\,dx$ and $\displaystyle\int_0^\pi\sin^2x\,dx$.
+    solution: |
+      $\sin^2x = \frac{1 - \cos2x}{2}$, so $\int\sin^2x\,dx = \frac x2 - \frac{\sin2x}{4} + C$, and $\int_0^\pi\sin^2x\,dx = \frac\pi2$.
+
+      (By symmetry $\int_0^\pi\sin^2 = \int_0^\pi\cos^2$, and they add to $\pi$, which gives the same answer without calculation.)
+
+  - id: ca-108
+    title: Partial fractions with a repeated factor
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [partial fractions]
+    related: [ca-023]
+    statement: |
+      Evaluate $\displaystyle\int\frac{dx}{x^2(x+1)}$.
+    solution: |
+      Write $\frac{1}{x^2(x+1)} = \frac Ax + \frac B{x^2} + \frac C{x+1}$, so $1 = Ax(x+1) + B(x + 1) + Cx^2$. Then $x = 0$ gives $B = 1$, $x = -1$ gives $C = 1$, and the $x^2$ coefficients give $A + C = 0$, so $A = -1$. Hence
+      $$\int\frac{dx}{x^2(x+1)} = -\ln|x| - \frac1x + \ln|x + 1| + C.$$
+
+  - id: ca-109
+    title: Completing the square
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [completing the square, arctangent]
+    statement: |
+      Evaluate $\displaystyle\int\frac{dx}{x^2 + 2x + 5}$.
+    solution: |
+      $x^2 + 2x + 5 = (x + 1)^2 + 4$. With $u = \frac{x+1}{2}$, $dx = 2\,du$:
+      $$\int\frac{2\,du}{4u^2 + 4} = \frac12\arctan u + C = \frac12\arctan\frac{x + 1}{2} + C.$$
+
+  - id: ca-110
+    title: The fundamental theorem of calculus, part 1
+    subtopic: Integration
+    difficulty: medium
+    type: proof
+    tags: [fundamental theorem of calculus, continuity]
+    related: [ca-111, ca-018]
+    statement: |
+      Let $f$ be continuous on $[a, b]$ and $F(x) = \int_a^xf(t)\,dt$. Prove that $F'(x) = f(x)$ for $x \in (a, b)$.
+    solution: |
+      For small $h \ne 0$,
+      $$\frac{F(x+h) - F(x)}{h} - f(x) = \frac1h\int_x^{x+h}\big(f(t) - f(x)\big)\,dt.$$
+      Given $\eps > 0$, continuity gives $\delta$ with $|f(t) - f(x)| < \eps$ for $|t - x| < \delta$. For $0 < |h| < \delta$, the integrand is less than $\eps$ in absolute value over an interval of length $|h|$, so the right side is at most $\eps$ in absolute value. $\blacksquare$
+
+  - id: ca-111
+    title: The fundamental theorem of calculus, part 2
+    subtopic: Integration
+    difficulty: easy
+    type: proof
+    tags: [fundamental theorem of calculus, antiderivatives]
+    related: [ca-110, ca-013]
+    statement: |
+      Let $f$ be continuous on $[a, b]$ and $G$ any antiderivative of $f$. Prove that $\int_a^bf(x)\,dx = G(b) - G(a)$.
+    solution: |
+      With $F(x) = \int_a^xf$, part 1 gives $F' = f = G'$ on $(a, b)$, so $G - F$ is constant (ca-013), and by continuity on all of $[a, b]$. Hence
+      $$G(b) - G(a) = F(b) - F(a) = \int_a^bf - 0. \qquad\blacksquare$$
+
+  - id: ca-112
+    title: Integrable singularities at 0
+    subtopic: Integration
+    difficulty: easy
+    type: proof
+    tags: [improper integrals]
+    related: [ca-022]
+    statement: |
+      Prove that $\displaystyle\int_0^1\frac{dx}{x^p}$ converges if and only if $p < 1$, and compute it.
+    solution: |
+      For $p \ne 1$ and $0 < \eps < 1$: $\int_\eps^1x^{-p}\,dx = \frac{1 - \eps^{1-p}}{1 - p}$. If $p < 1$, $\eps^{1-p} \to 0$ and the integral is $\frac{1}{1-p}$; if $p > 1$, $\eps^{1-p} \to \infty$. For $p = 1$, $\int_\eps^1\frac{dx}x = -\ln\eps \to \infty$. $\blacksquare$
+
+      (The opposite of ca-022: near 0 small powers are integrable, near $\infty$ large ones.)
+
+  - id: ca-113
+    title: The integral giving n!
+    subtopic: Integration
+    difficulty: medium
+    type: proof
+    tags: [improper integrals, integration by parts, gamma function]
+    statement: |
+      Prove that $\displaystyle\int_0^\infty x^ne^{-x}\,dx = n!$ for every $n \ge 0$.
+    solution: |
+      Let $I_n$ be the integral. $I_0 = \lim_{R\to\infty}(1 - e^{-R}) = 1$.
+
+      For $n \ge 1$, integrate by parts on $[0, R]$:
+      $$\int_0^Rx^ne^{-x}\,dx = \left[-x^ne^{-x}\right]_0^R + n\int_0^Rx^{n-1}e^{-x}\,dx.$$
+      $R^ne^{-R} \to 0$ (exponentials beat polynomials), so $I_n = nI_{n-1}$ (and $I_n$ converges since $I_{n-1}$ does). By induction $I_n = n!$. $\blacksquare$
+
+  - id: ca-114
+    title: The Dirichlet integral converges
+    subtopic: Integration
+    difficulty: hard
+    type: proof
+    tags: [improper integrals, integration by parts, conditional convergence]
+    statement: |
+      Prove that $\displaystyle\int_0^\infty\frac{\sin x}{x}\,dx$ converges, but $\displaystyle\int_0^\infty\frac{|\sin x|}{x}\,dx$ diverges.
+    solution: |
+      On $[0, 1]$ the integrand extends continuously (value 1 at 0), so only $[1, \infty)$ matters. Integrating by parts,
+      $$\int_1^R\frac{\sin x}{x}\,dx = \left[-\frac{\cos x}{x}\right]_1^R - \int_1^R\frac{\cos x}{x^2}\,dx.$$
+      The boundary term tends to $\cos1$, and $\int_1^\infty\frac{\cos x}{x^2}$ converges absolutely as $\left|\frac{\cos x}{x^2}\right| \le \frac1{x^2}$. So the integral converges.
+
+      **Not absolutely.** On $[k\pi, (k+1)\pi]$, $\frac{|\sin x|}{x} \ge \frac{|\sin x|}{(k+1)\pi}$, and $\int_{k\pi}^{(k+1)\pi}|\sin x|\,dx = 2$. So $\int_0^{N\pi}\frac{|\sin x|}{x}\,dx \ge \frac2\pi\sum_{k=1}^{N}\frac1k \to \infty$. $\blacksquare$
+
+      (Its value is $\frac\pi2$.)
+
+  - id: ca-115
+    title: Comparison tests for improper integrals
+    subtopic: Integration
+    difficulty: easy
+    type: proof
+    tags: [improper integrals, comparison test]
+    related: [ca-022]
+    statement: |
+      Decide whether $\displaystyle\int_1^\infty\frac{1 + \sin x}{x^2}\,dx$ and $\displaystyle\int_1^\infty\frac{2 + \sin x}{x}\,dx$ converge.
+    solution: |
+      Both integrands are non-negative.
+
+      - $0 \le \frac{1 + \sin x}{x^2} \le \frac{2}{x^2}$, and $\int_1^\infty\frac{2}{x^2}$ converges, so the first **converges**.
+      - $\frac{2 + \sin x}{x} \ge \frac1x$, and $\int_1^\infty\frac1x$ diverges, so the second **diverges**.
+
+      (For non-negative integrands, $\int_1^R$ is increasing in $R$, so it converges iff it is bounded; this is why comparison works.)
+
+  - id: ca-116
+    title: The mean value theorem for integrals
+    subtopic: Integration
+    difficulty: medium
+    type: proof
+    tags: [mean value theorem, integrals, intermediate value theorem]
+    statement: |
+      Prove that if $f$ is continuous on $[a, b]$ then $f(c) = \frac{1}{b - a}\int_a^bf$ for some $c \in [a, b]$.
+    solution: |
+      By the extreme value theorem $f$ has a minimum $m$ and maximum $M$ on $[a, b]$, so $m(b - a) \le \int_a^bf \le M(b - a)$. The average $\mu = \frac{1}{b-a}\int_a^bf$ lies in $[m, M]$, and by the IVT $f$ takes every value between its minimum and maximum. $\blacksquare$
+
+  - id: ca-117
+    title: Cauchy–Schwarz for integrals
+    subtopic: Integration
+    difficulty: medium
+    type: proof
+    tags: [cauchy-schwarz, integrals, inequalities]
+    related: [la-028]
+    statement: |
+      For continuous $f, g$ on $[a, b]$, prove that $\left(\int_a^bfg\right)^2 \le \int_a^bf^2\int_a^bg^2$.
+    solution: |
+      For every real $t$, $\int_a^b(f + tg)^2 \ge 0$, i.e.
+      $$\int f^2 + 2t\int fg + t^2\int g^2 \ge 0.$$
+      If $\int g^2 = 0$ then $g \equiv 0$ (continuous and non-negative with integral 0), and both sides are 0. Otherwise this quadratic in $t$ is never negative, so its discriminant is $\le 0$: $4\left(\int fg\right)^2 - 4\int f^2\int g^2 \le 0$. $\blacksquare$
+
+  - id: ca-118
+    title: Area between two parabolas
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [area, definite integrals]
+    statement: |
+      Find the area enclosed by $y = x^2$ and $y = 2x - x^2$.
+    solution: |
+      They meet where $x^2 = 2x - x^2$, i.e. $x = 0, 1$. On $[0, 1]$, $2x - x^2 \ge x^2$. Area
+      $$\int_0^1(2x - 2x^2)\,dx = 1 - \frac23 = \frac13.$$
+
+  - id: ca-119
+    title: Volumes of a ball and a cone
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [volumes, solids of revolution]
+    statement: |
+      Use the disc method to find the volume of a ball of radius $r$ and of a cone of radius $r$ and height $h$.
+    solution: |
+      **Ball.** Rotate $y = \sqrt{r^2 - x^2}$, $-r \le x \le r$: $\int_{-r}^r\pi(r^2 - x^2)\,dx = \pi\left(2r^3 - \frac{2r^3}{3}\right) = \frac43\pi r^3$.
+
+      **Cone.** Rotate $y = \frac rhx$, $0 \le x \le h$: $\int_0^h\pi\frac{r^2}{h^2}x^2\,dx = \frac13\pi r^2h$.
+
+  - id: ca-120
+    title: Length of a semicubical parabola
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [arc length]
+    statement: |
+      Find the length of the curve $y = x^{3/2}$ from $x = 0$ to $x = 4$.
+    solution: |
+      $y' = \frac32x^{1/2}$, so the length is
+      $$\int_0^4\sqrt{1 + \tfrac94x}\,dx = \frac{8}{27}\left[\left(1 + \tfrac94x\right)^{3/2}\right]_0^4 = \frac{8}{27}\left(10\sqrt{10} - 1\right) \approx 9.07.$$
+
+  - id: ca-121
+    title: The Wallis product
+    subtopic: Integration
+    difficulty: hard
+    type: proof
+    tags: [reduction formula, wallis product, squeeze theorem]
+    source: Wallis, 1656
+    related: [ca-021]
+    statement: |
+      Using $I_n = \int_0^{\pi/2}\sin^nx\,dx$ and $nI_n = (n-1)I_{n-2}$ (ca-021), prove that
+      $$\frac\pi2 = \lim_{n\to\infty}\prod_{k=1}^n\frac{(2k)^2}{(2k-1)(2k+1)} = \frac21\cdot\frac23\cdot\frac43\cdot\frac45\cdot\frac65\cdot\frac67\cdots.$$
+    solution: |
+      From $I_0 = \frac\pi2$, $I_1 = 1$ and the recursion,
+      $$I_{2n} = \frac{(2n-1)(2n-3)\cdots1}{2n(2n-2)\cdots2}\cdot\frac\pi2,\qquad I_{2n+1} = \frac{2n(2n-2)\cdots2}{(2n+1)(2n-1)\cdots3}.$$
+      Since $0 \le \sin x \le 1$ on $[0, \frac\pi2]$, $I_n$ decreases in $n$: $I_{2n+1} \le I_{2n} \le I_{2n-1} = \frac{2n+1}{2n}I_{2n+1}$. So $1 \le \frac{I_{2n}}{I_{2n+1}} \le \frac{2n+1}{2n} \to 1$. But
+      $$\frac{I_{2n}}{I_{2n+1}} = \frac\pi2\cdot\prod_{k=1}^n\frac{(2k-1)(2k+1)}{(2k)^2},$$
+      so the product $\prod_{k=1}^n\frac{(2k)^2}{(2k-1)(2k+1)} \to \frac\pi2$. $\blacksquare$
+
+  - id: ca-122
+    title: A symmetric trick
+    subtopic: Integration
+    difficulty: medium
+    type: compute
+    tags: [substitution, symmetry]
+    statement: |
+      Evaluate $\displaystyle I = \int_0^{\pi/2}\frac{\sin x}{\sin x + \cos x}\,dx$.
+    solution: |
+      Substitute $x = \frac\pi2 - u$, which swaps $\sin$ and $\cos$: $I = \int_0^{\pi/2}\frac{\cos u}{\cos u + \sin u}\,du$. Adding the two forms,
+      $$2I = \int_0^{\pi/2}\frac{\sin x + \cos x}{\sin x + \cos x}\,dx = \frac\pi2,$$
+      so $I = \frac\pi4$.
+
+  - id: ca-123
+    title: Integrals of logarithms on [0, 1]
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [improper integrals, logarithm]
+    related: [ca-104]
+    statement: |
+      Evaluate the improper integrals $\displaystyle\int_0^1\ln x\,dx$ and $\displaystyle\int_0^1x\ln x\,dx$.
+    solution: |
+      $\int_\eps^1\ln x\,dx = [x\ln x - x]_\eps^1 = -1 - \eps\ln\eps + \eps \to -1$, using $\eps\ln\eps \to 0$.
+
+      $\int x\ln x\,dx = \frac{x^2}{2}\ln x - \frac{x^2}{4}$ (by parts), and $\eps^2\ln\eps \to 0$, so $\int_0^1x\ln x\,dx = -\frac14$.
+
+  - id: ca-124
+    title: A Riemann sum for π/4
+    subtopic: Integration
+    difficulty: medium
+    type: compute
+    tags: [riemann sums, arctangent]
+    related: [ca-024]
+    statement: |
+      Evaluate $\displaystyle\lim_{n\to\infty}\sum_{k=1}^n\frac{n}{n^2 + k^2}$.
+    solution: |
+      $$\sum_{k=1}^n\frac{n}{n^2 + k^2} = \frac1n\sum_{k=1}^n\frac{1}{1 + (k/n)^2},$$
+      a right-endpoint Riemann sum for the continuous function $\frac1{1+x^2}$ on $[0,1]$. So the limit is $\int_0^1\frac{dx}{1+x^2} = \arctan1 = \frac\pi4$.
+
+  - id: ca-125
+    title: Repeated integration by parts
+    subtopic: Integration
+    difficulty: easy
+    type: compute
+    tags: [integration by parts, reduction formula]
+    related: [ca-019]
+    statement: |
+      Evaluate $\displaystyle\int_0^1x^3e^x\,dx$.
+    solution: |
+      Repeatedly applying $\int x^ne^x = x^ne^x - n\int x^{n-1}e^x$:
+      $$\int x^3e^x\,dx = e^x(x^3 - 3x^2 + 6x - 6) + C.$$
+      So $\int_0^1x^3e^x\,dx = e(1 - 3 + 6 - 6) - (-6) = 6 - 2e \approx 0.563$.
+
+  - id: ca-126
+    title: Odd functions integrate to zero
+    subtopic: Integration
+    difficulty: easy
+    type: proof
+    tags: [symmetry, odd functions, substitution]
+    statement: |
+      Prove that if $f$ is odd and continuous then $\int_{-a}^af = 0$, and if $f$ is even then $\int_{-a}^af = 2\int_0^af$. Evaluate $\int_{-1}^1x^3\cos x\,dx$ and $\int_{-2}^2(x^5 + 3)\,dx$.
+    solution: |
+      Substituting $x = -u$ in $\int_{-a}^0f(x)\,dx$ gives $\int_0^af(-u)\,du$, which is $-\int_0^af$ for odd $f$ and $\int_0^af$ for even $f$. Add $\int_0^af$.
+
+      $x^3\cos x$ is odd, so the first integral is $0$. $x^5$ is odd and $3$ is even, so the second is $0 + 2\cdot3\cdot2 = 12$. $\blacksquare$
+
+  - id: ca-127
+    title: The geometric series
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: proof
+    tags: [geometric series, convergence]
+    related: [in-004]
+    statement: |
+      Prove that $\sum_{n\ge0}r^n$ converges to $\frac{1}{1-r}$ if $|r| < 1$ and diverges if $|r| \ge 1$.
+    solution: |
+      The partial sums are $S_N = \frac{1 - r^{N+1}}{1 - r}$ for $r \ne 1$ (in-004). If $|r| < 1$, $r^{N+1} \to 0$ and $S_N \to \frac1{1-r}$.
+
+      If $|r| \ge 1$, the terms $r^n$ have $|r^n| \ge 1$, so they don't tend to 0 and the series diverges. $\blacksquare$
+
+  - id: ca-128
+    title: The ratio test
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: proof
+    tags: [ratio test, comparison test, geometric series]
+    related: [ca-028]
+    statement: |
+      Let $a_n \ne 0$ and $\left|\frac{a_{n+1}}{a_n}\right| \to L$. Prove that $\sum a_n$ converges absolutely if $L < 1$ and diverges if $L > 1$. Show that $L = 1$ is inconclusive.
+    solution: |
+      **$L < 1$.** Pick $r$ with $L < r < 1$. For $n \ge N$, $|a_{n+1}| \le r|a_n|$, so $|a_n| \le |a_N|r^{n-N}$. By comparison with the geometric series, $\sum|a_n|$ converges.
+
+      **$L > 1$.** Eventually $|a_{n+1}| > |a_n|$, so $|a_n|$ is eventually increasing and positive, and $a_n \not\to 0$.
+
+      **$L = 1$.** $\sum\frac1n$ diverges and $\sum\frac1{n^2}$ converges; both have $L = 1$. $\blacksquare$
+
+  - id: ca-129
+    title: The comparison test
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: proof
+    tags: [comparison test, monotone convergence]
+    related: [ca-029]
+    statement: |
+      Prove that if $0 \le a_n \le b_n$ and $\sum b_n$ converges, then $\sum a_n$ converges. (You may use that a bounded increasing sequence converges.)
+    solution: |
+      The partial sums of $\sum a_n$ increase (terms are non-negative) and are bounded by $\sum_{n\ge0}b_n$. So they converge. $\blacksquare$
+
+      (Contrapositively, if $\sum a_n$ diverges then so does $\sum b_n$.)
+
+  - id: ca-130
+    title: The integral test
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: proof
+    tags: [integral test, series, logarithm]
+    related: [ca-022]
+    statement: |
+      Let $f$ be positive and decreasing on $[1, \infty)$. Prove that $\sum_{n\ge1}f(n)$ converges iff $\int_1^\infty f$ converges. Deduce that $\sum_{n\ge2}\frac{1}{n\ln n}$ diverges.
+    solution: |
+      For $n \le x \le n + 1$, $f(n+1) \le f(x) \le f(n)$. Integrating and summing,
+      $$\sum_{n=2}^{N+1}f(n) \le \int_1^{N+1}f \le \sum_{n=1}^Nf(n).$$
+      Partial sums and the integrals $\int_1^R f$ are increasing in $N$ and $R$, so each is bounded iff the other is.
+
+      For $f(x) = \frac{1}{x\ln x}$ on $[2, \infty)$: $\int_2^R\frac{dx}{x\ln x} = \ln\ln R - \ln\ln2 \to \infty$. So the series diverges (very slowly). $\blacksquare$
+
+  - id: ca-131
+    title: The alternating series test
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: proof
+    tags: [alternating series, convergence, error bounds]
+    related: [ca-027]
+    statement: |
+      Let $a_n$ decrease to 0. Prove that $\sum_{n\ge1}(-1)^{n+1}a_n$ converges, and that its sum $S$ satisfies $|S - S_N| \le a_{N+1}$.
+    solution: |
+      $S_{2n+2} = S_{2n} + (a_{2n+1} - a_{2n+2}) \ge S_{2n}$ and $S_{2n+1} = S_{2n-1} - (a_{2n} - a_{2n+1}) \le S_{2n-1}$. Also $S_{2n} \le S_{2n} + a_{2n+1} = S_{2n+1} \le S_1$. So $(S_{2n})$ is increasing and bounded above, $(S_{2n+1})$ is decreasing and bounded below; both converge, and their limits agree since $S_{2n+1} - S_{2n} = a_{2n+1} \to 0$. Call the limit $S$.
+
+      Every $S$ lies between consecutive partial sums $S_N$ and $S_{N+1}$, so $|S - S_N| \le |S_{N+1} - S_N| = a_{N+1}$. $\blacksquare$
+
+  - id: ca-132
+    title: Summing n/2ⁿ by differentiating
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: compute
+    tags: [power series, geometric series, differentiation]
+    related: [in-037, ca-139]
+    statement: |
+      Using $\sum_{n\ge1}nx^n = \frac{x}{(1-x)^2}$ for $|x| < 1$, find $\sum_{n\ge1}\frac{n}{2^n}$ and $\sum_{n\ge1}\frac{n}{3^n}$.
+    solution: |
+      $x = \frac12$: $\frac{1/2}{1/4} = 2$. $x = \frac13$: $\frac{1/3}{4/9} = \frac34$.
+
+  - id: ca-133
+    title: A telescoping series
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: compute
+    tags: [telescoping, partial fractions]
+    statement: |
+      Find $\displaystyle\sum_{n=1}^\infty\frac{1}{n(n+2)}$.
+    solution: |
+      $\frac1{n(n+2)} = \frac12\left(\frac1n - \frac1{n+2}\right)$, so the $N$th partial sum is
+      $$\frac12\left(1 + \frac12 - \frac1{N+1} - \frac1{N+2}\right) \to \frac34.$$
+
+  - id: ca-134
+    title: The exponential series converges to eˣ
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: proof
+    tags: [taylor series, remainder, exponential]
+    related: [ca-098]
+    statement: |
+      Prove that $\displaystyle e^x = \sum_{n=0}^\infty\frac{x^n}{n!}$ for every real $x$.
+    solution: |
+      By Taylor's theorem (ca-098), $e^x - \sum_{k=0}^n\frac{x^k}{k!} = \frac{e^c}{(n+1)!}x^{n+1}$ with $c$ between 0 and $x$, so the remainder is at most $e^{|x|}\frac{|x|^{n+1}}{(n+1)!}$ in size.
+
+      For fixed $x$, $\frac{|x|^{n+1}}{(n+1)!} \to 0$: once $n \ge 2|x|$, each further factor $\frac{|x|}{n+1}$ is at most $\frac12$. So the partial sums tend to $e^x$. $\blacksquare$
+
+  - id: ca-135
+    title: Approximating sin 0.5
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: compute
+    tags: [taylor polynomials, error bounds]
+    statement: |
+      Use the Taylor polynomial $x - \frac{x^3}{6} + \frac{x^5}{120}$ to approximate $\sin0.5$ and bound the error.
+    solution: |
+      $$0.5 - \frac{0.125}{6} + \frac{0.03125}{120} = 0.5 - 0.020833 + 0.000260 = 0.479427.$$
+      The degree-5 polynomial is also the degree-6 one (the $x^6$ coefficient is 0), so Lagrange's remainder is $\frac{|\sin^{(7)}(c)|}{7!}|x|^7 \le \frac{0.5^7}{5040} \approx 1.6\times10^{-6}$. (True value $0.4794255\ldots$)
+
+  - id: ca-136
+    title: The Leibniz series for π
+    subtopic: Series & Taylor
+    difficulty: hard
+    type: proof
+    tags: [arctangent, geometric series, error bounds]
+    source: Leibniz, Madhava
+    statement: |
+      Prove that $1 - \frac13 + \frac15 - \frac17 + \cdots = \frac\pi4$.
+    solution: |
+      For every real $t$ and $n \ge 1$, the finite geometric sum gives
+      $$\frac{1}{1 + t^2} = \sum_{k=0}^{n-1}(-1)^kt^{2k} + \frac{(-1)^nt^{2n}}{1 + t^2}.$$
+      Integrate from 0 to 1:
+      $$\frac\pi4 = \arctan1 = \sum_{k=0}^{n-1}\frac{(-1)^k}{2k+1} + (-1)^n\int_0^1\frac{t^{2n}}{1+t^2}\,dt.$$
+      The remainder is at most $\int_0^1t^{2n}\,dt = \frac{1}{2n+1} \to 0$. $\blacksquare$
+
+      (This works directly at $x = 1$, the edge of the interval of convergence, where the usual power-series theorems don't immediately apply.)
+
+  - id: ca-137
+    title: The binomial series for a square root
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: compute
+    tags: [binomial series, approximation]
+    statement: |
+      Find the first four terms of the Maclaurin series of $\sqrt{1 + x}$ and use them to approximate $\sqrt{1.1}$.
+    solution: |
+      With $f = (1 + x)^{1/2}$: $f(0) = 1$, $f'(0) = \frac12$, $f''(0) = -\frac14$, $f'''(0) = \frac38$. So
+      $$\sqrt{1+x} \approx 1 + \frac x2 - \frac{x^2}{8} + \frac{x^3}{16}.$$
+      At $x = 0.1$: $1 + 0.05 - 0.00125 + 0.0000625 = 1.0488125$. (True value $1.0488088\ldots$; the next term is $-\frac{5x^4}{128} \approx -3.9\times10^{-6}$.)
+
+  - id: ca-138
+    title: Two extreme radii of convergence
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: compute
+    tags: [radius of convergence, ratio test]
+    related: [ca-028]
+    statement: |
+      Find the radius of convergence of $\sum n!\,x^n$ and of $\sum\frac{x^n}{n^2}$, and the behaviour at the endpoints of the second.
+    solution: |
+      **$\sum n!\,x^n$:** for $x \ne 0$, $\frac{(n+1)!|x|^{n+1}}{n!|x|^n} = (n+1)|x| \to \infty$. So $R = 0$: it converges only at $x = 0$.
+
+      **$\sum\frac{x^n}{n^2}$:** the ratio is $\frac{n^2}{(n+1)^2}|x| \to |x|$, so $R = 1$. At $x = \pm1$, $\sum\frac{|x|^n}{n^2} = \sum\frac1{n^2}$ converges, so it converges absolutely at both endpoints.
+
+  - id: ca-139
+    title: Differentiating a power series
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: compute
+    tags: [power series, differentiation, geometric series]
+    related: [ca-132, in-041]
+    statement: |
+      Assuming power series may be differentiated term by term inside their radius of convergence, show that $\sum_{n\ge1}nx^{n-1} = \frac{1}{(1-x)^2}$ and $\sum_{n\ge1}n^2x^n = \frac{x(1 + x)}{(1-x)^3}$ for $|x| < 1$.
+    solution: |
+      Differentiate $\sum_{n\ge0}x^n = \frac{1}{1-x}$: $\sum_{n\ge1}nx^{n-1} = \frac1{(1-x)^2}$. Multiply by $x$: $\sum nx^n = \frac{x}{(1-x)^2}$. Differentiate again and multiply by $x$:
+      $$\sum n^2x^n = x\frac{d}{dx}\frac{x}{(1-x)^2} = x\cdot\frac{(1-x) + 2x}{(1-x)^3} = \frac{x(1+x)}{(1-x)^3}.$$
+
+  - id: ca-140
+    title: Computing e to three decimals
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: compute
+    tags: [exponential, error bounds, series]
+    related: [ca-134, ca-026]
+    statement: |
+      Show that $\sum_{k=0}^7\frac1{k!}$ approximates $e$ to within $3\times10^{-5}$, and deduce $e = 2.718\ldots$
+    solution: |
+      $\sum_{k=0}^7\frac1{k!} = 2.718254\ldots$ The tail is
+      $$\sum_{k\ge8}\frac1{k!} = \frac1{8!}\left(1 + \frac19 + \frac1{9\cdot10} + \cdots\right) < \frac1{8!}\left(1 + \frac19 + \frac1{81} + \cdots\right) = \frac{1}{8!}\cdot\frac98 \approx 2.8\times10^{-5}.$$
+      So $2.718254 < e < 2.718283$, and the first three decimals are $718$.
+
+  - id: ca-141
+    title: Limits with Taylor series
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: compute
+    tags: [taylor series, limits]
+    related: [ca-017]
+    statement: |
+      Use Taylor expansions to evaluate $\displaystyle\lim_{x\to0}\frac{e^x - 1 - x - \frac{x^2}{2}}{x^3}$ and $\displaystyle\lim_{x\to0}\frac{\sin x - x}{x^3}$.
+    solution: |
+      $e^x = 1 + x + \frac{x^2}{2} + \frac{x^3}{6} + O(x^4)$, so the first is $\frac16 + O(x) \to \frac16$.
+
+      $\sin x = x - \frac{x^3}{6} + O(x^5)$, so the second is $-\frac16 + O(x^2) \to -\frac16$.
+
+      (Here $O(x^k)$ means a function bounded by a constant times $|x|^k$ near 0, which follows from the Lagrange remainder.)
+
+  - id: ca-142
+    title: Absolute and conditional convergence
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: proof
+    tags: [absolute convergence, conditional convergence, alternating series]
+    related: [ca-131, ca-030]
+    statement: |
+      Show that $\sum\frac{(-1)^{n+1}}{n}$ converges conditionally (but not absolutely), and $\sum\frac{(-1)^{n+1}}{n^2}$ converges absolutely.
+    solution: |
+      $\frac1n$ decreases to 0, so the first converges by the alternating series test, but $\sum\frac1n$ diverges. $\sum\frac1{n^2}$ converges (ca-029), so the second converges absolutely. $\blacksquare$
+
+  - id: ca-143
+    title: Rearranging the alternating harmonic series
+    subtopic: Series & Taylor
+    difficulty: hard
+    type: proof
+    tags: [rearrangements, conditional convergence, riemann]
+    related: [ca-030]
+    statement: |
+      Prove that the rearrangement $1 - \frac12 - \frac14 + \frac13 - \frac16 - \frac18 + \frac15 - \frac1{10} - \frac1{12} + \cdots$ (one odd term, then two even ones) has sum $\frac12\ln2$, although the original series sums to $\ln 2$.
+    solution: |
+      Group the terms in threes. The $k$th group is
+      $$\frac{1}{2k-1} - \frac{1}{4k-2} - \frac1{4k} = \frac{1}{4k-2} - \frac1{4k} = \frac12\left(\frac1{2k-1} - \frac1{2k}\right).$$
+      So the partial sums after $3n$ terms are $\frac12\sum_{j=1}^{2n}\frac{(-1)^{j+1}}{j} \to \frac12\ln2$ (ca-030). The partial sums after $3n + 1$ or $3n + 2$ terms differ from these by at most $\frac1{2n+1}$, which tends to 0. $\blacksquare$
+
+      (Riemann's theorem: a conditionally convergent series can be rearranged to have any sum.)
+
+  - id: ca-144
+    title: Multiplying exponential series
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: proof
+    tags: [cauchy product, exponential, binomial theorem]
+    statement: |
+      Assuming that the Cauchy product of two absolutely convergent series converges to the product of their sums, prove $e^xe^y = e^{x+y}$ from the series.
+    solution: |
+      The Cauchy product of $\sum\frac{x^j}{j!}$ and $\sum\frac{y^k}{k!}$ has $n$th term
+      $$\sum_{j+k = n}\frac{x^j}{j!}\frac{y^k}{k!} = \frac1{n!}\sum_{j=0}^n\binom njx^jy^{n-j} = \frac{(x+y)^n}{n!}.$$
+      Summing over $n$ gives $e^{x+y}$. $\blacksquare$
+
+  - id: ca-145
+    title: Limit comparison with 1/n and 1/n²
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: proof
+    tags: [limit comparison test, series]
+    statement: |
+      Prove that $\sum\sin\frac1n$ diverges and $\sum\left(1 - \cos\frac1n\right)$ converges.
+    solution: |
+      **Limit comparison:** if $a_n, b_n > 0$ and $\frac{a_n}{b_n} \to c \in (0, \infty)$, then eventually $\frac c2b_n \le a_n \le 2cb_n$, so $\sum a_n$ and $\sum b_n$ converge or diverge together.
+
+      $\frac{\sin(1/n)}{1/n} \to 1$, and $\sum\frac1n$ diverges. $\frac{1 - \cos(1/n)}{1/n^2} \to \frac12$ (ca-003), and $\sum\frac1{n^2}$ converges. $\blacksquare$
+
+  - id: ca-146
+    title: A fast series for ln 2
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: compute
+    tags: [logarithm, taylor series, approximation]
+    related: [ca-030]
+    statement: |
+      Show that $\ln\frac{1+x}{1-x} = 2\left(x + \frac{x^3}{3} + \frac{x^5}{5} + \cdots\right)$ for $|x| < 1$, and use $x = \frac13$ with four terms to approximate $\ln 2$. Compare with the alternating harmonic series.
+    solution: |
+      Subtracting the series $\ln(1 - x) = -x - \frac{x^2}2 - \frac{x^3}3 - \cdots$ from $\ln(1 + x) = x - \frac{x^2}{2} + \frac{x^3}3 - \cdots$ cancels the even terms.
+
+      With $x = \frac13$, $\frac{1+x}{1-x} = 2$:
+      $$\ln2 \approx 2\left(\frac13 + \frac1{81} + \frac{1}{1215} + \frac1{15309}\right) \approx 0.693135.$$
+      The omitted tail is less than $2\cdot\frac{(1/3)^9}{9}\cdot\frac{1}{1 - 1/9} \approx 1.3\times10^{-5}$ (true value $0.693147$). The alternating harmonic series would need tens of thousands of terms for this accuracy, since its error after $N$ terms is about $\frac1{2N}$.
+
+  - id: ca-147
+    title: Power series are determined by their sums
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: proof
+    tags: [power series, uniqueness, derivatives]
+    statement: |
+      Assuming a power series may be differentiated term by term inside its radius of convergence $R > 0$, prove that if $\sum a_nx^n = \sum b_nx^n$ for all $|x| < R$, then $a_n = b_n$ for all $n$.
+    solution: |
+      Let $f(x) = \sum a_nx^n$. Differentiating $k$ times, $f^{(k)}(x) = \sum_{n\ge k}n(n-1)\cdots(n-k+1)a_nx^{n-k}$, and at $x = 0$ only the $n = k$ term survives: $f^{(k)}(0) = k!\,a_k$. So $a_k = \frac{f^{(k)}(0)}{k!}$ is determined by $f$, and likewise $b_k$; since the functions agree, $a_k = b_k$. $\blacksquare$
+
+  - id: ca-148
+    title: Summing n²/3ⁿ
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: compute
+    tags: [power series, series]
+    related: [ca-139]
+    statement: |
+      Find $\displaystyle\sum_{n=1}^\infty\frac{n^2}{3^n}$.
+    solution: |
+      By ca-139 with $x = \frac13$: $\frac{\frac13\cdot\frac43}{\left(\frac23\right)^3} = \frac{4/9}{8/27} = \frac32$.
+
+  - id: ca-149
+    title: Euler's formula from power series
+    subtopic: Series & Taylor
+    difficulty: medium
+    type: proof
+    tags: [complex exponential, power series, euler formula]
+    source: Euler
+    related: [in-043]
+    statement: |
+      Define $e^z = \sum_{n\ge0}\frac{z^n}{n!}$ for complex $z$ (it converges absolutely). Prove that $e^{i\theta} = \cos\theta + i\sin\theta$, and deduce $e^{i\pi} + 1 = 0$.
+    solution: |
+      The powers of $i$ cycle $1, i, -1, -i$, so $(i\theta)^{2k} = (-1)^k\theta^{2k}$ and $(i\theta)^{2k+1} = i(-1)^k\theta^{2k+1}$. Splitting the absolutely convergent series into even and odd terms,
+      $$e^{i\theta} = \sum_{k\ge0}\frac{(-1)^k\theta^{2k}}{(2k)!} + i\sum_{k\ge0}\frac{(-1)^k\theta^{2k+1}}{(2k+1)!} = \cos\theta + i\sin\theta,$$
+      using the Maclaurin series of $\cos$ and $\sin$ (which converge to them, as in ca-134). With $\theta = \pi$: $e^{i\pi} = -1$. $\blacksquare$
+
+  - id: ca-150
+    title: How good is sin x ≈ x?
+    subtopic: Series & Taylor
+    difficulty: easy
+    type: proof
+    tags: [taylor's theorem, error bounds, small angles]
+    related: [ca-098, ca-090]
+    statement: |
+      Prove that $|\sin x - x| \le \frac{|x|^3}{6}$ for all real $x$. How large can $x$ be (in radians) for the relative error of $\sin x \approx x$ to be under 1%?
+    solution: |
+      By Taylor with $n = 2$ (the $x^2$ term is 0), $\sin x = x - \frac{\cos c}{6}x^3$ for some $c$, so $|\sin x - x| \le \frac{|x|^3}{6}$.
+
+      The relative error is $\frac{|\sin x - x|}{|x|} \le \frac{x^2}{6}$, which is below $0.01$ when $|x| < \sqrt{0.06} \approx 0.245$ rad, about $14^\circ$. $\blacksquare$

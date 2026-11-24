@@ -504,3 +504,966 @@ problems:
       Hence $\sqrt{1 - 4x} = 1 - \sum_{n\ge1}\frac2n\binom{2n-2}{n-1}x^n$, and
       $$C(x) = \frac{1}{2x}\sum_{n\ge1}\frac2n\binom{2n-2}{n-1}x^n = \sum_{n\ge1}\frac1n\binom{2n-2}{n-1}x^{n-1}.$$
       Setting $m = n - 1$, $C_m = \frac{1}{m+1}\binom{2m}{m}$. $\blacksquare$
+
+  - id: gf-031
+    title: Extracting a coefficient by partial fractions
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: compute
+    tags: [partial fractions, coefficient extraction]
+    statement: |
+      Find $[x^n]\dfrac{1}{(1-x)(1-2x)}$ in two ways.
+    solution: |
+      **Partial fractions.** $\frac{1}{(1-x)(1-2x)} = \frac{2}{1 - 2x} - \frac{1}{1-x}$, so the coefficient is $2^{n+1} - 1$.
+
+      **Partial sums.** Dividing $\frac1{1-2x}$ by $1 - x$ takes partial sums (gf-009): $1 + 2 + \cdots + 2^n = 2^{n+1} - 1$.
+
+  - id: gf-032
+    title: Making change for 20 cents
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: compute
+    tags: [coins, generating functions]
+    statement: |
+      Write down the generating function for the number of ways to make $n$ cents from 1-, 5- and 10-cent coins, and find the number of ways to make 20 cents.
+    solution: |
+      $\dfrac{1}{(1-x)(1-x^5)(1-x^{10})}$: each factor records how many coins of that value are used.
+
+      For 20 cents: with $d \in \{0, 1, 2\}$ ten-cent coins, the remaining $20 - 10d$ cents are made with fives and ones in $\frac{20 - 10d}{5} + 1$ ways: $5 + 3 + 1 = 9$.
+
+  - id: gf-033
+    title: Bounded solutions by generating functions
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: compute
+    tags: [generating functions, bounded variables]
+    related: [cb-105]
+    statement: |
+      Use a generating function to count solutions of $x_1 + x_2 + x_3 = 12$ with $2 \le x_i \le 5$.
+    solution: |
+      We need $[x^{12}](x^2 + x^3 + x^4 + x^5)^3 = [x^{12}]\,x^6\frac{(1 - x^4)^3}{(1-x)^3}$, i.e. $[x^6](1 - 3x^4 + \cdots)\sum\binom{n+2}2x^n$:
+      $$\binom82 - 3\binom42 = 28 - 18 = 10.$$
+
+  - id: gf-034
+    title: Multiplying generating functions
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: proof
+    tags: [convolution, generating functions]
+    statement: |
+      Let $A(x) = \sum a_nx^n$, $B(x) = \sum b_nx^n$. Prove that $A(x)B(x) = \sum c_nx^n$ with $c_n = \sum_{k=0}^na_kb_{n-k}$, and interpret: if $a_k$ counts ways to do task 1 with "size" $k$ and $b_j$ ways to do task 2 with size $j$, then $c_n$ counts ways to do both with total size $n$.
+    solution: |
+      Multiplying the series, $x^n$ arises exactly from the products $a_kx^k\cdot b_{n-k}x^{n-k}$, $0 \le k \le n$. (For formal power series this is the definition of the product.)
+
+      Combinatorially, a combined outcome of total size $n$ is a pair (outcome of size $k$, outcome of size $n - k$) for some $k$, and there are $a_kb_{n-k}$ such pairs. $\blacksquare$
+
+  - id: gf-035
+    title: Differentiating the binomial theorem
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: proof
+    tags: [binomial theorem, differentiation]
+    related: [cb-056, cb-058]
+    statement: |
+      Differentiate $(1 + x)^n = \sum_k\binom nkx^k$ to prove $\sum_kk\binom nk = n2^{n-1}$ and $\sum_kk(k-1)\binom nk = n(n-1)2^{n-2}$.
+    solution: |
+      $n(1 + x)^{n-1} = \sum_kk\binom nkx^{k-1}$; set $x = 1$.
+
+      Differentiate again: $n(n-1)(1 + x)^{n-2} = \sum_kk(k-1)\binom nkx^{k-2}$; set $x = 1$. $\blacksquare$
+
+  - id: gf-036
+    title: Sums of Fibonacci numbers via generating functions
+    subtopic: Ordinary generating functions
+    difficulty: medium
+    type: proof
+    tags: [fibonacci, partial sums, generating functions]
+    related: [gf-006, gf-009, in-020]
+    statement: |
+      Use $\sum F_nx^n = \frac{x}{1 - x - x^2}$ and gf-009 to prove $F_0 + F_1 + \cdots + F_n = F_{n+2} - 1$.
+    solution: |
+      The partial sums have generating function $\frac{x}{(1-x)(1 - x - x^2)}$. Since
+      $$\frac{1}{1-x-x^2} - \frac{1}{1-x} = \frac{(1 - x) - (1 - x - x^2)}{(1-x)(1-x-x^2)} = \frac{x^2}{(1-x)(1-x-x^2)},$$
+      we have
+      $$\frac{x}{(1-x)(1-x-x^2)} = \frac1x\left(\frac{1}{1-x-x^2} - \frac1{1-x}\right) = \frac1x\sum_{m\ge0}(F_{m+1} - 1)x^m.$$
+      The coefficient of $x^n$ is $F_{n+2} - 1$. $\blacksquare$
+
+  - id: gf-037
+    title: Inverting a quadratic
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: compute
+    tags: [partial fractions, coefficient extraction]
+    related: [in-222]
+    statement: |
+      Find $[x^n]\dfrac{1}{1 - x - 2x^2}$.
+    solution: |
+      $1 - x - 2x^2 = (1 - 2x)(1 + x)$, and
+      $$\frac{1}{(1-2x)(1+x)} = \frac{2/3}{1 - 2x} + \frac{1/3}{1 + x}.$$
+      So the coefficient is $\dfrac{2^{n+1} + (-1)^n}{3}$: $1, 1, 3, 5, 11, \dots$
+
+  - id: gf-038
+    title: Rational generating functions and linear recurrences
+    subtopic: Ordinary generating functions
+    difficulty: medium
+    type: proof
+    tags: [rational functions, recurrence, generating functions]
+    related: [gf-006]
+    statement: |
+      Let $Q(x) = 1 - c_1x - \cdots - c_kx^k$. Prove that $(a_n)$ satisfies $a_n = c_1a_{n-1} + \cdots + c_ka_{n-k}$ for all $n \ge k$ if and only if $A(x)Q(x)$ is a polynomial of degree less than $k$.
+    solution: |
+      The coefficient of $x^n$ in $A(x)Q(x)$ is $a_n - c_1a_{n-1} - \cdots - c_ka_{n-k}$ (with $a_j = 0$ for $j < 0$). For $n \ge k$ all the indices are $\ge 0$, so this coefficient vanishes for every $n \ge k$ exactly when the recurrence holds for every $n \ge k$. $\blacksquare$
+
+      (So $A(x) = P(x)/Q(x)$ with $\deg P < k$, and partial fractions turn this into a closed form.)
+
+  - id: gf-039
+    title: The generating function of harmonic numbers
+    subtopic: Ordinary generating functions
+    difficulty: medium
+    type: compute
+    tags: [harmonic numbers, logarithm, partial sums]
+    related: [gf-009]
+    statement: |
+      Show that $\sum_{n\ge1}\frac{x^n}{n} = -\ln(1 - x)$ and deduce $\sum_{n\ge1}H_nx^n = \dfrac{-\ln(1-x)}{1 - x}$.
+    solution: |
+      Integrate $\frac{1}{1-t} = \sum t^n$ from 0 to $x$ term by term (for $|x| < 1$): $-\ln(1 - x) = \sum_{n\ge0}\frac{x^{n+1}}{n+1}$.
+
+      $H_n = \sum_{k=1}^n\frac1k$ is the $n$th partial sum of $\left(\frac1k\right)$, so by gf-009 its generating function is $\frac{1}{1-x}$ times that of $\frac1k$.
+
+  - id: gf-040
+    title: Compositions by generating functions
+    subtopic: Ordinary generating functions
+    difficulty: medium
+    type: proof
+    tags: [compositions, generating functions]
+    related: [cb-023, cb-128]
+    statement: |
+      Show that the generating function for compositions of $n$ with exactly $k$ parts is $\left(\frac{x}{1-x}\right)^k$, and deduce that the total number of compositions of $n \ge 1$ is $2^{n-1}$.
+    solution: |
+      Each part is a positive integer, with generating function $x + x^2 + \cdots = \frac x{1-x}$, and a $k$-part composition is an ordered $k$-tuple of parts: hence the $k$th power.
+
+      Summing over $k \ge 0$:
+      $$\sum_k\left(\frac{x}{1-x}\right)^k = \frac{1}{1 - \frac{x}{1-x}} = \frac{1 - x}{1 - 2x} = 1 + \frac{x}{1 - 2x},$$
+      whose coefficient of $x^n$ ($n \ge 1$) is $2^{n-1}$. $\blacksquare$
+
+  - id: gf-041
+    title: Compositions into 1s and 2s
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: compute
+    tags: [compositions, fibonacci]
+    related: [gf-040, cb-027]
+    statement: |
+      Find the generating function for compositions of $n$ into parts 1 and 2, and identify its coefficients.
+    solution: |
+      A part has generating function $x + x^2$, so the answer is $\sum_k(x + x^2)^k = \frac{1}{1 - x - x^2} = \sum_nF_{n+1}x^n$, by gf-006.
+
+  - id: gf-042
+    title: Compositions into odd parts
+    subtopic: Ordinary generating functions
+    difficulty: medium
+    type: compute
+    tags: [compositions, fibonacci, generating functions]
+    related: [in-155]
+    statement: |
+      Show that compositions of $n$ into odd parts have generating function $\dfrac{1 - x^2}{1 - x - x^2}$, and deduce that there are $F_n$ of them for $n \ge 1$.
+    solution: |
+      An odd part has generating function $x + x^3 + x^5 + \cdots = \frac{x}{1-x^2}$, so
+      $$\sum_k\left(\frac{x}{1-x^2}\right)^k = \frac{1}{1 - \frac{x}{1-x^2}} = \frac{1 - x^2}{1 - x - x^2}.$$
+      With $\frac{1}{1-x-x^2} = \sum F_{n+1}x^n$, the coefficient of $x^n$ is $F_{n+1} - F_{n-1} = F_n$ for $n \ge 2$, and $F_1 = 1$ for $n = 1$.
+
+  - id: gf-043
+    title: Mixing free and capped variables
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: compute
+    tags: [generating functions, coefficient extraction]
+    statement: |
+      How many solutions does $a + b + c + d = n$ have with $a, b \ge 0$ and $c, d \in \{0, 1\}$?
+    solution: |
+      The generating function is $\frac{(1 + x)^2}{(1 - x)^2} = (1 + 2x + x^2)\sum(m+1)x^m$. For $n \ge 1$ the coefficient is
+      $$(n + 1) + 2n + (n - 1) = 4n,$$
+      and for $n = 0$ it is 1.
+
+  - id: gf-044
+    title: Sicherman dice
+    subtopic: Ordinary generating functions
+    difficulty: hard
+    type: proof
+    tags: [dice, polynomials, factorisation]
+    source: Sicherman, 1978
+    statement: |
+      Show that a die with faces $1, 2, 2, 3, 3, 4$ and a die with faces $1, 3, 4, 5, 6, 8$ give the same distribution of totals as two ordinary dice.
+    solution: |
+      A die's generating function is $\sum_{\text{faces}}x^{f}$, and the totals of two dice are counted by the product. An ordinary die gives $x + \cdots + x^6 = x(1 + x)(1 + x + x^2)(1 - x + x^2)$, so two dice give
+      $$x^2(1+x)^2(1+x+x^2)^2(1-x+x^2)^2.$$
+      Regroup the factors as $x(1+x)(1+x+x^2)\cdot x(1+x)(1+x+x^2)(1-x+x^2)^2$:
+
+      - $x(1 + x)(1 + x + x^2) = x + 2x^2 + 2x^3 + x^4$: faces $1, 2, 2, 3, 3, 4$.
+      - $x(1+x)(1+x+x^2)(1-x+x^2)^2 = x + x^3 + x^4 + x^5 + x^6 + x^8$: faces $1, 3, 4, 5, 6, 8$.
+
+      The product is the same, so the distributions agree. $\blacksquare$
+
+  - id: gf-045
+    title: Paying 10 with coins of 1, 2 and 5
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: compute
+    tags: [coins, generating functions]
+    related: [gf-032]
+    statement: |
+      Find $[x^{10}]\dfrac{1}{(1-x)(1-x^2)(1-x^5)}$ and interpret it.
+    solution: |
+      It counts ways to pay 10 with coins of value 1, 2 and 5. With $f \in \{0, 1, 2\}$ fives, the remaining $r = 10 - 5f$ is made of 1s and 2s in $\lfloor r/2\rfloor + 1$ ways: $6 + 3 + 1 = 10$.
+
+  - id: gf-046
+    title: Diagonal binomial sums by generating functions
+    subtopic: Ordinary generating functions
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, fibonacci, generating functions]
+    related: [cb-065]
+    statement: |
+      Prove $\sum_k\binom{n-k}{k} = F_{n+1}$ by computing $\sum_n\left(\sum_k\binom{n-k}{k}\right)x^n$.
+    solution: |
+      Swap the order of summation and put $m = n - k$:
+      $$\sum_k\sum_m\binom mkx^{m+k} = \sum_kx^k\sum_m\binom mkx^m = \sum_kx^k\cdot\frac{x^k}{(1-x)^{k+1}},$$
+      using $\sum_m\binom mkx^m = \frac{x^k}{(1-x)^{k+1}}$ (gf-002 shifted). This is a geometric series:
+      $$\frac{1}{1-x}\cdot\frac{1}{1 - \frac{x^2}{1-x}} = \frac{1}{1 - x - x^2} = \sum F_{n+1}x^n. \qquad\blacksquare$$
+
+  - id: gf-047
+    title: Even and odd parts of a generating function
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: proof
+    tags: [generating functions, parity, binomial coefficients]
+    statement: |
+      Show that $\frac{A(x) + A(-x)}{2}$ keeps only the even-index terms of $A(x)$, and use it to count even-sized subsets of an $n$-set ($n \ge 1$).
+    solution: |
+      $A(-x) = \sum(-1)^na_nx^n$, so $A(x) + A(-x) = \sum(1 + (-1)^n)a_nx^n$, which doubles the even terms and kills the odd ones.
+
+      With $A(x) = (1 + x)^n$ at $x = 1$: $\sum_{k\text{ even}}\binom nk = \frac{2^n + 0^n}{2} = 2^{n-1}$. $\blacksquare$
+
+  - id: gf-048
+    title: Summing n² / 2ⁿ
+    subtopic: Ordinary generating functions
+    difficulty: easy
+    type: compute
+    tags: [generating functions, series]
+    related: [gf-001]
+    statement: |
+      Evaluate $\displaystyle\sum_{n\ge0}\frac{n^2}{2^n}$.
+    solution: |
+      By gf-001, $\sum n^2x^n = \frac{x(1 + x)}{(1 - x)^3}$ for $|x| < 1$. At $x = \frac12$: $\frac{\frac12\cdot\frac32}{\frac18} = 6$.
+
+  - id: gf-049
+    title: A second-order recurrence by generating functions
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, generating functions, partial fractions]
+    related: [dm-030]
+    statement: |
+      Use a generating function to solve $a_n = 3a_{n-1} + 4a_{n-2}$ with $a_0 = 1$, $a_1 = 2$.
+    solution: |
+      Multiplying by $x^n$ and summing over $n \ge 2$: $A - 1 - 2x = 3x(A - 1) + 4x^2A$, so
+      $$A(x) = \frac{1 - x}{1 - 3x - 4x^2} = \frac{1 - x}{(1 - 4x)(1 + x)} = \frac{3/5}{1 - 4x} + \frac{2/5}{1 + x}.$$
+      So $a_n = \dfrac{3\cdot4^n + 2(-1)^n}{5}$. Check: $a_2 = \frac{48 + 2}{5} = 10 = 6 + 4$.
+
+  - id: gf-050
+    title: A recurrence with a constant term
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, particular solution]
+    related: [gf-010]
+    statement: |
+      Solve $a_n = 5a_{n-1} - 6a_{n-2} + 4$ with $a_0 = a_1 = 0$.
+    solution: |
+      A constant solution $c$ needs $c = 5c - 6c + 4$, so $c = 2$. The general solution is $A2^n + B3^n + 2$, with $A + B = -2$ and $2A + 3B = -2$, so $B = 2$, $A = -4$:
+      $$a_n = 2\cdot3^n - 2^{n+2} + 2.$$
+      Check: $a_2 = 18 - 16 + 2 = 4$ and $a_3 = 54 - 32 + 2 = 24 = 5\cdot4 + 4$.
+
+  - id: gf-051
+    title: Computing Catalan numbers
+    subtopic: Recurrences
+    difficulty: easy
+    type: compute
+    tags: [catalan, recurrence]
+    related: [gf-005, gf-030]
+    statement: |
+      Use $C_{n+1} = \sum_{k=0}^nC_kC_{n-k}$ to compute $C_0, \dots, C_6$, and check against $\frac{1}{n+1}\binom{2n}{n}$.
+    solution: |
+      $C_0 = 1$, $C_1 = 1$, $C_2 = 2$, $C_3 = 2 + 1 + 2 = 5$, $C_4 = 5 + 2 + 2 + 5 = 14$, $C_5 = 14 + 5 + 4 + 5 + 14 = 42$, $C_6 = 42 + 14 + 10 + 10 + 14 + 42 = 132$.
+
+      Check: $\frac17\binom{12}{6} = \frac{924}{7} = 132$.
+
+  - id: gf-052
+    title: Motzkin numbers
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [lattice paths, recurrence, motzkin]
+    related: [gf-005]
+    statement: |
+      A Motzkin path of length $n$ uses steps up $(1,1)$, down $(1,-1)$ and flat $(1,0)$, starts and ends at height 0, and never goes below 0. Show that the number $M_n$ satisfies $M_{n+1} = M_n + \sum_{k=0}^{n-1}M_kM_{n-1-k}$, and compute $M_0, \dots, M_6$.
+    solution: |
+      Look at the first step of a path of length $n + 1$. If it is flat, the rest is any Motzkin path of length $n$: $M_n$. If it is up, let the first return to height 0 be at step $k + 2$; between the up and that down step is a Motzkin path of length $k$ (shifted up by 1), and after it any Motzkin path of length $n - 1 - k$.
+
+      $M_0 = M_1 = 1$, $M_2 = 2$, $M_3 = 4$, $M_4 = 9$, $M_5 = 21$, $M_6 = 51$.
+
+  - id: gf-053
+    title: Coupled recurrences and Pell numbers
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [recurrence, pell equation, sqrt 2]
+    related: [in-162]
+    statement: |
+      Let $a_0 = b_0 = 1$ and $a_n = a_{n-1} + 2b_{n-1}$, $b_n = a_{n-1} + b_{n-1}$. Prove that $a_n + b_n\sqrt2 = (1 + \sqrt2)^{n+1}$, and find a single recurrence satisfied by $a_n$.
+    solution: |
+      $(a_{n-1} + b_{n-1}\sqrt2)(1 + \sqrt2) = (a_{n-1} + 2b_{n-1}) + (a_{n-1} + b_{n-1})\sqrt2 = a_n + b_n\sqrt2$, and $a_0 + b_0\sqrt2 = 1 + \sqrt2$. Induction gives the formula.
+
+      $1 + \sqrt2$ is a root of $t^2 = 2t + 1$, so $a_n = 2a_{n-1} + a_{n-2}$ (and likewise $b_n$). E.g. $a$: $1, 3, 7, 17, 41$; $b$: $1, 2, 5, 12, 29$. $\blacksquare$
+
+  - id: gf-054
+    title: Arrangements of subsets
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, factorial, permutations]
+    related: [gf-092]
+    statement: |
+      Let $a_n$ be the number of ordered lists of distinct elements chosen from $\{1, \dots, n\}$ (including the empty list). Show $a_n = na_{n-1} + 1$ and $a_n = \sum_{k=0}^n\frac{n!}{k!}$.
+    solution: |
+      **Recurrence.** A non-empty list starts with one of $n$ elements, followed by a list from the other $n - 1$: $na_{n-1}$. Plus the empty list.
+
+      **Closed form.** Lists of length $n - k$ number $\frac{n!}{k!}$. Summing over lengths gives the formula; it also satisfies $a_n = n\sum_{k=0}^{n-1}\frac{(n-1)!}{k!} + 1$. Values $1, 2, 5, 16, 65, \dots$, and $a_n = \lfloor e\cdot n!\rfloor$ for $n \ge 1$.
+
+  - id: gf-055
+    title: Tower of Hanoi by generating functions
+    subtopic: Recurrences
+    difficulty: easy
+    type: compute
+    tags: [recurrence, tower of hanoi, partial fractions]
+    related: [dm-024]
+    statement: |
+      Solve $H_n = 2H_{n-1} + 1$, $H_0 = 0$, using generating functions.
+    solution: |
+      $H(x) - 0 = 2xH(x) + \frac{x}{1-x}$, so
+      $$H(x) = \frac{x}{(1-x)(1-2x)} = \frac{1}{1 - 2x} - \frac{1}{1 - x}.$$
+      Hence $H_n = 2^n - 1$.
+
+  - id: gf-056
+    title: Tiling with dominoes and squares
+    subtopic: Recurrences
+    difficulty: easy
+    type: compute
+    tags: [tiling, recurrence, jacobsthal]
+    related: [gf-013, gf-037]
+    statement: |
+      Let $a_n$ count tilings of a $2\times n$ board by $1\times2$ dominoes and $2\times2$ squares. Find a recurrence and closed form.
+    solution: |
+      At the right end: a vertical domino ($a_{n-1}$), two horizontal dominoes or a square ($2a_{n-2}$). So $a_n = a_{n-1} + 2a_{n-2}$ with $a_0 = a_1 = 1$.
+
+      By gf-037, $a_n = \frac{2^{n+1} + (-1)^n}{3}$: $1, 1, 3, 5, 11, 21, \dots$
+
+  - id: gf-057
+    title: Strings containing 00
+    subtopic: Recurrences
+    difficulty: easy
+    type: compute
+    tags: [binary strings, complement, fibonacci]
+    related: [dm-026]
+    statement: |
+      How many binary strings of length $n$ contain at least one occurrence of $00$?
+    solution: |
+      Those avoiding $00$ number $F_{n+2}$ (dm-026 with 0 and 1 swapped). So $2^n - F_{n+2}$; for $n = 5$, $32 - 13 = 19$.
+
+  - id: gf-058
+    title: Counting calls of a naive Fibonacci program
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, fibonacci, algorithms]
+    related: [al-016]
+    statement: |
+      A recursive program computes $F_n$ by calling itself on $n-1$ and $n-2$ (with no further calls for $n \le 1$). Let $T(n)$ be the total number of calls, including the first. Show $T(n) = T(n-1) + T(n-2) + 1$ and $T(n) = 2F_{n+1} - 1$.
+    solution: |
+      For $n \ge 2$, the call on $n$ makes one call on $n - 1$ and one on $n - 2$, each generating its own calls: $T(n) = 1 + T(n-1) + T(n-2)$, with $T(0) = T(1) = 1$.
+
+      Let $U(n) = T(n) + 1$. Then $U(n) = U(n-1) + U(n-2)$ with $U(0) = U(1) = 2 = 2F_1 = 2F_2$, so $U(n) = 2F_{n+1}$. Values $T = 1, 1, 3, 5, 9, 15, 25, \dots$
+
+  - id: gf-059
+    title: A triple root
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [recurrence, repeated root, polynomials]
+    related: [dm-023]
+    statement: |
+      Prove that the solutions of $a_n = 3a_{n-1} - 3a_{n-2} + a_{n-3}$ are exactly the quadratic polynomials in $n$.
+    solution: |
+      The characteristic polynomial is $x^3 - 3x^2 + 3x - 1 = (x - 1)^3$.
+
+      **Polynomials work.** The recurrence says the third difference $\Delta^3a = a_n - 3a_{n-1} + 3a_{n-2} - a_{n-3}$ vanishes. Each difference lowers the degree of a polynomial by one, so a polynomial of degree $\le 2$ has $\Delta^3 = 0$.
+
+      **Nothing else.** The solution space is 3-dimensional (determined by $a_0, a_1, a_2$), and so is the space of quadratics, which lies inside it. So they are equal. $\blacksquare$
+
+  - id: gf-060
+    title: Roots 1, −1 and 2
+    subtopic: Recurrences
+    difficulty: easy
+    type: compute
+    tags: [recurrence, characteristic equation]
+    related: [dm-091]
+    statement: |
+      Solve $a_n = 2a_{n-1} + a_{n-2} - 2a_{n-3}$ with $a_0 = 3$, $a_1 = 2$, $a_2 = 6$.
+    solution: |
+      $x^3 - 2x^2 - x + 2 = (x-1)(x+1)(x-2)$, so $a_n = A + B(-1)^n + C2^n$. Then $A + B + C = 3$, $A - B + 2C = 2$, $A + B + 4C = 6$; the first and third give $C = 1$, then $A + B = 2$ and $A - B = 0$:
+      $$a_n = 1 + (-1)^n + 2^n.$$
+      Check: $a_3 = 8 = 12 + 2 - 6$.
+
+  - id: gf-061
+    title: Independent sets on a cycle
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [fibonacci, lucas numbers, subsets]
+    related: [cb-127, dm-026]
+    statement: |
+      Prove that the number of subsets of $\{1, \dots, n\}$ ($n \ge 3$) containing no two cyclically adjacent elements (where $n$ and $1$ count as adjacent) is the Lucas number $L_n = F_{n-1} + F_{n+1}$.
+    solution: |
+      Subsets of a path of $m$ elements with no two adjacent number $F_{m+2}$ (dm-026).
+
+      - If $1$ is not chosen, the rest is such a subset of the path $2, \dots, n$: $F_{n+1}$.
+      - If $1$ is chosen, then $2$ and $n$ are not, and the rest is a subset of the path $3, \dots, n-1$ of $n - 3$ elements: $F_{n-1}$.
+
+      Total $F_{n+1} + F_{n-1} = L_n$. $\blacksquare$
+
+  - id: gf-062
+    title: A recurrence with roots 3 and −1
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, particular solution]
+    statement: |
+      Solve $a_n = 2a_{n-1} + 3a_{n-2} + 1$ with $a_0 = 0$, $a_1 = 1$.
+    solution: |
+      A constant solution: $c = 5c + 1$, $c = -\frac14$. The roots of $x^2 - 2x - 3$ are $3$ and $-1$, so $a_n = A3^n + B(-1)^n - \frac14$, with $A + B = \frac14$ and $3A - B = \frac54$, giving $A = \frac38$, $B = -\frac18$:
+      $$a_n = \frac{3^{n+1} - (-1)^n - 2}{8}.$$
+      Values $0, 1, 3, 10, 30, 91$.
+
+  - id: gf-063
+    title: A recurrence for squared Fibonacci numbers
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [fibonacci, recurrence, identities]
+    related: [in-054]
+    statement: |
+      Prove that $F_{n+3}^2 = 2F_{n+2}^2 + 2F_{n+1}^2 - F_n^2$.
+    solution: |
+      Write $a = F_{n+1}$, $b = F_{n+2}$, so $F_n = b - a$ and $F_{n+3} = a + b$. Then
+      $$2b^2 + 2a^2 - (b - a)^2 = b^2 + a^2 + 2ab = (a + b)^2 = F_{n+3}^2. \qquad\blacksquare$$
+
+      (So $F_n^2$ satisfies a linear recurrence with characteristic roots $\varphi^2$, $\psi^2$ and $\varphi\psi = -1$.)
+
+  - id: gf-064
+    title: The generating function of central binomial coefficients
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, generalised binomial theorem]
+    related: [gf-030, gf-065]
+    statement: |
+      Prove that $\displaystyle\sum_{n\ge0}\binom{2n}{n}x^n = \frac{1}{\sqrt{1 - 4x}}$.
+    solution: |
+      By the generalised binomial theorem $(1 - 4x)^{-1/2} = \sum_n\binom{-1/2}{n}(-4x)^n$, and
+      $$\binom{-1/2}{n} = \frac{\left(-\frac12\right)\left(-\frac32\right)\cdots\left(-\frac{2n-1}{2}\right)}{n!} = \frac{(-1)^n\,1\cdot3\cdots(2n-1)}{2^nn!}.$$
+      Since $1\cdot3\cdots(2n-1) = \frac{(2n)!}{2^nn!}$, we get $\binom{-1/2}n(-4)^n = \frac{(2n)!}{n!^2} = \binom{2n}n$. $\blacksquare$
+
+  - id: gf-065
+    title: A convolution of central binomial coefficients
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, convolution]
+    related: [gf-064]
+    statement: |
+      Prove that $\displaystyle\sum_{k=0}^n\binom{2k}{k}\binom{2n-2k}{n-k} = 4^n$.
+    solution: |
+      The left side is the coefficient of $x^n$ in the square of $\sum\binom{2k}kx^k = (1 - 4x)^{-1/2}$, i.e. in $\frac{1}{1 - 4x} = \sum4^nx^n$. $\blacksquare$
+
+      (A bijective proof of this identity is surprisingly hard.)
+
+  - id: gf-066
+    title: Computing p(n) with the pentagonal recurrence
+    subtopic: Partitions
+    difficulty: medium
+    type: compute
+    tags: [partitions, pentagonal numbers, recurrence]
+    source: Euler
+    related: [gf-017, gf-075]
+    statement: |
+      Euler's pentagonal number theorem says $\prod_{k\ge1}(1 - x^k) = \sum_{j\in\Z}(-1)^jx^{j(3j-1)/2} = 1 - x - x^2 + x^5 + x^7 - x^{12} - x^{15} + \cdots$. Use it to derive
+      $$p(n) = p(n-1) + p(n-2) - p(n-5) - p(n-7) + p(n-12) + \cdots$$
+      and compute $p(8), p(9), p(10)$.
+    solution: |
+      $\sum p(n)x^n\cdot\prod(1 - x^k) = 1$, so for $n \ge 1$ the coefficient of $x^n$ in the product vanishes:
+      $$p(n) - p(n-1) - p(n-2) + p(n-5) + p(n-7) - \cdots = 0.$$
+      With $p(0..7) = 1, 1, 2, 3, 5, 7, 11, 15$:
+      - $p(8) = 15 + 11 - 3 - 1 = 22$,
+      - $p(9) = 22 + 15 - 5 - 2 = 30$,
+      - $p(10) = 30 + 22 - 7 - 3 = 42$.
+
+  - id: gf-067
+    title: Partitions of 10 into distinct parts
+    subtopic: Partitions
+    difficulty: easy
+    type: compute
+    tags: [partitions, distinct parts]
+    related: [cb-025]
+    statement: |
+      List the partitions of 10 into distinct parts, and check that there are as many partitions of 10 into odd parts.
+    solution: |
+      Distinct parts: $10$, $9{+}1$, $8{+}2$, $7{+}3$, $6{+}4$, $7{+}2{+}1$, $6{+}3{+}1$, $5{+}4{+}1$, $5{+}3{+}2$, $4{+}3{+}2{+}1$. **10.**
+
+      Odd parts: $9{+}1$, $7{+}3$, $7{+}1^3$, $5{+}5$, $5{+}3{+}1^2$, $5{+}1^5$, $3^3{+}1$, $3^2{+}1^4$, $3{+}1^7$, $1^{10}$. Also **10**, as cb-025 guarantees.
+
+  - id: gf-068
+    title: Partitions into exactly two parts
+    subtopic: Partitions
+    difficulty: easy
+    type: compute
+    tags: [partitions]
+    statement: |
+      How many partitions of $n$ have exactly two parts?
+    solution: |
+      They are $a + b = n$ with $a \ge b \ge 1$, determined by $b \in \{1, \dots, \lfloor n/2\rfloor\}$. So $\lfloor n/2\rfloor$.
+
+  - id: gf-069
+    title: Partitions into exactly three parts
+    subtopic: Partitions
+    difficulty: medium
+    type: compute
+    tags: [partitions, nearest integer]
+    related: [gf-021, gf-024]
+    statement: |
+      List the partitions of 9 into exactly 3 parts and compare with the formula "nearest integer to $\frac{n^2}{12}$".
+    solution: |
+      $7{+}1{+}1$, $6{+}2{+}1$, $5{+}3{+}1$, $5{+}2{+}2$, $4{+}4{+}1$, $4{+}3{+}2$, $3{+}3{+}3$: **7**. And $\frac{81}{12} = 6.75$ rounds to 7.
+
+      (By gf-024 these are the partitions of $n - 3$ into at most 3 parts, i.e. parts of size at most 3, and gf-021 gives the formula for those.)
+
+  - id: gf-070
+    title: Partitions into even parts
+    subtopic: Partitions
+    difficulty: easy
+    type: proof
+    tags: [partitions, bijection]
+    statement: |
+      Prove that the number of partitions of $2m$ into even parts is $p(m)$.
+    solution: |
+      Halving every part is a bijection from partitions of $2m$ into even parts to partitions of $m$; doubling is its inverse. $\blacksquare$
+
+  - id: gf-071
+    title: Binary partitions
+    subtopic: Partitions
+    difficulty: medium
+    type: proof
+    tags: [partitions, powers of two, recurrence]
+    related: [gf-025]
+    statement: |
+      Let $b(n)$ be the number of partitions of $n$ into powers of 2. Prove $b(2n + 1) = b(2n)$ and $b(2n) = b(2n - 1) + b(n)$, and compute $b(1), \dots, b(10)$.
+    solution: |
+      **Odd $n$.** A partition of $2n + 1$ into powers of 2 contains a part 1 (the others are even); removing one 1 is a bijection to partitions of $2n$.
+
+      **Even $n$.** Partitions of $2n$ either contain a 1 (remove it: $b(2n - 1)$) or consist of even parts (halve them: $b(n)$).
+
+      With $b(0) = 1$: $b(1..10) = 1, 2, 2, 4, 4, 6, 6, 10, 10, 14$. $\blacksquare$
+
+  - id: gf-072
+    title: Counting partitions into distinct parts
+    subtopic: Partitions
+    difficulty: easy
+    type: compute
+    tags: [partitions, distinct parts, generating functions]
+    related: [gf-067]
+    statement: |
+      Using $\prod_{k\ge1}(1 + x^k)$, find the number $q(n)$ of partitions of $n$ into distinct parts for $n = 0, \dots, 10$.
+    solution: |
+      Multiply out factor by factor (only $k \le 10$ matter):
+      $$q(0..10) = 1, 1, 1, 2, 2, 3, 4, 5, 6, 8, 10.$$
+      E.g. $q(6) = 4$: $6$, $5{+}1$, $4{+}2$, $3{+}2{+}1$.
+
+  - id: gf-073
+    title: Largest part versus number of parts
+    subtopic: Partitions
+    difficulty: easy
+    type: proof
+    tags: [partitions, conjugation]
+    related: [gf-018]
+    statement: |
+      Prove that the number of partitions of $n$ with largest part exactly $k$ equals the number with exactly $k$ parts.
+    solution: |
+      Conjugating (reflecting the Ferrers diagram) turns the first row (largest part) into the first column (number of parts), and is a bijection. $\blacksquare$
+
+  - id: gf-074
+    title: Parts appearing at most twice
+    subtopic: Partitions
+    difficulty: medium
+    type: proof
+    tags: [partitions, generating functions, glaisher]
+    related: [cb-025]
+    statement: |
+      Prove that the number of partitions of $n$ in which no part appears more than twice equals the number of partitions of $n$ with no part divisible by 3.
+    solution: |
+      Generating functions:
+      $$\prod_{k\ge1}(1 + x^k + x^{2k}) = \prod_{k\ge1}\frac{1 - x^{3k}}{1 - x^k}.$$
+      The numerator's factors $1 - x^{3k}$ cancel the denominator's factors $1 - x^m$ with $3 \mid m$, leaving $\prod_{3\nmid m}\frac{1}{1 - x^m}$, the generating function for partitions with no part divisible by 3. $\blacksquare$
+
+      (The same argument with $d$ in place of 3 is Glaisher's theorem.)
+
+  - id: gf-075
+    title: Parity of distinct-part partitions
+    subtopic: Partitions
+    difficulty: medium
+    type: proof
+    tags: [partitions, pentagonal numbers, parity]
+    related: [gf-066, gf-072]
+    statement: |
+      Assuming Euler's pentagonal number theorem (gf-066), prove that $q(n)$, the number of partitions of $n$ into distinct parts, is odd if and only if $n = \frac{j(3j-1)}{2}$ for some integer $j$.
+    solution: |
+      Mod 2, $1 + x^k \equiv 1 - x^k$, so the coefficients of $\prod(1 + x^k)$ and $\prod(1 - x^k)$ agree mod 2. The latter is $\sum_j(-1)^jx^{j(3j-1)/2}$, whose coefficients are $\pm1$ at the generalised pentagonal numbers $0, 1, 2, 5, 7, 12, 15, \dots$ (all distinct) and $0$ elsewhere. So $q(n)$ is odd exactly at those $n$. $\blacksquare$
+
+      (Check with gf-072: $q(n)$ is odd for $n = 0, 1, 2, 5, 7$ and even for $3, 4, 6, 8, 9, 10$.)
+
+  - id: gf-076
+    title: Subsets of {1, …, k} with a given sum
+    subtopic: Partitions
+    difficulty: easy
+    type: proof
+    tags: [partitions, distinct parts, symmetry]
+    statement: |
+      Let $a_n$ be the number of subsets of $\{1, \dots, k\}$ with sum $n$. Show that $\sum a_nx^n = \prod_{j=1}^k(1 + x^j)$ and that $a_n = a_{N - n}$ where $N = \frac{k(k+1)}2$.
+    solution: |
+      Choosing $1$ or $x^j$ from each factor is choosing whether $j$ is in the subset. Complementation $S \mapsto \{1,\dots,k\}\setminus S$ sends sum $n$ to sum $N - n$ and is a bijection. $\blacksquare$
+
+  - id: gf-077
+    title: Partitions inside a box
+    subtopic: Partitions
+    difficulty: medium
+    type: proof
+    tags: [partitions, ferrers diagrams, lattice paths]
+    related: [cb-005]
+    statement: |
+      Prove that the number of partitions whose Ferrers diagram fits in an $a\times b$ box (at most $a$ parts, each at most $b$), of any size, is $\binom{a+b}{a}$.
+    solution: |
+      The boundary of such a diagram, from the bottom-left corner of the box to the top-right corner, is a lattice path of $a$ up-steps and $b$ right-steps, and every such path is the boundary of exactly one diagram in the box. There are $\binom{a+b}{a}$ such paths (cb-005). $\blacksquare$
+
+  - id: gf-078
+    title: Distinct parts and the staircase
+    subtopic: Partitions
+    difficulty: medium
+    type: proof
+    tags: [partitions, distinct parts, bijection]
+    related: [gf-024]
+    statement: |
+      Prove that the number of partitions of $n$ into exactly $k$ distinct parts equals the number of partitions of $n - \binom k2$ into exactly $k$ parts.
+    solution: |
+      Given $\lambda_1 > \lambda_2 > \cdots > \lambda_k \ge 1$, subtract $k - i$ from $\lambda_i$. Since consecutive parts differ by at least 1, the results satisfy $\lambda_1 - (k-1) \ge \lambda_2 - (k-2) \ge \cdots \ge \lambda_k \ge 1$, a partition into exactly $k$ parts of $n - (0 + 1 + \cdots + (k-1)) = n - \binom k2$. Adding the staircase back reverses this. $\blacksquare$
+
+  - id: gf-079
+    title: The total number of parts
+    subtopic: Partitions
+    difficulty: medium
+    type: proof
+    tags: [partitions, double counting, divisor function]
+    related: [nt-063]
+    statement: |
+      Prove that the total number of parts in all partitions of $n$ is $\sum_{k=1}^n\tau(k)\,p(n - k)$, and check $n = 4$.
+    solution: |
+      Count pairs (partition $\lambda$ of $n$, an occurrence of a part in $\lambda$). Label the occurrences of part $j$ in $\lambda$ as the 1st, 2nd, ... The partitions in which part $j$ occurs at least $m$ times correspond, by removing $m$ copies of $j$, to partitions of $n - mj$. So the number of pairs where the occurrence is "the $m$th copy of $j$" is $p(n - mj)$. Summing over $j, m \ge 1$ with $mj = k$ gives $\tau(k)$ terms $p(n - k)$.
+
+      **$n = 4$.** Directly: $4,\ 3{+}1,\ 2{+}2,\ 2{+}1{+}1,\ 1^4$ have $1 + 2 + 2 + 3 + 4 = 12$ parts. Formula: $1\cdot3 + 2\cdot2 + 2\cdot1 + 3\cdot1 = 12$. $\blacksquare$
+
+  - id: gf-080
+    title: The size of a partition's generating function
+    subtopic: Partitions
+    difficulty: easy
+    type: compute
+    tags: [partitions, generating functions, bounded parts]
+    related: [gf-020]
+    statement: |
+      Write down the generating function for partitions of $n$ into parts from $\{1, 2, 5\}$ in which each part appears at most twice, and find the number of such partitions of 7.
+    solution: |
+      $(1 + x + x^2)(1 + x^2 + x^4)(1 + x^5 + x^{10})$.
+
+      For 7: using one 5, the remaining 2 is $2$ or $1{+}1$; using no 5, 7 must be made of at most two 1s and two 2s, giving at most 6. So **2**: $5{+}2$ and $5{+}1{+}1$.
+
+  - id: gf-081
+    title: Some exponential generating functions
+    subtopic: Exponential generating functions
+    difficulty: easy
+    type: compute
+    tags: [exponential generating functions]
+    statement: |
+      Find the EGFs $\sum a_n\frac{x^n}{n!}$ of $a_n = 1$, $a_n = 2^n$, $a_n = n!$ and $a_n = n$.
+    solution: |
+      $e^x$, $e^{2x}$, $\frac1{1-x}$, and $\sum_{n\ge1}\frac{x^n}{(n-1)!} = xe^x$.
+
+  - id: gf-082
+    title: Products of EGFs are binomial convolutions
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: proof
+    tags: [exponential generating functions, convolution]
+    related: [gf-034]
+    statement: |
+      Prove that if $A(x) = \sum a_n\frac{x^n}{n!}$ and $B(x) = \sum b_n\frac{x^n}{n!}$, then $A(x)B(x) = \sum c_n\frac{x^n}{n!}$ with $c_n = \sum_k\binom nka_kb_{n-k}$. Interpret this in terms of splitting a labelled set.
+    solution: |
+      The coefficient of $x^n$ in $AB$ is $\sum_k\frac{a_k}{k!}\cdot\frac{b_{n-k}}{(n-k)!}$; multiply by $n!$ to get $\sum_k\binom nka_kb_{n-k}$.
+
+      If $a_k$ counts structures of one kind on a $k$-set and $b_j$ of another kind on a $j$-set, then $c_n$ counts ways to split an $n$-set into two labelled parts and put one structure on each. $\blacksquare$
+
+  - id: gf-083
+    title: Subsets of even size, by EGFs
+    subtopic: Exponential generating functions
+    difficulty: easy
+    type: compute
+    tags: [exponential generating functions, subsets]
+    related: [gf-047]
+    statement: |
+      Use EGFs to count ordered pairs $(A, B)$ partitioning $\{1, \dots, n\}$ with $|A|$ even.
+    solution: |
+      "A set of even size" has EGF $\cosh x$, "any set" has EGF $e^x$, and splitting multiplies EGFs (gf-082):
+      $$\cosh x\cdot e^x = \frac{e^{2x} + 1}{2}.$$
+      So the answer is $\frac{2^n}{2} = 2^{n-1}$ for $n \ge 1$ (and 1 for $n = 0$).
+
+  - id: gf-084
+    title: The Bell numbers' EGF
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: proof
+    tags: [bell numbers, exponential generating functions]
+    related: [gf-016, gf-094]
+    statement: |
+      Prove that $\sum_nB_n\frac{x^n}{n!} = e^{e^x - 1}$.
+    solution: |
+      By gf-028, partitions into exactly $k$ blocks have EGF $\frac{(e^x - 1)^k}{k!}$ (ordered blocks give $(e^x - 1)^k$; divide by the $k!$ orderings). Summing over $k$:
+      $$\sum_k\frac{(e^x - 1)^k}{k!} = e^{e^x - 1}. \qquad\blacksquare$$
+
+  - id: gf-085
+    title: Permutations with all cycles long
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: compute
+    tags: [permutations, cycles, exponential generating functions]
+    related: [gf-086, gf-026]
+    statement: |
+      Find the EGF for permutations with no cycles of length 1 or 2, and count such permutations of 4 and 5 elements.
+    solution: |
+      Permutations are sets of cycles, and cycles of length $k$ on a $k$-set have EGF $\frac{(k-1)!x^k}{k!} = \frac{x^k}{k}$. Allowing all $k \ge 3$:
+      $$\exp\left(\sum_{k\ge3}\frac{x^k}k\right) = \exp\left(-\ln(1-x) - x - \tfrac{x^2}{2}\right) = \frac{e^{-x - x^2/2}}{1 - x}.$$
+      For $n = 4$ the only cycle type is a 4-cycle: $3! = 6$. For $n = 5$: a 5-cycle ($4! = 24$) only, since $3 + 2$ uses a 2-cycle. So $6$ and $24$.
+
+  - id: gf-086
+    title: The exponential formula for permutations
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: proof
+    tags: [permutations, cycles, exponential formula]
+    related: [gf-085, cb-137]
+    statement: |
+      Show that cyclic permutations of an $n$-set number $(n-1)!$, with EGF $-\ln(1 - x)$, and that $\exp(-\ln(1-x)) = \frac{1}{1-x}$ is the EGF of all permutations. Explain why "exp" appears.
+    solution: |
+      A cyclic arrangement of $n$ labelled elements: fix the position of element 1 and order the rest: $(n-1)!$. EGF $\sum\frac{(n-1)!}{n!}x^n = \sum\frac{x^n}n = -\ln(1-x)$.
+
+      A permutation is a set of disjoint cycles. A structure made of $k$ cycles splits the set into $k$ unordered blocks, giving $\frac{C(x)^k}{k!}$ (gf-082, divided by the $k!$ orderings of the blocks). Summing over $k$ gives $e^{C(x)}$. Here $e^{-\ln(1-x)} = \frac1{1-x} = \sum n!\frac{x^n}{n!}$. $\blacksquare$
+
+  - id: gf-087
+    title: Permutations with only odd cycles
+    subtopic: Exponential generating functions
+    difficulty: hard
+    type: compute
+    tags: [permutations, cycles, exponential generating functions]
+    related: [gf-086]
+    statement: |
+      Find the EGF for permutations all of whose cycles have odd length, and count them for $n = 4$.
+    solution: |
+      $$\exp\left(\sum_{k\text{ odd}}\frac{x^k}{k}\right) = \exp\left(\tfrac12\ln\frac{1+x}{1-x}\right) = \sqrt{\frac{1+x}{1-x}}.$$
+      For $n = 4$, odd cycle types are $1{+}1{+}1{+}1$ (1 permutation) and $3{+}1$ ($4\cdot2 = 8$): total **9**. (The sequence is $1, 1, 1, 3, 9, 45, 225, \dots$)
+
+  - id: gf-088
+    title: Partitions into even blocks
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: compute
+    tags: [set partitions, exponential generating functions]
+    related: [gf-084]
+    statement: |
+      Find the EGF for set partitions of $\{1,\dots,n\}$ into blocks of even size, and count them for $n = 4$ and $n = 6$.
+    solution: |
+      A block is a non-empty set of even size: EGF $\cosh x - 1$. So $e^{\cosh x - 1}$.
+
+      $n = 4$: one block of 4 (1) or two blocks of 2 (3): **4**. $n = 6$: one block (1), $4 + 2$ ($\binom64 = 15$), $2 + 2 + 2$ ($\frac{6!}{2^33!} = 15$): **31**.
+
+  - id: gf-089
+    title: Words with parity constraints
+    subtopic: Exponential generating functions
+    difficulty: easy
+    type: compute
+    tags: [words, exponential generating functions, parity]
+    related: [gf-027]
+    statement: |
+      How many words of length $n$ over $\{a, b, c\}$ have an odd number of $a$'s and an even number of $b$'s?
+    solution: |
+      EGF $\sinh x\cosh x\,e^x = \frac{\sinh 2x}{2}e^x = \frac{e^{3x} - e^{-x}}{4}$. So $\dfrac{3^n - (-1)^n}{4}$: $1, 2, 7, 20, \dots$
+
+  - id: gf-090
+    title: Ordered set partitions
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: compute
+    tags: [set partitions, fubini numbers, exponential generating functions]
+    related: [gf-028]
+    statement: |
+      An ordered set partition (a "weak ranking" of $n$ competitors, ties allowed) is a sequence of non-empty blocks. Show the EGF is $\frac{1}{2 - e^x}$ and compute the number for $n = 3$.
+    solution: |
+      A sequence of $k$ non-empty blocks has EGF $(e^x - 1)^k$, so the total is
+      $$\sum_k(e^x - 1)^k = \frac{1}{1 - (e^x - 1)} = \frac1{2 - e^x}.$$
+      For $n = 3$: all tied (1), two tiers ($\binom31 + \binom32 = 3$ choices of split, times 2 orders = 6), all different ($3! = 6$): **13**.
+
+  - id: gf-091
+    title: Functions with even preimages
+    subtopic: Exponential generating functions
+    difficulty: easy
+    type: compute
+    tags: [functions, exponential generating functions, parity]
+    related: [gf-089]
+    statement: |
+      How many functions $f : \{1, \dots, n\} \to \{1, 2, 3\}$ take each of the values 1 and 2 an even number of times?
+    solution: |
+      EGF $\cosh^2x\,e^x = \frac{(e^x + e^{-x})^2}{4}e^x = \frac{e^{3x} + 2e^x + e^{-x}}{4}$. So $\dfrac{3^n + 2 + (-1)^n}{4}$; for $n = 2$: $\frac{9 + 2 + 1}{4} = 3$ (the constant functions $11$, $22$, $33$).
+
+  - id: gf-092
+    title: The EGF of arrangements
+    subtopic: Exponential generating functions
+    difficulty: easy
+    type: compute
+    tags: [exponential generating functions, arrangements]
+    related: [gf-054]
+    statement: |
+      Use EGFs to show that the number of ordered lists of distinct elements from an $n$-set is $\sum_k\frac{n!}{k!}$.
+    solution: |
+      Such a list is a split of the set into "used" (arranged in order: EGF $\frac1{1-x}$) and "unused" (EGF $e^x$). So the EGF is $\frac{e^x}{1-x}$, and the coefficient of $\frac{x^n}{n!}$ is $n!\sum_{k=0}^n\frac{1}{k!}$.
+
+  - id: gf-093
+    title: Differentiating an EGF shifts the sequence
+    subtopic: Exponential generating functions
+    difficulty: easy
+    type: proof
+    tags: [exponential generating functions, differentiation]
+    statement: |
+      Prove that if $A(x) = \sum a_n\frac{x^n}{n!}$ then $A'(x) = \sum a_{n+1}\frac{x^n}{n!}$. Use it to turn the recurrence $a_{n+1} = 2a_n$, $a_0 = 1$ into a differential equation and solve it.
+    solution: |
+      $\frac{d}{dx}\frac{x^{n+1}}{(n+1)!} = \frac{x^n}{n!}$, so differentiating term by term shifts the coefficients down by one.
+
+      $a_{n+1} = 2a_n$ becomes $A' = 2A$ with $A(0) = 1$, so $A = e^{2x}$ and $a_n = 2^n$. $\blacksquare$
+
+  - id: gf-094
+    title: The Bell recurrence from the EGF
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: proof
+    tags: [bell numbers, exponential generating functions, differentiation]
+    related: [gf-016, gf-084, gf-093]
+    statement: |
+      Starting from $B(x) = e^{e^x - 1}$, show $B'(x) = e^xB(x)$ and deduce $B_{n+1} = \sum_k\binom nkB_k$.
+    solution: |
+      By the chain rule $B'(x) = e^x\,e^{e^x - 1} = e^xB(x)$. By gf-093 the left side has coefficients $B_{n+1}$, and by gf-082 the right side is the binomial convolution of $(1)$ with $(B_k)$, i.e. $\sum_k\binom nkB_k$. $\blacksquare$
+
+  - id: gf-095
+    title: Words using two given letters
+    subtopic: Exponential generating functions
+    difficulty: easy
+    type: compute
+    tags: [words, exponential generating functions, inclusion-exclusion]
+    statement: |
+      How many words of length $n$ over $\{a, b, c, d\}$ use both $a$ and $b$ at least once?
+    solution: |
+      EGF $(e^x - 1)^2e^{2x} = e^{4x} - 2e^{3x} + e^{2x}$, giving $4^n - 2\cdot3^n + 2^n$. (The same as inclusion–exclusion.) For $n = 2$: $16 - 18 + 4 = 2$, namely $ab$ and $ba$.
+
+  - id: gf-096
+    title: Partitions with a leader in each block
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: compute
+    tags: [set partitions, exponential generating functions]
+    related: [gf-084]
+    statement: |
+      In how many ways can $n$ people be split into teams, each with a designated captain? Find the EGF and the values for $n \le 4$.
+    solution: |
+      A team of size $k$ with a captain: $k$ ways, EGF $\sum k\frac{x^k}{k!} = xe^x$. A set of teams: $e^{xe^x}$.
+
+      Values: $n = 1$: 1. $n = 2$: one team (2 captains) or two singletons (1): 3. $n = 3$: one team (3), a pair plus a singleton ($3\cdot2 = 6$), three singletons (1): 10. $n = 4$: $4 + 4\cdot3 + 3\cdot2\cdot2 + 6\cdot2 + 1 = 41$ (types $4$, $3{+}1$, $2{+}2$, $2{+}1{+}1$, $1^4$).
+
+  - id: gf-097
+    title: A formula for involutions
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: proof
+    tags: [involutions, exponential generating functions]
+    related: [gf-029]
+    statement: |
+      Using the EGF $e^{x + x^2/2}$, prove that the number of involutions of $\{1,\dots,n\}$ is $\displaystyle\sum_k\frac{n!}{k!\,(n-2k)!\,2^k}$, and explain it combinatorially.
+    solution: |
+      $e^{x}e^{x^2/2} = \sum_j\frac{x^j}{j!}\sum_k\frac{x^{2k}}{2^kk!}$, and the coefficient of $x^n$ is $\sum_k\frac{1}{(n-2k)!\,2^kk!}$. Multiply by $n!$.
+
+      Combinatorially, an involution with $k$ swaps chooses the $n - 2k$ fixed points and pairs up the rest: $\binom{n}{2k}\cdot\frac{(2k)!}{2^kk!} = \frac{n!}{(n-2k)!\,2^kk!}$ (cb-048). $\blacksquare$
+
+  - id: gf-098
+    title: Binomial sums from EGFs
+    subtopic: Exponential generating functions
+    difficulty: easy
+    type: proof
+    tags: [exponential generating functions, binomial coefficients]
+    related: [gf-082]
+    statement: |
+      Use $e^x\cdot e^x = e^{2x}$ and $e^x\cdot e^{-x} = 1$ to prove $\sum_k\binom nk = 2^n$ and $\sum_k(-1)^k\binom nk = 0$ for $n \ge 1$.
+    solution: |
+      By gf-082 the coefficient of $\frac{x^n}{n!}$ in $e^xe^x$ is $\sum\binom nk\cdot1\cdot1$, and in $e^{2x}$ it is $2^n$.
+
+      In $e^xe^{-x}$ it is $\sum\binom nk(-1)^{n-k}$, and in $1$ it is $0$ for $n \ge 1$. Multiply by $(-1)^n$. $\blacksquare$
+
+  - id: gf-099
+    title: Bernoulli numbers
+    subtopic: Exponential generating functions
+    difficulty: medium
+    type: compute
+    tags: [bernoulli numbers, exponential generating functions]
+    related: [gf-100]
+    statement: |
+      Define $B_n$ by $\dfrac{x}{e^x - 1} = \sum B_n\frac{x^n}{n!}$. Show that $\sum_{k=0}^{n}\binom{n+1}{k}B_k = 0$ for $n \ge 1$, and compute $B_0, \dots, B_4$.
+    solution: |
+      $x = (e^x - 1)\sum B_k\frac{x^k}{k!}$. The EGF $e^x - 1$ has coefficients $0, 1, 1, \dots$, so by gf-082 the coefficient of $\frac{x^{m}}{m!}$ on the right is $\sum_{k<m}\binom mkB_k$. On the left it is $1$ for $m = 1$ and $0$ for $m \ge 2$. With $m = n + 1$ this gives the identity.
+
+      $B_0 = 1$; $2B_1 + 1 = 0$, $B_1 = -\frac12$; $3B_2 + 3B_1 + 1 = 0$, $B_2 = \frac16$; $4B_3 + 6B_2 + 4B_1 + 1 = 0$, $B_3 = 0$; $5B_4 + 10B_3 + 10B_2 + 5B_1 + 1 = 0$, $B_4 = -\frac1{30}$.
+
+  - id: gf-100
+    title: Sums of powers via Bernoulli numbers
+    subtopic: Exponential generating functions
+    difficulty: hard
+    type: proof
+    tags: [bernoulli numbers, power sums, exponential generating functions]
+    related: [gf-099, in-218]
+    statement: |
+      Let $S_m(n) = 0^m + 1^m + \cdots + (n-1)^m$. Prove that
+      $$S_m(n) = \frac{1}{m+1}\sum_{k=0}^m\binom{m+1}{k}B_kn^{m+1-k},$$
+      and check it for $m = 2$.
+    solution: |
+      $\sum_mS_m(n)\frac{x^m}{m!} = \sum_{j=0}^{n-1}e^{jx} = \frac{e^{nx} - 1}{e^x - 1} = \frac{x}{e^x - 1}\cdot\frac{e^{nx} - 1}{x}$.
+
+      The first factor is $\sum B_k\frac{x^k}{k!}$, and $\frac{e^{nx} - 1}{x} = \sum_{j\ge0}\frac{n^{j+1}x^j}{(j+1)!}$. The coefficient of $x^m$ in the product is $\sum_k\frac{B_k}{k!}\cdot\frac{n^{m-k+1}}{(m-k+1)!}$; multiplying by $m!$ and using $\frac{m!}{k!(m+1-k)!} = \frac1{m+1}\binom{m+1}{k}$ gives the formula.
+
+      **$m = 2$:** $\frac13\left(n^3 - \frac32n^2 + \frac12n\right) = \frac{(n-1)n(2n-1)}{6}$, the sum of squares up to $n - 1$. $\blacksquare$

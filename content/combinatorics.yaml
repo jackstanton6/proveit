@@ -474,3 +474,1641 @@ problems:
       **Step.** Assume the formula for $n$. Then
       $$(x+y)^{n+1} = (x+y)\sum_{k=0}^n \binom nk x^k y^{n-k} = \sum_{k=0}^n \binom nk x^{k+1}y^{n-k} + \sum_{k=0}^n \binom nk x^k y^{n+1-k}.$$
       Re-index the first sum by $j = k + 1$. The coefficient of $x^j y^{n+1-j}$ is then $\binom n{j-1} + \binom nj$ for $1 \le j \le n$, which is $\binom{n+1}{j}$ by Pascal's rule. The extreme terms are $x^{n+1}$ and $y^{n+1}$, each with coefficient $1 = \binom{n+1}{n+1} = \binom{n+1}0$. So $(x+y)^{n+1} = \sum_{j=0}^{n+1}\binom{n+1}j x^jy^{n+1-j}$. $\blacksquare$
+
+  - id: cb-031
+    title: Licence plates
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [product rule]
+    statement: |
+      A licence plate has 3 letters followed by 4 digits. How many plates are there? How many have no repeated letter?
+    solution: |
+      By the product rule: $26^3\cdot10^4 = 175\,760\,000$.
+
+      With distinct letters: $26\cdot25\cdot24\cdot10^4 = 156\,000\,000$.
+
+  - id: cb-032
+    title: Four-digit numbers with distinct digits
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [product rule, digits]
+    related: [cb-033]
+    statement: |
+      How many four-digit numbers (1000 to 9999) have all digits different?
+    solution: |
+      The first digit can't be 0: 9 choices. The second can be any digit except the first: 9. Then 8, then 7. So $9\cdot9\cdot8\cdot7 = 4536$.
+
+  - id: cb-033
+    title: Four-digit numbers containing a 7
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [complement, product rule, digits]
+    related: [cb-032]
+    statement: |
+      How many four-digit numbers contain at least one digit 7?
+    solution: |
+      Count the complement. Four-digit numbers with no 7: first digit from $\{1,\dots,9\}\setminus\{7\}$ (8 choices), the others from 9 digits: $8\cdot9^3 = 5832$. There are 9000 four-digit numbers, so $9000 - 5832 = 3168$.
+
+  - id: cb-034
+    title: Boys and girls alternating
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [permutations, product rule]
+    statement: |
+      In how many ways can 5 boys and 5 girls stand in a row so that boys and girls alternate?
+    solution: |
+      The pattern is BGBGBGBGBG or GBGBGBGBGB (2 choices). Then the boys can be arranged in their 5 places in $5!$ ways and the girls in $5!$. Total $2\cdot5!\cdot5! = 28\,800$.
+
+  - id: cb-035
+    title: Committees with a president
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [product rule, double counting]
+    related: [cb-021]
+    statement: |
+      From 10 people, a committee of 3 is chosen and one of its members is made president. Count the possibilities in two ways.
+    solution: |
+      **Committee first:** $\binom{10}3 = 120$ committees, each with 3 choices of president: $360$.
+
+      **President first:** 10 choices, then 2 more members from the remaining 9: $10\binom92 = 360$.
+
+      (This is the identity $k\binom nk = n\binom{n-1}{k-1}$ with $n = 10$, $k = 3$.)
+
+  - id: cb-036
+    title: Poker hands
+    subtopic: Counting principles
+    difficulty: medium
+    type: compute
+    tags: [cards, product rule]
+    related: [cb-020]
+    statement: |
+      Count the 5-card hands from a standard deck that are (1) a full house (three of one rank, two of another), (2) two pair, (3) a flush (all one suit, but not a straight flush; there are 40 straight flushes).
+    solution: |
+      1. **Full house.** Rank of the triple (13), its suits $\binom43$, rank of the pair (12), its suits $\binom42$: $13\cdot4\cdot12\cdot6 = 3744$.
+      2. **Two pair.** The two pair ranks $\binom{13}2 = 78$, suits $\binom42^2 = 36$, and a fifth card of another rank: $44$. Total $78\cdot36\cdot44 = 123\,552$.
+      3. **Flush.** $4\binom{13}{5} = 5148$ one-suit hands, minus 40 straight flushes: $5108$.
+
+      (Choosing the two pair ranks in order, $13\cdot12$, would double count.)
+
+  - id: cb-037
+    title: Rectangles on a chessboard
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [product rule, grids]
+    statement: |
+      How many rectangles (of any size, with sides along grid lines) are there on an $8\times8$ chessboard? How many are squares?
+    solution: |
+      A rectangle is determined by choosing 2 of the 9 vertical lines and 2 of the 9 horizontal lines: $\binom92^2 = 36^2 = 1296$.
+
+      A $k\times k$ square can be placed in $(9 - k)^2$ positions, so there are $\sum_{k=1}^8(9-k)^2 = 1^2 + \cdots + 8^2 = 204$ squares.
+
+  - id: cb-038
+    title: Triangles with no side on the polygon
+    subtopic: Counting principles
+    difficulty: medium
+    type: compute
+    tags: [counting, polygons, double counting]
+    statement: |
+      How many triangles have their vertices among those of a convex $n$-gon ($n \ge 6$) but share no side with the polygon? Evaluate for $n = 8$.
+    solution: |
+      Count pairs (vertex $v$, such triangle containing $v$). Fix $v$; the other two vertices must avoid $v$'s two neighbours and not be adjacent to each other. They come from the $n - 3$ other vertices, which form a path, and $k$-subsets of a path of length $m$ with no two adjacent number $\binom{m-k+1}{k}$ (cb-127). With $m = n - 3$, $k = 2$: $\binom{n-4}{2}$.
+
+      Each triangle is counted once for each of its 3 vertices, so the number is
+      $$\frac{n}{3}\binom{n-4}{2} = \frac{n(n-4)(n-5)}{6}.$$
+      For $n = 8$: $\frac{8\cdot4\cdot3}{6} = 16$.
+
+  - id: cb-039
+    title: Words without repeated neighbours
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [product rule, words]
+    statement: |
+      How many words of length 5 over $\{a, b, c\}$ have no two consecutive letters equal?
+    solution: |
+      The first letter has 3 choices, and each later letter must differ from its predecessor: 2 choices. Total $3\cdot2^4 = 48$.
+
+  - id: cb-040
+    title: Non-decreasing functions
+    subtopic: Counting principles
+    difficulty: medium
+    type: proof
+    tags: [stars and bars, multisets, functions]
+    related: [cb-003, cb-041]
+    statement: |
+      Prove that the number of non-decreasing functions $f: \{1, \dots, n\} \to \{1, \dots, m\}$ is $\binom{n + m - 1}{n}$.
+    solution: |
+      A non-decreasing $f$ is determined by how many times it takes each value: $x_j = \#\{i : f(i) = j\}$, with $x_1 + \cdots + x_m = n$, $x_j \ge 0$. Conversely any such $(x_j)$ gives exactly one non-decreasing $f$ (list $x_1$ ones, then $x_2$ twos, ...). By stars and bars (cb-003) there are $\binom{n + m - 1}{m - 1} = \binom{n+m-1}{n}$. $\blacksquare$
+
+  - id: cb-041
+    title: Strictly increasing functions
+    subtopic: Counting principles
+    difficulty: easy
+    type: proof
+    tags: [subsets, functions, bijection]
+    related: [cb-040]
+    statement: |
+      Prove that there are $\binom nk$ strictly increasing functions $\{1, \dots, k\} \to \{1, \dots, n\}$.
+    solution: |
+      A strictly increasing $f$ is determined by its image, a $k$-subset of $\{1, \dots, n\}$, and every $k$-subset is the image of exactly one strictly increasing function (list its elements in order). $\blacksquare$
+
+  - id: cb-042
+    title: Sharing out sweets
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [stars and bars]
+    related: [cb-004]
+    statement: |
+      In how many ways can 10 identical sweets be shared among 4 children if every child gets at least one?
+    solution: |
+      Give each child one sweet first; then share the remaining 6 freely among 4: by stars and bars $\binom{6 + 3}{3} = \binom93 = 84$.
+
+  - id: cb-043
+    title: An inequality made into an equation
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [stars and bars, slack variables]
+    statement: |
+      How many solutions in non-negative integers does $x_1 + x_2 + x_3 \le 10$ have?
+    solution: |
+      Add a slack variable $x_4 = 10 - (x_1 + x_2 + x_3) \ge 0$. Solutions correspond to non-negative solutions of $x_1 + x_2 + x_3 + x_4 = 10$, of which there are $\binom{13}{3} = 286$.
+
+  - id: cb-044
+    title: Beads on a bracelet
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [circular arrangements, symmetry]
+    related: [cb-006]
+    statement: |
+      In how many ways can 6 different beads be threaded on a bracelet, if two arrangements that differ by a rotation or a reflection are the same?
+    solution: |
+      There are $6!$ arrangements in a row. Each bracelet corresponds to $6$ rotations times $2$ reflections, $12$ rows, and these are all different because the beads are distinct. So $\frac{6!}{12} = 60$.
+
+  - id: cb-045
+    title: Arranging BANANA
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [permutations with repetition, complement]
+    related: [cb-002]
+    statement: |
+      How many arrangements of the letters of BANANA are there? In how many are the two N's not adjacent?
+    solution: |
+      Letters: A three times, N twice, B once: $\frac{6!}{3!\,2!} = 60$.
+
+      With the N's adjacent, glue them into one block: arrange A, A, A, B, NN, which gives $\frac{5!}{3!} = 20$. So $60 - 20 = 40$ have the N's apart.
+
+  - id: cb-046
+    title: Paths avoiding a point
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [lattice paths, complement]
+    related: [cb-005]
+    statement: |
+      How many right/up lattice paths go from $(0,0)$ to $(4,4)$ without passing through $(2,2)$?
+    solution: |
+      All paths: $\binom84 = 70$. Paths through $(2,2)$: $\binom42$ to get there, $\binom42$ to continue: $36$. So $70 - 36 = 34$.
+
+  - id: cb-047
+    title: Three numbers with an even sum
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [sum rule, parity]
+    statement: |
+      How many 3-element subsets of $\{1, \dots, 20\}$ have an even sum?
+    solution: |
+      There are 10 odd and 10 even numbers. The sum is even iff the number of odd elements is 0 or 2.
+
+      - No odd: $\binom{10}3 = 120$.
+      - Two odd, one even: $\binom{10}2\cdot10 = 450$.
+
+      Total $570$ (out of $\binom{20}{3} = 1140$, exactly half).
+
+  - id: cb-048
+    title: Pairing up people
+    subtopic: Counting principles
+    difficulty: medium
+    type: proof
+    tags: [perfect matchings, double factorial]
+    statement: |
+      Prove that there are $\frac{(2n)!}{2^nn!} = (2n-1)(2n-3)\cdots3\cdot1$ ways to split $2n$ people into $n$ unordered pairs.
+    solution: |
+      **First way.** Line the people up in one of $(2n)!$ orders and pair positions $1$–$2$, $3$–$4$, and so on. Each pairing arises from $2^nn!$ orders: swap within each pair ($2^n$) and permute the pairs ($n!$). So there are $\frac{(2n)!}{2^nn!}$.
+
+      **Second way.** The person with the smallest label has $2n - 1$ choices of partner; then the smallest remaining person has $2n - 3$ choices, and so on: $(2n-1)(2n-3)\cdots1$.
+
+      (The two agree: $(2n)! = [2n(2n-2)\cdots2]\cdot[(2n-1)(2n-3)\cdots1] = 2^nn!\cdot(2n-1)!!$.) $\blacksquare$
+
+  - id: cb-049
+    title: Binary strings with separated ones
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [gaps, binary strings]
+    related: [cb-127]
+    statement: |
+      How many binary strings of length 10 contain exactly four 1s, no two of them adjacent?
+    solution: |
+      Write the six 0s; they create 7 gaps (before, between and after). Placing the four 1s in distinct gaps guarantees no two are adjacent, and every valid string arises this way. So $\binom74 = 35$.
+
+  - id: cb-050
+    title: Choosing doughnuts
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [multisets, stars and bars]
+    related: [cb-146]
+    statement: |
+      A shop sells 3 kinds of doughnut. In how many ways can you buy 5 doughnuts (only the number of each kind matters)?
+    solution: |
+      We need non-negative $a + b + c = 5$: $\binom{5+2}{2} = 21$.
+
+  - id: cb-051
+    title: Pairs of subsets covering a set
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [product rule, subsets]
+    related: [lg-206]
+    statement: |
+      How many ordered pairs $(A, B)$ of subsets of $\{1, \dots, n\}$ satisfy $A \cup B = \{1, \dots, n\}$?
+    solution: |
+      Each element must be in $A$ only, $B$ only, or both: 3 independent choices. So $3^n$.
+
+  - id: cb-052
+    title: Non-attacking rooks
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [permutations, product rule]
+    related: [cb-150]
+    statement: |
+      In how many ways can $k$ non-attacking rooks be placed on an $8\times8$ board? (No two in the same row or column.) What is the answer for $k = 8$?
+    solution: |
+      Choose the $k$ rows ($\binom8k$) and the $k$ columns ($\binom8k$), then match rows to columns bijectively ($k!$). Total $\binom8k^2k!$.
+
+      For $k = 8$: $8! = 40320$, one placement for each permutation.
+
+  - id: cb-053
+    title: 1 before 2
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [permutations, symmetry]
+    statement: |
+      In how many permutations of $1, \dots, n$ ($n \ge 2$) does 1 appear before 2? Before both 2 and 3?
+    solution: |
+      Swapping 1 and 2 is a bijection between permutations with 1 before 2 and those with 2 before 1. So exactly half: $\frac{n!}{2}$.
+
+      For "1 before 2 and 3": by symmetry each of 1, 2, 3 is equally likely to come first among the three, so $\frac{n!}{3}$ (for $n \ge 3$).
+
+  - id: cb-054
+    title: Two teams of four
+    subtopic: Counting principles
+    difficulty: easy
+    type: compute
+    tags: [subsets, overcounting]
+    statement: |
+      In how many ways can 8 people be split into two teams of 4 (teams unlabelled)? Into teams of 4 called Red and Blue?
+    solution: |
+      **Labelled:** choose Red's members: $\binom84 = 70$.
+
+      **Unlabelled:** each split was counted twice (swap colours): $35$.
+
+  - id: cb-055
+    title: Symmetry of binomial coefficients
+    subtopic: Binomial coefficients
+    difficulty: easy
+    type: proof
+    tags: [binomial coefficients, bijection]
+    statement: |
+      Prove combinatorially that $\binom nk = \binom n{n-k}$.
+    solution: |
+      Taking complements, $S \mapsto \{1,\dots,n\}\setminus S$, is a bijection from $k$-subsets to $(n-k)$-subsets; it is its own inverse. $\blacksquare$
+
+  - id: cb-056
+    title: Absorbing a factor
+    subtopic: Binomial coefficients
+    difficulty: easy
+    type: proof
+    tags: [binomial coefficients, double counting]
+    related: [cb-021, cb-035]
+    statement: |
+      Prove that $k\binom nk = n\binom{n-1}{k-1}$, and use it to give a one-line proof that $\sum_kk\binom nk = n2^{n-1}$.
+    solution: |
+      Both sides count $k$-person committees from $n$ people with a chosen chair: committee then chair, or chair then the other $k - 1$ members.
+
+      Then $\sum_kk\binom nk = n\sum_k\binom{n-1}{k-1} = n2^{n-1}$. $\blacksquare$
+
+  - id: cb-057
+    title: Subcommittees
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, double counting]
+    related: [cb-073]
+    statement: |
+      Prove that $\binom nk\binom km = \binom nm\binom{n-m}{k-m}$ for $0 \le m \le k \le n$.
+    solution: |
+      Both sides count pairs (committee of $k$, subcommittee of $m$ inside it).
+
+      - Committee first: $\binom nk$, then the subcommittee: $\binom km$.
+      - Subcommittee first: $\binom nm$, then the other $k - m$ committee members from the remaining $n - m$: $\binom{n-m}{k-m}$. $\blacksquare$
+
+  - id: cb-058
+    title: A weighted binomial sum
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, sums]
+    related: [cb-056]
+    statement: |
+      Prove that $\displaystyle\sum_{k=0}^nk^2\binom nk = n(n+1)2^{n-2}$ for $n \ge 1$.
+    solution: |
+      Write $k^2 = k(k-1) + k$. Applying cb-056 twice, $k(k-1)\binom nk = n(n-1)\binom{n-2}{k-2}$, so
+      $$\sum_kk(k-1)\binom nk = n(n-1)2^{n-2}, \qquad \sum_kk\binom nk = n2^{n-1}.$$
+      Adding: $n(n-1)2^{n-2} + 2n2^{n-2} = n(n+1)2^{n-2}$. $\blacksquare$
+
+      (Combinatorially: choose a committee, a chair and a secretary, who may be the same person.)
+
+  - id: cb-059
+    title: Every third binomial coefficient
+    subtopic: Binomial coefficients
+    difficulty: hard
+    type: proof
+    tags: [binomial theorem, roots of unity]
+    hints:
+      - |
+        Add $(1 + 1)^n$, $(1 + \omega)^n$ and $(1 + \omega^2)^n$ where $\omega = e^{2\pi i/3}$.
+    statement: |
+      Prove that
+      $$\sum_{k \equiv 0 \ (\mathrm{mod}\ 3)}\binom nk = \frac{2^n + 2\cos\frac{n\pi}{3}}{3}.$$
+    solution: |
+      Let $\omega = e^{2\pi i/3}$, so $1 + \omega + \omega^2 = 0$, and $1 + \omega^k + \omega^{2k}$ is $3$ if $3 \mid k$ and $0$ otherwise. Hence
+      $$(1+1)^n + (1+\omega)^n + (1+\omega^2)^n = \sum_k\binom nk(1 + \omega^k + \omega^{2k}) = 3\sum_{3\mid k}\binom nk.$$
+      Now $1 + \omega = e^{i\pi/3}$ and $1 + \omega^2 = e^{-i\pi/3}$ (both have real part $\frac12$ and modulus 1), so $(1 + \omega)^n + (1 + \omega^2)^n = 2\cos\frac{n\pi}3$. $\blacksquare$
+
+      (Check $n = 3$: $\binom30 + \binom33 = 2 = \frac{8 - 2}{3}$.)
+
+  - id: cb-060
+    title: Rows of Pascal's triangle are unimodal
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, unimodal]
+    statement: |
+      Prove that $\binom n0 < \binom n1 < \cdots < \binom n{\lfloor n/2\rfloor}$, after which the row decreases symmetrically.
+    solution: |
+      $$\frac{\binom n{k+1}}{\binom nk} = \frac{n - k}{k + 1},$$
+      which exceeds 1 iff $n - k > k + 1$, i.e. $k < \frac{n-1}{2}$. So the coefficients strictly increase while $k + 1 \le \lfloor n/2\rfloor$. By symmetry ($\binom nk = \binom n{n-k}$) they then decrease. $\blacksquare$
+
+  - id: cb-061
+    title: The middle binomial coefficient is large
+    subtopic: Binomial coefficients
+    difficulty: easy
+    type: proof
+    tags: [binomial coefficients, inequalities]
+    related: [cb-060, in-102]
+    statement: |
+      Prove that $\binom{n}{\lfloor n/2\rfloor} \ge \frac{2^n}{n+1}$.
+    solution: |
+      The $n + 1$ numbers $\binom n0, \dots, \binom nn$ sum to $2^n$, so the largest is at least their average $\frac{2^n}{n+1}$. By cb-060 the largest is $\binom n{\lfloor n/2\rfloor}$. $\blacksquare$
+
+  - id: cb-062
+    title: Dividing by k + 1
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, sums]
+    related: [cb-063]
+    statement: |
+      Prove that $\displaystyle\sum_{k=0}^n\frac{1}{k+1}\binom nk = \frac{2^{n+1} - 1}{n+1}$.
+    solution: |
+      $\frac{1}{k+1}\binom nk = \frac{n!}{(k+1)!\,(n-k)!} = \frac{1}{n+1}\binom{n+1}{k+1}$. So the sum is
+      $$\frac1{n+1}\sum_{j=1}^{n+1}\binom{n+1}{j} = \frac{2^{n+1} - 1}{n+1}. \qquad\blacksquare$$
+      (Alternatively, integrate $(1+x)^n$ from $0$ to $1$.)
+
+  - id: cb-063
+    title: An alternating version
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, alternating sums]
+    related: [cb-062, in-217]
+    statement: |
+      Prove that $\displaystyle\sum_{k=0}^n\frac{(-1)^k}{k+1}\binom nk = \frac{1}{n+1}$.
+    solution: |
+      As in cb-062, the sum is
+      $$\frac{1}{n+1}\sum_{j=1}^{n+1}(-1)^{j-1}\binom{n+1}{j} = \frac{1}{n+1}\left(1 - \sum_{j=0}^{n+1}(-1)^j\binom{n+1}j\right) = \frac{1}{n+1},$$
+      since the full alternating sum is $0$. $\blacksquare$ (Or integrate $(1-x)^n$ from $0$ to $1$.)
+
+  - id: cb-064
+    title: Partial alternating sums
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, telescoping, pascal]
+    statement: |
+      Prove that for $n \ge 1$ and $0 \le m \le n$,
+      $$\sum_{k=0}^m(-1)^k\binom nk = (-1)^m\binom{n-1}{m}.$$
+    solution: |
+      By Pascal, $\binom nk = \binom{n-1}{k} + \binom{n-1}{k-1}$ (with $\binom{n-1}{-1} = 0$). So
+      $$\sum_{k=0}^m(-1)^k\binom nk = \sum_{k=0}^m\left[(-1)^k\binom{n-1}k - (-1)^{k-1}\binom{n-1}{k-1}\right],$$
+      which telescopes to $(-1)^m\binom{n-1}{m}$. $\blacksquare$
+
+  - id: cb-065
+    title: Fibonacci numbers in Pascal's triangle
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, fibonacci, tiling]
+    related: [cb-027]
+    statement: |
+      Prove that $\displaystyle\sum_{k\ge0}\binom{n-k}{k} = F_{n+1}$, the sums along the shallow diagonals of Pascal's triangle.
+    solution: |
+      Count tilings of a $1\times n$ strip by squares and dominoes. A tiling with $k$ dominoes has $n - k$ tiles in total, and is determined by which $k$ of those $n - k$ positions are dominoes: $\binom{n-k}{k}$ tilings. Summing over $k$ counts all tilings, which number $F_{n+1}$ by cb-027. $\blacksquare$
+
+  - id: cb-066
+    title: An upper-index Vandermonde identity
+    subtopic: Binomial coefficients
+    difficulty: hard
+    type: proof
+    tags: [binomial coefficients, combinatorial proof]
+    related: [cb-010]
+    statement: |
+      Prove that for non-negative integers $a, b, n$,
+      $$\sum_{k=0}^n\binom ka\binom{n-k}{b} = \binom{n+1}{a+b+1}.$$
+    solution: |
+      The right side counts $(a + b + 1)$-subsets of $\{0, 1, \dots, n\}$. Classify them by their $(a+1)$th smallest element $k$. The $a$ smaller elements come from $\{0, \dots, k-1\}$ ($\binom ka$ ways) and the $b$ larger ones from $\{k+1, \dots, n\}$ ($\binom{n-k}{b}$ ways). Summing over $k$ counts each subset once. $\blacksquare$
+
+      (With $b = 0$ this is the hockey-stick identity.)
+
+  - id: cb-067
+    title: Odd entries in a row of Pascal's triangle
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, parity, binary]
+    related: [nt-064, nt-065]
+    statement: |
+      Prove that row $n$ of Pascal's triangle has exactly $2^{s(n)}$ odd entries, where $s(n)$ is the number of 1s in the binary expansion of $n$. (You may use Kummer's theorem, nt-064.)
+    solution: |
+      By Kummer with $p = 2$, $\binom nk$ is odd iff adding $k$ and $n - k$ in binary produces no carry, iff every binary 1 of $k$ sits where $n$ has a 1 (then $n - k$ is $n$ with those bits cleared, and the addition is carry-free; conversely a carry-free sum has disjoint 1s). So the odd entries correspond to subsets of the $s(n)$ positions where $n$ has a 1: $2^{s(n)}$ of them. $\blacksquare$
+
+      (E.g. row $5 = 101_2$: $1, 5, 10, 10, 5, 1$ has 4 odd entries.)
+
+  - id: cb-068
+    title: A product of binomials
+    subtopic: Binomial coefficients
+    difficulty: easy
+    type: compute
+    tags: [binomial theorem, coefficients]
+    statement: |
+      Find the coefficients of $x^5$ and $x^6$ in $(1 + x)^{10}(1 - x)^{10}$.
+    solution: |
+      $(1 + x)^{10}(1 - x)^{10} = (1 - x^2)^{10} = \sum_j\binom{10}j(-1)^jx^{2j}$. Only even powers appear, so the coefficient of $x^5$ is $0$, and that of $x^6$ ($j = 3$) is $-\binom{10}{3} = -120$.
+
+  - id: cb-069
+    title: Coefficients of a trinomial power
+    subtopic: Binomial coefficients
+    difficulty: easy
+    type: compute
+    tags: [multinomial, coefficients]
+    statement: |
+      Find the coefficient of $x^4$ in $(1 + x + x^2)^5$.
+    solution: |
+      Choose a term $x^{e_i}$, $e_i \in \{0, 1, 2\}$, from each of the 5 factors with $\sum e_i = 4$:
+
+      - two 2s, three 0s: $\binom52 = 10$;
+      - one 2, two 1s, two 0s: $5\cdot\binom42 = 30$;
+      - four 1s, one 0: $\binom54 = 5$.
+
+      Total **45**.
+
+  - id: cb-070
+    title: The multinomial theorem
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [multinomial, combinatorial proof]
+    related: [cb-029, cb-071]
+    statement: |
+      Prove that
+      $$(x_1 + \cdots + x_m)^n = \sum_{a_1 + \cdots + a_m = n}\frac{n!}{a_1!\cdots a_m!}x_1^{a_1}\cdots x_m^{a_m},$$
+      the sum over non-negative integers.
+    solution: |
+      Expanding the product of $n$ factors, each term comes from choosing one $x_j$ from each factor, i.e. a word of length $n$ over $\{x_1, \dots, x_m\}$. The term is $x_1^{a_1}\cdots x_m^{a_m}$ where $a_j$ is the number of times $x_j$ was chosen. The number of words with given counts $(a_1, \dots, a_m)$ is the number of arrangements of a multiset, $\frac{n!}{a_1!\cdots a_m!}$. $\blacksquare$
+
+  - id: cb-071
+    title: Summing multinomial coefficients
+    subtopic: Binomial coefficients
+    difficulty: easy
+    type: proof
+    tags: [multinomial]
+    related: [cb-070]
+    statement: |
+      Prove that $\displaystyle\sum_{a+b+c = n}\frac{n!}{a!\,b!\,c!} = 3^n$, and interpret it.
+    solution: |
+      Put $x_1 = x_2 = x_3 = 1$ in the multinomial theorem.
+
+      Combinatorially, both sides count words of length $n$ over a 3-letter alphabet, the left grouping them by how many of each letter they use. $\blacksquare$
+
+  - id: cb-072
+    title: Lucas's theorem
+    subtopic: Binomial coefficients
+    difficulty: hard
+    type: proof
+    tags: [binomial coefficients, primes, generating functions]
+    source: Lucas, 1878
+    related: [nt-204, cb-067]
+    hints:
+      - |
+        $(1 + x)^p \equiv 1 + x^p \pmod p$, so $(1 + x)^{p^i} \equiv 1 + x^{p^i}$.
+    statement: |
+      Let $p$ be prime and write $n = \sum n_ip^i$, $k = \sum k_ip^i$ in base $p$. Prove that
+      $$\binom nk \equiv \prod_i\binom{n_i}{k_i} \pmod p,$$
+      and use it to show $3 \mid \binom{10}{3}$.
+    solution: |
+      By the freshman's dream (nt-204), $(1 + x)^p \equiv 1 + x^p$ coefficientwise mod $p$, and by induction $(1+x)^{p^i} \equiv 1 + x^{p^i}$. Hence
+      $$(1 + x)^n = \prod_i\left((1+x)^{p^i}\right)^{n_i} \equiv \prod_i\left(1 + x^{p^i}\right)^{n_i} = \prod_i\sum_{j=0}^{n_i}\binom{n_i}{j}x^{jp^i}.$$
+      Since $0 \le j \le n_i < p$, by uniqueness of base-$p$ expansion, $x^k$ arises from exactly one choice, $j = k_i$ for each $i$ (and not at all if some $k_i > n_i$, where $\binom{n_i}{k_i} = 0$). Comparing coefficients of $x^k$ gives the result.
+
+      $10 = 101_3$ and $3 = 010_3$, so $\binom{10}3 \equiv \binom11\binom01\binom10 = 0$. Indeed $\binom{10}{3} = 120$. $\blacksquare$
+
+  - id: cb-073
+    title: Choosing a committee and its leaders
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, double counting]
+    related: [cb-057]
+    statement: |
+      Prove that $\displaystyle\sum_{k=j}^n\binom nk\binom kj = \binom nj2^{n-j}$.
+    solution: |
+      Count pairs (committee $C$, set $L \subseteq C$ of $j$ leaders) from $n$ people. Summing over the committee size $k$ gives the left side. Alternatively choose the leaders first ($\binom nj$) and then decide for each of the other $n - j$ people whether they are on the committee ($2^{n-j}$). $\blacksquare$
+
+  - id: cb-074
+    title: A binomial sum giving a power of 3
+    subtopic: Binomial coefficients
+    difficulty: easy
+    type: proof
+    tags: [binomial theorem, combinatorial proof]
+    statement: |
+      Prove that $\displaystyle\sum_{k=0}^n2^k\binom nk = 3^n$ both algebraically and combinatorially.
+    solution: |
+      **Algebraically:** the binomial theorem with $x = 2$, $y = 1$: $(2 + 1)^n$.
+
+      **Combinatorially:** colour each of $n$ objects red, green or blue ($3^n$ ways). Alternatively choose the set of $k$ objects that are not blue ($\binom nk$) and colour each of them red or green ($2^k$). $\blacksquare$
+
+  - id: cb-075
+    title: Two triangular numbers make a square
+    subtopic: Binomial coefficients
+    difficulty: easy
+    type: proof
+    tags: [binomial coefficients, squares]
+    statement: |
+      Prove that $\binom{n+1}2 + \binom n2 = n^2$.
+    solution: |
+      Algebraically, $\frac{(n+1)n}{2} + \frac{n(n-1)}{2} = \frac{n(2n)}{2} = n^2$.
+
+      Combinatorially: $n^2$ counts ordered pairs $(a, b)$ from $\{1, \dots, n\}$. Those with $a < b$ correspond to 2-subsets: $\binom n2$. Those with $a \ge b$ correspond to 2-element multisets $\{a, b\}$ (repetition allowed), of which there are $\binom{n+1}{2}$ by stars and bars. $\blacksquare$
+
+  - id: cb-076
+    title: Sum of cubes via binomial coefficients
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, hockey stick, sums]
+    related: [cb-010, in-003]
+    statement: |
+      Show that $k^3 = 6\binom k3 + 6\binom k2 + \binom k1$, and deduce a formula for $\sum_{k=1}^nk^3$ using the hockey-stick identity.
+    solution: |
+      $6\binom k3 + 6\binom k2 + k = k(k-1)(k-2) + 3k(k-1) + k = k[(k^2 - 3k + 2) + (3k - 3) + 1] = k^3$.
+
+      (Combinatorially: words of length 3 over $k$ letters, sorted by whether they use 3, 2 or 1 distinct letters.)
+
+      Summing with $\sum_{k=1}^n\binom kr = \binom{n+1}{r+1}$:
+      $$\sum_{k=1}^nk^3 = 6\binom{n+1}4 + 6\binom{n+1}3 + \binom{n+1}{2},$$
+      which simplifies to $\left(\frac{n(n+1)}{2}\right)^2$. $\blacksquare$
+
+  - id: cb-077
+    title: Bounding binomial coefficients
+    subtopic: Binomial coefficients
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, inequalities]
+    related: [in-229]
+    statement: |
+      Prove that $\left(\dfrac nk\right)^k \le \dbinom nk \le \left(\dfrac{en}{k}\right)^k$ for $1 \le k \le n$.
+    solution: |
+      **Lower.** $\binom nk = \prod_{i=0}^{k-1}\frac{n - i}{k - i}$, and each factor is at least $\frac nk$ (as $\frac{n-i}{k-i} \ge \frac nk \iff nk - ik \ge nk - in \iff n \ge k$).
+
+      **Upper.** $\binom nk \le \frac{n^k}{k!}$, and $k! \ge (k/e)^k$ (in-229). $\blacksquare$
+
+  - id: cb-078
+    title: Subsets meeting a pair
+    subtopic: Binomial coefficients
+    difficulty: easy
+    type: compute
+    tags: [complement, subsets]
+    statement: |
+      How many $k$-subsets of $\{1, \dots, n\}$ contain 1 or 2 (or both)? Check by counting the cases directly.
+    solution: |
+      **Complement:** $\binom nk - \binom{n-2}{k}$.
+
+      **Directly:** containing both: $\binom{n-2}{k-2}$; exactly one of them: $2\binom{n-2}{k-1}$. And indeed $\binom{n-2}{k-2} + 2\binom{n-2}{k-1} + \binom{n-2}k = \binom nk$ by applying Pascal twice.
+
+  - id: cb-079
+    title: Socks in the dark
+    subtopic: Pigeonhole
+    difficulty: easy
+    type: compute
+    tags: [pigeonhole]
+    statement: |
+      A drawer holds 10 black and 10 white socks. Without looking, how many must you take to be sure of (1) a matching pair, (2) a black pair?
+    solution: |
+      1. **3.** With 3 socks and 2 colours, two share a colour. Two socks might be one of each.
+      2. **12.** You might first draw all 10 white socks, then 2 more must both be black. With 11 you might have 10 white and 1 black.
+
+  - id: cb-080
+    title: Two numbers summing to 101
+    subtopic: Pigeonhole
+    difficulty: easy
+    type: proof
+    tags: [pigeonhole, pairing]
+    related: [lg-137]
+    statement: |
+      Prove that any 51 numbers chosen from $\{1, 2, \dots, 100\}$ include two whose sum is 101.
+    solution: |
+      Partition $\{1, \dots, 100\}$ into the 50 pairs $\{k, 101 - k\}$, $k = 1, \dots, 50$. With 51 numbers chosen, two lie in the same pair, and they sum to 101. $\blacksquare$
+
+  - id: cb-081
+    title: Ten points in a square
+    subtopic: Pigeonhole
+    difficulty: easy
+    type: proof
+    tags: [pigeonhole, geometry]
+    related: [cb-011]
+    statement: |
+      Ten points lie in a closed unit square. Prove that two are within distance $\frac{\sqrt2}{3}$.
+    solution: |
+      Divide the square into a $3\times3$ grid of closed squares of side $\frac13$. With 10 points and 9 small squares, two points share one. Their distance is at most its diagonal, $\frac{\sqrt2}3$. $\blacksquare$
+
+  - id: cb-082
+    title: The generalised pigeonhole principle
+    subtopic: Pigeonhole
+    difficulty: easy
+    type: proof
+    tags: [pigeonhole, averaging]
+    statement: |
+      Prove that if $N$ objects are put in $k$ boxes, some box contains at least $\lceil N/k\rceil$ objects. Deduce that among 100 people at least 9 share a birth month.
+    solution: |
+      If every box held at most $\lceil N/k\rceil - 1$ objects, the total would be at most $k(\lceil N/k\rceil - 1) < k\cdot\frac Nk = N$, since $\lceil N/k\rceil < \frac Nk + 1$. Contradiction.
+
+      With $N = 100$, $k = 12$: $\lceil 100/12\rceil = 9$. $\blacksquare$
+
+  - id: cb-083
+    title: Lattice point midpoints
+    subtopic: Pigeonhole
+    difficulty: easy
+    type: proof
+    tags: [pigeonhole, parity, lattice points]
+    related: [cb-084]
+    statement: |
+      Prove that among any 5 points with integer coordinates in the plane, two have a midpoint with integer coordinates.
+    solution: |
+      The midpoint of $(a, b)$ and $(c, d)$ is a lattice point iff $a \equiv c$ and $b \equiv d \pmod 2$. There are 4 parity classes $(a \bmod 2, b \bmod 2)$, so two of the 5 points share a class. $\blacksquare$
+
+  - id: cb-084
+    title: Lattice midpoints in space
+    subtopic: Pigeonhole
+    difficulty: easy
+    type: proof
+    tags: [pigeonhole, parity, lattice points]
+    related: [cb-083]
+    statement: |
+      What is the least $n$ such that among any $n$ lattice points in $\R^3$, two have a lattice-point midpoint?
+    solution: |
+      **9.** There are $2^3 = 8$ parity classes, so 9 points force two in the same class, whose midpoint is a lattice point.
+
+      8 points are not enough: take one point of each class, the 8 vertices of the unit cube $\{0,1\}^3$. Any two differ in parity in some coordinate. $\blacksquare$
+
+  - id: cb-085
+    title: Disjoint subsets with equal sums
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, subset sums]
+    source: IMO 1972
+    statement: |
+      Prove that from any 10 distinct two-digit numbers one can choose two disjoint non-empty subsets with the same sum.
+    solution: |
+      There are $2^{10} - 1 = 1023$ non-empty subsets, and each has sum at most $10\cdot99 = 990$. So two different subsets $A \ne B$ have the same sum.
+
+      Remove their common elements: $A' = A \setminus B$ and $B' = B \setminus A$ are disjoint with equal sums. If one were empty, its sum would be 0, so the other would be empty too (all numbers are positive), making $A = B$. So both are non-empty. $\blacksquare$
+
+  - id: cb-086
+    title: Two-colouring the plane
+    subtopic: Pigeonhole
+    difficulty: easy
+    type: proof
+    tags: [pigeonhole, colouring, geometry]
+    statement: |
+      Every point of the plane is coloured red or blue. Prove that there are two points at distance exactly 1 with the same colour.
+    solution: |
+      Take the vertices of an equilateral triangle of side 1. Two of the three vertices have the same colour, and they are at distance 1. $\blacksquare$
+
+  - id: cb-087
+    title: A chess player's schedule
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, prefix sums]
+    related: [cb-015]
+    statement: |
+      A chess player plays at least one game every day for 77 days, but no more than 132 games in total. Prove that for some run of consecutive days she plays exactly 21 games.
+    solution: |
+      Let $a_i$ be the total played in the first $i$ days: $1 \le a_1 < a_2 < \cdots < a_{77} \le 132$. Then $a_1 + 21 < \cdots < a_{77} + 21 \le 153$. These 154 numbers all lie in $\{1, \dots, 153\}$, so two are equal. The $a_i$ are distinct and so are the $a_i + 21$, so $a_j = a_i + 21$ for some $i < j$. Then on days $i + 1, \dots, j$ she plays exactly 21 games. $\blacksquare$
+
+  - id: cb-088
+    title: Five points on a sphere
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, geometry]
+    source: Putnam 2002
+    statement: |
+      Five points lie on a sphere. Prove that some closed hemisphere contains at least four of them.
+    solution: |
+      Take a great circle through two of the points. It splits the sphere into two closed hemispheres, both containing those two points. The other three points lie in these hemispheres, so by pigeonhole one hemisphere contains at least two of them, and hence at least four points in all. $\blacksquare$
+
+  - id: cb-089
+    title: Three-colour Ramsey bound
+    subtopic: Pigeonhole
+    difficulty: hard
+    type: proof
+    tags: [pigeonhole, ramsey, graphs]
+    related: [cb-014]
+    statement: |
+      The edges of the complete graph on 17 vertices are coloured red, green or blue. Prove there is a triangle with all edges the same colour.
+    solution: |
+      Pick a vertex $v$. Its 16 edges get 3 colours, so at least $\lceil16/3\rceil = 6$ have the same colour, say red, going to a set $S$ of 6 vertices.
+
+      If any edge inside $S$ is red, it forms a red triangle with $v$. Otherwise the edges inside $S$ are green or blue, and by cb-014 six vertices with a 2-coloured complete graph contain a monochromatic triangle. $\blacksquare$
+
+  - id: cb-090
+    title: Dirichlet's approximation theorem
+    subtopic: Pigeonhole
+    difficulty: hard
+    type: proof
+    tags: [pigeonhole, approximation, irrationality]
+    source: Dirichlet, 1842
+    statement: |
+      Let $\alpha$ be real and $N \ge 1$ an integer. Prove that there are integers $p$, $q$ with $1 \le q \le N$ and $|q\alpha - p| < \frac1N$.
+    solution: |
+      Consider the fractional parts $\{k\alpha\} = k\alpha - \lfloor k\alpha\rfloor \in [0, 1)$ for $k = 0, 1, \dots, N$. Split $[0, 1)$ into the $N$ intervals $\left[\frac jN, \frac{j+1}N\right)$. With $N + 1$ numbers, two, say for $i < j$, lie in the same interval, so
+      $$\big|(j\alpha - \lfloor j\alpha\rfloor) - (i\alpha - \lfloor i\alpha\rfloor)\big| < \frac1N.$$
+      Take $q = j - i \in [1, N]$ and $p = \lfloor j\alpha\rfloor - \lfloor i\alpha\rfloor$. $\blacksquare$
+
+      (Dividing by $q$: $\left|\alpha - \frac pq\right| < \frac1{qN} \le \frac1{q^2}$.)
+
+  - id: cb-091
+    title: Three numbers with sum divisible by 3
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, congruences]
+    source: Erdős–Ginzburg–Ziv (case n = 3)
+    statement: |
+      Prove that among any 5 integers there are 3 whose sum is divisible by 3. Show that 4 integers are not enough.
+    solution: |
+      Look at remainders mod 3. If all three remainders $0, 1, 2$ occur, take one number of each: the sum is $\equiv 0 + 1 + 2 \equiv 0$. Otherwise the 5 numbers use at most 2 remainders, so one remainder occurs at least 3 times, and three numbers with the same remainder $r$ sum to $3r \equiv 0$.
+
+      **Four isn't enough:** $0, 0, 1, 1$. Any three have sum $1$ or $2$. $\blacksquare$
+
+  - id: cb-092
+    title: A power of 3 ending in 001
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, powers, congruences]
+    related: [cb-099]
+    statement: |
+      Prove that some power $3^k$ with $k \ge 1$ ends in the digits 001.
+    solution: |
+      Among $3^1, \dots, 3^{1001}$ two are congruent mod 1000, say $3^i \equiv 3^j$ with $i < j$. Then $1000 \mid 3^i(3^{j-i} - 1)$, and since $\gcd(3^i, 1000) = 1$, $1000 \mid 3^{j-i} - 1$. So $3^{j-i}$ ends in 001. $\blacksquare$
+
+  - id: cb-093
+    title: Monotone subsequences of length 4
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: compute
+    tags: [erdos-szekeres, sequences]
+    related: [cb-013]
+    statement: |
+      Show that every sequence of 10 distinct numbers has an increasing or decreasing subsequence of length 4, but some sequence of 9 does not.
+    solution: |
+      Erdős–Szekeres (cb-013) with $n = 3$: $n^2 + 1 = 10$.
+
+      For 9 numbers take $7, 8, 9, 4, 5, 6, 1, 2, 3$. An increasing subsequence stays within one block (each block is smaller than the previous), so has length at most 3. A decreasing subsequence takes at most one element from each block, so also has length at most 3.
+
+  - id: cb-094
+    title: A monochromatic rectangle
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, colouring, grids]
+    statement: |
+      The cells of a $3\times7$ grid are each coloured black or white. Prove there is a rectangle whose four corner cells have the same colour.
+    solution: |
+      Each column has 3 cells and 2 colours, so at least two of its cells share a colour. Record for each column one such pair: (which two rows, which colour). There are $\binom32\cdot2 = 6$ possible records and 7 columns, so two columns have the same record. The two rows in those two columns give four corners of one colour. $\blacksquare$
+
+  - id: cb-095
+    title: Decimals of rationals repeat
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, decimals, rationals]
+    related: [nt-189]
+    statement: |
+      Prove that the decimal expansion of every rational number is eventually periodic.
+    solution: |
+      Let $\frac ab$ with $b > 0$, and run long division. At each step the next digit and the next remainder are determined by the current remainder, which lies in $\{0, 1, \dots, b-1\}$. After at most $b + 1$ steps (past the integer part), some remainder repeats, by pigeonhole. From then on the computation repeats exactly, so the digits are periodic (a remainder of 0 gives a tail of zeros, period 1). $\blacksquare$
+
+  - id: cb-096
+    title: Three points in a small disc
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, geometry]
+    statement: |
+      51 points lie in a unit square. Prove that some disc of radius $\frac17$ contains at least three of them.
+    solution: |
+      Divide the square into 25 squares of side $\frac15$. Since $51 > 2\cdot25$, some small square contains at least 3 points. A square of side $\frac15$ lies in the disc about its centre of radius half its diagonal, $\frac{\sqrt2}{10} \approx 0.1414$, and $\frac{\sqrt2}{10} < \frac17 \approx 0.1429$ (as $7\sqrt2 < 10$, i.e. $98 < 100$). So a disc of radius $\frac17$ contains those 3 points. $\blacksquare$
+
+  - id: cb-097
+    title: Neighbours on a numbered board
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, grids, paths]
+    statement: |
+      The numbers $1, 2, \dots, 100$ are written in the cells of a $10\times10$ board, one per cell. Prove that some two cells sharing an edge contain numbers differing by at least 6.
+    solution: |
+      Go from the cell containing 1 to the cell containing 100 by moving along its row and then along a column: at most $9 + 9 = 18$ steps between adjacent cells. The numbers change by $99$ in total over these steps, so some step changes it by at least $\frac{99}{18} = 5.5$, hence by at least 6. $\blacksquare$
+
+  - id: cb-098
+    title: Ramsey's R(3, 4) ≤ 10
+    subtopic: Pigeonhole
+    difficulty: hard
+    type: proof
+    tags: [pigeonhole, ramsey, graphs]
+    related: [cb-014, cb-089]
+    statement: |
+      Prove that among any 10 people there are 3 mutual strangers or 4 mutual friends.
+    solution: |
+      Pick a person $v$; the other 9 are friends or strangers of $v$. Either $v$ has at least 4 strangers or at least 6 friends (otherwise at most $3 + 5 = 8$ others).
+
+      - **4 strangers of $v$.** If two of them are strangers, they and $v$ are 3 mutual strangers. Otherwise all 4 are mutual friends.
+      - **6 friends of $v$.** By cb-014, among these 6 there are 3 mutual strangers (done) or 3 mutual friends, who with $v$ make 4 mutual friends. $\blacksquare$
+
+  - id: cb-099
+    title: Powers of 2 and an odd modulus
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, powers, congruences]
+    related: [cb-092]
+    statement: |
+      Prove that $2023$ divides $2^k - 1$ for some $k \ge 1$. What property of 2023 is used?
+    solution: |
+      Among $2^1, \dots, 2^{2024}$, two are congruent mod 2023: $2^i \equiv 2^j$, $i < j$. Then $2023 \mid 2^i(2^{j-i} - 1)$, and $\gcd(2^i, 2023) = 1$ because 2023 is odd, so $2023 \mid 2^{j-i} - 1$. $\blacksquare$
+
+      (Only oddness is used; for an even modulus $2^k - 1$ is odd and can't be divisible by it.)
+
+  - id: cb-100
+    title: The averaging principle
+    subtopic: Pigeonhole
+    difficulty: easy
+    type: proof
+    tags: [pigeonhole, averaging]
+    statement: |
+      Prove that among real numbers $x_1, \dots, x_n$ with average $a$, some $x_i \ge a$ and some $x_j \le a$. Deduce that if 10 people have a total age of 300, someone is at least 30.
+    solution: |
+      If every $x_i < a$ then $\sum x_i < na$, contradicting $\sum x_i = na$. Similarly for $\le$.
+
+      For the ages: the average is 30, so someone is at least 30. $\blacksquare$
+
+  - id: cb-101
+    title: Infinite monotone subsequences
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [infinite pigeonhole, sequences, monotone]
+    related: [cb-013]
+    hints:
+      - |
+        Call $n$ a peak if $a_n > a_m$ for all $m > n$.
+    statement: |
+      Prove that every infinite sequence of real numbers has a monotone (non-decreasing or strictly decreasing) infinite subsequence.
+    solution: |
+      Call $n$ a **peak** if $a_n > a_m$ for every $m > n$.
+
+      - **Infinitely many peaks** $n_1 < n_2 < \cdots$: then $a_{n_1} > a_{n_2} > \cdots$, a strictly decreasing subsequence.
+      - **Finitely many peaks:** let $n_1$ be beyond the last. Since $n_1$ is not a peak, there is $n_2 > n_1$ with $a_{n_2} \ge a_{n_1}$; $n_2$ is not a peak either, so there is $n_3 > n_2$ with $a_{n_3} \ge a_{n_2}$; and so on. This gives a non-decreasing subsequence. $\blacksquare$
+
+      (With Bolzano–Weierstrass this shows every bounded sequence has a convergent subsequence.)
+
+  - id: cb-102
+    title: Two angles close together
+    subtopic: Pigeonhole
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, trigonometry]
+    statement: |
+      Prove that among any 7 real numbers there are two, $x$ and $y$, with
+      $$0 \le \frac{x - y}{1 + xy} < \frac{1}{\sqrt3}.$$
+    solution: |
+      Write each number as $\tan\theta$ with $\theta \in \left(-\frac\pi2, \frac\pi2\right)$. Split this interval into 6 intervals of length $\frac\pi6$. Two of the 7 angles, $\alpha \ge \beta$, lie in the same one, so $0 \le \alpha - \beta < \frac\pi6$.
+
+      With $x = \tan\alpha$, $y = \tan\beta$, the subtraction formula gives
+      $$\tan(\alpha - \beta) = \frac{x - y}{1 + xy},$$
+      valid because $\alpha - \beta \ne \pm\frac\pi2$ (so $1 + xy \ne 0$). As $\tan$ is increasing on $\left[0, \frac\pi6\right]$, $0 \le \tan(\alpha - \beta) < \tan\frac\pi6 = \frac1{\sqrt3}$. $\blacksquare$
+
+  - id: cb-103
+    title: Divisible by 7 or 11 but not 13
+    subtopic: Inclusion–exclusion
+    difficulty: easy
+    type: compute
+    tags: [inclusion-exclusion, divisibility]
+    related: [cb-016]
+    statement: |
+      How many integers in $\{1, \dots, 1000\}$ are divisible by 7 or 11 but not by 13?
+    solution: |
+      Multiples of 7 or 11: $\lfloor1000/7\rfloor + \lfloor1000/11\rfloor - \lfloor1000/77\rfloor = 142 + 90 - 12 = 220$.
+
+      Of these, those also divisible by 13 are the multiples of 91 or 143: $10 + 6 - \lfloor1000/1001\rfloor = 16$.
+
+      **Answer:** $220 - 16 = 204$.
+
+  - id: cb-104
+    title: Sweets with a cap
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, stars and bars]
+    related: [cb-042]
+    statement: |
+      In how many ways can 10 identical sweets be shared among 4 children so that nobody gets more than 4?
+    solution: |
+      Without the cap: $\binom{13}{3} = 286$. Let $A_i$ be the shares where child $i$ gets at least 5; giving that child 5 first leaves 5 to share freely: $|A_i| = \binom{8}{3} = 56$. Two children with at least 5 each use all 10: $|A_i \cap A_j| = 1$. Three is impossible.
+      $$286 - 4\cdot56 + \binom42\cdot1 = 286 - 224 + 6 = 68.$$
+
+  - id: cb-105
+    title: Bounded solutions of a linear equation
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, stars and bars]
+    statement: |
+      How many integer solutions does $x_1 + x_2 + x_3 = 15$ have with $0 \le x_i \le 7$?
+    solution: |
+      Without upper bounds: $\binom{17}{2} = 136$. If $x_1 \ge 8$, put $y_1 = x_1 - 8$: $\binom{9}{2} = 36$ solutions; likewise for $x_2$, $x_3$. Two variables $\ge 8$ would sum to more than 15.
+      $$136 - 3\cdot36 = 28.$$
+
+  - id: cb-106
+    title: Permutations with no successions
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, permutations]
+    statement: |
+      Find the number of permutations of $1, \dots, n$ in which no $i$ is immediately followed by $i + 1$. Evaluate for $n = 4$.
+    solution: |
+      Let $A_i$ ($1 \le i \le n-1$) be the permutations in which $i$ is immediately followed by $i + 1$. Requiring a set of $k$ such adjacencies glues the numbers into $n - k$ blocks (the glued pairs chain together), which can be arranged in $(n - k)!$ ways. So
+      $$\sum_{k=0}^{n-1}(-1)^k\binom{n-1}{k}(n-k)!.$$
+      For $n = 4$: $24 - 3\cdot6 + 3\cdot2 - 1 = 11$.
+
+  - id: cb-107
+    title: Couples not sitting together
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, arrangements]
+    related: [cb-125]
+    statement: |
+      In how many ways can 4 married couples sit in a row of 8 chairs so that no couple sits side by side?
+    solution: |
+      Let $A_i$ be the seatings with couple $i$ together. Forcing a given set of $k$ couples together: glue each into a block (2 internal orders each), leaving $8 - k$ units: $2^k(8-k)!$. So
+      $$\sum_{k=0}^4(-1)^k\binom4k2^k(8-k)! = 40320 - 40320 + 17280 - 3840 + 384 = 13824.$$
+
+  - id: cb-108
+    title: Surjections from 6 to 3
+    subtopic: Inclusion–exclusion
+    difficulty: easy
+    type: compute
+    tags: [inclusion-exclusion, surjections]
+    related: [cb-018]
+    statement: |
+      In how many ways can 6 different jobs be given to 3 workers so that every worker gets at least one?
+    solution: |
+      These are surjections from a 6-set onto a 3-set. By cb-018:
+      $$3^6 - 3\cdot2^6 + 3\cdot1^6 = 729 - 192 + 3 = 540.$$
+
+  - id: cb-109
+    title: Exactly two fixed points
+    subtopic: Inclusion–exclusion
+    difficulty: easy
+    type: compute
+    tags: [derangements, permutations]
+    related: [cb-017]
+    statement: |
+      How many permutations of $\{1, \dots, 5\}$ have no fixed points? Exactly two fixed points?
+    solution: |
+      $D_5 = 5!\left(1 - 1 + \frac12 - \frac16 + \frac1{24} - \frac1{120}\right) = 60 - 20 + 5 - 1 = 44$.
+
+      Exactly two fixed points: choose them ($\binom52 = 10$) and derange the other three ($D_3 = 2$): $20$.
+
+  - id: cb-110
+    title: Not a square, cube or fifth power
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, perfect powers]
+    statement: |
+      How many integers in $\{1, \dots, 1000\}$ are not perfect squares, cubes or fifth powers?
+    solution: |
+      Squares: 31 ($31^2 = 961$). Cubes: 10. Fifth powers: 3 ($1, 32, 243$). Square and cube = sixth powers: 3 ($1, 64, 729$). Square and fifth = tenth powers: 1. Cube and fifth = fifteenth powers: 1. All three = thirtieth powers: 1.
+      $$|S \cup C \cup F| = 31 + 10 + 3 - 3 - 1 - 1 + 1 = 40.$$
+      **Answer:** $1000 - 40 = 960$.
+
+  - id: cb-111
+    title: The inclusion–exclusion principle
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: proof
+    tags: [inclusion-exclusion, binomial theorem]
+    related: [lg-175]
+    statement: |
+      Prove that for finite sets $A_1, \dots, A_n$,
+      $$\left|\bigcup_iA_i\right| = \sum_{\varnothing \ne S \subseteq \{1,\dots,n\}}(-1)^{|S|+1}\left|\bigcap_{i\in S}A_i\right|.$$
+    solution: |
+      Count how often each element $x$ is counted on the right. If $x$ lies in exactly $m \ge 1$ of the sets, it lies in $\bigcap_{i\in S}A_i$ exactly when $S$ is a non-empty subset of those $m$ indices. So it is counted
+      $$\sum_{k=1}^m(-1)^{k+1}\binom mk = 1 - \sum_{k=0}^m(-1)^k\binom mk = 1 - 0 = 1$$
+      time. An element in none of the sets is counted 0 times on both sides. $\blacksquare$
+
+  - id: cb-112
+    title: Bonferroni inequalities
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: proof
+    tags: [inclusion-exclusion, inequalities]
+    related: [cb-111]
+    statement: |
+      Prove that
+      $$\sum_i|A_i| - \sum_{i<j}|A_i\cap A_j| \le \left|\bigcup_iA_i\right| \le \sum_i|A_i|.$$
+    solution: |
+      As in cb-111, track an element lying in exactly $m \ge 1$ sets. It contributes $1$ to the middle, $m$ to the right, and $m - \binom m2$ to the left.
+
+      - $1 \le m$: upper bound.
+      - $m - \binom m2 = \frac{m(3 - m)}{2} \le 1$ for every integer $m \ge 1$ (it is $1, 1, 0, -2, \dots$): lower bound.
+
+      Elements in no set contribute 0 everywhere. $\blacksquare$
+
+  - id: cb-113
+    title: Words containing a, b and c
+    subtopic: Inclusion–exclusion
+    difficulty: easy
+    type: compute
+    tags: [inclusion-exclusion, words]
+    statement: |
+      How many 5-letter words over the 26-letter alphabet contain each of the letters $a$, $b$, $c$ at least once?
+    solution: |
+      Let $A_x$ be the words avoiding $x$. Words avoiding a given set of $j$ of the three letters number $(26 - j)^5$. So
+      $$26^5 - 3\cdot25^5 + 3\cdot24^5 - 23^5 = 11\,881\,376 - 29\,296\,875 + 23\,887\,872 - 6\,436\,343 = 36\,030.$$
+
+  - id: cb-114
+    title: Colouring the corners of a square
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, colouring, chromatic polynomial]
+    statement: |
+      The 4 corners of a square (a 4-cycle) are coloured with $k$ colours so that corners joined by a side differ. Use inclusion–exclusion over the sides to show there are $(k-1)^4 + (k-1)$ colourings, and evaluate for $k = 3$.
+    solution: |
+      For a set $S$ of sides, the colourings in which every side of $S$ is monochromatic number $k^{c(S)}$, where $c(S)$ is the number of connected pieces the corners form using the sides in $S$. For $|S| = 0, 1, 2, 3, 4$: $c = 4, 3, 2, 1, 1$. So
+      $$k^4 - 4k^3 + 6k^2 - 4k + k = (k-1)^4 + (k - 1),$$
+      since $(k-1)^4 = k^4 - 4k^3 + 6k^2 - 4k + 1$. For $k = 3$: $16 + 2 = 18$.
+
+  - id: cb-115
+    title: Ternary strings using every digit
+    subtopic: Inclusion–exclusion
+    difficulty: easy
+    type: compute
+    tags: [inclusion-exclusion, surjections]
+    related: [cb-018]
+    statement: |
+      How many strings of length $n$ over $\{0, 1, 2\}$ contain each digit at least once?
+    solution: |
+      Subtract those missing a digit: $3^n - 3\cdot2^n + 3\cdot1^n$. (For $n = 3$: $27 - 24 + 3 = 6 = 3!$, as it should be.)
+
+  - id: cb-116
+    title: Neither squares nor cubes up to a million
+    subtopic: Inclusion–exclusion
+    difficulty: easy
+    type: compute
+    tags: [inclusion-exclusion, perfect powers]
+    statement: |
+      How many integers in $\{1, \dots, 10^6\}$ are neither perfect squares nor perfect cubes?
+    solution: |
+      Squares: $1000$. Cubes: $100$. Both (sixth powers): $10$ ($10^6 = 10^6$). So $10^6 - (1000 + 100 - 10) = 998\,910$.
+
+  - id: cb-117
+    title: Forbidden adjacent pairs
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, permutations]
+    statement: |
+      How many permutations of $1, \dots, 6$ contain none of the patterns $12$, $34$, $56$ as consecutive entries (in that order)?
+    solution: |
+      Forcing a given set of $k$ of the three patterns glues those pairs into blocks, leaving $6 - k$ units: $(6-k)!$. So
+      $$6! - 3\cdot5! + 3\cdot4! - 3! = 720 - 360 + 72 - 6 = 426.$$
+
+  - id: cb-118
+    title: Elements in exactly k of the sets
+    subtopic: Inclusion–exclusion
+    difficulty: hard
+    type: proof
+    tags: [inclusion-exclusion, binomial coefficients]
+    related: [cb-111]
+    statement: |
+      For finite sets $A_1, \dots, A_n$ let $S_j = \sum_{|T| = j}\left|\bigcap_{i\in T}A_i\right|$ (with $S_0$ the size of the universe). Prove that the number of elements lying in exactly $k$ of the sets is
+      $$E_k = \sum_{j=k}^n(-1)^{j-k}\binom jkS_j.$$
+    solution: |
+      Take an element in exactly $m$ of the sets. It is counted in $S_j$ exactly $\binom mj$ times. So its contribution to the right side is
+      $$\sum_{j=k}^m(-1)^{j-k}\binom jk\binom mj = \binom mk\sum_{j=k}^m(-1)^{j-k}\binom{m-k}{j-k} = \binom mk(1 - 1)^{m-k},$$
+      using $\binom jk\binom mj = \binom mk\binom{m-k}{j-k}$ (cb-057). This is $1$ if $m = k$ and $0$ otherwise. $\blacksquare$
+
+      ($k = 0$ is the usual inclusion–exclusion for elements in none of the sets.)
+
+  - id: cb-119
+    title: Paths avoiding two points
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, lattice paths]
+    related: [cb-046]
+    statement: |
+      How many right/up lattice paths from $(0,0)$ to $(5,5)$ avoid both $(2,2)$ and $(3,3)$?
+    solution: |
+      Total $\binom{10}{5} = 252$. Through $(2,2)$: $\binom42\binom63 = 120$. Through $(3,3)$: $\binom63\binom42 = 120$. Through both: $\binom42\binom21\binom42 = 72$.
+      $$252 - 120 - 120 + 72 = 84.$$
+
+  - id: cb-120
+    title: Seven cards, all four suits
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, cards]
+    related: [cb-020]
+    statement: |
+      How many 7-card hands contain at least one card of every suit?
+    solution: |
+      Hands missing a given set of $j$ suits: $\binom{52 - 13j}{7}$. So
+      $$\binom{52}7 - 4\binom{39}7 + 6\binom{26}7 - 4\binom{13}7 = 133\,784\,560 - 61\,523\,748 + 3\,946\,800 - 6\,864 = 76\,200\,748.$$
+
+  - id: cb-121
+    title: Counting primes with Legendre's sieve
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, primes, sieve]
+    related: [nt-075]
+    statement: |
+      Use inclusion–exclusion with the primes $2, 3, 5, 7$ to count the primes up to 100.
+    solution: |
+      Count $n \le 100$ divisible by none of $2, 3, 5, 7$:
+      $$100 - (50 + 33 + 20 + 14) + (16 + 10 + 7 + 6 + 4 + 2) - (3 + 2 + 1 + 0) + 0 = 100 - 117 + 45 - 6 = 22.$$
+      (The pair terms are $\lfloor 100/d\rfloor$ for $d = 6, 10, 14, 15, 21, 35$; the triples for $30, 42, 70, 105$.)
+
+      These 22 numbers are $1$ and every prime from $11$ to $97$ (any composite $\le 100$ has a prime factor $\le 7$). So there are $21$ such primes, plus $2, 3, 5, 7$: $\pi(100) = 25$.
+
+  - id: cb-122
+    title: The derangement recurrence, combinatorially
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: proof
+    tags: [derangements, recurrence, bijection]
+    related: [cb-017, in-246]
+    statement: |
+      Give a combinatorial proof that $D_n = (n-1)(D_{n-1} + D_{n-2})$ for $n \ge 3$.
+    solution: |
+      In a derangement $\sigma$ of $\{1, \dots, n\}$, $\sigma(n) = k$ for some $k \ne n$: $n - 1$ choices. Fix $k$.
+
+      - **$\sigma(k) = n$:** $n$ and $k$ swap, and the other $n - 2$ elements are deranged: $D_{n-2}$.
+      - **$\sigma(k) \ne n$:** let $j = \sigma^{-1}(n)$, so $j \ne k$ and $j \ne n$. Define $\tau$ on $\{1, \dots, n-1\}$ by $\tau(j) = k$ and $\tau(i) = \sigma(i)$ for $i \ne j$. It is a permutation (we have just rerouted $j \to n \to k$ to $j \to k$), and a derangement since $\tau(j) = k \ne j$. Conversely, from a derangement $\tau$ of $\{1,\dots,n-1\}$, setting $j = \tau^{-1}(k)$, $\sigma(j) = n$, $\sigma(n) = k$ and $\sigma = \tau$ elsewhere recovers $\sigma$, with $\sigma(k) = \tau(k) \ne n$. So there are $D_{n-1}$ such $\sigma$.
+
+      So $D_n = (n-1)(D_{n-1} + D_{n-2})$. $\blacksquare$
+
+  - id: cb-123
+    title: 0–1 matrices with no zero row or column
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, matrices]
+    statement: |
+      Show that the number of $n\times n$ matrices with entries 0 or 1 having no zero row is $(2^n - 1)^n$, and that the number with no zero row and no zero column is
+      $$\sum_{k=0}^n(-1)^k\binom nk\left(2^{n-k} - 1\right)^n.$$
+      Check $n = 2$.
+    solution: |
+      **No zero row:** each row is any of the $2^n - 1$ non-zero vectors.
+
+      **Also no zero column:** let $A_j$ be the matrices with no zero row whose column $j$ is zero. Forcing a set of $k$ columns to be zero leaves rows of length $n - k$ that must be non-zero: $(2^{n-k} - 1)^n$. Inclusion–exclusion over the columns gives the formula.
+
+      **$n = 2$:** $9 - 2\cdot1 + 0 = 7$. Directly: of the 16 matrices, those with no zero row or column are the 7 that contain a "diagonal" pair of 1s: the two permutation matrices, the four with three 1s, and the all-ones matrix.
+
+  - id: cb-124
+    title: Permutations fixing no even number
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, permutations, derangements]
+    statement: |
+      How many permutations of $\{1, \dots, n\}$ fix no even number? Evaluate for $n = 4$.
+    solution: |
+      Let $E$ be the $\lfloor n/2\rfloor$ even numbers and $A_e$ the permutations fixing $e$. Fixing a given set of $k$ evens leaves $(n - k)!$ permutations, so the count is
+      $$\sum_{k=0}^{\lfloor n/2\rfloor}(-1)^k\binom{\lfloor n/2\rfloor}{k}(n-k)!.$$
+      For $n = 4$: $24 - 2\cdot6 + 2 = 14$.
+
+  - id: cb-125
+    title: Couples around a round table
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [inclusion-exclusion, circular arrangements]
+    related: [cb-107]
+    statement: |
+      In how many ways can 4 couples sit around a round table (rotations considered the same) so that no couple sits together?
+    solution: |
+      Forcing a given set of $k$ couples together: $8 - k$ units around a table in $(8 - k - 1)!$ ways, times $2^k$. So
+      $$\sum_{k=0}^4(-1)^k\binom4k2^k(7-k)! = 5040 - 5760 + 2880 - 768 + 96 = 1488.$$
+
+  - id: cb-126
+    title: Surjections onto one fewer element
+    subtopic: Inclusion–exclusion
+    difficulty: medium
+    type: compute
+    tags: [surjections, direct counting]
+    related: [cb-018]
+    statement: |
+      Show directly that there are $\binom n2(n-1)!$ surjections from an $n$-set onto an $(n-1)$-set, and check against inclusion–exclusion for $n = 4$.
+    solution: |
+      A surjection from $n$ elements onto $n - 1$ values has exactly one value hit twice and the others once. Choose the two elements sharing a value ($\binom n2$), then biject the resulting $n - 1$ "groups" with the values ($(n-1)!$).
+
+      For $n = 4$: $6\cdot6 = 36$. Inclusion–exclusion: $3^4 - 3\cdot2^4 + 3\cdot1^4 = 81 - 48 + 3 = 36$.
+
+  - id: cb-127
+    title: Subsets with no two consecutive elements
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [bijection, subsets]
+    related: [cb-049]
+    statement: |
+      Prove that the number of $k$-subsets of $\{1, \dots, n\}$ with no two consecutive elements is $\binom{n-k+1}{k}$.
+    solution: |
+      Given such a subset $a_1 < a_2 < \cdots < a_k$, let $b_i = a_i - (i - 1)$. Since $a_{i+1} \ge a_i + 2$, $b_{i+1} \ge b_i + 1$, so the $b_i$ are strictly increasing, and $1 \le b_1$, $b_k \le n - k + 1$. Conversely, from any $k$-subset $b_1 < \cdots < b_k$ of $\{1, \dots, n-k+1\}$, $a_i = b_i + i - 1$ gives a valid subset. These maps are inverse. $\blacksquare$
+
+  - id: cb-128
+    title: Compositions with k parts
+    subtopic: Bijections & double counting
+    difficulty: easy
+    type: proof
+    tags: [compositions, stars and bars]
+    related: [cb-023]
+    statement: |
+      Prove that $n$ has $\binom{n-1}{k-1}$ compositions into exactly $k$ positive parts.
+    solution: |
+      As in cb-023, write $n$ as a row of $n$ ones with $n - 1$ gaps; a composition with $k$ parts corresponds to choosing which $k - 1$ gaps get a separating comma. $\blacksquare$
+
+      (Summing over $k$ recovers $2^{n-1}$.)
+
+  - id: cb-129
+    title: Triangular numbers count pairs
+    subtopic: Bijections & double counting
+    difficulty: easy
+    type: proof
+    tags: [double counting, binomial coefficients]
+    statement: |
+      Prove combinatorially that $1 + 2 + \cdots + n = \binom{n+1}2$.
+    solution: |
+      Count 2-subsets $\{a, b\}$ of $\{1, \dots, n+1\}$ with $a < b$ by their larger element $b$: there are $b - 1$ choices of $a$. Summing over $b = 2, \dots, n+1$ gives $1 + 2 + \cdots + n$. $\blacksquare$
+
+  - id: cb-130
+    title: A sum counted by its middle element
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [double counting, binomial coefficients]
+    related: [in-056, cb-066]
+    statement: |
+      Prove combinatorially that $\displaystyle\sum_{k=0}^nk(n-k) = \binom{n+1}{3}$.
+    solution: |
+      Count 3-subsets of $\{0, 1, \dots, n\}$ by their middle element $k$: the smallest element is one of the $k$ numbers $0, \dots, k-1$ and the largest one of the $n - k$ numbers $k+1, \dots, n$. So there are $k(n-k)$ subsets with middle $k$. $\blacksquare$
+
+  - id: cb-131
+    title: Summing intersection sizes
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [double counting, subsets]
+    related: [cb-021]
+    statement: |
+      Prove that $\displaystyle\sum_{A, B \subseteq \{1,\dots,n\}}|A \cap B| = n\,4^{n-1}$.
+    solution: |
+      Count triples $(x, A, B)$ with $x \in A \cap B$. For each of the $n$ choices of $x$, the other $n - 1$ elements are each in $A$ or not and in $B$ or not, independently: $4^{n-1}$ choices. $\blacksquare$
+
+  - id: cb-132
+    title: Triangulations and Catalan numbers
+    subtopic: Bijections & double counting
+    difficulty: hard
+    type: proof
+    tags: [catalan, triangulation, recurrence]
+    related: [cb-024, in-131]
+    statement: |
+      Let $t_n$ be the number of triangulations of a convex $(n+2)$-gon (with $t_0 = 1$). Prove that $t_n = \sum_{k=1}^nt_{k-1}t_{n-k}$, and deduce $t_n = C_n = \frac{1}{n+1}\binom{2n}{n}$ by showing balanced bracket strings satisfy the same recurrence.
+    solution: |
+      **Triangulations.** Label the vertices $v_0, \dots, v_{n+1}$. The side $v_0v_{n+1}$ lies in exactly one triangle $v_0v_kv_{n+1}$, $1 \le k \le n$. It splits the rest into the polygon $v_0\cdots v_k$, with $k + 1 = (k-1) + 2$ vertices, and $v_k\cdots v_{n+1}$, with $(n-k) + 2$ vertices (a "polygon" with 2 vertices contributing $t_0 = 1$). These are triangulated independently, giving the recurrence.
+
+      **Brackets.** A non-empty balanced string with $n$ pairs is uniquely $(\,u\,)\,v$, where the bracket opened first closes at the first point the string returns to balance; $u$ and $v$ are balanced with $k - 1$ and $n - k$ pairs. So $C_n = \sum_{k=1}^nC_{k-1}C_{n-k}$ with $C_0 = 1$.
+
+      Same recurrence and starting value, so $t_n = C_n$ for all $n$ by strong induction, and cb-024 gives the formula. (E.g. a hexagon has $t_4 = 14$ triangulations.) $\blacksquare$
+
+  - id: cb-133
+    title: Binary trees and Catalan numbers
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [catalan, trees, recurrence]
+    related: [cb-132, in-175]
+    statement: |
+      Prove that the number of full binary trees with $n + 1$ leaves (every internal vertex has a left and a right child) is the Catalan number $C_n$.
+    solution: |
+      Let $b_n$ be the number with $n + 1$ leaves; $b_0 = 1$ (a single vertex). A tree with $n + 1 \ge 2$ leaves has a root whose left subtree has $k$ leaves and right subtree $n + 1 - k$, for $1 \le k \le n$, chosen independently. So
+      $$b_n = \sum_{k=1}^nb_{k-1}b_{n-k},$$
+      the Catalan recurrence with the same start (cb-132). Hence $b_n = C_n$. $\blacksquare$
+
+  - id: cb-134
+    title: Sperner's theorem
+    subtopic: Bijections & double counting
+    difficulty: hard
+    type: proof
+    tags: [antichains, double counting, lym inequality]
+    source: Sperner, 1928
+    hints:
+      - |
+        Count pairs (maximal chain, member of the family lying on it).
+    statement: |
+      A family $\mathcal F$ of subsets of $\{1, \dots, n\}$ is an antichain if no member contains another. Prove that $|\mathcal F| \le \binom n{\lfloor n/2\rfloor}$.
+    solution: |
+      A maximal chain is $\varnothing \subset \{x_1\} \subset \{x_1, x_2\} \subset \cdots \subset \{x_1, \dots, x_n\}$, one for each ordering of the elements: $n!$ chains. A set of size $k$ lies on exactly $k!(n-k)!$ of them (order its elements first, then the rest).
+
+      An antichain meets each chain at most once (two sets on a chain are nested). Counting pairs (chain, member of $\mathcal F$ on it):
+      $$\sum_{A\in\mathcal F}|A|!\,(n - |A|)! \le n!,\qquad\text{i.e.}\qquad \sum_{A\in\mathcal F}\frac{1}{\binom n{|A|}} \le 1$$
+      (the **LYM inequality**). Each $\binom n{|A|} \le \binom n{\lfloor n/2\rfloor}$, so $\frac{|\mathcal F|}{\binom n{\lfloor n/2\rfloor}} \le 1$. $\blacksquare$
+
+      (All $\lfloor n/2\rfloor$-subsets form an antichain of exactly this size.)
+
+  - id: cb-135
+    title: Intersecting families
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [intersecting families, pairing]
+    related: [cb-148]
+    statement: |
+      A family of subsets of $\{1, \dots, n\}$ is intersecting if every two members share an element. Prove it has at most $2^{n-1}$ members, and that this is attained.
+    solution: |
+      The $2^n$ subsets split into $2^{n-1}$ pairs $\{A, A^c\}$. A set and its complement are disjoint, so an intersecting family contains at most one from each pair.
+
+      All sets containing $1$ form an intersecting family of size $2^{n-1}$. $\blacksquare$
+
+  - id: cb-136
+    title: The average number of fixed points
+    subtopic: Bijections & double counting
+    difficulty: easy
+    type: proof
+    tags: [double counting, permutations, fixed points]
+    related: [cb-137]
+    statement: |
+      Prove that a permutation of $\{1, \dots, n\}$ has on average exactly one fixed point.
+    solution: |
+      Count pairs $(\sigma, i)$ with $\sigma(i) = i$. For each $i$, the permutations fixing $i$ number $(n-1)!$. So there are $n\cdot(n-1)! = n!$ pairs, and dividing by the $n!$ permutations gives an average of 1. $\blacksquare$
+
+  - id: cb-137
+    title: The average number of cycles
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [double counting, permutations, cycles, harmonic numbers]
+    related: [cb-136]
+    statement: |
+      Prove that a random permutation of $\{1, \dots, n\}$ has on average $H_n = 1 + \frac12 + \cdots + \frac1n$ cycles.
+    solution: |
+      Count pairs ($\sigma$, cycle of $\sigma$). A cycle is determined by its set $S$ of $k$ elements and a cyclic order on $S$: $(k-1)!$ orders. The rest of $\sigma$ is any permutation of the other $n - k$ elements. So for each $k$ there are $\binom nk(k-1)!(n-k)! = \frac{n!}{k}$ pairs with a $k$-cycle, and in total $n!\sum_{k=1}^n\frac1k$. Dividing by $n!$ gives $H_n$. $\blacksquare$
+
+  - id: cb-138
+    title: The ballot problem
+    subtopic: Bijections & double counting
+    difficulty: hard
+    type: proof
+    tags: [reflection principle, lattice paths, ballot]
+    source: Bertrand, 1887
+    related: [cb-024]
+    statement: |
+      In an election $A$ gets $a$ votes and $B$ gets $b < a$. The votes are counted in a random order. Prove that the probability that $A$ is strictly ahead throughout the count is $\frac{a - b}{a + b}$.
+    solution: |
+      All $\binom{a+b}{a}$ orders are equally likely. A good order must start with an $A$ vote. Among orders starting with $A$, call one **bad** if the running tally is tied at some point.
+
+      Reflect a bad order (swap $A \leftrightarrow B$) up to its first tie. It now starts with $B$. Conversely, an order starting with $B$ begins behind and ends ahead ($a > b$), so it must tie somewhere; reflecting up to the first tie gives a bad order starting with $A$. So bad orders are in bijection with orders starting with $B$, of which there are $\binom{a+b-1}{a}$.
+
+      Good orders: $\binom{a+b-1}{a-1} - \binom{a+b-1}{a} = \left(\frac{a}{a+b} - \frac{b}{a+b}\right)\binom{a+b}{a}$. Dividing by $\binom{a+b}a$ gives $\frac{a-b}{a+b}$. $\blacksquare$
+
+  - id: cb-139
+    title: Permutations with exactly one descent
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [permutations, descents, bijection]
+    statement: |
+      A descent of a permutation $a_1a_2\cdots a_n$ is a position $i$ with $a_i > a_{i+1}$. Prove that exactly $2^n - n - 1$ permutations of $\{1, \dots, n\}$ have exactly one descent.
+    solution: |
+      A permutation with exactly one descent consists of two increasing runs, so it is determined by the set $S$ of entries in the first run: it is $S$ in increasing order followed by $S^c$ in increasing order.
+
+      Conversely, for $S \subseteq \{1, \dots, n\}$, the permutation "$S$ sorted, then $S^c$ sorted" has a descent at the join iff $\max S > \min S^c$, i.e. iff $S$ is not an initial segment $\{1, \dots, k\}$ ($0 \le k \le n$, including $\varnothing$). There are $n + 1$ initial segments, so $2^n - (n + 1)$ permutations. $\blacksquare$
+
+      ($n = 3$: $132, 213, 231, 312$.)
+
+  - id: cb-140
+    title: Avoiding complementary pairs
+    subtopic: Bijections & double counting
+    difficulty: easy
+    type: compute
+    tags: [subsets, pairing]
+    statement: |
+      How many $n$-subsets of $\{1, \dots, 2n\}$ contain no two elements summing to $2n + 1$?
+    solution: |
+      $\{1, \dots, 2n\}$ splits into $n$ pairs $\{k, 2n + 1 - k\}$. A valid subset takes at most one from each pair, and having $n$ elements it takes exactly one from each. So there are $2^n$.
+
+  - id: cb-141
+    title: Counting incidences
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [double counting, designs]
+    related: [cb-142]
+    statement: |
+      A collection of $b$ blocks (subsets) of a $v$-element set has every block of size $k$ and every point in exactly $r$ blocks. Prove that $vr = bk$. Exhibit such a system with $v = b = 7$, $k = r = 3$.
+    solution: |
+      Count pairs (point, block containing it): each of $v$ points is in $r$ blocks, and each of $b$ blocks has $k$ points. So $vr = bk$. $\blacksquare$
+
+      **Example (the Fano plane).** Points $1, \dots, 7$, blocks
+      $$124,\ 235,\ 346,\ 457,\ 561,\ 672,\ 713$$
+      (each block is $\{i, i+1, i+3\}$ mod 7). Each point appears in exactly 3 blocks, and in fact every two points lie in exactly one block.
+
+  - id: cb-142
+    title: A system that can't exist
+    subtopic: Bijections & double counting
+    difficulty: easy
+    type: proof
+    tags: [double counting, designs]
+    related: [cb-141]
+    statement: |
+      Is there a family of 8 subsets of a 10-element set, each of size 4, with every element in exactly 3 of the subsets?
+    solution: |
+      **No.** By cb-141 we would need $vr = bk$, but $10\cdot3 = 30 \ne 32 = 8\cdot4$.
+
+  - id: cb-143
+    title: Subsets with odd sum
+    subtopic: Bijections & double counting
+    difficulty: easy
+    type: proof
+    tags: [bijection, parity, subsets]
+    related: [cb-022]
+    statement: |
+      Prove that for $n \ge 1$ exactly half of the subsets of $\{1, \dots, n\}$ have an odd sum of elements.
+    solution: |
+      Toggling the element 1 (adding it if absent, removing it if present) changes the sum by $\pm1$, so it swaps odd-sum and even-sum subsets, and it is its own inverse. Hence it is a bijection between the two kinds, and each has $2^{n-1}$ members. $\blacksquare$
+
+  - id: cb-144
+    title: The hockey stick the other way
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, combinatorial proof]
+    related: [cb-010]
+    statement: |
+      Prove combinatorially that for $0 \le k < n$,
+      $$\binom nk = \binom{n-1}{k} + \binom{n-2}{k-1} + \cdots + \binom{n-k-1}{0}.$$
+    solution: |
+      Classify $k$-subsets $S$ of $\{1, \dots, n\}$ by the least $j \ge 0$ with $j + 1 \notin S$. Then $1, \dots, j \in S$ and $j + 1 \notin S$, so $j \le k$ (and $j + 1 \le n$ since $k < n$), and the other $k - j$ elements of $S$ are chosen from $\{j + 2, \dots, n\}$, which has $n - j - 1$ elements: $\binom{n-1-j}{k-j}$ ways. Summing over $j = 0, \dots, k$ gives the identity. $\blacksquare$
+
+  - id: cb-145
+    title: Multisets by shifting
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [multisets, bijection]
+    related: [cb-003, cb-127]
+    statement: |
+      Prove that the number of $k$-element multisets from $\{1, \dots, n\}$ is $\binom{n+k-1}{k}$, using the bijection $a_i \mapsto a_i + i - 1$.
+    solution: |
+      Write a multiset as $a_1 \le a_2 \le \cdots \le a_k$ with $a_i \in \{1, \dots, n\}$, and let $b_i = a_i + i - 1$. Then $b_{i+1} - b_i = a_{i+1} - a_i + 1 \ge 1$, so $b_1 < \cdots < b_k$ is a $k$-subset of $\{1, \dots, n + k - 1\}$. Conversely $a_i = b_i - (i - 1)$ turns any such subset into a multiset. So the count is $\binom{n+k-1}{k}$. $\blacksquare$
+
+  - id: cb-146
+    title: Cyclic triangles in a tournament
+    subtopic: Bijections & double counting
+    difficulty: hard
+    type: proof
+    tags: [double counting, tournaments]
+    related: [in-133]
+    statement: |
+      In a round-robin tournament with $n$ players, player $i$ wins $s_i$ games. Prove that the number of cyclic triples ($a$ beats $b$, $b$ beats $c$, $c$ beats $a$) is
+      $$\binom n3 - \sum_i\binom{s_i}{2}.$$
+    solution: |
+      Every triple of players is either cyclic or transitive. A transitive triple has exactly one player who beats both others; a cyclic triple has none (each player beats exactly one other).
+
+      So the transitive triples are counted by choosing a player $i$ and two players $i$ beat: $\sum_i\binom{s_i}2$. Subtract from all $\binom n3$ triples. $\blacksquare$
+
+      (Since $\sum s_i = \binom n2$ is fixed, the number of cyclic triples is largest when the $s_i$ are as equal as possible.)
+
+  - id: cb-147
+    title: Necklaces of prime length
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: compute
+    tags: [necklaces, rotations, counting]
+    related: [nt-191]
+    statement: |
+      How many different necklaces of $p$ beads ($p$ prime) can be made with beads of $k$ colours, if rotations are considered the same? Evaluate for $p = 5$, $k = 2$.
+    solution: |
+      As shown in nt-191, the $k$ constant strings are fixed by every rotation, and each of the other $k^p - k$ strings has $p$ distinct rotations. So the number of necklaces is
+      $$k + \frac{k^p - k}{p}.$$
+      For $p = 5$, $k = 2$: $2 + \frac{30}{5} = 8$.
+
+  - id: cb-148
+    title: Intersecting families of pairs
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [intersecting families, graphs]
+    related: [cb-135]
+    statement: |
+      Let $n \ge 4$. Prove that a family of 2-element subsets of $\{1, \dots, n\}$, any two of which intersect, has at most $n - 1$ members, and is either a "star" (all containing one element) or a triangle $\{ab, bc, ca\}$.
+    solution: |
+      Suppose the family has two members; they share an element, say $\{a, b\}$ and $\{a, c\}$. Any other member must meet both, so it contains $a$ or equals $\{b, c\}$.
+
+      - If $\{b, c\}$ is a member, any further member must meet $\{a, b\}$, $\{a,c\}$ and $\{b, c\}$; a pair meeting all three edges of a triangle is one of them. So the family is the triangle.
+      - Otherwise every member contains $a$: a star, with at most $n - 1$ members.
+
+      A triangle has $3 \le n - 1$ members. $\blacksquare$
+
+  - id: cb-149
+    title: Rooks off the diagonal
+    subtopic: Bijections & double counting
+    difficulty: easy
+    type: proof
+    tags: [derangements, rooks, bijection]
+    related: [cb-052, cb-017]
+    statement: |
+      Prove that the number of ways to place $n$ non-attacking rooks on an $n\times n$ board with none on the main diagonal is the derangement number $D_n$.
+    solution: |
+      Non-attacking placements of $n$ rooks correspond to permutations $\sigma$: put the rook of row $i$ in column $\sigma(i)$. A rook on the main diagonal means $\sigma(i) = i$. So placements avoiding the diagonal correspond to permutations with no fixed point. $\blacksquare$
+
+  - id: cb-150
+    title: Sorting functions by their image
+    subtopic: Bijections & double counting
+    difficulty: medium
+    type: proof
+    tags: [double counting, functions, surjections]
+    related: [cb-018]
+    statement: |
+      Let $\mathrm{Sur}(m, k)$ be the number of surjections from an $m$-set onto a $k$-set. Prove that
+      $$n^m = \sum_{k=0}^n\binom nk\mathrm{Sur}(m, k),$$
+      and check it for $m = 3$, $n = 2$.
+    solution: |
+      Every function $f : [m] \to [n]$ is a surjection onto its image $f([m])$. Classify functions by the image: choosing an image of size $k$ ($\binom nk$ ways) and a surjection onto it ($\mathrm{Sur}(m,k)$ ways) gives each function exactly once.
+
+      $m = 3$, $n = 2$: $\mathrm{Sur}(3,1) = 1$, $\mathrm{Sur}(3,2) = 6$, so $\binom21\cdot1 + \binom22\cdot6 = 8 = 2^3$. $\blacksquare$

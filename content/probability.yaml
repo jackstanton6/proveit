@@ -449,3 +449,914 @@ problems:
     solution: |
       Let $M$ be the maximum. $\P(M \le j) = (j/6)^2$, so $\P(M \ge k) = 1 - \left(\frac{k-1}{6}\right)^2$. By the tail-sum formula,
       $$\E M = \sum_{k=1}^6\left(1 - \frac{(k-1)^2}{36}\right) = 6 - \frac{0 + 1 + 4 + 9 + 16 + 25}{36} = 6 - \frac{55}{36} = \frac{161}{36} \approx 4.47.$$
+
+  - id: pr-031
+    title: Inclusion–exclusion for three events
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: proof
+    tags: [inclusion-exclusion, axioms]
+    related: [pr-004, lg-175]
+    statement: |
+      Prove that $\P(A\cup B\cup C) = \P(A) + \P(B) + \P(C) - \P(A\cap B) - \P(A\cap C) - \P(B\cap C) + \P(A\cap B\cap C)$.
+    solution: |
+      Apply pr-004 to $A \cup B$ and $C$:
+      $$\P(A\cup B\cup C) = \P(A\cup B) + \P(C) - \P\big((A\cap C)\cup(B\cap C)\big).$$
+      Expand $\P(A\cup B)$ and $\P((A\cap C)\cup(B\cap C))$ by pr-004 again, noting $(A\cap C)\cap(B\cap C) = A\cap B\cap C$. $\blacksquare$
+
+  - id: pr-032
+    title: The probability of a flush
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: compute
+    tags: [cards, counting]
+    related: [cb-036]
+    statement: |
+      What is the probability that a random 5-card hand is a flush (all one suit, excluding straight flushes)?
+    solution: |
+      By cb-036 there are 5108 such hands out of $\binom{52}5 = 2\,598\,960$: probability $\approx 0.00197$, about 1 in 509.
+
+  - id: pr-033
+    title: Two aces
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: compute
+    tags: [cards, counting, conditional probability]
+    statement: |
+      Two cards are drawn from a shuffled deck. Find the probability both are aces, by counting and by conditioning.
+    solution: |
+      **Counting:** $\frac{\binom42}{\binom{52}2} = \frac{6}{1326} = \frac1{221}$.
+
+      **Conditioning:** $\frac4{52}\cdot\frac3{51} = \frac{12}{2652} = \frac1{221}$.
+
+  - id: pr-034
+    title: Two friends on a committee
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: compute
+    tags: [counting, committees]
+    statement: |
+      A committee of 4 is chosen at random from 10 people. What is the probability that two particular people are both on it?
+    solution: |
+      Committees containing both: choose the other 2 from 8: $\binom82 = 28$. Total $\binom{10}4 = 210$. Probability $\frac{28}{210} = \frac2{15}$.
+
+      (Or: person A is on it with probability $\frac4{10}$, and then B with probability $\frac39$.)
+
+  - id: pr-035
+    title: Continuity of probability
+    subtopic: Axioms & counting
+    difficulty: medium
+    type: proof
+    tags: [axioms, countable additivity, limits]
+    related: [pr-094]
+    statement: |
+      Using countable additivity, prove that if $A_1 \subseteq A_2 \subseteq \cdots$ then $\P\left(\bigcup A_n\right) = \lim\P(A_n)$, and if $B_1 \supseteq B_2 \supseteq\cdots$ then $\P\left(\bigcap B_n\right) = \lim\P(B_n)$.
+    solution: |
+      Let $C_1 = A_1$ and $C_n = A_n\setminus A_{n-1}$. These are disjoint, $A_N = C_1\cup\cdots\cup C_N$ and $\bigcup A_n = \bigcup C_n$. So
+      $$\P\left(\bigcup A_n\right) = \sum_{n\ge1}\P(C_n) = \lim_N\sum_{n\le N}\P(C_n) = \lim_N\P(A_N).$$
+      For decreasing $B_n$, apply this to the increasing complements $B_n^c$: $\P\left(\bigcap B_n\right) = 1 - \P\left(\bigcup B_n^c\right) = 1 - \lim\P(B_n^c) = \lim\P(B_n)$. $\blacksquare$
+
+  - id: pr-036
+    title: A lower bound for an intersection
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: proof
+    tags: [axioms, inequalities, bonferroni]
+    statement: |
+      Prove that $\P(A\cap B) \ge \P(A) + \P(B) - 1$. If 90% of students pass maths and 80% pass physics, at least what fraction pass both?
+    solution: |
+      $\P(A\cap B) = \P(A) + \P(B) - \P(A\cup B) \ge \P(A) + \P(B) - 1$.
+
+      At least $0.9 + 0.8 - 1 = 70\%$. $\blacksquare$
+
+  - id: pr-037
+    title: The Chevalier de Méré's problem
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: compute
+    tags: [complement, dice, independence]
+    source: Pascal, Fermat, 1654
+    statement: |
+      Which is more likely: at least one six in 4 rolls of a die, or at least one double six in 24 rolls of two dice?
+    solution: |
+      $1 - \left(\frac56\right)^4 \approx 0.518$ versus $1 - \left(\frac{35}{36}\right)^{24} \approx 0.491$. The first is more likely (de Méré lost money on the second, expecting them to be equal since $4\cdot\frac16 = 24\cdot\frac1{36}$).
+
+  - id: pr-038
+    title: Adjacent in a random permutation
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: compute
+    tags: [permutations, counting]
+    statement: |
+      In a uniformly random permutation of $1, \dots, n$, what is the probability that 1 and 2 are next to each other?
+    solution: |
+      Glue 1 and 2 into a block: $(n-1)!$ arrangements, times 2 orders. So $\frac{2(n-1)!}{n!} = \frac2n$.
+
+  - id: pr-039
+    title: No matching pair of socks
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: compute
+    tags: [counting, complement]
+    statement: |
+      A drawer holds 5 distinct pairs of socks. Four socks are drawn at random. What is the probability that no two of them form a pair?
+    solution: |
+      Choose 4 of the 5 pairs and one sock from each: $\binom54\cdot2^4 = 80$ ways, out of $\binom{10}{4} = 210$. Probability $\frac{8}{21} \approx 0.38$.
+
+  - id: pr-040
+    title: Random subsets without neighbours
+    subtopic: Axioms & counting
+    difficulty: easy
+    type: compute
+    tags: [fibonacci, subsets]
+    related: [dm-026]
+    statement: |
+      Each element of $\{1, \dots, n\}$ is included independently with probability $\frac12$. What is the probability that no two consecutive numbers are included? Evaluate for $n = 10$.
+    solution: |
+      All $2^n$ subsets are equally likely, and $F_{n+2}$ of them have no two consecutive elements (dm-026). So $\frac{F_{n+2}}{2^n}$; for $n = 10$, $\frac{144}{1024} \approx 0.14$.
+
+  - id: pr-041
+    title: Breaking a stick into a triangle
+    subtopic: Axioms & counting
+    difficulty: medium
+    type: compute
+    tags: [geometric probability, triangles]
+    statement: |
+      A stick of length 1 is broken at two independent uniform random points. What is the probability that the three pieces form a triangle?
+    solution: |
+      Three lengths summing to 1 form a triangle iff each is less than $\frac12$. Let the break points be $X, Y$, uniform on the unit square.
+
+      If $X < Y$, the pieces are $X$, $Y - X$, $1 - Y$, and we need $X < \frac12$, $Y > \frac12$, $Y - X < \frac12$. In the triangle $X < Y$ (area $\frac12$) this region is the triangle with vertices $(0,\frac12), (\frac12,\frac12), (\frac12, 1)$, of area $\frac18$. By symmetry the same for $X > Y$. Total probability $\frac14$.
+
+  - id: pr-042
+    title: Buffon's needle
+    subtopic: Axioms & counting
+    difficulty: hard
+    type: compute
+    tags: [geometric probability, buffon, pi]
+    source: Buffon, 1777
+    statement: |
+      A needle of length $\ell$ is dropped at random on a floor ruled with parallel lines a distance $d \ge \ell$ apart. Show that it crosses a line with probability $\frac{2\ell}{\pi d}$.
+    solution: |
+      Let $Y \in [0, \frac d2]$ be the distance from the needle's centre to the nearest line and $\Theta \in [0, \frac\pi2]$ the acute angle with the lines, independent and uniform. The needle crosses iff $Y \le \frac\ell2\sin\Theta$. So
+      $$\P = \frac{1}{\frac d2\cdot\frac\pi2}\int_0^{\pi/2}\frac\ell2\sin\theta\,d\theta = \frac{4}{\pi d}\cdot\frac\ell2 = \frac{2\ell}{\pi d}.$$
+      With $\ell = d$ this is $\frac2\pi \approx 0.64$: dropping needles estimates $\pi$.
+
+  - id: pr-043
+    title: Will they meet?
+    subtopic: Axioms & counting
+    difficulty: medium
+    type: compute
+    tags: [geometric probability, uniform distribution]
+    statement: |
+      Two people arrive independently at uniformly random times between 12:00 and 13:00, and each waits 15 minutes for the other. What is the probability they meet?
+    solution: |
+      Measuring time in hours, they meet iff $|X - Y| \le \frac14$. The complement is two corner triangles of the unit square with legs $\frac34$, total area $\left(\frac34\right)^2 = \frac9{16}$. So the probability is $\frac7{16}$.
+
+  - id: pr-044
+    title: The multiplication rule
+    subtopic: Conditional probability
+    difficulty: easy
+    type: compute
+    tags: [conditional probability, multiplication rule]
+    statement: |
+      Prove $\P(A\cap B\cap C) = \P(A)\P(B\mid A)\P(C\mid A\cap B)$ (when the conditions have positive probability), and find the probability that the first three cards dealt are all aces.
+    solution: |
+      The right side is $\P(A)\cdot\frac{\P(A\cap B)}{\P(A)}\cdot\frac{\P(A\cap B\cap C)}{\P(A\cap B)}$, which telescopes.
+
+      $\frac4{52}\cdot\frac3{51}\cdot\frac2{50} = \frac{1}{5525}$.
+
+  - id: pr-045
+    title: The law of total probability
+    subtopic: Conditional probability
+    difficulty: easy
+    type: proof
+    tags: [conditional probability, partitions]
+    related: [pr-005]
+    statement: |
+      Let $B_1, \dots, B_n$ partition $\Omega$ with each $\P(B_i) > 0$. Prove that $\P(A) = \sum_i\P(A\mid B_i)\P(B_i)$.
+    solution: |
+      $A$ is the disjoint union of the $A\cap B_i$, so $\P(A) = \sum\P(A\cap B_i) = \sum\P(A\mid B_i)\P(B_i)$. $\blacksquare$
+
+  - id: pr-046
+    title: Which coin was it?
+    subtopic: Conditional probability
+    difficulty: easy
+    type: compute
+    tags: [bayes, coins]
+    related: [pr-009]
+    statement: |
+      A bag holds a two-headed coin, a fair coin, and a coin landing heads with probability $\frac34$. A coin is drawn at random and tossed: heads. What is the probability it is the two-headed coin?
+    solution: |
+      $\P(H) = \frac13\left(1 + \frac12 + \frac34\right) = \frac34$. By Bayes, $\P(\text{two-headed}\mid H) = \frac{\frac13\cdot1}{\frac34} = \frac49$.
+
+  - id: pr-047
+    title: The boy-or-girl problem
+    subtopic: Conditional probability
+    difficulty: easy
+    type: compute
+    tags: [conditional probability, paradox]
+    statement: |
+      A family has two children, each independently a boy or girl with probability $\frac12$. Given that at least one is a boy, what is the probability both are boys? Given that the elder is a boy?
+    solution: |
+      Outcomes BB, BG, GB, GG equally likely.
+
+      - At least one boy: BB, BG, GB. Probability $\frac13$.
+      - Elder is a boy: BB, BG. Probability $\frac12$.
+
+      The answers differ because the conditioning events differ.
+
+  - id: pr-048
+    title: The prosecutor's fallacy
+    subtopic: Conditional probability
+    difficulty: medium
+    type: compute
+    tags: [bayes, base rates]
+    related: [pr-005]
+    statement: |
+      In a city of $10^7$ people, a crime was committed by one person. The culprit's DNA matches a sample, and an innocent person matches by chance with probability $10^{-6}$. A suspect is found by searching the database and matches. With no other evidence, how likely is the suspect to be guilty?
+    solution: |
+      Among the $10^7 - 1$ innocent people, about $10$ are expected to match, plus the guilty one. With nothing else to distinguish them, $\P(\text{guilty}\mid\text{match}) \approx \frac1{11}$.
+
+      Confusing $\P(\text{match}\mid\text{innocent}) = 10^{-6}$ with $\P(\text{innocent}\mid\text{match})$ is the fallacy.
+
+  - id: pr-049
+    title: Conditionally independent but dependent
+    subtopic: Conditional probability
+    difficulty: medium
+    type: compute
+    tags: [conditional independence, independence]
+    statement: |
+      A coin is chosen at random from a fair coin and a two-headed coin, and tossed twice. Show that the tosses are independent given the coin but not independent unconditionally.
+    solution: |
+      Given the coin, the tosses are independent by assumption.
+
+      Unconditionally, $\P(H_1) = \frac12\cdot\frac12 + \frac12\cdot1 = \frac34$, likewise $\P(H_2)$, but
+      $$\P(H_1\cap H_2) = \tfrac12\cdot\tfrac14 + \tfrac12\cdot1 = \tfrac58 \ne \tfrac9{16}.$$
+      The first head is evidence for the two-headed coin, which raises the chance of the second.
+
+  - id: pr-050
+    title: Gambler's ruin with a biased coin
+    subtopic: Conditional probability
+    difficulty: hard
+    type: proof
+    tags: [gambler's ruin, recurrence, first-step analysis]
+    related: [pr-010]
+    statement: |
+      A gambler wins each \$1 bet with probability $p \ne \frac12$ and loses with $q = 1 - p$. Starting with $\$k$, he stops at $\$0$ or $\$N$. Show that the probability of reaching $N$ is $\dfrac{1 - r^k}{1 - r^N}$ where $r = \frac qp$.
+    solution: |
+      Let $p_k$ be the probability. $p_0 = 0$, $p_N = 1$, and conditioning on the first bet, $p_k = pp_{k+1} + qp_{k-1}$. Writing $p_k = pp_k + qp_k$ and rearranging,
+      $$p(p_{k+1} - p_k) = q(p_k - p_{k-1}),\qquad\text{so}\qquad p_{k+1} - p_k = r(p_k - p_{k-1}) = r^k p_1.$$
+      Summing, $p_k = p_1(1 + r + \cdots + r^{k-1}) = p_1\frac{1 - r^k}{1 - r}$. From $p_N = 1$, $p_1 = \frac{1-r}{1-r^N}$. $\blacksquare$
+
+      (E.g. at roulette with $p = \frac{18}{38}$, starting at \$50 the chance of doubling to \$100 is under 1%.)
+
+  - id: pr-051
+    title: Pólya's urn
+    subtopic: Conditional probability
+    difficulty: medium
+    type: proof
+    tags: [polya urn, total probability, exchangeability]
+    statement: |
+      An urn has $r$ red and $b$ blue balls. A ball is drawn, then returned together with $c$ more of the same colour. Prove that the second ball drawn is red with probability $\frac{r}{r+b}$.
+    solution: |
+      By total probability,
+      $$\frac{r}{r+b}\cdot\frac{r+c}{r+b+c} + \frac{b}{r+b}\cdot\frac{r}{r+b+c} = \frac{r(r + c + b)}{(r+b)(r+b+c)} = \frac{r}{r+b}. \qquad\blacksquare$$
+      (In fact every draw is red with this probability.)
+
+  - id: pr-052
+    title: Testing twice
+    subtopic: Conditional probability
+    difficulty: easy
+    type: compute
+    tags: [bayes, independence, medical testing]
+    related: [pr-005]
+    statement: |
+      With the test of pr-005 (prevalence 1%, sensitivity 95%, false positive rate 10%), a person tests positive twice, the results being independent given disease status. Find $\P(D\mid ++)$.
+    solution: |
+      $$\P(D\mid++) = \frac{0.95^2\cdot0.01}{0.95^2\cdot0.01 + 0.10^2\cdot0.99} = \frac{0.009025}{0.009025 + 0.0099} \approx 0.477.$$
+      A second positive raises the probability from about 9% to about 48%.
+
+  - id: pr-053
+    title: Positive association is symmetric
+    subtopic: Conditional probability
+    difficulty: easy
+    type: proof
+    tags: [conditional probability, correlation]
+    statement: |
+      Let $\P(A), \P(B) > 0$. Prove that $\P(A\mid B) > \P(A)$ iff $\P(B\mid A) > \P(B)$.
+    solution: |
+      Both are equivalent to $\P(A\cap B) > \P(A)\P(B)$: divide by $\P(B)$, respectively $\P(A)$. $\blacksquare$
+
+  - id: pr-054
+    title: Simpson's paradox
+    subtopic: Conditional probability
+    difficulty: medium
+    type: compute
+    tags: [simpson's paradox, conditional probability]
+    statement: |
+      Treatment A cured 81 of 87 small kidney stones and 192 of 263 large ones; treatment B cured 234 of 270 small and 55 of 80 large. Which is better for small stones, for large stones, and overall?
+    solution: |
+      - Small: A $\frac{81}{87} \approx 93\%$, B $\frac{234}{270} \approx 87\%$. **A better.**
+      - Large: A $\frac{192}{263} \approx 73\%$, B $\frac{55}{80} \approx 69\%$. **A better.**
+      - Overall: A $\frac{273}{350} = 78\%$, B $\frac{289}{350} \approx 83\%$. **B better!**
+
+      A was mostly given the harder (large) cases. Overall rates mix the groups in different proportions, which can reverse the comparison.
+
+  - id: pr-055
+    title: Returning to the start
+    subtopic: Conditional probability
+    difficulty: medium
+    type: compute
+    tags: [random walk, binomial coefficients]
+    related: [cb-024]
+    statement: |
+      A simple random walk on $\Z$ starts at 0 and steps $\pm1$ with probability $\frac12$ each. Find the probability that it is at 0 at time $2n$, and its approximate size.
+    solution: |
+      It is at 0 iff exactly $n$ of the $2n$ steps are $+1$: probability $\binom{2n}{n}4^{-n}$.
+
+      By Stirling's formula this is about $\frac{1}{\sqrt{\pi n}}$; e.g. $n = 10$ gives $\frac{184756}{1048576} \approx 0.176$ versus $\frac1{\sqrt{10\pi}} \approx 0.178$.
+
+  - id: pr-056
+    title: The product condition is not enough
+    subtopic: Conditional probability
+    difficulty: medium
+    type: compute
+    tags: [independence, counterexample]
+    related: [pr-008]
+    statement: |
+      Find events $A, B, C$ with $\P(A\cap B\cap C) = \P(A)\P(B)\P(C)$ that are not pairwise independent.
+    solution: |
+      On $\{1, \dots, 8\}$ with the uniform distribution, let $A = B = \{1,2,3,4\}$ and $C = \{1, 5, 6, 7\}$. Then $\P(A\cap B\cap C) = \P(\{1\}) = \frac18 = \left(\frac12\right)^3$, but $\P(A\cap B) = \frac12 \ne \frac14$.
+
+      (Mutual independence of three events requires all four product conditions.)
+
+  - id: pr-057
+    title: Fixed points have variance 1
+    subtopic: Expectation & variance
+    difficulty: medium
+    type: compute
+    tags: [indicators, variance, permutations]
+    related: [pr-012]
+    statement: |
+      Let $X$ be the number of fixed points of a uniformly random permutation of $n \ge 2$ elements. Show $\Var X = 1$.
+    solution: |
+      $X = \sum I_i$ with $\E I_i = \frac1n$. For $i \ne j$, $\E[I_iI_j] = \frac{(n-2)!}{n!} = \frac{1}{n(n-1)}$. So
+      $$\E X^2 = \sum_i\E I_i + \sum_{i\ne j}\E[I_iI_j] = 1 + n(n-1)\cdot\frac1{n(n-1)} = 2,$$
+      and $\Var X = 2 - 1 = 1$. (Like a Poisson(1) variable, which is the limiting distribution.)
+
+  - id: pr-058
+    title: Runs in a random string
+    subtopic: Expectation & variance
+    difficulty: easy
+    type: compute
+    tags: [indicators, linearity of expectation]
+    statement: |
+      A run is a maximal block of equal symbols. Find the expected number of runs in a uniformly random binary string of length $n$.
+    solution: |
+      The number of runs is $1 + $ (number of positions $i$, $1 \le i \le n-1$, where $s_i \ne s_{i+1}$). Each such change happens with probability $\frac12$, so the expectation is $1 + \frac{n-1}2 = \frac{n+1}{2}$.
+
+  - id: pr-059
+    title: Records in a random permutation
+    subtopic: Expectation & variance
+    difficulty: easy
+    type: compute
+    tags: [indicators, harmonic numbers, permutations]
+    related: [cb-137]
+    statement: |
+      A record in a sequence is an entry larger than all before it. Find the expected number of records in a uniformly random permutation of $1, \dots, n$.
+    solution: |
+      Position $k$ is a record iff its entry is the largest of the first $k$, which by symmetry has probability $\frac1k$. So the expectation is $H_n = 1 + \frac12 + \cdots + \frac1n \approx \ln n$.
+
+  - id: pr-060
+    title: Distinct values from rolling a die
+    subtopic: Expectation & variance
+    difficulty: easy
+    type: compute
+    tags: [indicators, linearity of expectation]
+    statement: |
+      A die is rolled $n$ times. Find the expected number of distinct values that appear.
+    solution: |
+      Value $v$ appears with probability $1 - \left(\frac56\right)^n$, so the expected number is $6\left(1 - \left(\frac56\right)^n\right)$; e.g. $n = 6$ gives about $3.99$.
+
+  - id: pr-061
+    title: Empty boxes
+    subtopic: Expectation & variance
+    difficulty: easy
+    type: compute
+    tags: [indicators, balls and bins]
+    statement: |
+      $n$ balls are thrown independently and uniformly into $n$ boxes. Find the expected number of empty boxes, and its limit as a fraction of $n$.
+    solution: |
+      Each box is empty with probability $\left(1 - \frac1n\right)^n$, so the expected number is $n\left(1 - \frac1n\right)^n$, and the fraction tends to $e^{-1} \approx 0.37$.
+
+  - id: pr-062
+    title: Properties of covariance
+    subtopic: Expectation & variance
+    difficulty: easy
+    type: proof
+    tags: [covariance, variance]
+    related: [pr-017]
+    statement: |
+      With $\Cov(X,Y) = \E[(X - \E X)(Y - \E Y)]$, prove $\Cov(X,Y) = \E[XY] - \E X\,\E Y$, that $\Cov$ is bilinear, and that $\Var(X + Y) = \Var X + \Var Y + 2\Cov(X,Y)$.
+    solution: |
+      Expand: $\E[XY - X\E Y - Y\E X + \E X\E Y] = \E[XY] - \E X\E Y$. Bilinearity follows from linearity of $\E$ in this formula. Then $\Var(X + Y) = \Cov(X+Y, X+Y)$ expands to $\Var X + 2\Cov(X,Y) + \Var Y$. $\blacksquare$
+
+  - id: pr-063
+    title: Uncorrelated but dependent
+    subtopic: Expectation & variance
+    difficulty: easy
+    type: compute
+    tags: [covariance, independence, counterexample]
+    statement: |
+      Let $X$ be uniform on $\{-1, 0, 1\}$ and $Y = X^2$. Show $\Cov(X, Y) = 0$ but $X$ and $Y$ are not independent.
+    solution: |
+      $\E X = 0$ and $XY = X^3 = X$, so $\E[XY] = 0 = \E X\E Y$.
+
+      But $\P(X = 0, Y = 1) = 0 \ne \P(X = 0)\P(Y = 1) = \frac13\cdot\frac23$.
+
+  - id: pr-064
+    title: Variance of the hypergeometric distribution
+    subtopic: Expectation & variance
+    difficulty: hard
+    type: proof
+    tags: [hypergeometric, indicators, covariance]
+    statement: |
+      $n$ balls are drawn without replacement from an urn with $K$ red and $N - K$ blue. Let $X$ be the number of red balls drawn and $p = \frac KN$. Prove $\E X = np$ and $\Var X = np(1-p)\frac{N - n}{N - 1}$.
+    solution: |
+      Let $I_j$ indicate that the $j$th draw is red. By symmetry each draw is red with probability $p$, so $\E X = np$. For $i \ne j$,
+      $$\E[I_iI_j] = \frac{K(K-1)}{N(N-1)},\qquad\Cov(I_i, I_j) = p\left(\frac{K-1}{N-1} - p\right) = -\frac{p(1-p)}{N-1}.$$
+      So
+      $$\Var X = np(1-p) - n(n-1)\frac{p(1-p)}{N-1} = np(1-p)\left(1 - \frac{n-1}{N-1}\right) = np(1-p)\frac{N-n}{N-1}. \qquad\blacksquare$$
+      (Smaller than the binomial variance by the "finite population correction".)
+
+  - id: pr-065
+    title: Waiting for HH and HT
+    subtopic: Expectation & variance
+    difficulty: medium
+    type: compute
+    tags: [first-step analysis, coins, expectation]
+    statement: |
+      A fair coin is tossed until two consecutive tosses are HH. Find the expected number of tosses. Do the same for HT.
+    solution: |
+      **HH.** Let $E_0$ be the expected number from scratch and $E_1$ after a head. Then $E_0 = 1 + \frac12E_1 + \frac12E_0$ and $E_1 = 1 + \frac12\cdot0 + \frac12E_0$. So $E_0 = 2 + E_1 = 3 + \frac12E_0$, giving $E_0 = 6$.
+
+      **HT.** Wait for the first H (2 tosses on average), then wait for a T (2 more): 4. After an H, extra Hs don't set you back, unlike for HH.
+
+  - id: pr-066
+    title: Variance of the geometric distribution
+    subtopic: Expectation & variance
+    difficulty: medium
+    type: compute
+    tags: [geometric distribution, variance, series]
+    related: [pr-015]
+    statement: |
+      Show that a geometric random variable with success probability $p$ (trials up to the first success) has variance $\frac{1-p}{p^2}$.
+    solution: |
+      With $q = 1 - p$, $\P(X = k) = pq^{k-1}$. Differentiating $\sum_kq^k = \frac{1}{1-q}$ twice, $\sum_kk(k-1)q^{k-2} = \frac{2}{(1-q)^3}$, so
+      $$\E[X(X-1)] = pq\sum_kk(k-1)q^{k-2} = \frac{2pq}{p^3} = \frac{2q}{p^2}.$$
+      Then $\Var X = \E[X(X-1)] + \E X - (\E X)^2 = \frac{2q}{p^2} + \frac1p - \frac1{p^2} = \frac{q}{p^2}$.
+
+  - id: pr-067
+    title: Moments of the Poisson distribution
+    subtopic: Expectation & variance
+    difficulty: easy
+    type: compute
+    tags: [poisson distribution, mean, variance]
+    related: [pr-021]
+    statement: |
+      Let $\P(X = k) = e^{-\lambda}\frac{\lambda^k}{k!}$. Show the probabilities sum to 1 and $\E X = \Var X = \lambda$.
+    solution: |
+      $\sum_ke^{-\lambda}\frac{\lambda^k}{k!} = e^{-\lambda}e^\lambda = 1$.
+
+      $\E X = \sum_{k\ge1}e^{-\lambda}\frac{\lambda^k}{(k-1)!} = \lambda$, and similarly $\E[X(X-1)] = \sum_{k\ge2}e^{-\lambda}\frac{\lambda^k}{(k-2)!} = \lambda^2$. So $\Var X = \lambda^2 + \lambda - \lambda^2 = \lambda$.
+
+  - id: pr-068
+    title: Triangles in a random graph
+    subtopic: Expectation & variance
+    difficulty: easy
+    type: compute
+    tags: [random graphs, indicators]
+    statement: |
+      In the random graph $G(n, p)$, each of the $\binom n2$ edges is present independently with probability $p$. Find the expected number of triangles, and the threshold $p$ at which it is about 1.
+    solution: |
+      Each of the $\binom n3$ triples is a triangle with probability $p^3$, so the expectation is $\binom n3p^3 \approx \frac{(np)^3}{6}$. It is of order 1 when $p \approx \frac1n$.
+
+  - id: pr-069
+    title: Comparisons in randomised quicksort
+    subtopic: Expectation & variance
+    difficulty: hard
+    type: proof
+    tags: [quicksort, indicators, harmonic numbers]
+    related: [pr-059]
+    statement: |
+      Quicksort on distinct keys picks a uniformly random pivot, compares it with every other key, and recurses on the two sides. Prove that the expected number of comparisons is $2(n+1)H_n - 4n$.
+    solution: |
+      Let the keys in sorted order be $z_1 < \cdots < z_n$. Keys $z_i$ and $z_j$ ($i < j$) are compared at most once, and they are compared iff the first pivot chosen from $\{z_i, \dots, z_j\}$ is $z_i$ or $z_j$ (any pivot strictly between separates them; until one of this block is chosen they stay together). By symmetry this has probability $\frac{2}{j - i + 1}$. So
+      $$\E = \sum_{i<j}\frac{2}{j-i+1} = \sum_{d=1}^{n-1}(n - d)\frac{2}{d+1} = 2\sum_{m=2}^{n}\frac{n + 1 - m}{m} = 2(n+1)(H_n - 1) - 2(n - 1),$$
+      which equals $2(n+1)H_n - 4n$. $\blacksquare$ (About $2n\ln n$.)
+
+  - id: pr-070
+    title: Correlation lies between −1 and 1
+    subtopic: Expectation & variance
+    difficulty: medium
+    type: proof
+    tags: [covariance, cauchy-schwarz, correlation]
+    related: [la-028]
+    statement: |
+      Prove that $|\Cov(X, Y)| \le \sqrt{\Var X\,\Var Y}$, so the correlation coefficient lies in $[-1, 1]$.
+    solution: |
+      Let $U = X - \E X$, $V = Y - \E Y$. For every real $t$, $0 \le \E[(U + tV)^2] = \Var X + 2t\Cov(X,Y) + t^2\Var Y$. If $\Var Y = 0$ then $V = 0$ with probability 1 and $\Cov = 0$. Otherwise the quadratic in $t$ is non-negative, so its discriminant is $\le 0$: $\Cov(X,Y)^2 \le \Var X\Var Y$. $\blacksquare$
+
+  - id: pr-071
+    title: Best constant predictors
+    subtopic: Expectation & variance
+    difficulty: medium
+    type: proof
+    tags: [mean, median, optimisation]
+    statement: |
+      Prove that $\E[(X - c)^2]$ is minimised at $c = \E X$. For a finite list $x_1 \le \cdots \le x_n$, prove that $\sum|x_i - c|$ is minimised at any median.
+    solution: |
+      **Squares.** $\E[(X - c)^2] = \Var X + (\E X - c)^2$ (expand around $\E X$), which is smallest when $c = \E X$.
+
+      **Absolute values.** Pair $x_1$ with $x_n$, $x_2$ with $x_{n-1}$, and so on. For a pair $a \le b$, $|a - c| + |b - c| \ge b - a$, with equality iff $a \le c \le b$. A median lies in every such interval (the intervals are nested), so it minimises every pair's sum simultaneously (an unpaired middle element is minimised at $c = $ itself). $\blacksquare$
+
+  - id: pr-072
+    title: Variance of the binomial distribution
+    subtopic: Distributions
+    difficulty: easy
+    type: compute
+    tags: [binomial distribution, variance, indicators]
+    related: [pr-020, pr-017]
+    statement: |
+      Show that $X \sim \mathrm{Bin}(n, p)$ has variance $np(1 - p)$.
+    solution: |
+      $X = \sum I_k$ with independent Bernoulli$(p)$ indicators, each of variance $p - p^2 = p(1-p)$. Variances of independent variables add (pr-017). $\blacksquare$
+
+  - id: pr-073
+    title: Sums of independent Poisson variables
+    subtopic: Distributions
+    difficulty: medium
+    type: proof
+    tags: [poisson distribution, convolution, binomial theorem]
+    statement: |
+      Let $X \sim \mathrm{Poisson}(\lambda)$ and $Y \sim \mathrm{Poisson}(\mu)$ be independent. Prove $X + Y \sim \mathrm{Poisson}(\lambda + \mu)$.
+    solution: |
+      $$\P(X + Y = n) = \sum_{k=0}^ne^{-\lambda}\frac{\lambda^k}{k!}e^{-\mu}\frac{\mu^{n-k}}{(n-k)!} = \frac{e^{-(\lambda+\mu)}}{n!}\sum_k\binom nk\lambda^k\mu^{n-k} = e^{-(\lambda+\mu)}\frac{(\lambda+\mu)^n}{n!}. \qquad\blacksquare$$
+
+  - id: pr-074
+    title: The uniform distribution
+    subtopic: Distributions
+    difficulty: easy
+    type: compute
+    tags: [uniform distribution, mean, variance]
+    statement: |
+      Find the mean and variance of $X$ uniform on $[a, b]$.
+    solution: |
+      $\E X = \int_a^b\frac{x}{b-a}\,dx = \frac{a + b}{2}$. $\E X^2 = \frac{b^3 - a^3}{3(b - a)} = \frac{a^2 + ab + b^2}{3}$. So $\Var X = \frac{a^2 + ab + b^2}{3} - \frac{(a+b)^2}{4} = \frac{(b - a)^2}{12}$.
+
+  - id: pr-075
+    title: The standard normal distribution
+    subtopic: Distributions
+    difficulty: medium
+    type: proof
+    tags: [normal distribution, gaussian integral]
+    related: [mv-022]
+    statement: |
+      Using $\int_{-\infty}^\infty e^{-x^2/2}\,dx = \sqrt{2\pi}$, show that $\varphi(x) = \frac{1}{\sqrt{2\pi}}e^{-x^2/2}$ is a density with mean 0 and variance 1.
+    solution: |
+      It is positive and integrates to 1 by the given integral. The mean is 0 because $x\varphi(x)$ is odd (and integrable). For the variance, integrate by parts with $u = x$, $dv = xe^{-x^2/2}dx$:
+      $$\int x^2e^{-x^2/2}\,dx = \left[-xe^{-x^2/2}\right]_{-\infty}^\infty + \int e^{-x^2/2}\,dx = \sqrt{2\pi}.$$
+      So $\E X^2 = 1$. $\blacksquare$
+
+  - id: pr-076
+    title: The exponential distribution is memoryless
+    subtopic: Distributions
+    difficulty: easy
+    type: proof
+    tags: [exponential distribution, memoryless]
+    related: [pr-022]
+    statement: |
+      Let $X$ be exponential with rate $\lambda$. Prove $\P(X > s + t\mid X > s) = \P(X > t)$.
+    solution: |
+      $\P(X > u) = \int_u^\infty\lambda e^{-\lambda x}\,dx = e^{-\lambda u}$. So the left side is $\frac{e^{-\lambda(s+t)}}{e^{-\lambda s}} = e^{-\lambda t}$. $\blacksquare$
+
+  - id: pr-077
+    title: The first of two exponential clocks
+    subtopic: Distributions
+    difficulty: easy
+    type: proof
+    tags: [exponential distribution, minimum]
+    statement: |
+      Let $X, Y$ be independent exponentials with rates $\lambda, \mu$. Prove $\min(X, Y)$ is exponential with rate $\lambda + \mu$, and $\P(X < Y) = \frac{\lambda}{\lambda + \mu}$.
+    solution: |
+      $\P(\min > t) = \P(X > t)\P(Y > t) = e^{-(\lambda+\mu)t}$.
+
+      $\P(X < Y) = \int_0^\infty\lambda e^{-\lambda x}e^{-\mu x}\,dx = \frac{\lambda}{\lambda + \mu}$. $\blacksquare$
+
+  - id: pr-078
+    title: Sum of two uniforms
+    subtopic: Distributions
+    difficulty: medium
+    type: compute
+    tags: [convolution, uniform distribution, densities]
+    statement: |
+      Let $X, Y$ be independent and uniform on $[0, 1]$. Find the density of $Z = X + Y$.
+    solution: |
+      $f_Z(z) = \int f_X(x)f_Y(z - x)\,dx$ is the length of $\{x \in [0,1] : z - x \in [0,1]\} = [\max(0, z-1), \min(1, z)]$. So
+      $$f_Z(z) = \begin{cases}z & 0 \le z \le 1,\\ 2 - z & 1 \le z \le 2,\end{cases}$$
+      a triangle. (The two dice of pr-003 show the discrete version.)
+
+  - id: pr-079
+    title: The negative binomial distribution
+    subtopic: Distributions
+    difficulty: easy
+    type: compute
+    tags: [negative binomial, geometric distribution]
+    related: [pr-015]
+    statement: |
+      Let $X$ be the number of independent trials (success probability $p$) needed for the $r$th success. Find $\P(X = k)$ and $\E X$.
+    solution: |
+      $X = k$ iff trial $k$ is a success and the first $k - 1$ contain exactly $r - 1$ successes: $\P(X = k) = \binom{k-1}{r-1}p^r(1-p)^{k-r}$ for $k \ge r$.
+
+      $X$ is a sum of $r$ independent geometric waiting times, so $\E X = \frac rp$.
+
+  - id: pr-080
+    title: Lottery odds
+    subtopic: Distributions
+    difficulty: easy
+    type: compute
+    tags: [hypergeometric, counting]
+    statement: |
+      In a 6-from-49 lottery, what is the probability that a ticket matches exactly 3 of the 6 numbers drawn?
+    solution: |
+      $$\frac{\binom63\binom{43}3}{\binom{49}6} = \frac{20\cdot12341}{13\,983\,816} \approx 0.0177,$$
+      about 1 in 57.
+
+  - id: pr-081
+    title: Memorylessness characterises the geometric
+    subtopic: Distributions
+    difficulty: medium
+    type: proof
+    tags: [geometric distribution, memoryless, functional equations]
+    related: [pr-022]
+    statement: |
+      Let $X$ take values in $\{1, 2, \dots\}$ with $\P(X > m + n) = \P(X > m)\P(X > n)$ for all $m, n \ge 0$, and $\P(X > 1) < 1$. Prove $X$ is geometric.
+    solution: |
+      Let $g(n) = \P(X > n)$ and $q = g(1)$. Then $g(n + 1) = g(n)q$, and $g(0) = 1$, so $g(n) = q^n$. Hence $\P(X = n) = q^{n-1} - q^n = (1 - q)q^{n-1}$: geometric with $p = 1 - q$. $\blacksquare$
+
+  - id: pr-082
+    title: The maximum of uniforms
+    subtopic: Distributions
+    difficulty: easy
+    type: compute
+    tags: [order statistics, uniform distribution]
+    related: [pr-096]
+    statement: |
+      Let $M$ be the maximum of $n$ independent uniform $[0,1]$ variables. Find its CDF, density and mean.
+    solution: |
+      $\P(M \le x) = x^n$ for $x \in [0,1]$, so the density is $nx^{n-1}$ and $\E M = \int_0^1nx^n\,dx = \frac{n}{n+1}$.
+
+  - id: pr-083
+    title: Inverse transform sampling
+    subtopic: Distributions
+    difficulty: easy
+    type: proof
+    tags: [simulation, exponential distribution, uniform distribution]
+    statement: |
+      Let $U$ be uniform on $(0, 1)$. Prove that $X = -\frac1\lambda\ln U$ is exponential with rate $\lambda$.
+    solution: |
+      For $t \ge 0$, $\P(X > t) = \P(\ln U < -\lambda t) = \P(U < e^{-\lambda t}) = e^{-\lambda t}$. $\blacksquare$
+
+      (In general, if $F$ is a continuous strictly increasing CDF, $F^{-1}(U)$ has CDF $F$.)
+
+  - id: pr-084
+    title: The most likely value of a binomial
+    subtopic: Distributions
+    difficulty: medium
+    type: proof
+    tags: [binomial distribution, mode]
+    statement: |
+      Prove that the most likely value of $\mathrm{Bin}(n, p)$ is $\lfloor(n+1)p\rfloor$ (with a tie with $(n+1)p - 1$ when $(n+1)p$ is an integer).
+    solution: |
+      $$\frac{\P(X = k+1)}{\P(X = k)} = \frac{(n-k)p}{(k+1)(1-p)},$$
+      which is $> 1$ iff $(n - k)p > (k+1)(1 - p)$, iff $k < (n+1)p - 1$. So the probabilities increase while $k + 1 \le (n+1)p$ and then decrease, peaking at $\lfloor (n+1)p\rfloor$; when $(n+1)p$ is an integer the ratio equals 1 at $k = (n+1)p - 1$, giving two modes. $\blacksquare$
+
+  - id: pr-085
+    title: Typos on a page
+    subtopic: Distributions
+    difficulty: easy
+    type: compute
+    tags: [poisson approximation]
+    related: [pr-021]
+    statement: |
+      A 500-page book has 300 typos, each independently on a uniformly random page. Estimate the probability that a given page has no typo.
+    solution: |
+      The number on a page is $\mathrm{Bin}(300, \frac1{500})$, approximately Poisson with mean $0.6$. So $\P(0) \approx e^{-0.6} \approx 0.549$ (exactly $(0.998)^{300} \approx 0.548$).
+
+  - id: pr-086
+    title: Mean and variance of a die
+    subtopic: Distributions
+    difficulty: easy
+    type: compute
+    tags: [discrete uniform, mean, variance]
+    statement: |
+      Find the mean and variance of a fair die roll, and of the sum of $n$ rolls.
+    solution: |
+      $\E X = \frac{21}{6} = \frac72$, $\E X^2 = \frac{91}{6}$, $\Var X = \frac{91}{6} - \frac{49}{4} = \frac{35}{12}$.
+
+      For $n$ independent rolls: mean $\frac{7n}{2}$, variance $\frac{35n}{12}$.
+
+  - id: pr-087
+    title: Markov's inequality is sharp
+    subtopic: Inequalities & limits
+    difficulty: easy
+    type: compute
+    tags: [markov inequality]
+    related: [pr-025]
+    statement: |
+      Use Markov to bound $\P(X \ge 3\E X)$ for non-negative $X$, and show the bound can be attained.
+    solution: |
+      $\P(X \ge 3\E X) \le \frac13$.
+
+      Attained by $X = 3$ with probability $\frac13$ and $0$ otherwise: $\E X = 1$ and $\P(X \ge 3) = \frac13$.
+
+  - id: pr-088
+    title: Chebyshev for coin tossing
+    subtopic: Inequalities & limits
+    difficulty: easy
+    type: compute
+    tags: [chebyshev, binomial distribution]
+    related: [pr-026]
+    statement: |
+      A fair coin is tossed 100 times. Use Chebyshev to bound the probability that the number of heads is between 41 and 59 inclusive, and compare with the exact value.
+    solution: |
+      $\E X = 50$, $\Var X = 25$. $\P(|X - 50| \ge 10) \le \frac{25}{100} = \frac14$, so $\P(41 \le X \le 59) \ge \frac34$.
+
+      The exact value is about $0.943$: Chebyshev is valid for every distribution and so is crude for a specific one.
+
+  - id: pr-089
+    title: Cantelli's one-sided inequality
+    subtopic: Inequalities & limits
+    difficulty: hard
+    type: proof
+    tags: [chebyshev, one-sided bounds, optimisation]
+    source: Cantelli
+    statement: |
+      Let $X$ have mean $\mu$ and variance $\sigma^2$. Prove that for $t > 0$,
+      $$\P(X - \mu \ge t) \le \frac{\sigma^2}{\sigma^2 + t^2}.$$
+    solution: |
+      For any $u \ge 0$, $X - \mu \ge t$ implies $(X - \mu + u)^2 \ge (t + u)^2$. By Markov,
+      $$\P(X - \mu \ge t) \le \frac{\E[(X - \mu + u)^2]}{(t+u)^2} = \frac{\sigma^2 + u^2}{(t + u)^2}.$$
+      Choose $u = \frac{\sigma^2}{t}$: the bound becomes $\frac{\sigma^2 + \sigma^4/t^2}{(t + \sigma^2/t)^2} = \frac{\sigma^2(t^2 + \sigma^2)/t^2}{(t^2 + \sigma^2)^2/t^2} = \frac{\sigma^2}{\sigma^2 + t^2}$. $\blacksquare$
+
+  - id: pr-090
+    title: Jensen's inequality
+    subtopic: Inequalities & limits
+    difficulty: medium
+    type: proof
+    tags: [jensen, convexity, expectation]
+    related: [in-110]
+    statement: |
+      Let $f$ be convex and $X$ take finitely many values. Prove $f(\E X) \le \E f(X)$.
+    solution: |
+      If $X$ takes values $x_i$ with probabilities $p_i$, then $\E X = \sum p_ix_i$ with $p_i \ge 0$, $\sum p_i = 1$, and by the finite Jensen inequality (in-110), $f\left(\sum p_ix_i\right) \le \sum p_if(x_i) = \E f(X)$. $\blacksquare$
+
+      (E.g. $(\E X)^2 \le \E X^2$, and $e^{\E X} \le \E e^X$.)
+
+  - id: pr-091
+    title: Reciprocals and expectations
+    subtopic: Inequalities & limits
+    difficulty: easy
+    type: proof
+    tags: [jensen, expectation, inequalities]
+    related: [pr-090]
+    statement: |
+      Let $X > 0$ take finitely many values. Prove $\E\left[\frac1X\right] \ge \frac1{\E X}$. If you drive 60 km at 30 km/h and 60 km at 90 km/h, what is your average speed?
+    solution: |
+      $\frac1x$ is convex on $(0, \infty)$, so Jensen applies.
+
+      **Speed.** Time $2 + \frac23 = \frac83$ hours for 120 km: average $45$ km/h, not $60$. The average speed is a harmonic mean, which is at most the arithmetic mean. $\blacksquare$
+
+  - id: pr-092
+    title: A Chernoff bound
+    subtopic: Inequalities & limits
+    difficulty: hard
+    type: proof
+    tags: [chernoff bound, moment generating functions, concentration]
+    source: Chernoff, 1952
+    statement: |
+      Let $X = X_1 + \cdots + X_n$ with independent $X_i \sim$ Bernoulli$(p_i)$ and $\mu = \E X$. Prove that for $\delta > 0$,
+      $$\P\big(X \ge (1+\delta)\mu\big) \le \left(\frac{e^\delta}{(1+\delta)^{1+\delta}}\right)^\mu.$$
+    solution: |
+      For $t > 0$, $\E e^{tX_i} = 1 + p_i(e^t - 1) \le e^{p_i(e^t - 1)}$, so by independence $\E e^{tX} \le e^{\mu(e^t - 1)}$. By Markov,
+      $$\P\big(X \ge (1+\delta)\mu\big) = \P\big(e^{tX} \ge e^{t(1+\delta)\mu}\big) \le \frac{e^{\mu(e^t-1)}}{e^{t(1+\delta)\mu}}.$$
+      Take $t = \ln(1 + \delta)$: the right side is $\left(\frac{e^\delta}{(1+\delta)^{1+\delta}}\right)^\mu$. $\blacksquare$
+
+      (Unlike Chebyshev, this decays exponentially in $\mu$.)
+
+  - id: pr-093
+    title: A Hoeffding bound for random signs
+    subtopic: Inequalities & limits
+    difficulty: hard
+    type: proof
+    tags: [concentration, moment generating functions, random walk]
+    related: [pr-092]
+    statement: |
+      Let $S_n$ be a sum of $n$ independent random signs $\pm1$. Prove that $\P(S_n \ge a) \le e^{-a^2/(2n)}$ for $a > 0$.
+    solution: |
+      $\E e^{tS_n} = (\cosh t)^n$, and $\cosh t = \sum\frac{t^{2k}}{(2k)!} \le \sum\frac{t^{2k}}{2^kk!} = e^{t^2/2}$, since $(2k)! \ge 2^kk!$. By Markov, for $t > 0$,
+      $$\P(S_n \ge a) \le e^{-ta}\E e^{tS_n} \le e^{nt^2/2 - ta}.$$
+      Choose $t = \frac an$: $e^{-a^2/(2n)}$. $\blacksquare$
+
+      (E.g. 1000 fair coin tosses give a lead of 100 heads over tails with probability at most $e^{-5} < 0.7\%$.)
+
+  - id: pr-094
+    title: The first Borel–Cantelli lemma
+    subtopic: Inequalities & limits
+    difficulty: medium
+    type: proof
+    tags: [borel-cantelli, limsup, union bound]
+    related: [pr-035, lg-196]
+    statement: |
+      Prove that if $\sum\P(A_n) < \infty$ then with probability 1 only finitely many $A_n$ occur.
+    solution: |
+      "Infinitely many $A_n$ occur" is $\limsup A_n = \bigcap_N\bigcup_{n\ge N}A_n$. For every $N$ it is contained in $\bigcup_{n\ge N}A_n$, whose probability is at most $\sum_{n\ge N}\P(A_n)$ by the union bound (extended to countable unions via pr-035). This tail tends to 0, so $\P(\limsup A_n) = 0$. $\blacksquare$
+
+  - id: pr-095
+    title: How many samples for a poll?
+    subtopic: Inequalities & limits
+    difficulty: easy
+    type: compute
+    tags: [chebyshev, law of large numbers, sampling]
+    related: [pr-027]
+    statement: |
+      To estimate a proportion $p$ by the fraction $\hat p$ of yeses in $n$ independent samples, how large must $n$ be for Chebyshev to guarantee $\P(|\hat p - p| \ge 0.05) \le 0.05$, whatever $p$ is?
+    solution: |
+      $\Var\hat p = \frac{p(1-p)}{n} \le \frac1{4n}$, so Chebyshev gives $\P(|\hat p - p| \ge 0.05) \le \frac{1}{4n(0.05)^2} = \frac{100}{n}$. This is $\le 0.05$ when $n \ge 2000$. (The normal approximation shows about 385 suffice.)
+
+  - id: pr-096
+    title: The maximum of uniforms tends to 1
+    subtopic: Inequalities & limits
+    difficulty: easy
+    type: proof
+    tags: [convergence in probability, order statistics]
+    related: [pr-082]
+    statement: |
+      Let $M_n$ be the maximum of $n$ independent uniform $[0,1]$ variables. Prove that $M_n \to 1$ in probability.
+    solution: |
+      For $0 < \eps < 1$, $\P(|M_n - 1| \ge \eps) = \P(M_n \le 1 - \eps) = (1 - \eps)^n \to 0$. $\blacksquare$
+
+  - id: pr-097
+    title: The second moment method
+    subtopic: Inequalities & limits
+    difficulty: medium
+    type: proof
+    tags: [second moment method, cauchy-schwarz]
+    related: [pr-070]
+    statement: |
+      Let $X \ge 0$ with $0 < \E X^2 < \infty$. Prove that $\P(X > 0) \ge \dfrac{(\E X)^2}{\E X^2}$.
+    solution: |
+      $X = X\cdot\mathbf 1[X > 0]$, so by Cauchy–Schwarz
+      $$\E X = \E\big[X\mathbf 1[X > 0]\big] \le \sqrt{\E X^2}\sqrt{\E\mathbf 1[X > 0]^2} = \sqrt{\E X^2\,\P(X > 0)}.$$
+      Square and divide. $\blacksquare$
+
+      (While Markov shows $X$ is usually 0 when $\E X$ is small, this shows $X$ is usually positive when $\E X^2 \approx (\E X)^2$.)
+
+  - id: pr-098
+    title: Isolated vertices in a random graph
+    subtopic: Inequalities & limits
+    difficulty: easy
+    type: compute
+    tags: [random graphs, union bound]
+    related: [pr-068]
+    statement: |
+      In $G(n, \frac12)$, bound the probability that some vertex is isolated, and show it tends to 0.
+    solution: |
+      A given vertex is isolated with probability $2^{-(n-1)}$. By the union bound the probability that some vertex is isolated is at most $n2^{1-n} \to 0$.
+
+  - id: pr-099
+    title: The coupon collector concentrates
+    subtopic: Inequalities & limits
+    difficulty: medium
+    type: proof
+    tags: [coupon collector, variance, chebyshev]
+    related: [pr-014, pr-066]
+    statement: |
+      With $T$ the coupon collector's time (pr-014), prove $\Var T < \frac{\pi^2}{6}n^2$, and deduce $\P(|T - nH_n| \ge cn) \le \frac{\pi^2}{6c^2}$.
+    solution: |
+      $T = \sum T_i$ with independent geometric $T_i$ of success probability $p_i = \frac{n - i + 1}{n}$. By pr-066, $\Var T_i = \frac{1-p_i}{p_i^2} < \frac{1}{p_i^2} = \frac{n^2}{(n - i + 1)^2}$. So $\Var T < n^2\sum_{k\ge1}\frac1{k^2} = \frac{\pi^2}{6}n^2$. Chebyshev with $t = cn$ gives the bound. $\blacksquare$
+
+      (Since $nH_n \approx n\ln n$, the collector almost always needs $n\ln n + O(n)$ boxes.)
+
+  - id: pr-100
+    title: A normal approximation
+    subtopic: Inequalities & limits
+    difficulty: easy
+    type: compute
+    tags: [central limit theorem, normal approximation]
+    related: [pr-088]
+    statement: |
+      Use the central limit theorem to estimate the probability of more than 60 heads in 100 tosses of a fair coin.
+    solution: |
+      $X$ has mean 50 and standard deviation 5. With a continuity correction, $\P(X \ge 61) \approx \P\left(Z \ge \frac{60.5 - 50}{5}\right) = \P(Z \ge 2.1) \approx 0.018$. The exact value is $0.0176$.

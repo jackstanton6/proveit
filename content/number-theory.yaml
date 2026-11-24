@@ -502,3 +502,3223 @@ problems:
       Pair each divisor $d$ of $n$ with $n/d$, which is also a divisor; applying the pairing twice returns $d$. The divisors therefore split into pairs $\{d, n/d\}$ with $d \ne n/d$, plus the divisors with $d = n/d$, i.e. $d^2 = n$.
 
       There is at most one positive $d$ with $d^2 = n$, and one exists iff $n$ is a square. So $\tau(n)$ is even plus $1$ if $n$ is a square, and even otherwise. $\blacksquare$
+
+  - id: nt-031
+    title: Multiplying divisibilities
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [divisibility, definitions]
+    related: [nt-001]
+    statement: |
+      Prove that if $a \mid b$ and $c \mid d$ then $ac \mid bd$, and that if $a \mid b$ then $a^n \mid b^n$ for every $n \ge 1$.
+    solution: |
+      Write $b = ak$ and $d = cl$. Then $bd = (ac)(kl)$, so $ac \mid bd$.
+
+      Applying this repeatedly with $c = a$, $d = b$ (an induction on $n$) gives $a^n \mid b^n$. Directly: $b^n = a^nk^n$. $\blacksquare$
+
+  - id: nt-032
+    title: Divisibility of Mersenne-type numbers
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [divisibility, factorisation, mersenne]
+    related: [nt-009, nt-015]
+    statement: |
+      Prove that if $n \mid m$ then $2^n - 1 \mid 2^m - 1$.
+    solution: |
+      Write $m = nk$ and $x = 2^n$. Then
+      $$2^m - 1 = x^k - 1 = (x - 1)(x^{k-1} + \cdots + x + 1),$$
+      and $x - 1 = 2^n - 1$. $\blacksquare$
+
+  - id: nt-033
+    title: Divisibility by 3 and 9
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [divisibility tests, congruences, digits]
+    related: [in-009, nt-057]
+    statement: |
+      Prove that an integer is congruent to the sum of its decimal digits modulo 9. Deduce the tests for divisibility by 3 and by 9.
+    solution: |
+      $10 \equiv 1 \pmod 9$, so $10^i \equiv 1$ for every $i$. For $n = \sum_i d_i10^i$,
+      $$n \equiv \sum_i d_i \pmod 9.$$
+      So $9 \mid n$ iff 9 divides the digit sum. Since $3 \mid 9$, the same congruence holds mod 3, giving the test for 3. $\blacksquare$
+
+  - id: nt-034
+    title: Divisibility by powers of 2
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [divisibility tests, digits, powers of two]
+    statement: |
+      Prove that $2^k$ divides $n$ if and only if $2^k$ divides the number formed by the last $k$ digits of $n$. Use it to decide whether $8$ divides $7\,315\,128$.
+    solution: |
+      Write $n = 10^kq + r$ where $r$ is the number formed by the last $k$ digits. Since $10^k = 2^k5^k$, $2^k \mid 10^kq$, so $2^k \mid n$ iff $2^k \mid r$.
+
+      For $7\,315\,128$ and $k = 3$: $r = 128 = 8\cdot16$, so yes. $\blacksquare$
+
+  - id: nt-035
+    title: Testing 7, 11 and 13 at once
+    subtopic: Divisibility
+    difficulty: medium
+    type: compute
+    tags: [divisibility tests, congruences, digits]
+    statement: |
+      Use $1001 = 7\cdot11\cdot13$ to give a test for divisibility by 7, 11 and 13 in terms of three-digit blocks, and apply it to $3\,524\,169$.
+    solution: |
+      $1000 \equiv -1 \pmod{1001}$, so splitting $n$ into three-digit blocks $n = \sum_jB_j1000^j$,
+      $$n \equiv B_0 - B_1 + B_2 - \cdots \pmod{1001},$$
+      and hence also modulo 7, 11 and 13.
+
+      For $3\,524\,169$: $169 - 524 + 3 = -352$. Now $352 = 7\cdot50 + 2 = 11\cdot32 = 13\cdot27 + 1$. So $3\,524\,169$ is divisible by **11** but not by 7 or 13 (remainders $5$ and $12$).
+
+  - id: nt-036
+    title: 30 divides n⁵ − n
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [divisibility, fermat, factorisation]
+    related: [in-062]
+    statement: |
+      Prove that $30 \mid n^5 - n$ for every integer $n$.
+    solution: |
+      $n^5 - n = n(n-1)(n+1)(n^2+1)$. It suffices to show divisibility by $2$, $3$ and $5$, which are pairwise coprime.
+
+      - $(n-1)n(n+1)$ is a product of three consecutive integers, so divisible by 2 and 3.
+      - By Fermat's little theorem $n^5 \equiv n \pmod 5$. (Or: if $n \equiv \pm2 \pmod 5$ then $n^2 + 1 \equiv 0$; otherwise one of $n - 1, n, n + 1$ is.)
+
+      $\blacksquare$
+
+  - id: nt-037
+    title: 42 divides n⁷ − n
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [divisibility, fermat]
+    related: [nt-036]
+    statement: |
+      Prove that $42 \mid n^7 - n$ for every integer $n$.
+    solution: |
+      $42 = 2\cdot3\cdot7$, so check each prime.
+
+      - **7:** Fermat gives $n^7 \equiv n \pmod 7$.
+      - **3:** $n^3 \equiv n \pmod 3$, so $n^7 = n^3\cdot n^3\cdot n \equiv n\cdot n\cdot n = n^3 \equiv n$.
+      - **2:** $n^2 \equiv n \pmod 2$, so $n^7 \equiv n$.
+
+      Since $2, 3, 7$ are pairwise coprime, $42 \mid n^7 - n$. $\blacksquare$
+
+      (In general, if $p - 1 \mid k - 1$ then $p \mid n^k - n$.)
+
+  - id: nt-038
+    title: Legendre's formula
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [factorial, p-adic valuation, floor function]
+    source: Legendre
+    related: [nt-039, nt-040]
+    statement: |
+      Let $p$ be prime and $v_p(m)$ the exponent of $p$ in $m$. Prove that
+      $$v_p(n!) = \sum_{i\ge1}\left\lfloor\frac{n}{p^i}\right\rfloor.$$
+    solution: |
+      $v_p(n!) = \sum_{k=1}^nv_p(k)$, and $v_p(k)$ is the number of $i \ge 1$ with $p^i \mid k$. So
+      $$v_p(n!) = \sum_{k=1}^n\sum_{i \ge 1}[p^i \mid k] = \sum_{i\ge1}\#\{k \le n : p^i \mid k\} = \sum_{i\ge1}\left\lfloor\frac n{p^i}\right\rfloor,$$
+      since the multiples of $p^i$ up to $n$ are $p^i, 2p^i, \dots, \lfloor n/p^i\rfloor p^i$. (The sum is finite: terms vanish once $p^i > n$.) $\blacksquare$
+
+  - id: nt-039
+    title: Trailing zeros of factorials
+    subtopic: Divisibility
+    difficulty: easy
+    type: compute
+    tags: [factorial, legendre formula]
+    related: [nt-038]
+    statement: |
+      How many zeros does $100!$ end in? And $1000!$?
+    solution: |
+      The number of trailing zeros is $\min(v_2, v_5)$, which is $v_5$ since there are far more factors of 2. By Legendre's formula:
+
+      - $100!$: $\lfloor100/5\rfloor + \lfloor100/25\rfloor = 20 + 4 = 24$.
+      - $1000!$: $200 + 40 + 8 + 1 = 249$.
+
+  - id: nt-040
+    title: Powers of 2 in factorials
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [factorial, binary, legendre formula]
+    related: [nt-038]
+    statement: |
+      Prove that $v_2(n!) = n - s_2(n)$, where $s_2(n)$ is the number of 1s in the binary expansion of $n$. Check it for $n = 1000$.
+    solution: |
+      Write $n = \sum_jb_j2^j$ with bits $b_j$. Then $\lfloor n/2^i\rfloor = \sum_{j\ge i}b_j2^{j-i}$, so by Legendre
+      $$v_2(n!) = \sum_{i\ge1}\sum_{j\ge i}b_j2^{j-i} = \sum_jb_j\sum_{i=1}^{j}2^{j-i} = \sum_jb_j(2^j - 1) = n - s_2(n).$$
+
+      For $n = 1000 = 1111101000_2$, $s_2 = 6$, so $v_2(1000!) = 994$. Legendre directly: $500 + 250 + 125 + 62 + 31 + 15 + 7 + 3 + 1 = 994$. $\blacksquare$
+
+  - id: nt-041
+    title: Catalan numbers are integers
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, catalan, divisibility]
+    related: [cb-024]
+    statement: |
+      Prove that $n + 1$ divides $\binom{2n}{n}$ for every $n \ge 0$.
+    solution: |
+      $$\binom{2n}{n+1} = \frac{(2n)!}{(n+1)!\,(n-1)!} = \binom{2n}{n}\cdot\frac{n}{n+1}$$
+      (for $n \ge 1$; $n = 0$ is trivial). So
+      $$\binom{2n}{n} - \binom{2n}{n+1} = \binom{2n}n\left(1 - \frac{n}{n+1}\right) = \frac{1}{n+1}\binom{2n}{n}.$$
+      The left side is an integer, so $n + 1 \mid \binom{2n}{n}$. $\blacksquare$
+
+  - id: nt-042
+    title: Central binomial coefficients are even
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [binomial coefficients, parity]
+    statement: |
+      Prove that $\binom{2n}{n}$ is even for $n \ge 1$.
+    solution: |
+      $\binom{2n}{n} = \binom{2n-1}{n-1} + \binom{2n-1}{n}$ by Pascal, and the two terms are equal by symmetry ($\binom{m}{k} = \binom{m}{m-k}$ with $m = 2n - 1$). So $\binom{2n}{n} = 2\binom{2n-1}{n-1}$. $\blacksquare$
+
+      (Combinatorially: the $n$-subsets of $\{1, \dots, 2n\}$ pair up with their complements, and no subset is its own complement.)
+
+  - id: nt-043
+    title: A bound on the number of divisors
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [divisor function, pairing]
+    related: [nt-030]
+    statement: |
+      Prove that $\tau(n) \le 2\sqrt n$ for every $n \ge 1$.
+    solution: |
+      Pair each divisor $d$ with $n/d$. In each pair, at least one member is at most $\sqrt n$ (if both exceeded $\sqrt n$, their product would exceed $n$). So the map $d \mapsto \min(d, n/d)$ sends divisors to divisors in $\{1, \dots, \lfloor\sqrt n\rfloor\}$ and is at most two-to-one. Hence $\tau(n) \le 2\lfloor\sqrt n\rfloor \le 2\sqrt n$. $\blacksquare$
+
+  - id: nt-044
+    title: The sum-of-divisors function is multiplicative
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [divisor function, multiplicative functions]
+    related: [nt-029]
+    statement: |
+      Prove that if $\gcd(m, n) = 1$ then $\sigma(mn) = \sigma(m)\sigma(n)$, and that $\sigma(p^k) = \frac{p^{k+1} - 1}{p - 1}$ for a prime $p$.
+    solution: |
+      **Multiplicative.** If $\gcd(m,n) = 1$, every divisor $d$ of $mn$ can be written uniquely as $d = ab$ with $a \mid m$ and $b \mid n$ (namely $a = \gcd(d, m)$, $b = \gcd(d, n)$; by unique factorisation, the primes of $d$ split between $m$ and $n$). Conversely each such product divides $mn$. So
+      $$\sigma(mn) = \sum_{a\mid m}\sum_{b \mid n}ab = \left(\sum_{a\mid m}a\right)\left(\sum_{b\mid n}b\right) = \sigma(m)\sigma(n).$$
+
+      **Prime powers.** The divisors of $p^k$ are $1, p, \dots, p^k$, a geometric series. $\blacksquare$
+
+  - id: nt-045
+    title: Euclid's perfect numbers
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [perfect numbers, divisor function, mersenne]
+    source: Euclid, Elements IX.36
+    related: [nt-044, nt-046]
+    statement: |
+      A number is perfect if $\sigma(n) = 2n$. Prove that if $2^p - 1$ is prime then $n = 2^{p-1}(2^p - 1)$ is perfect.
+    solution: |
+      Let $q = 2^p - 1$, an odd prime, so $\gcd(2^{p-1}, q) = 1$. By nt-044,
+      $$\sigma(n) = \sigma(2^{p-1})\,\sigma(q) = (2^p - 1)(q + 1) = (2^p - 1)2^p = 2n. \qquad\blacksquare$$
+
+      ($p = 2, 3, 5, 7$ give $6, 28, 496, 8128$.)
+
+  - id: nt-046
+    title: Every even perfect number is Euclid's
+    subtopic: Divisibility
+    difficulty: hard
+    type: proof
+    tags: [perfect numbers, divisor function]
+    source: Euler
+    related: [nt-045]
+    hints:
+      - |
+        Write $n = 2^km$ with $m$ odd, and compare $2^{k+1}m = (2^{k+1} - 1)\sigma(m)$.
+    statement: |
+      Prove that every even perfect number has the form $2^{p-1}(2^p - 1)$ with $2^p - 1$ prime.
+    solution: |
+      Write $n = 2^km$ with $k \ge 1$, $m$ odd. Then
+      $$2^{k+1}m = 2n = \sigma(n) = (2^{k+1} - 1)\sigma(m).$$
+      Since $2^{k+1} - 1$ is odd, it divides $m$: write $m = (2^{k+1} - 1)c$. Then $\sigma(m) = 2^{k+1}c = m + c$.
+
+      Now $m$ and $c$ are distinct divisors of $m$ (as $2^{k+1} - 1 \ge 3$), so $\sigma(m) \ge m + c$, with equality only if $m$ and $c$ are its **only** divisors. Hence $c = 1$ and $m$ is prime. So $m = 2^{k+1} - 1$ is prime and $n = 2^k(2^{k+1} - 1)$, which is Euclid's form with $p = k + 1$. $\blacksquare$
+
+  - id: nt-047
+    title: Abundant numbers
+    subtopic: Divisibility
+    difficulty: easy
+    type: compute
+    tags: [divisor function, abundant numbers]
+    related: [nt-044]
+    statement: |
+      $n$ is **abundant** if $\sigma(n) > 2n$. Find the three smallest abundant numbers, and show that $945$ is an odd abundant number.
+    solution: |
+      Checking: $\sigma(12) = 1 + 2 + 3 + 4 + 6 + 12 = 28 > 24$, and no smaller $n$ works (e.g. $\sigma(6) = 12 = 2\cdot6$ is perfect, $\sigma(10) = 18$). Next $\sigma(18) = 39 > 36$ and $\sigma(20) = 42 > 40$. So **12, 18, 20**.
+
+      $945 = 3^3\cdot5\cdot7$, so by multiplicativity $\sigma(945) = 40\cdot6\cdot8 = 1920 > 1890$. (It is the smallest odd abundant number.)
+
+  - id: nt-048
+    title: Smallest number with twelve divisors
+    subtopic: Divisibility
+    difficulty: easy
+    type: compute
+    tags: [divisor function, prime factorisation]
+    related: [nt-029, nt-073]
+    statement: |
+      Find the smallest positive integer with exactly 12 positive divisors.
+    solution: |
+      If $n = \prod p_i^{a_i}$ then $\tau(n) = \prod(a_i + 1)$. Writing $12$ as a product of factors $\ge 2$: $12$, $6\cdot2$, $4\cdot3$, $3\cdot2\cdot2$. To minimise, give the largest exponents to the smallest primes:
+      $$2^{11} = 2048,\quad 2^5\cdot3 = 96,\quad 2^3\cdot3^2 = 72,\quad 2^2\cdot3\cdot5 = 60.$$
+      The smallest is **60**.
+
+  - id: nt-049
+    title: When is σ(n) odd?
+    subtopic: Divisibility
+    difficulty: hard
+    type: proof
+    tags: [divisor function, parity, squares]
+    related: [nt-044, nt-030]
+    statement: |
+      Prove that $\sigma(n)$ is odd if and only if $n$ is a perfect square or twice a perfect square.
+    solution: |
+      Write $n = 2^a\prod p_i^{e_i}$ with odd primes $p_i$. By multiplicativity $\sigma(n) = \sigma(2^a)\prod\sigma(p_i^{e_i})$, and $\sigma(2^a) = 2^{a+1} - 1$ is always odd.
+
+      For odd $p$, $\sigma(p^e) = 1 + p + \cdots + p^e$ is a sum of $e + 1$ odd numbers, so it is odd iff $e$ is even.
+
+      So $\sigma(n)$ is odd iff every odd prime appears to an even power, i.e. iff the odd part of $n$ is a square $m^2$. Then $n = 2^am^2$, which is a square if $a$ is even and twice a square if $a$ is odd. Conversely squares and twice squares have square odd part. $\blacksquare$
+
+  - id: nt-050
+    title: Polynomial values and differences
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [divisibility, polynomials]
+    related: [in-070]
+    statement: |
+      Let $P$ be a polynomial with integer coefficients. Prove that $a - b \mid P(a) - P(b)$ for all integers $a \ne b$. Deduce that no such $P$ has $P(1) = 2$ and $P(3) = 5$.
+    solution: |
+      Write $P(x) = \sum c_kx^k$. Then $P(a) - P(b) = \sum c_k(a^k - b^k)$, and each $a^k - b^k$ is divisible by $a - b$ (in-070).
+
+      If $P(1) = 2$ and $P(3) = 5$, then $3 - 1 = 2$ would divide $5 - 2 = 3$, which is false. $\blacksquare$
+
+  - id: nt-051
+    title: When does n + 1 divide n² + 1?
+    subtopic: Divisibility
+    difficulty: easy
+    type: compute
+    tags: [divisibility, polynomials]
+    statement: |
+      Find all integers $n$ with $n + 1 \mid n^2 + 1$.
+    solution: |
+      $n^2 + 1 = (n+1)(n-1) + 2$, so $n + 1 \mid n^2 + 1$ iff $n + 1 \mid 2$, i.e. $n + 1 \in \{\pm1, \pm2\}$. Hence $n \in \{0, 1, -2, -3\}$.
+
+      Check: $1 \mid 1$, $2 \mid 2$, $-1 \mid 5$, $-2 \mid 10$.
+
+  - id: nt-052
+    title: Three divides 2ⁿ + 1 for odd n
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [divisibility, congruences]
+    statement: |
+      Prove that $3 \mid 2^n + 1$ if and only if $n$ is odd.
+    solution: |
+      $2 \equiv -1 \pmod 3$, so $2^n + 1 \equiv (-1)^n + 1$, which is $0$ for odd $n$ and $2$ for even $n$. $\blacksquare$
+
+  - id: nt-053
+    title: Primes of the form 2ⁿ + 1
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [divisibility, fermat numbers, factorisation]
+    related: [in-071, nt-009]
+    statement: |
+      Prove that if $2^n + 1$ is prime ($n \ge 1$) then $n$ is a power of 2.
+    solution: |
+      Suppose $n$ has an odd factor $m > 1$, $n = km$. With $x = 2^k$,
+      $$2^n + 1 = x^m + 1 = (x + 1)(x^{m-1} - x^{m-2} + \cdots + 1),$$
+      using $m$ odd (in-071). Since $1 < 2^k + 1 < 2^n + 1$, this is a proper factorisation. So if $2^n + 1$ is prime, $n$ has no odd factor greater than 1, i.e. $n$ is a power of 2. $\blacksquare$
+
+  - id: nt-054
+    title: When can aⁿ − 1 be prime?
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [divisibility, primes, mersenne]
+    related: [nt-009]
+    statement: |
+      Let $a, n \ge 2$. Prove that if $a^n - 1$ is prime then $a = 2$ and $n$ is prime.
+    solution: |
+      $a - 1 \mid a^n - 1$. Since $a^n - 1 > a - 1$, primality forces $a - 1 = 1$, i.e. $a = 2$. Then nt-009 shows $n$ is prime. $\blacksquare$
+
+  - id: nt-055
+    title: Sophie Germain's identity
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [factorisation, primes]
+    source: Sophie Germain
+    related: [nt-056]
+    statement: |
+      Prove that $a^4 + 4b^4 = (a^2 + 2b^2 + 2ab)(a^2 + 2b^2 - 2ab)$, and deduce that $n^4 + 4$ is composite for every $n > 1$.
+    solution: |
+      $a^4 + 4b^4 = (a^2 + 2b^2)^2 - 4a^2b^2 = (a^2 + 2b^2 - 2ab)(a^2 + 2b^2 + 2ab)$.
+
+      With $b = 1$: $n^4 + 4 = (n^2 + 2n + 2)(n^2 - 2n + 2)$, and $n^2 - 2n + 2 = (n-1)^2 + 1 > 1$ for $n > 1$. Both factors exceed 1, so the number is composite. $\blacksquare$
+
+  - id: nt-056
+    title: n⁴ + 4ⁿ is composite
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [factorisation, sophie germain]
+    related: [nt-055]
+    statement: |
+      Prove that $n^4 + 4^n$ is composite for every integer $n > 1$.
+    solution: |
+      **$n$ even.** Both terms are even, so the sum is even and greater than 2.
+
+      **$n$ odd**, $n = 2k + 1$ with $k \ge 1$. Then $4^n = 4\cdot4^{2k} = 4(2^k)^4$, so by Sophie Germain with $b = 2^k$,
+      $$n^4 + 4^n = (n^2 + 2^{2k+1} + 2^{k+1}n)(n^2 + 2^{2k+1} - 2^{k+1}n).$$
+      The second factor is $(n - 2^k)^2 + 2^{2k} \ge 2^{2k} \ge 4$. So both factors exceed 1. $\blacksquare$
+
+  - id: nt-057
+    title: Rearranged digits
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [divisibility tests, digits, congruences]
+    related: [nt-033]
+    statement: |
+      Prove that if the digits of $n$ are rearranged to give $m$, then $9 \mid n - m$.
+    solution: |
+      By nt-033, $n$ and $m$ are each congruent mod 9 to their digit sums, which are equal. So $n \equiv m \pmod 9$. $\blacksquare$
+
+  - id: nt-058
+    title: A long repunit is composite
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [repunits, divisibility]
+    related: [in-080, nt-032]
+    statement: |
+      Let $R_k = \frac{10^k - 1}{9}$ be the number written with $k$ ones. Prove that if $j \mid k$ then $R_j \mid R_k$, and deduce that $R_{91}$ is composite.
+    solution: |
+      If $k = jm$, then with $x = 10^j$,
+      $$R_k = \frac{x^m - 1}{9} = \frac{x - 1}{9}(x^{m-1} + \cdots + 1) = R_j(x^{m-1} + \cdots + 1).$$
+      Since $91 = 7\cdot13$, $R_7 \mid R_{91}$, and $1 < R_7 < R_{91}$. $\blacksquare$
+
+      (So $R_k$ prime needs $k$ prime; $R_2, R_{19}, R_{23}$ are prime, but $R_3 = 3\cdot37$.)
+
+  - id: nt-059
+    title: Composite n divides (n − 1)!
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [factorial, divisibility, wilson]
+    related: [nt-019]
+    statement: |
+      Prove that if $n > 4$ is composite then $n \mid (n-1)!$. What happens for $n = 4$?
+    solution: |
+      Write $n = ab$ with $1 < a \le b < n$.
+
+      - If $a < b$, then $a$ and $b$ are distinct factors of $(n-1)!$, so $ab \mid (n-1)!$.
+      - If $a = b$, then $n = a^2$ with $a > 2$ (as $n > 4$). Then $a$ and $2a$ are distinct and $2a < a^2 = n$, so both appear in $(n-1)!$, and $a\cdot2a = 2n$ divides $(n-1)!$.
+
+      For $n = 4$: $3! = 6$ is not divisible by 4. $\blacksquare$
+
+      (So $(n-1)! \equiv 0 \pmod n$ for composite $n > 4$, while Wilson gives $-1$ for primes: a primality test, though a slow one.)
+
+  - id: nt-060
+    title: A multiple written with 0s and 1s
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, divisibility, repunits]
+    related: [cb-015]
+    statement: |
+      Prove that every positive integer $n$ has a positive multiple whose decimal digits are all 0 or 1.
+    solution: |
+      Consider the $n + 1$ numbers $1, 11, 111, \dots, \underbrace{1\cdots1}_{n+1}$. By pigeonhole two of them, say with $i < j$ ones, are congruent mod $n$. Their difference
+      $$\underbrace{1\cdots1}_{j - i}\underbrace{0\cdots0}_{i}$$
+      is a positive multiple of $n$ with digits 0 and 1 only. $\blacksquare$
+
+  - id: nt-061
+    title: Odd power sums
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [divisibility, power sums]
+    related: [in-071]
+    statement: |
+      Prove that for odd $k$, $1^k + 2^k + \cdots + n^k$ is divisible by $1 + 2 + \cdots + n = \frac{n(n+1)}{2}$.
+    solution: |
+      Let $S = \sum_{i=1}^n i^k$. For odd $k$, $a + b \mid a^k + b^k$ (in-071).
+
+      - Pairing $i$ with $n + 1 - i$: $2S = \sum_{i=1}^n\big(i^k + (n+1-i)^k\big)$, each term divisible by $n + 1$.
+      - Pairing $i$ with $n - i$ over $i = 0, \dots, n$: $2S = \sum_{i=0}^n\big(i^k + (n - i)^k\big)$, each term divisible by $n$.
+
+      So $n \mid 2S$ and $n + 1 \mid 2S$, and as $\gcd(n, n+1) = 1$, $n(n+1) \mid 2S$, i.e. $\frac{n(n+1)}{2} \mid S$. $\blacksquare$
+
+  - id: nt-062
+    title: The sum of divisors is at most n(1 + ln n)
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [divisor function, harmonic numbers, inequalities]
+    statement: |
+      Prove that $\sigma(n) \le nH_n$, where $H_n = 1 + \frac12 + \cdots + \frac1n$.
+    solution: |
+      As $d$ runs over divisors of $n$, so does $n/d$. Hence
+      $$\sigma(n) = \sum_{d\mid n}\frac nd = n\sum_{d \mid n}\frac1d \le n\sum_{d=1}^n\frac1d = nH_n. \qquad\blacksquare$$
+      (With $H_n \le 1 + \ln n$, this gives $\sigma(n) \le n(1 + \ln n)$.)
+
+  - id: nt-063
+    title: Summing the divisor function
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [divisor function, double counting, floor function]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n\tau(k) = \sum_{d=1}^n\left\lfloor\frac nd\right\rfloor$, and deduce that the average of $\tau(1), \dots, \tau(n)$ is at most $H_n$.
+    solution: |
+      Count pairs $(d, k)$ with $1 \le k \le n$ and $d \mid k$. Fixing $k$ gives $\tau(k)$ pairs; fixing $d$, the multiples of $d$ up to $n$ number $\lfloor n/d\rfloor$. So the two sums are equal.
+
+      Then $\frac1n\sum\tau(k) = \sum_d\frac1n\lfloor n/d\rfloor \le \sum_{d=1}^n\frac1d = H_n$. $\blacksquare$
+
+  - id: nt-064
+    title: Kummer's theorem
+    subtopic: Divisibility
+    difficulty: hard
+    type: proof
+    tags: [binomial coefficients, p-adic valuation, carries]
+    source: Kummer, 1852
+    related: [nt-038, nt-040]
+    hints:
+      - |
+        Generalise nt-040: $v_p(n!) = \frac{n - s_p(n)}{p - 1}$, where $s_p$ is the base-$p$ digit sum.
+    statement: |
+      Prove that the exponent of a prime $p$ in $\binom{m+k}{k}$ equals the number of carries when $m$ and $k$ are added in base $p$.
+    solution: |
+      **Lemma.** $v_p(n!) = \frac{n - s_p(n)}{p - 1}$. As in nt-040, with $n = \sum b_jp^j$, Legendre gives $\sum_jb_j(1 + p + \cdots + p^{j-1}) = \sum_jb_j\frac{p^j - 1}{p - 1}$.
+
+      So
+      $$v_p\binom{m+k}{k} = \frac{s_p(m) + s_p(k) - s_p(m+k)}{p - 1}.$$
+      When adding digit by digit, at a position with no incoming or outgoing carry the digit sum is preserved. Each carry replaces $p$ units in one position by $1$ in the next, lowering the total digit sum by $p - 1$. So $s_p(m) + s_p(k) - s_p(m + k) = (p-1)\cdot(\text{number of carries})$. $\blacksquare$
+
+  - id: nt-065
+    title: Rows of odd binomial coefficients
+    subtopic: Divisibility
+    difficulty: hard
+    type: proof
+    tags: [binomial coefficients, binary, kummer]
+    related: [nt-064]
+    statement: |
+      Prove that every entry $\binom nk$ ($0 \le k \le n$) of row $n$ of Pascal's triangle is odd if and only if $n = 2^m - 1$ for some $m$.
+    solution: |
+      By Kummer (nt-064) with $p = 2$, $\binom nk$ is odd iff adding $k$ and $n - k$ in binary has no carries, i.e. iff the binary 1s of $k$ are a subset of those of $n$.
+
+      If $n = 2^m - 1 = 11\cdots1_2$, every $k \le n$ has its 1s among those of $n$, so all entries are odd.
+
+      Otherwise $n$ has a 0 bit below its leading 1, say in position $j$. Then $k = 2^j < n$ has a 1 where $n$ has a 0, so $\binom nk$ is even. $\blacksquare$
+
+  - id: nt-066
+    title: Sums of cubes mod 6
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [divisibility, congruences]
+    related: [in-007]
+    statement: |
+      Prove that $6 \mid a + b + c$ if and only if $6 \mid a^3 + b^3 + c^3$.
+    solution: |
+      $n^3 - n$ is divisible by 6 for every integer $n$ (in-007). So
+      $$(a^3 + b^3 + c^3) - (a + b + c) = (a^3 - a) + (b^3 - b) + (c^3 - c) \equiv 0 \pmod 6,$$
+      and the two sums are divisible by 6 together. $\blacksquare$
+
+  - id: nt-067
+    title: Seven divides a sum of two squares
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [divisibility, squares, congruences]
+    related: [lg-139]
+    statement: |
+      Prove that if $7 \mid a^2 + b^2$ then $7 \mid a$ and $7 \mid b$.
+    solution: |
+      Squares mod 7 are $0, 1, 4, 2, 2, 4, 1$ for residues $0, \dots, 6$, so they lie in $\{0, 1, 2, 4\}$. Two non-zero ones sum to $1+1 = 2$, $1+2 = 3$, $1+4 = 5$, $2+2 = 4$, $2+4 = 6$ or $4+4 \equiv 1$, never $0$. So a sum of two squares is $\equiv 0$ only as $0 + 0$. So $a^2 \equiv b^2 \equiv 0$, and since 7 is prime, $7 \mid a$ and $7 \mid b$. $\blacksquare$
+
+  - id: nt-068
+    title: Tens digits of odd squares
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [squares, digits]
+    statement: |
+      Prove that every odd square has an even tens digit.
+    solution: |
+      Write the odd number as $10a + b$ with $b \in \{1, 3, 5, 7, 9\}$. Then
+      $$(10a + b)^2 = 100a^2 + 20ab + b^2.$$
+      $100a^2$ doesn't affect the last two digits, and $20ab$ adds an even number of tens. And $b^2 \in \{01, 09, 25, 49, 81\}$, each with an even tens digit. So the tens digit is even. $\blacksquare$
+
+  - id: nt-069
+    title: Lifting a divisibility by p
+    subtopic: Divisibility
+    difficulty: hard
+    type: proof
+    tags: [divisibility, fermat, binomial theorem]
+    related: [nt-017]
+    statement: |
+      Let $p$ be prime. Prove that if $p \mid a^p - b^p$ then $p^2 \mid a^p - b^p$.
+    solution: |
+      By Fermat, $a^p \equiv a$ and $b^p \equiv b \pmod p$, so $p \mid a - b$. Write $a = b + kp$. Then
+      $$a^p - b^p = \sum_{i=1}^p\binom pi(kp)^ib^{p-i}.$$
+      The $i = 1$ term is $p\cdot kp\cdot b^{p-1}$, divisible by $p^2$; every term with $i \ge 2$ contains $(kp)^i$, also divisible by $p^2$. $\blacksquare$
+
+  - id: nt-070
+    title: n² divides (n + 1)ⁿ − 1
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [divisibility, binomial theorem]
+    statement: |
+      Prove that $n^2 \mid (n+1)^n - 1$ for every $n \ge 1$.
+    solution: |
+      By the binomial theorem,
+      $$(n+1)^n - 1 = \sum_{k=1}^n\binom nkn^k = n\cdot n + \binom n2n^2 + \cdots + n^n.$$
+      Every term is divisible by $n^2$. $\blacksquare$
+
+  - id: nt-071
+    title: Odd n divides 2^(n!) − 1
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [divisibility, euler theorem, factorial]
+    related: [nt-021]
+    statement: |
+      Prove that every odd $n \ge 1$ divides $2^{n!} - 1$.
+    solution: |
+      $\gcd(2, n) = 1$, so by Euler's theorem $2^{\varphi(n)} \equiv 1 \pmod n$. Since $1 \le \varphi(n) \le n$, $\varphi(n) \mid n!$, and so $2^{n!} = \left(2^{\varphi(n)}\right)^{n!/\varphi(n)} \equiv 1 \pmod n$. $\blacksquare$
+
+  - id: nt-072
+    title: The product of the divisors
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [divisor function, pairing]
+    related: [nt-030]
+    statement: |
+      Prove that the product of all positive divisors of $n$ is $n^{\tau(n)/2}$.
+    solution: |
+      Let $P = \prod_{d\mid n}d$. Since $d \mapsto n/d$ permutes the divisors, also $P = \prod_{d\mid n}\frac nd$. Multiplying,
+      $$P^2 = \prod_{d\mid n}d\cdot\frac nd = n^{\tau(n)},$$
+      and since $P > 0$, $P = n^{\tau(n)/2}$. $\blacksquare$
+
+      (E.g. $12$: $1\cdot2\cdot3\cdot4\cdot6\cdot12 = 1728 = 12^3$.)
+
+  - id: nt-073
+    title: Smallest number with fifteen divisors
+    subtopic: Divisibility
+    difficulty: easy
+    type: compute
+    tags: [divisor function, prime factorisation]
+    related: [nt-048]
+    statement: |
+      Find the smallest positive integer with exactly 15 divisors.
+    solution: |
+      $15 = 15$ or $5\cdot3$, so $n = p^{14}$ or $n = p^4q^2$. The candidates are $2^{14} = 16384$, $2^4\cdot3^2 = 144$ and $2^2\cdot3^4 = 324$. The smallest is **144**.
+
+  - id: nt-074
+    title: Every positive integer divides some Fibonacci number
+    subtopic: Divisibility
+    difficulty: hard
+    type: proof
+    tags: [fibonacci, pigeonhole, periodicity]
+    related: [in-089]
+    hints:
+      - |
+        Look at the pairs $(F_k \bmod n, F_{k+1} \bmod n)$. The recurrence can be run backwards.
+    statement: |
+      Prove that for every $n \ge 1$ some Fibonacci number $F_k$ with $k \ge 1$ is divisible by $n$ (with $F_0 = 0$, $F_1 = 1$).
+    solution: |
+      Consider the pairs $(F_k \bmod n,\ F_{k+1}\bmod n)$ for $k \ge 0$. There are only $n^2$ possible pairs, so two coincide: $(F_i, F_{i+1}) \equiv (F_j, F_{j+1})$ with $i < j$.
+
+      The recurrence runs backwards: $F_{k-1} = F_{k+1} - F_k$. So the pair at index $k$ determines the pair at $k - 1$, mod $n$. Stepping back $i$ times from the equal pairs gives $(F_0, F_1) \equiv (F_{j-i}, F_{j-i+1})$. In particular $F_{j-i} \equiv F_0 = 0 \pmod n$, with $j - i \ge 1$. $\blacksquare$
+
+  - id: nt-075
+    title: The sieve of Eratosthenes
+    subtopic: Primes
+    difficulty: easy
+    type: compute
+    tags: [primes, sieve]
+    source: Eratosthenes
+    related: [nt-076]
+    statement: |
+      Use the sieve of Eratosthenes to list the primes below 100. Why is it enough to cross out multiples of 2, 3, 5 and 7?
+    solution: |
+      Cross out the proper multiples of 2, 3, 5, 7. What survives (apart from 1) is
+      $$2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,$$
+      25 primes.
+
+      A composite $n < 100$ has a prime factor at most $\sqrt n < 10$ (nt-076), i.e. one of $2, 3, 5, 7$, so it has been crossed out.
+
+  - id: nt-076
+    title: Trial division up to √n
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [primes, trial division]
+    related: [nt-075]
+    statement: |
+      Prove that a composite $n$ has a prime factor $p \le \sqrt n$. Use this to decide whether $221$ and $223$ are prime.
+    solution: |
+      Write $n = ab$ with $1 < a \le b < n$. Then $a^2 \le ab = n$, so $a \le \sqrt n$, and any prime factor of $a$ is at most $a$ and divides $n$.
+
+      $\sqrt{221} < 15$: testing $2, 3, 5, 7, 11, 13$ finds $221 = 13\cdot17$. $\sqrt{223} < 15$ and none of $2, 3, 5, 7, 11, 13$ divides 223 (remainders $1, 1, 3, 6, 3, 2$), so **223 is prime**. $\blacksquare$
+
+  - id: nt-077
+    title: Infinitely many primes 5 mod 6
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [primes, contradiction, congruences]
+    related: [lg-014]
+    statement: |
+      Prove that there are infinitely many primes $p \equiv 5 \pmod 6$.
+    solution: |
+      Suppose $p_1, \dots, p_k$ are all of them (5 is one) and let $N = 6p_1\cdots p_k - 1 \equiv 5 \pmod 6$. $N$ is odd and not divisible by 3, so its prime factors are all $\equiv 1$ or $5 \pmod 6$. A product of numbers $\equiv 1 \pmod 6$ is $\equiv 1$, so some prime factor $q$ is $\equiv 5 \pmod 6$. Then $q = p_i$ for some $i$, so $q \mid 6p_1\cdots p_k - N = 1$. Contradiction. $\blacksquare$
+
+  - id: nt-078
+    title: Infinitely many primes 1 mod 4
+    subtopic: Primes
+    difficulty: hard
+    type: proof
+    tags: [primes, quadratic residues, contradiction]
+    related: [nt-028, nt-079, lg-014]
+    hints:
+      - |
+        Look at $N = (2p_1\cdots p_k)^2 + 1$ and use nt-028.
+    statement: |
+      Prove that there are infinitely many primes $p \equiv 1 \pmod 4$. (You may use nt-028.)
+    solution: |
+      Suppose $p_1, \dots, p_k$ are all of them ($5$ is one), and let $x = 2p_1\cdots p_k$ and $N = x^2 + 1$. $N$ is odd. Let $q$ be a prime factor of $N$. Then $x^2 \equiv -1 \pmod q$ with $q$ odd, so by nt-028, $q \equiv 1 \pmod 4$. Hence $q = p_i$ for some $i$. But $p_i \mid x$, so $q \mid N - x^2 = 1$. Contradiction. $\blacksquare$
+
+      (The argument in lg-014 for $4k+3$ fails here, because a product of $4k+3$ primes can be $\equiv 1 \pmod 4$.)
+
+  - id: nt-079
+    title: Prime factors of n² + 1
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [primes, quadratic residues]
+    related: [nt-028]
+    statement: |
+      Prove that every prime factor of $n^2 + 1$ is either $2$ or congruent to $1 \bmod 4$.
+    solution: |
+      Let $q$ be an odd prime with $q \mid n^2 + 1$. Then $n^2 \equiv -1 \pmod q$, so by nt-028, $q \equiv 1 \pmod 4$. $\blacksquare$
+
+      (E.g. $10^2 + 1 = 101$, $12^2 + 1 = 5\cdot29$, $13^2 + 1 = 2\cdot5\cdot17$.)
+
+  - id: nt-080
+    title: A prime dividing a power
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [primes, euclid lemma]
+    related: [nt-004]
+    statement: |
+      Prove that if $p$ is prime and $p \mid a^n$ then $p \mid a$, and deduce $p^n \mid a^n$.
+    solution: |
+      Induct on $n$. $n = 1$ is trivial. If $p \mid a^{n} = a\cdot a^{n-1}$, Euclid's lemma gives $p \mid a$ or $p \mid a^{n-1}$, and in the second case $p \mid a$ by hypothesis.
+
+      Then $a = pk$ and $a^n = p^nk^n$. $\blacksquare$
+
+  - id: nt-081
+    title: Primes one away from a square or cube
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [primes, factorisation]
+    statement: |
+      Find all primes of the form $n^2 - 1$ and all primes of the form $n^3 + 1$ ($n \ge 1$).
+    solution: |
+      **$n^2 - 1 = (n-1)(n+1)$.** For a prime we need $n - 1 = 1$, so $n = 2$: the prime **3**.
+
+      **$n^3 + 1 = (n + 1)(n^2 - n + 1)$.** Since $n + 1 \ge 2$, we need $n^2 - n + 1 = 1$, so $n = 1$: the prime **2**. $\blacksquare$
+
+  - id: nt-082
+    title: Prime triplets
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [primes, congruences]
+    statement: |
+      Prove that $p$, $p + 2$, $p + 4$ are all prime only for $p = 3$.
+    solution: |
+      $p, p+2, p+4$ are congruent to $p, p+2, p+1 \pmod 3$, which cover all residues. So one of them is divisible by 3, and if all are prime that one equals 3. Since $p + 2, p + 4 > 3$ (for $p \ge 2$), it must be $p = 3$, giving $3, 5, 7$. $\blacksquare$
+
+  - id: nt-083
+    title: Primes around 8p
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [primes, congruences]
+    statement: |
+      Prove that if $p$ and $8p - 1$ are both prime then $8p + 1$ is composite.
+    solution: |
+      If $p = 3$: $8p + 1 = 25$. If $p = 2$: $8p - 1 = 15$ isn't prime.
+
+      Otherwise $p > 3$, so $3 \nmid 8p$. Of the consecutive numbers $8p - 1, 8p, 8p + 1$ one is divisible by 3. Not $8p$, and not the prime $8p - 1 > 3$. So $3 \mid 8p + 1$, and $8p + 1 > 3$, so it is composite. $\blacksquare$
+
+  - id: nt-084
+    title: When is p² + 2 prime?
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [primes, congruences]
+    statement: |
+      Prove that if $p$ and $p^2 + 2$ are both prime then $p = 3$.
+    solution: |
+      If $p \ne 3$ then $3 \nmid p$, so $p^2 \equiv 1 \pmod 3$ and $3 \mid p^2 + 2$. As $p^2 + 2 > 3$, it is composite. And $p = 3$ gives $11$, prime. $\blacksquare$
+
+  - id: nt-085
+    title: Twin primes and 12
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [primes, twin primes, congruences]
+    related: [lg-147]
+    statement: |
+      Prove that if $p$ and $p + 2$ are primes with $p > 3$, then $12 \mid p + (p + 2)$.
+    solution: |
+      $p + (p + 2) = 2(p + 1)$. Since $p$ is odd, $p + 1$ is even. Among $p, p + 1, p + 2$ one is divisible by 3, and it isn't one of the primes $> 3$, so $3 \mid p + 1$. Hence $6 \mid p + 1$ and $12 \mid 2(p+1)$. $\blacksquare$
+
+  - id: nt-086
+    title: When are 2p + 1 and 4p + 1 prime?
+    subtopic: Primes
+    difficulty: easy
+    type: compute
+    tags: [primes, congruences]
+    statement: |
+      Find all primes $p$ for which $2p + 1$ and $4p + 1$ are also prime.
+    solution: |
+      Mod 3, $p, 2p + 1, 4p + 1 \equiv p, 2p + 1, p + 1$. If $p \equiv 1$, then $2p + 1 \equiv 0$; if $p \equiv 2$, then $p + 1 \equiv 0$, so $4p + 1 \equiv 0$. Either way one of $2p+1, 4p+1$ is a multiple of 3 greater than 3.
+
+      So $p \equiv 0 \pmod 3$, i.e. $p = 3$, giving $7$ and $13$, both prime. **Answer: $p = 3$.**
+
+  - id: nt-087
+    title: Three primes in arithmetic progression
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [primes, arithmetic progressions, congruences]
+    statement: |
+      Suppose $a$, $a + d$, $a + 2d$ are primes greater than 3, with $d > 0$. Prove that $6 \mid d$.
+    solution: |
+      **2.** All three are odd, so $d = (a + d) - a$ is even.
+
+      **3.** If $3 \nmid d$, then $a, a + d, a + 2d$ are pairwise incongruent mod 3 (differences $d, 2d$ are non-zero mod 3), so one is divisible by 3. But they are primes greater than 3. So $3 \mid d$. $\blacksquare$
+
+      (E.g. $5, 11, 17$.)
+
+  - id: nt-088
+    title: n⁴ + n² + 1 is composite
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [primes, factorisation]
+    statement: |
+      Prove that $n^4 + n^2 + 1$ is composite for every integer $n > 1$.
+    solution: |
+      $n^4 + n^2 + 1 = (n^2 + 1)^2 - n^2 = (n^2 - n + 1)(n^2 + n + 1)$. For $n > 1$, $n^2 - n + 1 = n(n-1) + 1 \ge 3$, so both factors exceed 1. $\blacksquare$
+
+  - id: nt-089
+    title: Factorising 2²⁴ − 1
+    subtopic: Primes
+    difficulty: medium
+    type: compute
+    tags: [primes, factorisation, difference of squares]
+    statement: |
+      Find the prime factorisation of $2^{24} - 1$.
+    solution: |
+      Repeated differences of squares and cubes:
+      $$2^{24} - 1 = (2^{12} - 1)(2^{12} + 1),\quad 2^{12} - 1 = (2^6 - 1)(2^6 + 1) = 63\cdot65 = 3^2\cdot7\cdot5\cdot13.$$
+      $2^{12} + 1 = (2^4)^3 + 1 = (2^4 + 1)(2^8 - 2^4 + 1) = 17\cdot241$, and 241 is prime (not divisible by $2, 3, 5, 7, 11, 13$, and $17^2 > 241$). So
+      $$2^{24} - 1 = 3^2\cdot5\cdot7\cdot13\cdot17\cdot241.$$
+
+  - id: nt-090
+    title: No polynomial gives only primes
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [primes, polynomials]
+    related: [lg-130, nt-050]
+    statement: |
+      Prove that no non-constant polynomial $P$ with integer coefficients has $P(n)$ prime for every positive integer $n$.
+    solution: |
+      Suppose it does, and let $p = P(1)$, a prime. For any integer $k$, $(1 + kp) - 1 \mid P(1 + kp) - P(1)$ (nt-050), so $p \mid P(1 + kp)$. Since $P(1 + kp)$ is prime, $P(1 + kp) = p$ for every $k \ge 0$.
+
+      Then $P(x) - p$ has infinitely many roots, so it is the zero polynomial and $P$ is constant. Contradiction. $\blacksquare$
+
+  - id: nt-091
+    title: A prime between n and n!
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [primes, factorial]
+    related: [nt-005]
+    statement: |
+      Prove that for every $n \ge 3$ there is a prime $p$ with $n < p < n!$.
+    solution: |
+      $n! - 1 \ge 5$, so it has a prime factor $p \le n! - 1$. If $p \le n$, then $p \mid n!$, so $p \mid n! - (n! - 1) = 1$, impossible. So $n < p < n!$. $\blacksquare$
+
+  - id: nt-092
+    title: A crude bound on the nth prime
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [primes, strong induction, euclid]
+    related: [nt-005, in-074]
+    statement: |
+      Let $p_n$ be the $n$th prime. Prove that $p_n \le 2^{2^{n-1}}$, and deduce that there are at least $n$ primes below $2^{2^{n-1}} + 1$.
+    solution: |
+      Strong induction. $p_1 = 2 = 2^{2^0}$.
+
+      Any prime factor of $p_1\cdots p_n + 1$ differs from $p_1, \dots, p_n$ (Euclid), so $p_{n+1} \le p_1\cdots p_n + 1$. By hypothesis
+      $$p_{n+1} \le 2^{1 + 2 + 4 + \cdots + 2^{n-1}} + 1 = 2^{2^n - 1} + 1 \le 2^{2^n}.$$
+      The consequence is immediate since $p_1, \dots, p_n \le 2^{2^{n-1}}$. $\blacksquare$
+
+  - id: nt-093
+    title: Primes dividing 2ᵖ + 1
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [primes, fermat]
+    statement: |
+      Find all primes $p$ with $p \mid 2^p + 1$.
+    solution: |
+      By Fermat, $2^p \equiv 2 \pmod p$, so $2^p + 1 \equiv 3$. Hence $p \mid 2^p + 1$ iff $p \mid 3$, i.e. $p = 3$ (and indeed $3 \mid 9$). $\blacksquare$
+
+  - id: nt-094
+    title: Odd primes as differences of squares
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [primes, difference of squares, uniqueness]
+    related: [nt-024]
+    statement: |
+      Prove that every odd prime $p$ can be written as $x^2 - y^2$ with $x, y$ non-negative integers in exactly one way.
+    solution: |
+      $p = (x - y)(x + y)$ with $x + y > 0$, so $x - y > 0$ too. As $p$ is prime and $x - y \le x + y$, we need $x - y = 1$ and $x + y = p$, so
+      $$x = \frac{p+1}{2},\quad y = \frac{p-1}{2},$$
+      which are integers because $p$ is odd. Conversely these work. $\blacksquare$
+
+  - id: nt-095
+    title: Fermat's two-squares theorem
+    subtopic: Primes
+    difficulty: hard
+    type: proof
+    tags: [primes, sums of squares, pigeonhole]
+    source: Fermat, Euler, Thue
+    related: [nt-028]
+    hints:
+      - |
+        Take $x$ with $x^2 \equiv -1$. Among the numbers $a - xb$ with $0 \le a, b \le \lfloor\sqrt p\rfloor$, two are congruent mod $p$.
+    statement: |
+      Prove that every prime $p \equiv 1 \pmod 4$ is a sum of two squares.
+    solution: |
+      By nt-028 there is $x$ with $x^2 \equiv -1 \pmod p$. Let $m = \lfloor\sqrt p\rfloor$; since $p$ is not a square, $m < \sqrt p$.
+
+      Consider $a - xb \bmod p$ for $0 \le a, b \le m$. There are $(m+1)^2 > p$ pairs, so two different pairs $(a, b)$, $(a', b')$ give the same residue. Let $u = a - a'$, $v = b - b'$: not both zero, $|u|, |v| \le m$, and $u \equiv xv \pmod p$. Then
+      $$u^2 \equiv x^2v^2 \equiv -v^2 \pmod p,$$
+      so $p \mid u^2 + v^2$. And $0 < u^2 + v^2 \le 2m^2 < 2p$. So $u^2 + v^2 = p$. $\blacksquare$
+
+  - id: nt-096
+    title: The converse of Wilson's theorem
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [wilson, primes]
+    related: [nt-019, nt-059]
+    statement: |
+      Prove that if $n > 1$ and $(n - 1)! \equiv -1 \pmod n$, then $n$ is prime.
+    solution: |
+      Suppose $n$ is composite with a divisor $d$, $1 < d < n$. Then $d \mid (n-1)!$ (as $d \le n - 1$), and $d \mid n \mid (n-1)! + 1$. So $d \mid 1$, a contradiction. $\blacksquare$
+
+  - id: nt-097
+    title: Variations on Wilson
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [wilson, congruences]
+    related: [nt-019]
+    statement: |
+      Let $p$ be prime. Prove that $(p - 2)! \equiv 1 \pmod p$, and for $p \ge 3$ that $2(p-3)! \equiv -1 \pmod p$.
+    solution: |
+      By Wilson, $-1 \equiv (p-1)! = (p-1)(p-2)! \equiv -(p-2)!$, so $(p-2)! \equiv 1$.
+
+      For $p \ge 3$: $(p-2)! = (p-2)(p-3)! \equiv -2(p-3)!$, so $-2(p-3)! \equiv 1$, i.e. $2(p-3)! \equiv -1$. $\blacksquare$
+
+  - id: nt-098
+    title: Babbage's congruence
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [binomial coefficients, primes]
+    source: Babbage, 1819
+    related: [cb-026, in-083]
+    statement: |
+      Prove that $\binom{2p}{p} \equiv 2 \pmod{p^2}$ for every prime $p$.
+    solution: |
+      By cb-026, $\binom{2p}{p} = \sum_{k=0}^p\binom pk^2$. The terms $k = 0, p$ give $1 + 1 = 2$. For $1 \le k \le p - 1$, $p \mid \binom pk$ (in-083), so $p^2 \mid \binom pk^2$. $\blacksquare$
+
+      (Wolstenholme strengthened this to $p^3$ for $p \ge 5$.)
+
+  - id: nt-099
+    title: The sum of reciprocals of primes diverges
+    subtopic: Primes
+    difficulty: hard
+    type: proof
+    tags: [primes, series, counting]
+    source: Euler; proof by Erdős
+    hints:
+      - |
+        Suppose the tail $\sum_{i>k}1/p_i < \frac12$. Count $n \le N$ by whether they have a prime factor beyond $p_k$.
+    statement: |
+      Prove that $\sum_p\frac1p$ over all primes diverges.
+    solution: |
+      Suppose it converges. Choose $k$ with $\sum_{i > k}\frac{1}{p_i} < \frac12$. Fix $N$ and split $\{1, \dots, N\}$:
+
+      - **Big:** numbers with a prime factor $p_i$, $i > k$. There are at most $\sum_{i>k}\lfloor N/p_i\rfloor < N/2$ of them.
+      - **Small:** numbers all of whose prime factors are among $p_1, \dots, p_k$. Write such $n = sm^2$ with $s$ squarefree. Then $s$ is a product of a subset of $\{p_1, \dots, p_k\}$ ($2^k$ choices) and $m \le \sqrt N$. So there are at most $2^k\sqrt N$.
+
+      Hence $N < \frac N2 + 2^k\sqrt N$, i.e. $\sqrt N < 2^{k+1}$. Taking $N = 4^{k+1}$ gives a contradiction. $\blacksquare$
+
+  - id: nt-100
+    title: The product of primes up to n is less than 4ⁿ
+    subtopic: Primes
+    difficulty: hard
+    type: proof
+    tags: [primes, binomial coefficients, strong induction]
+    source: Erdős
+    related: [nt-101]
+    hints:
+      - |
+        Every prime in $(m+1, 2m+1]$ divides $\binom{2m+1}{m}$, and $\binom{2m+1}{m} \le 4^m$.
+    statement: |
+      Prove that $\prod_{p \le n}p < 4^n$ for every $n \ge 1$, the product being over primes.
+    solution: |
+      Strong induction. For $n = 1, 2$ the product is $1$ or $2$.
+
+      **Even $n > 2$.** $n$ is not prime, so the product equals that for $n - 1$, which is $< 4^{n-1} < 4^n$.
+
+      **Odd $n = 2m + 1 \ge 3$.** Every prime $p$ with $m + 1 < p \le 2m + 1$ divides $(2m+1)!$ but not $m!(m+1)!$, so it divides $\binom{2m+1}{m}$. Also $\binom{2m+1}{m} = \binom{2m+1}{m+1}$ and these two terms of $(1+1)^{2m+1}$ sum to at most $2^{2m+1}$, so $\binom{2m+1}{m} \le 4^m$. Hence
+      $$\prod_{p \le 2m+1}p \le \prod_{p\le m+1}p\cdot\binom{2m+1}{m} < 4^{m+1}\cdot4^m = 4^{2m+1}. \qquad\blacksquare$$
+
+  - id: nt-101
+    title: A lower bound for the prime-counting function
+    subtopic: Primes
+    difficulty: hard
+    type: proof
+    tags: [primes, binomial coefficients, legendre formula]
+    source: Chebyshev
+    related: [nt-038, nt-100]
+    statement: |
+      Prove that $\binom{2n}{n} \le (2n)^{\pi(2n)}$, and deduce
+      $$\pi(2n) \ge \frac{n\ln4 - \ln(2n+1)}{\ln(2n)}.$$
+      (So $\pi(x)$ grows at least like a constant times $x/\ln x$.)
+    solution: |
+      By Legendre, for a prime $p$,
+      $$v_p\binom{2n}{n} = \sum_{i\ge1}\left(\left\lfloor\frac{2n}{p^i}\right\rfloor - 2\left\lfloor\frac n{p^i}\right\rfloor\right).$$
+      Each bracket is $0$ or $1$ (as $\lfloor 2x\rfloor - 2\lfloor x\rfloor \in \{0,1\}$) and is $0$ once $p^i > 2n$. So $p^{v_p} \le 2n$. Only primes $p \le 2n$ divide $\binom{2n}{n}$, so $\binom{2n}{n} \le (2n)^{\pi(2n)}$.
+
+      Also $\binom{2n}{n}$ is the largest of the $2n + 1$ terms of $(1 + 1)^{2n}$, so $\binom{2n}{n} \ge \frac{4^n}{2n+1}$. Taking logarithms gives the bound. $\blacksquare$
+
+  - id: nt-102
+    title: Unique factorisation can fail
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [unique factorisation, counterexample]
+    source: Hilbert
+    related: [nt-008]
+    statement: |
+      Let $H = \{1, 5, 9, 13, \dots\} = \{4k + 1\}$, which is closed under multiplication. Call $h \in H$, $h > 1$, **$H$-prime** if it is not a product of two elements of $H$ both greater than 1. Show that $441$ has two different factorisations into $H$-primes. Which step of nt-008 fails in $H$?
+    solution: |
+      $441 = 9\cdot49 = 21\cdot21$. Each of $9, 21, 49$ is in $H$ and is $H$-prime: their only factorisations in $\Z$ are $3\cdot3$, $3\cdot7$ and $7\cdot7$, and $3, 7 \notin H$.
+
+      The proof of uniqueness uses Euclid's lemma: if a prime divides a product it divides a factor. In $H$, $9 \mid 21\cdot21$ but $9 \nmid 21$. Euclid's lemma came from Bézout, which needs subtraction, and $H$ is not closed under subtraction. $\blacksquare$
+
+  - id: nt-103
+    title: Unique factorisation fails in Z[√−5]
+    subtopic: Primes
+    difficulty: hard
+    type: proof
+    tags: [unique factorisation, norms, algebraic integers]
+    related: [nt-102]
+    hints:
+      - |
+        Use the norm $N(a + b\sqrt{-5}) = a^2 + 5b^2$, which is multiplicative.
+    statement: |
+      In $\Z[\sqrt{-5}] = \{a + b\sqrt{-5} : a, b \in \Z\}$, prove that $6 = 2\cdot3 = (1 + \sqrt{-5})(1 - \sqrt{-5})$ are two factorisations into irreducibles that are genuinely different.
+    solution: |
+      The norm $N(a + b\sqrt{-5}) = a^2 + 5b^2 = |a + b\sqrt{-5}|^2$ is multiplicative. Units have norm 1, so the units are $\pm1$.
+
+      An element $z$ of norm $4$, $9$ or $6$ factoring as $z = uv$ with neither a unit needs $N(u) \in \{2, 3\}$. But $a^2 + 5b^2 = 2$ or $3$ has no integer solutions ($b = 0$ forces $a^2 = 2$ or $3$). So $2$ ($N = 4$), $3$ ($N = 9$) and $1 \pm\sqrt{-5}$ ($N = 6$) are all irreducible.
+
+      The factorisations differ: $2$ is not $\pm(1 \pm\sqrt{-5})$, since the norms are $4 \ne 6$. $\blacksquare$
+
+  - id: nt-104
+    title: Equal squares mod p
+    subtopic: Primes
+    difficulty: easy
+    type: proof
+    tags: [primes, euclid lemma, squares]
+    statement: |
+      Let $p$ be prime. Prove that $a^2 \equiv b^2 \pmod p$ implies $a \equiv \pm b$. Show this fails mod 8.
+    solution: |
+      $p \mid a^2 - b^2 = (a - b)(a + b)$, so by Euclid's lemma $p \mid a - b$ or $p \mid a + b$.
+
+      Mod 8: $1^2 \equiv 3^2 \equiv 1$, but $3 \not\equiv \pm1 \pmod 8$. $\blacksquare$
+
+  - id: nt-105
+    title: Prime factors of Mersenne numbers
+    subtopic: Primes
+    difficulty: hard
+    type: proof
+    tags: [primes, mersenne, order]
+    related: [nt-009, nt-114]
+    statement: |
+      Let $p$ be an odd prime and $q$ a prime factor of $2^p - 1$. Prove that $q \equiv 1 \pmod{2p}$. (Use that if $a^k \equiv 1 \pmod q$, the least such positive $k$ divides every $m$ with $a^m \equiv 1$.)
+    solution: |
+      Let $d$ be the order of $2$ mod $q$: the least $d \ge 1$ with $2^d \equiv 1$. Since $2^p \equiv 1$, $d \mid p$; and $d \ne 1$ since $2 \not\equiv 1 \pmod q$. So $d = p$.
+
+      By Fermat, $2^{q-1} \equiv 1 \pmod q$ ($q$ is odd), so $p = d \mid q - 1$. Since $q - 1$ is even and $p$ is odd, $2p \mid q - 1$. $\blacksquare$
+
+      (Check: $2^{11} - 1 = 23\cdot89$ with $23 = 2\cdot11 + 1$, $89 = 4\cdot22 + 1$.)
+
+  - id: nt-106
+    title: Prime factors of Fermat numbers
+    subtopic: Primes
+    difficulty: hard
+    type: proof
+    tags: [primes, fermat numbers, order]
+    related: [nt-105, lg-131]
+    statement: |
+      Prove that every prime factor $q$ of $2^{2^n} + 1$ satisfies $q \equiv 1 \pmod{2^{n+1}}$.
+    solution: |
+      $2^{2^n} \equiv -1 \pmod q$, so $2^{2^{n+1}} \equiv 1$. The order $d$ of 2 mod $q$ divides $2^{n+1}$, so it is a power of 2. If $d \le 2^n$ then $d \mid 2^n$ and $2^{2^n} \equiv 1$, contradicting $2^{2^n} \equiv -1$ (as $q$ is odd, $1 \not\equiv -1$). So $d = 2^{n+1}$, and $d \mid q - 1$ by Fermat. $\blacksquare$
+
+      (This is how Euler found $641 = 5\cdot2^7 + 1$ dividing $2^{32} + 1$: only candidates $\equiv 1 \bmod 64$ need testing.)
+
+  - id: nt-107
+    title: Fourth powers of primes mod 240
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [primes, fermat, congruences]
+    related: [nt-010]
+    statement: |
+      Prove that $p^4 \equiv 1 \pmod{240}$ for every prime $p > 5$.
+    solution: |
+      $240 = 16\cdot3\cdot5$, and $p^4 - 1 = (p-1)(p+1)(p^2+1)$.
+
+      - **16:** $p$ is odd, so $(p-1)(p+1)$ is divisible by 8 (nt-010) and $p^2 + 1$ is even.
+      - **3:** $p^2 \equiv 1 \pmod 3$ since $3 \nmid p$.
+      - **5:** $p^4 \equiv 1 \pmod 5$ by Fermat.
+
+      These are coprime, so $240 \mid p^4 - 1$. $\blacksquare$
+
+  - id: nt-108
+    title: Last digits of even perfect numbers
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [perfect numbers, last digit]
+    related: [nt-046]
+    statement: |
+      Prove that every even perfect number ends in 6 or 8.
+    solution: |
+      By nt-046, $n = 2^{p-1}(2^p - 1)$ with $p$ prime. If $p = 2$, $n = 6$. Otherwise $p$ is odd. Powers of 2 mod 10 cycle $2, 4, 8, 6$ with period 4.
+
+      - $p \equiv 1 \pmod 4$: $2^{p-1}$ ends in 6 and $2^p$ ends in 2, so $2^p - 1$ ends in 1; $n$ ends in $6\cdot1 = 6$.
+      - $p \equiv 3 \pmod 4$: $2^{p-1}$ ends in 4 and $2^p$ ends in 8, so $2^p - 1$ ends in 7; $n$ ends in $4\cdot7 = 28$, i.e. 8.
+
+      $\blacksquare$ ($6, 28, 496, 8128, 33550336, \dots$)
+
+  - id: nt-109
+    title: Erdős's lower bound for π(n)
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [primes, counting, squarefree]
+    source: Erdős
+    related: [nt-099]
+    statement: |
+      Prove that $\pi(n) \ge \frac12\log_2 n$ for every $n \ge 1$.
+    solution: |
+      Every $m \le n$ can be written as $m = sk^2$ with $s$ squarefree: let $k^2$ be the largest square dividing $m$. Then $s$ is a product of a subset of the $\pi(n)$ primes up to $n$, and $k \le \sqrt n$. So the number of $m \le n$ is at most $2^{\pi(n)}\sqrt n$:
+      $$n \le 2^{\pi(n)}\sqrt n \implies 2^{\pi(n)} \ge \sqrt n \implies \pi(n) \ge \tfrac12\log_2 n. \qquad\blacksquare$$
+
+  - id: nt-110
+    title: Splitting into two coprime parts
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [gcd, parity, construction]
+    statement: |
+      Prove that every integer $n > 6$ is the sum of two coprime integers each greater than 1.
+    solution: |
+      - **$n$ odd:** $n = 2 + (n - 2)$, with $n - 2 \ge 5$ odd, so coprime to 2.
+      - **$n \equiv 0 \pmod 4$:** $n = \left(\frac n2 - 1\right) + \left(\frac n2 + 1\right)$. Both are odd (as $\frac n2$ is even) and differ by 2, so their gcd divides 2 and is odd, hence 1. And $\frac n2 - 1 \ge 3$.
+      - **$n \equiv 2 \pmod 4$:** $n = \left(\frac n2 - 2\right) + \left(\frac n2 + 2\right)$. Both are odd and differ by 4, so their gcd is 1. And $n \ge 10$ gives $\frac n2 - 2 \ge 3$.
+
+      $\blacksquare$
+
+  - id: nt-111
+    title: Harmonic numbers are never integers
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [harmonic numbers, p-adic valuation, parity]
+    statement: |
+      Prove that $H_n = 1 + \frac12 + \cdots + \frac1n$ is not an integer for any $n \ge 2$.
+    solution: |
+      Let $2^k$ be the largest power of 2 with $2^k \le n$, so $k \ge 1$, and let $L = \mathrm{lcm}(1, \dots, n)$, so $v_2(L) = k$. Then
+      $$LH_n = \sum_{j=1}^n\frac Lj.$$
+      For $j = 2^k$, $L/j$ is odd. For any other $j \le n$, $v_2(j) < k$ (the only multiple of $2^k$ up to $n$ is $2^k$ itself, as $2^{k+1} > n$), so $L/j$ is even. Hence $LH_n$ is odd. If $H_n$ were an integer, $LH_n$ would be even since $L$ is. $\blacksquare$
+
+  - id: nt-112
+    title: Primes p, p + 10, p + 14
+    subtopic: Primes
+    difficulty: easy
+    type: compute
+    tags: [primes, congruences]
+    related: [nt-082]
+    statement: |
+      Find all primes $p$ such that $p + 10$ and $p + 14$ are also prime.
+    solution: |
+      Mod 3, $p, p + 10, p + 14 \equiv p, p + 1, p + 2$, so one is divisible by 3 and must equal 3. Only $p = 3$ is possible, giving $3, 13, 17$, all prime. **Answer: $p = 3$.**
+
+  - id: nt-113
+    title: Harmonic sums and odd primes
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [harmonic numbers, primes, pairing]
+    related: [nt-111]
+    statement: |
+      Let $p$ be an odd prime. Prove that when $1 + \frac12 + \cdots + \frac{1}{p-1}$ is written in lowest terms, its numerator is divisible by $p$.
+    solution: |
+      Pair $k$ with $p - k$:
+      $$H_{p-1} = \sum_{k=1}^{(p-1)/2}\left(\frac1k + \frac1{p-k}\right) = p\sum_{k=1}^{(p-1)/2}\frac{1}{k(p-k)}.$$
+      Multiplying by $(p-1)!$, $(p-1)!\,H_{p-1} = p\cdot M$ for an integer $M$. So $H_{p-1} = \frac{pM}{(p-1)!}$. Since $p \nmid (p-1)!$, reducing this fraction cannot cancel the factor $p$ from the numerator. $\blacksquare$
+
+      (Wolstenholme showed $p^2$ divides it for $p \ge 5$.)
+
+  - id: nt-114
+    title: A factor of 2²³ − 1
+    subtopic: Primes
+    difficulty: medium
+    type: compute
+    tags: [mersenne, modular exponentiation]
+    related: [nt-105]
+    statement: |
+      Show that $47 \mid 2^{23} - 1$. How does nt-105 make 47 a natural candidate?
+    solution: |
+      Mod 47: $2^{10} = 1024 = 21\cdot47 + 37 \equiv 37$; $2^{20} \equiv 37^2 = 1369 = 29\cdot47 + 6 \equiv 6$; $2^{23} \equiv 6\cdot8 = 48 \equiv 1$. So $47 \mid 2^{23} - 1$.
+
+      By nt-105, any prime factor of $2^{23} - 1$ is $\equiv 1 \pmod{46}$, and the first candidate is $47$.
+
+  - id: nt-115
+    title: Euclid numbers need not be prime
+    subtopic: Primes
+    difficulty: easy
+    type: compute
+    tags: [primes, euclid]
+    related: [nt-005]
+    statement: |
+      Euclid's proof uses $N = p_1p_2\cdots p_k + 1$. Show that $2\cdot3\cdot5\cdot7\cdot11\cdot13 + 1$ is not prime. Why doesn't this damage Euclid's argument?
+    solution: |
+      $2\cdot3\cdot5\cdot7\cdot11\cdot13 + 1 = 30031 = 59\cdot509$.
+
+      Euclid's argument never claims $N$ is prime; it only uses that $N$ has **some** prime factor, which cannot be any of $p_1, \dots, p_k$. Here those factors are $59$ and $509$, both new.
+
+  - id: nt-116
+    title: Goldbach partitions of 100
+    subtopic: Primes
+    difficulty: easy
+    type: compute
+    tags: [primes, goldbach]
+    related: [lg-076]
+    statement: |
+      In how many ways can 100 be written as a sum of two primes (ignoring order)?
+    solution: |
+      Check odd primes $p \le 50$ and whether $100 - p$ is prime:
+      $$3 + 97,\ 11 + 89,\ 17 + 83,\ 29 + 71,\ 41 + 59,\ 47 + 53.$$
+      (The others fail: $95, 93, 87, 81, 77, 69, 63, 57$ are composite, and $2 + 98$ fails.) **6 ways.**
+
+  - id: nt-117
+    title: A Fermat-quotient sum
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [fermat, congruences, inverses]
+    source: IMO 2005 (idea)
+    statement: |
+      Prove that every prime $p > 3$ divides $2^{p-2} + 3^{p-2} + 6^{p-2} - 1$.
+    solution: |
+      Let $S = 2^{p-2} + 3^{p-2} + 6^{p-2} - 1$. Multiply by 6 and use Fermat ($a^{p-1} \equiv 1$ for $p \nmid a$):
+      $$6S = 3\cdot2^{p-1} + 2\cdot3^{p-1} + 6^{p-1} - 6 \equiv 3 + 2 + 1 - 6 = 0 \pmod p.$$
+      Since $p \nmid 6$, $p \mid S$. $\blacksquare$
+
+      (In other words $2^{p-2} \equiv \frac12$, etc., and $\frac12 + \frac13 + \frac16 = 1$.)
+
+  - id: nt-118
+    title: Every prime other than 2 and 5 divides a repunit
+    subtopic: Primes
+    difficulty: medium
+    type: proof
+    tags: [primes, repunits, fermat]
+    related: [nt-058, nt-060]
+    statement: |
+      Prove that every prime $p \ne 2, 5$ divides some number $11\cdots1$ (all digits 1).
+    solution: |
+      $p = 3$ divides $111$. Otherwise $\gcd(p, 10) = \gcd(p, 9) = 1$. By Fermat $p \mid 10^{p-1} - 1 = 9\underbrace{1\cdots1}_{p-1}$, and since $p \nmid 9$, $p$ divides the repunit with $p - 1$ ones. $\blacksquare$
+
+      (No multiple of 2 or 5 ends in 1, so those primes really are exceptions.)
+
+  - id: nt-119
+    title: The key step of Euclid's algorithm
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [gcd, euclidean algorithm]
+    related: [in-152]
+    statement: |
+      Prove that $\gcd(a, b) = \gcd(a - kb, b)$ for every integer $k$, and hence $\gcd(a, b) = \gcd(b, a \bmod b)$ for $b > 0$.
+    solution: |
+      If $d \mid a$ and $d \mid b$ then $d \mid a - kb$. Conversely if $d \mid a - kb$ and $d \mid b$ then $d \mid (a - kb) + kb = a$. So the two pairs have the same common divisors, hence the same greatest one.
+
+      With $a = qb + r$, $r = a \bmod b$, take $k = q$. $\blacksquare$
+
+  - id: nt-120
+    title: Euclid and Bézout for 252 and 198
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: compute
+    tags: [euclidean algorithm, bezout]
+    related: [nt-011]
+    statement: |
+      Find $\gcd(252, 198)$ and integers $x, y$ with $252x + 198y = \gcd(252, 198)$.
+    solution: |
+      $$252 = 1\cdot198 + 54,\quad 198 = 3\cdot54 + 36,\quad 54 = 1\cdot36 + 18,\quad 36 = 2\cdot18.$$
+      So the gcd is **18**. Back-substituting:
+      $$18 = 54 - 36 = 54 - (198 - 3\cdot54) = 4\cdot54 - 198 = 4(252 - 198) - 198 = 4\cdot252 - 5\cdot198.$$
+      $x = 4$, $y = -5$. Check: $1008 - 990 = 18$.
+
+  - id: nt-121
+    title: Fractions that never reduce
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [gcd, linear combinations]
+    source: IMO 1959
+    statement: |
+      Prove that for every integer $n$, $\gcd(2n+1, 3n+1) = 1$ and $\gcd(21n + 4, 14n + 3) = 1$.
+    solution: |
+      Any common divisor of two numbers divides every integer combination of them.
+
+      - $3(2n+1) - 2(3n+1) = 1$.
+      - $3(14n + 3) - 2(21n + 4) = 1$.
+
+      So in each case a common divisor divides 1. (Thus $\frac{21n+4}{14n+3}$ is always in lowest terms.) $\blacksquare$
+
+  - id: nt-122
+    title: Gauss's lemma
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [gcd, bezout, divisibility]
+    related: [nt-004]
+    statement: |
+      Prove that if $\gcd(a, b) = 1$ and $a \mid bc$, then $a \mid c$.
+    solution: |
+      By Bézout, $ax + by = 1$. Multiplying by $c$: $c = acx + bcy$. Both terms are divisible by $a$ (the second because $a \mid bc$). $\blacksquare$
+
+      (Euclid's lemma is the case where $a$ is prime.)
+
+  - id: nt-123
+    title: Coprime divisors multiply
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [gcd, divisibility]
+    related: [nt-122]
+    statement: |
+      Prove that if $\gcd(a, b) = 1$, $a \mid c$ and $b \mid c$, then $ab \mid c$. Show coprimality is needed.
+    solution: |
+      Write $c = am$. Then $b \mid am$ with $\gcd(a,b) = 1$, so $b \mid m$ by Gauss's lemma: $m = bk$ and $c = abk$.
+
+      Without coprimality: $4 \mid 4$ and $2 \mid 4$ but $8 \nmid 4$. $\blacksquare$
+
+  - id: nt-124
+    title: Coprime to a product
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [gcd, primes]
+    statement: |
+      Prove that $\gcd(ab, c) = 1$ if and only if $\gcd(a, c) = 1$ and $\gcd(b, c) = 1$.
+    solution: |
+      **($\Rightarrow$)** A common divisor of $a$ and $c$ also divides $ab$ and $c$, so it is $\pm1$. Same for $b$.
+
+      **($\Leftarrow$)** If $\gcd(ab, c) > 1$, take a prime $p$ dividing both. By Euclid's lemma $p \mid a$ or $p \mid b$, and $p \mid c$, contradicting one of the hypotheses. $\blacksquare$
+
+  - id: nt-125
+    title: Scaling the gcd
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [gcd, bezout]
+    statement: |
+      Prove that $\gcd(ka, kb) = k\gcd(a, b)$ for $k > 0$ (with $a, b$ not both zero).
+    solution: |
+      By nt-012, $\gcd(a, b)$ is the least positive element of $\{ax + by\}$. The set $\{kax + kby\}$ is $k$ times that set, so its least positive element is $k\gcd(a,b)$, and that is $\gcd(ka, kb)$. $\blacksquare$
+
+  - id: nt-126
+    title: Dividing out the gcd
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [gcd, bezout]
+    statement: |
+      Let $d = \gcd(a, b) > 0$. Prove that $\gcd(a/d, b/d) = 1$.
+    solution: |
+      By Bézout $ax + by = d$; dividing by $d$, $\frac ad x + \frac bd y = 1$. So any common divisor of $a/d$ and $b/d$ divides 1. $\blacksquare$
+
+  - id: nt-127
+    title: The lcm divides every common multiple
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [lcm, division algorithm]
+    related: [nt-013]
+    statement: |
+      Let $L = \mathrm{lcm}(a, b)$ be the least positive common multiple of non-zero $a, b$. Prove that every common multiple of $a$ and $b$ is a multiple of $L$.
+    solution: |
+      Let $m$ be a common multiple and divide: $m = qL + r$ with $0 \le r < L$. Then $r = m - qL$ is a difference of common multiples, hence a common multiple. If $r > 0$ it would be a positive common multiple smaller than $L$. So $r = 0$ and $L \mid m$. $\blacksquare$
+
+  - id: nt-128
+    title: Sums and differences of coprime numbers
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [gcd, coprime]
+    statement: |
+      Let $\gcd(a, b) = 1$. Prove that $\gcd(a + b, a - b) \in \{1, 2\}$ and $\gcd(a + b, ab) = 1$.
+    solution: |
+      **First.** If $d$ divides $a + b$ and $a - b$, it divides their sum $2a$ and difference $2b$, hence $\gcd(2a, 2b) = 2$.
+
+      **Second.** If a prime $p$ divides $ab$ and $a + b$, then $p \mid a$ or $p \mid b$; in the first case $p \mid (a + b) - a = b$, in the second $p \mid a$. Either way $p$ divides both $a$ and $b$, a contradiction. $\blacksquare$
+
+  - id: nt-129
+    title: gcd of squares
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [gcd, prime factorisation]
+    related: [nt-013]
+    statement: |
+      Prove that $\gcd(a^2, b^2) = \gcd(a, b)^2$ for positive integers $a, b$.
+    solution: |
+      With $a = \prod p^{\alpha_p}$ and $b = \prod p^{\beta_p}$, $\gcd(a, b) = \prod p^{\min(\alpha_p, \beta_p)}$ (nt-013). So
+      $$\gcd(a^2, b^2) = \prod p^{\min(2\alpha_p, 2\beta_p)} = \prod p^{2\min(\alpha_p,\beta_p)} = \gcd(a,b)^2. \qquad\blacksquare$$
+
+  - id: nt-130
+    title: Coprime factors of a square
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [gcd, squares, prime factorisation]
+    related: [nt-131]
+    statement: |
+      Prove that if $a, b$ are positive, coprime, and $ab$ is a perfect square, then $a$ and $b$ are both perfect squares.
+    solution: |
+      Let $ab = c^2$. For a prime $p \mid a$, $p \nmid b$, so $v_p(a) = v_p(ab) = 2v_p(c)$ is even. So every prime appears in $a$ to an even power and $a$ is a square; likewise $b$. $\blacksquare$
+
+      (This is a key step in classifying Pythagorean triples.)
+
+  - id: nt-131
+    title: Consecutive factorials plus one
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [gcd, factorial]
+    statement: |
+      Prove that $\gcd(n! + 1, (n+1)! + 1) = 1$ for every $n \ge 1$.
+    solution: |
+      Let $d$ be the gcd. Then $d$ divides $(n+1)(n! + 1) - \big((n+1)! + 1\big) = n$. But $n \mid n!$, so $d \mid n!$, and $d \mid n! + 1$; hence $d \mid 1$. $\blacksquare$
+
+  - id: nt-132
+    title: Euclid's algorithm is fast
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [euclidean algorithm, complexity]
+    related: [nt-157]
+    statement: |
+      Run Euclid's algorithm on $a \ge b > 0$: $r_0 = a$, $r_1 = b$, and $r_{i+1} = r_{i-1} \bmod r_i$ until some $r_{k+1} = 0$ (so $k$ divisions). Prove that $r_{i+2} < \frac12 r_i$, and deduce $k \le 2\log_2 b + 2$.
+    solution: |
+      $r_i = q r_{i+1} + r_{i+2}$ with $q \ge 1$ and $r_{i+2} < r_{i+1}$, so $r_i \ge r_{i+1} + r_{i+2} > 2r_{i+2}$.
+
+      Hence $r_{2j+1} < b/2^j$ and $r_{2j} < r_{2j-1} < b/2^{j-1}$. The last non-zero remainder $r_k \ge 1$:
+
+      - if $k = 2j + 1$: $1 < b/2^j$, so $j < \log_2b$ and $k < 2\log_2b + 1$;
+      - if $k = 2j$: $1 < b/2^{j-1}$, so $j < \log_2 b + 1$ and $k < 2\log_2b + 2$. $\blacksquare$
+
+  - id: nt-133
+    title: Fibonacci numbers are the worst case for Euclid
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: compute
+    tags: [euclidean algorithm, fibonacci]
+    related: [nt-157, nt-014]
+    statement: |
+      Run Euclid's algorithm on $(F_{n+1}, F_n)$ for $n \ge 2$. How many divisions does it take, and what are the quotients?
+    solution: |
+      For $m \ge 3$, $F_{m+1} = 1\cdot F_m + F_{m-1}$ with $0 < F_{m-1} < F_m$, so each division has quotient 1 and steps the pair down: $(F_{n+1}, F_n) \to (F_n, F_{n-1}) \to \cdots \to (F_3, F_2) = (2, 1)$. The last division is $2 = 2\cdot1 + 0$.
+
+      So there are $n - 1$ divisions, with quotients $1, 1, \dots, 1, 2$. Small quotients make the remainders shrink as slowly as possible, which is why this is the worst case (nt-157).
+
+  - id: nt-134
+    title: The binary gcd algorithm
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [gcd, algorithms, parity]
+    statement: |
+      For positive integers, prove: (1) $\gcd(a, b) = 2\gcd(a/2, b/2)$ if both are even; (2) $\gcd(a, b) = \gcd(a/2, b)$ if $a$ is even and $b$ odd; (3) $\gcd(a, b) = \gcd(a - b, b)$ if $a > b$. Explain why repeatedly applying these rules computes the gcd using only halving and subtraction.
+    solution: |
+      1. nt-125 with $k = 2$.
+      2. Any common divisor $d$ of $a$ and $b$ is odd (it divides $b$), so $d \mid a$ implies $d \mid a/2$ (as $\gcd(d, 2) = 1$). Conversely a common divisor of $a/2$ and $b$ divides $a$.
+      3. nt-119.
+
+      **Algorithm.** Apply (1) or (2) while some number is even; when both are odd and different, apply (3) to the larger, which makes it even; stop when they are equal, at which point the gcd is that common value (times the factors of 2 from rule (1)). Each step reduces $a + b$, so it terminates. $\blacksquare$
+
+  - id: nt-135
+    title: Three numbers with gcd 1
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: compute
+    tags: [gcd, bezout]
+    statement: |
+      Show that $\gcd(6, 10, 15) = 1$ although each pair has gcd greater than 1, and find integers with $6x + 10y + 15z = 1$.
+    solution: |
+      The pairwise gcds are $2, 3, 5$. A common divisor of all three divides $\gcd(2, 15) = 1$.
+
+      $6 + 10 - 15 = 1$, so $(x, y, z) = (1, 1, -1)$.
+
+  - id: nt-136
+    title: All integer combinations
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [bezout, gcd]
+    related: [nt-012]
+    statement: |
+      Let $d = \gcd(a, b)$. Prove that $\{ax + by : x, y \in \Z\}$ is exactly the set of multiples of $d$.
+    solution: |
+      Every $ax + by$ is a multiple of $d$, since $d \mid a$ and $d \mid b$. Conversely, by Bézout $d = ax_0 + by_0$, so $kd = a(kx_0) + b(ky_0)$. $\blacksquare$
+
+  - id: nt-137
+    title: Measuring with two jugs
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: compute
+    tags: [bezout, puzzles]
+    statement: |
+      With an unmarked 3-litre jug, an unmarked 5-litre jug and a tap, measure exactly 4 litres. Which amounts could you measure with 6- and 9-litre jugs?
+    solution: |
+      $4 = 2\cdot5 - 2\cdot3$: fill the 5, pour into the 3 (leaving 2 in the 5), empty the 3, pour the 2 into the 3, fill the 5, top up the 3 (using 1 litre). The 5-litre jug now holds 4.
+
+      With 6 and 9, every amount in either jug is always a multiple of $\gcd(6, 9) = 3$ (each operation adds or subtracts multiples of 3). So only $3, 6, 9$ can be measured.
+
+  - id: nt-138
+    title: Solving linear congruences
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [congruences, bezout, gcd]
+    related: [nt-016]
+    statement: |
+      Let $d = \gcd(a, n)$. Prove that $ax \equiv b \pmod n$ has a solution iff $d \mid b$, and that it then has exactly $d$ solutions modulo $n$.
+    solution: |
+      $ax \equiv b \pmod n$ iff $ax + ny = b$ for some integer $y$, which by nt-136 is solvable iff $d \mid b$.
+
+      Suppose $d \mid b$. Dividing by $d$, the congruence is equivalent to $\frac adx \equiv \frac bd \pmod{\frac nd}$, and $\gcd(\frac ad, \frac nd) = 1$, so $\frac ad$ is invertible mod $\frac nd$ and there is a unique solution $x_0$ mod $\frac nd$. Mod $n$, the solutions are $x_0 + k\frac nd$ for $k = 0, 1, \dots, d - 1$: exactly $d$ of them. $\blacksquare$
+
+  - id: nt-139
+    title: An inverse modulo 101
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: compute
+    tags: [modular inverse, euclidean algorithm]
+    related: [nt-016]
+    statement: |
+      Find $43^{-1} \bmod 101$.
+    solution: |
+      $$101 = 2\cdot43 + 15,\quad 43 = 2\cdot15 + 13,\quad 15 = 13 + 2,\quad 13 = 6\cdot2 + 1.$$
+      Back-substituting:
+      $$1 = 13 - 6\cdot2 = 7\cdot13 - 6\cdot15 = 7\cdot43 - 20\cdot15 = 47\cdot43 - 20\cdot101.$$
+      So $43^{-1} \equiv 47$. Check: $43\cdot47 = 2021 = 20\cdot101 + 1$.
+
+  - id: nt-140
+    title: The lcm of 1 to 10
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: compute
+    tags: [lcm, prime factorisation]
+    statement: |
+      Compute $\mathrm{lcm}(1, 2, \dots, 10)$, and describe $\mathrm{lcm}(1, \dots, n)$ in general.
+    solution: |
+      In general $\mathrm{lcm}(1, \dots, n) = \prod_{p \le n}p^{\lfloor\log_p n\rfloor}$: each prime appears to the highest power not exceeding $n$.
+
+      For $n = 10$: $2^3\cdot3^2\cdot5\cdot7 = 2520$.
+
+  - id: nt-141
+    title: Lowest terms are unique
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [gcd, rationals]
+    related: [nt-122]
+    statement: |
+      Prove that every rational number has exactly one representation $a/b$ with $b > 0$ and $\gcd(a, b) = 1$.
+    solution: |
+      **Existence.** Given $p/q$ with $q > 0$, divide both by $d = \gcd(p, q)$ (nt-126).
+
+      **Uniqueness.** If $a/b = c/d$ with $b, d > 0$ and both in lowest terms, then $ad = bc$. So $b \mid ad$ with $\gcd(a, b) = 1$, giving $b \mid d$ (nt-122); symmetrically $d \mid b$. Both are positive, so $b = d$, and then $a = c$. $\blacksquare$
+
+  - id: nt-142
+    title: gcd of consecutive values of n² + 1
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [gcd, polynomials]
+    statement: |
+      Prove that $\gcd(n^2 + 1, (n+1)^2 + 1)$ is 1 or 5, and that it is 5 exactly when $n \equiv 2 \pmod 5$.
+    solution: |
+      Let $d$ be the gcd. Then $d \mid (n+1)^2 + 1 - (n^2 + 1) = 2n + 1$. Also $d \mid 4(n^2 + 1) = (2n+1)(2n - 1) + 5$, so $d \mid 5$.
+
+      $d = 5$ iff $5 \mid 2n + 1$ and $5 \mid n^2 + 1$. The first gives $n \equiv 2 \pmod 5$, and then $n^2 + 1 \equiv 5 \equiv 0$ and $(n+1)^2 + 1 \equiv 10 \equiv 0$. $\blacksquare$
+
+  - id: nt-143
+    title: An irreducible fraction
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [gcd, polynomials]
+    statement: |
+      Prove that $\dfrac{n^2 + n - 1}{n^2 + 2n}$ is in lowest terms for every positive integer $n$.
+    solution: |
+      $n^2 + 2n = n(n+2)$, so it suffices that $n^2 + n - 1$ is coprime to $n$ and to $n + 2$ (nt-124).
+
+      - $n^2 + n - 1 = n(n+1) - 1$, so any common divisor with $n$ divides 1.
+      - $n^2 + n - 1 = (n+2)(n-1) + 1$, so any common divisor with $n + 2$ divides 1. $\blacksquare$
+
+  - id: nt-144
+    title: Powers of coprime numbers
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [gcd, primes]
+    statement: |
+      Prove that if $\gcd(a, b) = 1$ then $\gcd(a^m, b^n) = 1$ for all $m, n \ge 1$.
+    solution: |
+      If a prime $p$ divided both $a^m$ and $b^n$, then $p \mid a$ and $p \mid b$ (nt-080), contradicting $\gcd(a,b) = 1$. $\blacksquare$
+
+  - id: nt-145
+    title: Small Bézout coefficients
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [bezout, inequalities]
+    statement: |
+      Let $a, b$ be positive with $d = \gcd(a,b)$. Prove that there are $x, y$ with $ax + by = d$, $0 \le x < b/d$ and $|y| \le a/d$.
+    solution: |
+      Start with any solution $ax + by = d$. Replacing $(x, y)$ by $(x - tb/d,\ y + ta/d)$ preserves the equation, so we can arrange $0 \le x < b/d$.
+
+      Then $by = d - ax$ with $0 \le ax < ab/d$, so
+      $$d - \frac{ab}{d} < by \le d,\qquad\text{i.e.}\qquad -\frac ad < -\frac ad + \frac db < y \le \frac db \le 1.$$
+      Since $d \le a$, $1 \le a/d$, so $|y| \le a/d$. $\blacksquare$
+
+  - id: nt-146
+    title: Lattice points on a segment
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [gcd, lattice points, bezout]
+    statement: |
+      Prove that the segment from $(0, 0)$ to $(a, b)$, with $a, b$ non-negative integers not both zero, contains exactly $\gcd(a, b) + 1$ lattice points (including the endpoints).
+    solution: |
+      Let $d = \gcd(a,b)$, $a = da'$, $b = db'$ with $\gcd(a', b') = 1$. The points of the segment are $t(a, b)$ for $t \in [0,1]$; write $s = td \in [0, d]$, so the point is $(sa', sb')$.
+
+      If $s$ is an integer, this is a lattice point; that gives $d + 1$ points. Conversely if $sa'$ and $sb'$ are integers, then with $a'u + b'v = 1$ (Bézout), $s = (sa')u + (sb')v$ is an integer. So there are exactly $d + 1$. $\blacksquare$
+
+  - id: nt-147
+    title: The mediant lies between
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [fractions, mediants, inequalities]
+    related: [nt-148]
+    statement: |
+      Let $b, d > 0$ and $\frac ab < \frac cd$. Prove that $\frac ab < \frac{a+c}{b+d} < \frac cd$.
+    solution: |
+      $\frac ab < \frac cd$ means $bc - ad > 0$. Then
+      $$\frac{a+c}{b+d} - \frac ab = \frac{bc - ad}{b(b+d)} > 0, \qquad \frac cd - \frac{a+c}{b+d} = \frac{bc - ad}{d(b+d)} > 0. \qquad\blacksquare$$
+
+  - id: nt-148
+    title: Farey neighbours
+    subtopic: GCD & Euclid
+    difficulty: hard
+    type: proof
+    tags: [fractions, farey sequence, mediants]
+    source: Farey, Cauchy
+    related: [nt-147]
+    statement: |
+      Let $b, d > 0$ and $bc - ad = 1$. Prove that every fraction $\frac xy$ ($y > 0$) strictly between $\frac ab$ and $\frac cd$ has $y \ge b + d$. (So the mediant $\frac{a+c}{b+d}$ is the fraction between them with smallest denominator.)
+    solution: |
+      $bx - ay$ and $cy - dx$ are positive integers (since $\frac ab < \frac xy < \frac cd$), so
+      $$\frac xy - \frac ab = \frac{bx - ay}{by} \ge \frac1{by}, \qquad \frac cd - \frac xy = \frac{cy - dx}{dy} \ge \frac1{dy}.$$
+      Adding,
+      $$\frac{1}{bd} = \frac{bc - ad}{bd} = \frac cd - \frac ab \ge \frac1{by} + \frac1{dy} = \frac{b + d}{bdy},$$
+      so $y \ge b + d$. $\blacksquare$
+
+  - id: nt-149
+    title: Chicken McNuggets
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: compute
+    tags: [frobenius, linear combinations]
+    related: [nt-022, in-248]
+    statement: |
+      Nuggets come in boxes of 6, 9 and 20. Show that 43 nuggets can't be bought exactly but every larger number can.
+    solution: |
+      **43.** With $c$ boxes of 20, $43 - 20c$ must be a sum of 6s and 9s, so a multiple of 3 other than 3. $c = 0, 1, 2$ give $43, 23, 3$: the first two aren't multiples of 3, and $3$ isn't a sum of 6s and 9s.
+
+      **44–49.** $44 = 20 + 4\cdot6$, $45 = 5\cdot9$, $46 = 2\cdot20 + 6$, $47 = 20 + 3\cdot9$, $48 = 8\cdot6$, $49 = 2\cdot20 + 9$.
+
+      **Beyond.** Six consecutive amounts work, so adding boxes of 6 gives every larger amount (strong induction stepping back by 6).
+
+  - id: nt-150
+    title: gcd distributes over lcm
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [gcd, lcm, prime factorisation]
+    related: [nt-013]
+    statement: |
+      Prove that $\gcd(a, \mathrm{lcm}(b, c)) = \mathrm{lcm}(\gcd(a, b), \gcd(a, c))$ for positive integers.
+    solution: |
+      Compare the exponent of each prime $p$; write $\alpha, \beta, \gamma$ for its exponents in $a, b, c$. We need
+      $$\min(\alpha, \max(\beta,\gamma)) = \max(\min(\alpha,\beta), \min(\alpha,\gamma)).$$
+      By symmetry assume $\beta \le \gamma$. Then the left side is $\min(\alpha, \gamma)$, and since $\min(\alpha,\beta) \le \min(\alpha,\gamma)$, so is the right side. $\blacksquare$
+
+  - id: nt-151
+    title: gcd times lcm for three numbers
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: compute
+    tags: [gcd, lcm, counterexample]
+    related: [nt-013]
+    statement: |
+      Is $\gcd(a,b,c)\cdot\mathrm{lcm}(a,b,c) = abc$ for all positive integers? Why does the proof of nt-013 not extend?
+    solution: |
+      **No.** $a = b = c = 2$: $\gcd\cdot\mathrm{lcm} = 2\cdot2 = 4 \ne 8$.
+
+      nt-013 used $\min(x,y) + \max(x,y) = x + y$. For three numbers, $\min + \max$ misses the middle exponent: $\min(x,y,z) + \max(x,y,z) \ne x + y + z$ in general.
+
+  - id: nt-152
+    title: Coprime iff 1 is a combination
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [gcd, bezout, coprime]
+    statement: |
+      Prove that $\gcd(m, n) = 1$ if and only if there are integers $x, y$ with $mx + ny = 1$.
+    solution: |
+      **($\Rightarrow$)** Bézout.
+
+      **($\Leftarrow$)** Any common divisor of $m$ and $n$ divides $mx + ny = 1$. $\blacksquare$
+
+  - id: nt-153
+    title: gcd of consecutive triangular numbers
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: compute
+    tags: [gcd, triangular numbers]
+    statement: |
+      Let $T_n = \frac{n(n+1)}{2}$. Find $\gcd(T_n, T_{n+1})$ in terms of $n$.
+    solution: |
+      **$n = 2m$ even.** $T_n = m(2m+1)$ and $T_{n+1} = (2m+1)(m+1)$, so the gcd is $(2m+1)\gcd(m, m+1) = 2m + 1 = n + 1$.
+
+      **$n = 2m - 1$ odd.** $T_n = (2m-1)m$ and $T_{n+1} = m(2m+1)$, so the gcd is $m\gcd(2m-1, 2m+1) = m$, since two odd numbers differing by 2 are coprime. That is $\frac{n+1}{2}$.
+
+      E.g. $\gcd(T_4, T_5) = \gcd(10, 15) = 5$ and $\gcd(T_5, T_6) = \gcd(15, 21) = 3$.
+
+  - id: nt-154
+    title: Euclid's algorithm and continued fractions
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: compute
+    tags: [euclidean algorithm, continued fractions]
+    related: [nt-011]
+    statement: |
+      Use the Euclidean algorithm for $\gcd(1071, 462)$ (nt-011) to write $\frac{1071}{462}$ as a continued fraction.
+    solution: |
+      The quotients were $2, 3, 7$:
+      $$\frac{1071}{462} = 2 + \frac{147}{462} = 2 + \cfrac{1}{\frac{462}{147}} = 2 + \cfrac{1}{3 + \frac{21}{147}} = 2 + \cfrac{1}{3 + \cfrac17}.$$
+      Check: $3 + \frac17 = \frac{22}7$, and $2 + \frac{7}{22} = \frac{51}{22} = \frac{1071}{462}$ (dividing by 21).
+
+  - id: nt-155
+    title: Congruent numbers share gcds with the modulus
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: proof
+    tags: [gcd, congruences]
+    statement: |
+      Prove that if $a \equiv b \pmod n$ then $\gcd(a, n) = \gcd(b, n)$.
+    solution: |
+      $a = b + kn$, so by nt-119, $\gcd(a, n) = \gcd(b + kn, n) = \gcd(b, n)$. $\blacksquare$
+
+      (So "being coprime to $n$" is a property of residue classes, which makes $\varphi(n)$ well defined.)
+
+  - id: nt-156
+    title: Counting coprime pairs
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: compute
+    tags: [gcd, euler phi, counting]
+    statement: |
+      How many ordered pairs $(a, b)$ with $1 \le a, b \le 6$ have $\gcd(a, b) = 1$?
+    solution: |
+      Pairs with $a = b$: only $(1, 1)$. Pairs with $a < b$: for each $b$ there are $\varphi(b)$ choices of $a < b$ coprime to $b$, so $\varphi(2) + \cdots + \varphi(6) = 1 + 2 + 2 + 4 + 2 = 11$. By symmetry 11 more with $a > b$.
+
+      **Total: $1 + 2\cdot11 = 23$** out of 36. (As $n \to \infty$ the proportion tends to $6/\pi^2 \approx 0.61$.)
+
+  - id: nt-157
+    title: Lamé's theorem
+    subtopic: GCD & Euclid
+    difficulty: hard
+    type: proof
+    tags: [euclidean algorithm, fibonacci, complexity]
+    source: Lamé, 1844
+    related: [nt-133, nt-132, in-019]
+    statement: |
+      Prove that if Euclid's algorithm on $a > b > 0$ takes $k$ divisions, then $b \ge F_{k+1}$ and $a \ge F_{k+2}$. Deduce that the number of divisions is at most 5 times the number of decimal digits of $b$.
+    solution: |
+      Induct on $k$. If $k = 1$: $b \ge 1 = F_2$ and $a > b$ gives $a \ge 2 = F_3$.
+
+      If $k \ge 2$, the first division is $a = qb + r$ with $0 < r < b$, $q \ge 1$, and the algorithm on $(b, r)$ takes $k - 1$ divisions. By hypothesis $r \ge F_k$ and $b \ge F_{k+1}$. Then $a \ge b + r \ge F_{k+1} + F_k = F_{k+2}$.
+
+      **Digits.** By in-019, $F_{k+1} \ge \varphi^{k-1}$, so $b \ge \varphi^{k-1}$ and $k - 1 \le \log_\varphi b$. If $b$ has $D$ digits, $b < 10^D$, so $k - 1 < D\log_\varphi10 \approx 4.785D$. Since $k$ is an integer, $k \le \lceil 4.785D\rceil \le 5D$. $\blacksquare$
+
+  - id: nt-158
+    title: gcd with a product of coprime numbers
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [gcd, multiplicative, prime factorisation]
+    statement: |
+      Prove that if $\gcd(b, c) = 1$ then $\gcd(a, bc) = \gcd(a, b)\gcd(a, c)$ (for positive integers).
+    solution: |
+      Compare exponents of a prime $p$, with $\alpha, \beta, \gamma$ its exponents in $a, b, c$. As $b, c$ are coprime, $\beta = 0$ or $\gamma = 0$; say $\gamma = 0$. Then
+      $$\min(\alpha, \beta + \gamma) = \min(\alpha, \beta) = \min(\alpha, \beta) + \min(\alpha, 0) = \min(\alpha,\beta) + \min(\alpha,\gamma).$$
+      So the exponents agree for every prime. $\blacksquare$
+
+  - id: nt-159
+    title: Denominators of sums
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [gcd, fractions]
+    statement: |
+      Let $\frac ab$ and $\frac cd$ be in lowest terms with $\gcd(b, d) = 1$. Prove that $\frac ab + \frac cd = \frac{ad + bc}{bd}$ is in lowest terms.
+    solution: |
+      Let $p$ be a prime dividing $bd$; say $p \mid b$. Then $p \nmid d$ (coprime) and $p \nmid a$ (lowest terms), so $p \nmid ad$, while $p \mid bc$. Hence $p \nmid ad + bc$. Similarly if $p \mid d$. So no prime divides both $bd$ and $ad + bc$. $\blacksquare$
+
+      (E.g. $\frac12 + \frac13 = \frac56$, but $\frac16 + \frac{1}{10} = \frac{16}{60} = \frac{4}{15}$ reduces.)
+
+  - id: nt-160
+    title: gcd of n and n + k
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: compute
+    tags: [gcd]
+    statement: |
+      Prove that $\gcd(n, n + k)$ divides $k$, and find all $n$ with $\gcd(n, n + 6) = 6$.
+    solution: |
+      A common divisor of $n$ and $n + k$ divides their difference $k$.
+
+      $\gcd(n, n+6) = 6$ requires $6 \mid n$, and then $6$ divides both and the gcd (which divides 6) is $6$. **Answer:** all multiples of 6.
+
+  - id: nt-161
+    title: A three-term Bézout identity
+    subtopic: GCD & Euclid
+    difficulty: easy
+    type: compute
+    tags: [bezout, gcd]
+    related: [nt-135]
+    statement: |
+      Find integers $x, y, z$ with $15x + 21y + 35z = 1$.
+    solution: |
+      $15 + 21 = 36 = 35 + 1$, so $(x, y, z) = (1, 1, -1)$.
+
+      (Systematically: $\gcd(15, 21) = 3 = 3\cdot15 - 2\cdot21$, and $\gcd(3, 35) = 1 = 12\cdot3 - 35$, giving $36\cdot15 - 24\cdot21 - 35 = 1$.)
+
+  - id: nt-162
+    title: A symmetric Euler congruence
+    subtopic: GCD & Euclid
+    difficulty: medium
+    type: proof
+    tags: [euler theorem, crt, coprime]
+    related: [nt-021]
+    statement: |
+      Let $a, b \ge 2$ be coprime. Prove that $a^{\varphi(b)} + b^{\varphi(a)} \equiv 1 \pmod{ab}$.
+    solution: |
+      **Mod $b$.** $a^{\varphi(b)} \equiv 1$ by Euler, and $b^{\varphi(a)} \equiv 0$ since $\varphi(a) \ge 1$. Sum $\equiv 1$.
+
+      **Mod $a$.** Symmetrically, the sum $\equiv 1$.
+
+      So $a \mid S - 1$ and $b \mid S - 1$ with $\gcd(a,b) = 1$, hence $ab \mid S - 1$ (nt-123). $\blacksquare$
+
+  - id: nt-163
+    title: Congruence is compatible with arithmetic
+    subtopic: Congruences
+    difficulty: easy
+    type: proof
+    tags: [congruences, equivalence relation]
+    statement: |
+      Prove that congruence mod $n$ is an equivalence relation, and that if $a \equiv b$ and $c \equiv d \pmod n$ then $a + c \equiv b + d$ and $ac \equiv bd \pmod n$.
+    solution: |
+      **Equivalence.** $n \mid a - a$; if $n \mid a - b$ then $n \mid b - a$; if $n \mid a - b$ and $n \mid b - c$ then $n \mid (a - b) + (b - c)$.
+
+      **Arithmetic.** $(a + c) - (b + d) = (a - b) + (c - d)$, a sum of multiples of $n$. And
+      $$ac - bd = a(c - d) + d(a - b),$$
+      also a multiple of $n$. $\blacksquare$
+
+      (By induction, $a \equiv b$ implies $a^k \equiv b^k$ and $P(a) \equiv P(b)$ for integer polynomials $P$.)
+
+  - id: nt-164
+    title: The last digit of a power tower
+    subtopic: Congruences
+    difficulty: easy
+    type: compute
+    tags: [congruences, powers, last digit]
+    statement: |
+      Find the last digit of $7^{7^7}$.
+    solution: |
+      Powers of 7 mod 10 cycle with period 4: $7, 9, 3, 1$. So we need $7^7 \bmod 4$. Since $7 \equiv -1 \pmod 4$, $7^7 \equiv -1 \equiv 3$. Hence $7^{7^7} \equiv 7^3 = 343 \equiv 3 \pmod{10}$. **The last digit is 3.**
+
+  - id: nt-165
+    title: The last two digits of 3¹⁰⁰
+    subtopic: Congruences
+    difficulty: easy
+    type: compute
+    tags: [congruences, euler theorem, powers]
+    related: [nt-018]
+    statement: |
+      Find the last two digits of $3^{100}$.
+    solution: |
+      $\varphi(100) = 40$ and $\gcd(3, 100) = 1$, so $3^{40} \equiv 1$ and $3^{100} \equiv 3^{20} \pmod{100}$. Now $3^{10} = 59049 \equiv 49$, so $3^{20} \equiv 49^2 = 2401 \equiv 1$. **The last two digits are 01.**
+
+      (In fact $3^{20} \equiv 1 \pmod{100}$ already: the order of 3 mod 100 is 20.)
+
+  - id: nt-166
+    title: Euler's theorem
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [euler theorem, euler phi, permutation]
+    source: Euler, 1763
+    related: [nt-017, nt-021]
+    statement: |
+      Prove that if $\gcd(a, n) = 1$ then $a^{\varphi(n)} \equiv 1 \pmod n$.
+    solution: |
+      Let $r_1, \dots, r_{\varphi(n)}$ be the residues in $\{1, \dots, n\}$ coprime to $n$. The numbers $ar_1, \dots, ar_{\varphi(n)}$ are coprime to $n$ (nt-124) and pairwise incongruent mod $n$ (if $ar_i \equiv ar_j$ then $n \mid a(r_i - r_j)$, and Gauss's lemma gives $n \mid r_i - r_j$). So mod $n$ they are a rearrangement of the $r_i$. Multiplying,
+      $$a^{\varphi(n)}R \equiv R \pmod n,\qquad R = r_1\cdots r_{\varphi(n)}.$$
+      $R$ is coprime to $n$, so invertible mod $n$; cancelling gives the result. $\blacksquare$
+
+  - id: nt-167
+    title: φ is multiplicative
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [euler phi, crt, multiplicative functions]
+    related: [nt-169]
+    statement: |
+      Prove that $\varphi(mn) = \varphi(m)\varphi(n)$ when $\gcd(m,n) = 1$. Deduce the product formula for $\varphi$.
+    solution: |
+      By the Chinese remainder theorem (nt-169), $x \mapsto (x \bmod m, x \bmod n)$ is a bijection from $\Z_{mn}$ to $\Z_m \times \Z_n$. And $x$ is coprime to $mn$ iff it is coprime to both $m$ and $n$ (nt-124), iff $x \bmod m$ is coprime to $m$ and $x \bmod n$ coprime to $n$ (nt-155). So the bijection matches the units mod $mn$ with pairs of units, giving $\varphi(mn) = \varphi(m)\varphi(n)$.
+
+      For a prime power, the non-units in $\{1, \dots, p^k\}$ are the $p^{k-1}$ multiples of $p$, so $\varphi(p^k) = p^k(1 - \frac1p)$. Multiplying over the prime powers of $n$ gives $\varphi(n) = n\prod_{p\mid n}(1 - \frac1p)$. $\blacksquare$
+
+  - id: nt-168
+    title: Gauss's identity for φ
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [euler phi, divisors, counting]
+    source: Gauss
+    statement: |
+      Prove that $\displaystyle\sum_{d \mid n}\varphi(d) = n$.
+    solution: |
+      Sort the numbers $k = 1, \dots, n$ by $g = \gcd(k, n)$. For a divisor $g$ of $n$, $\gcd(k, n) = g$ iff $k = gj$ with $1 \le j \le n/g$ and $\gcd(j, n/g) = 1$. There are $\varphi(n/g)$ such $k$. So
+      $$n = \sum_{g\mid n}\varphi(n/g) = \sum_{d \mid n}\varphi(d),$$
+      as $d = n/g$ runs over the divisors too. $\blacksquare$
+
+      (E.g. $n = 12$: $1 + 1 + 2 + 2 + 2 + 4 = 12$.)
+
+  - id: nt-169
+    title: The Chinese remainder theorem
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [crt, bezout]
+    related: [nt-020]
+    statement: |
+      Let $\gcd(m, n) = 1$. Prove that for any $a, b$ the system $x \equiv a \pmod m$, $x \equiv b \pmod n$ has a solution, unique modulo $mn$.
+    solution: |
+      **Existence.** By Bézout $mu + nv = 1$. Let $x = a\,nv + b\,mu$. Mod $m$: $nv = 1 - mu \equiv 1$, so $x \equiv a$. Mod $n$: $mu \equiv 1$, so $x \equiv b$.
+
+      **Uniqueness.** If $x, x'$ both work, then $m \mid x - x'$ and $n \mid x - x'$, so $mn \mid x - x'$ (nt-123). And every $x' \equiv x \pmod{mn}$ is also a solution. $\blacksquare$
+
+  - id: nt-170
+    title: Solving a system with the CRT
+    subtopic: Congruences
+    difficulty: easy
+    type: compute
+    tags: [crt, congruences]
+    related: [nt-020]
+    statement: |
+      Solve $x \equiv 1 \pmod 4$, $x \equiv 2 \pmod 5$, $x \equiv 3 \pmod 7$.
+    solution: |
+      From the first, $x = 1 + 4t$. Then $1 + 4t \equiv 2 \pmod 5$ gives $4t \equiv 1$, and $4^{-1} \equiv 4$, so $t \equiv 4$: $x = 17 + 20s$. Then $17 + 20s \equiv 3 \pmod 7$: $3 + 6s \equiv 3$, so $s \equiv 0$.
+
+      **Answer:** $x \equiv 17 \pmod{140}$. Check: $17 = 4\cdot4 + 1 = 3\cdot5 + 2 = 2\cdot7 + 3$.
+
+  - id: nt-171
+    title: The CRT with non-coprime moduli
+    subtopic: Congruences
+    difficulty: medium
+    type: compute
+    tags: [crt, gcd, congruences]
+    statement: |
+      Solve, or show there is no solution: (1) $x \equiv 3 \pmod 6$, $x \equiv 5 \pmod 8$; (2) $x \equiv 1 \pmod 6$, $x \equiv 2 \pmod 8$. State the general criterion.
+    solution: |
+      **Criterion.** $x \equiv a \pmod m$, $x \equiv b \pmod n$ is solvable iff $\gcd(m,n) \mid a - b$, and then the solution is unique mod $\mathrm{lcm}(m,n)$. (Write $x = a + mt$; then $mt \equiv b - a \pmod n$, solvable iff $\gcd(m,n) \mid b - a$ by nt-138.)
+
+      1. $\gcd = 2 \mid 3 - 5$. $x = 3 + 6t \equiv 5 \pmod 8$: $6t \equiv 2$, $3t \equiv 1 \pmod 4$, $t \equiv 3$. So $x = 21$, and $x \equiv 21 \pmod{24}$.
+      2. $\gcd = 2 \nmid 1 - 2$: **no solution** (the first forces $x$ odd, the second even).
+
+  - id: nt-172
+    title: Orders divide φ(n)
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [order, euler theorem]
+    related: [nt-166]
+    statement: |
+      Let $\gcd(a, n) = 1$ and let $d$ be the **order** of $a$ mod $n$, the least $d \ge 1$ with $a^d \equiv 1$. Prove that $a^k \equiv 1$ iff $d \mid k$, and deduce $d \mid \varphi(n)$.
+    solution: |
+      If $d \mid k$, $a^k = (a^d)^{k/d} \equiv 1$. Conversely, write $k = qd + r$ with $0 \le r < d$. Then $1 \equiv a^k = (a^d)^qa^r \equiv a^r$, and minimality of $d$ forces $r = 0$.
+
+      By Euler, $a^{\varphi(n)} \equiv 1$, so $d \mid \varphi(n)$. $\blacksquare$
+
+  - id: nt-173
+    title: Computing orders
+    subtopic: Congruences
+    difficulty: easy
+    type: compute
+    tags: [order, primitive roots]
+    related: [nt-172]
+    statement: |
+      Find the order of 2 modulo 7 and modulo 11. Is 2 a primitive root (an element of order $p - 1$) for either prime?
+    solution: |
+      **Mod 7:** $2, 4, 8 \equiv 1$, so the order is $3$. Not a primitive root.
+
+      **Mod 11:** the order divides $10$, so it is $1, 2, 5$ or $10$. $2^2 = 4$, $2^5 = 32 \equiv 10 \equiv -1$, so it is none of $1, 2, 5$. The order is $10$, and **2 is a primitive root mod 11**: its powers run through all of $1, \dots, 10$.
+
+  - id: nt-174
+    title: Lagrange's theorem on polynomial roots mod p
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [polynomials, roots, congruences]
+    source: Lagrange
+    related: [in-239]
+    statement: |
+      Let $p$ be prime and $f$ a polynomial with integer coefficients, of degree $d$, whose leading coefficient is not divisible by $p$. Prove that $f(x) \equiv 0 \pmod p$ has at most $d$ solutions mod $p$. Show this fails for composite moduli.
+    solution: |
+      Induct on $d$; for $d = 0$, $f$ is a non-zero constant mod $p$ with no roots.
+
+      If $f(r) \equiv 0$, divide: $f(x) = (x - r)g(x) + f(r)$ with $g$ of degree $d - 1$ and the same leading coefficient. So $f(x) \equiv (x - r)g(x)$. If $f(s) \equiv 0$, then $p \mid (s - r)g(s)$, so by Euclid's lemma $s \equiv r$ or $g(s) \equiv 0$. Hence the roots of $f$ are $r$ and the roots of $g$, at most $1 + (d - 1) = d$ in all.
+
+      **Composite moduli.** $x^2 - 1$ has four roots mod 8: $1, 3, 5, 7$. $\blacksquare$
+
+  - id: nt-175
+    title: Euler's criterion
+    subtopic: Congruences
+    difficulty: hard
+    type: proof
+    tags: [quadratic residues, euler criterion, fermat]
+    source: Euler
+    related: [nt-174, nt-176, nt-028]
+    statement: |
+      Let $p$ be an odd prime and $p \nmid a$. Prove that $a^{(p-1)/2} \equiv 1 \pmod p$ if $a$ is a square mod $p$, and $\equiv -1$ otherwise. (You may use nt-174 and nt-176.)
+    solution: |
+      Let $t = a^{(p-1)/2}$. Then $t^2 = a^{p-1} \equiv 1$, so $t \equiv \pm1$ (nt-104).
+
+      **Squares.** If $a \equiv x^2$, then $t \equiv x^{p-1} \equiv 1$ by Fermat.
+
+      **Non-squares.** By nt-176 there are exactly $\frac{p-1}{2}$ non-zero squares, and by the above each is a root of $x^{(p-1)/2} - 1$. By nt-174 this polynomial has at most $\frac{p-1}2$ roots, so these are all of them. A non-square is therefore not a root, so its $t \equiv -1$. $\blacksquare$
+
+      (With $a = -1$ this re-proves nt-028: $-1$ is a square iff $(-1)^{(p-1)/2} = 1$.)
+
+  - id: nt-176
+    title: Half the residues are squares
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [quadratic residues, counting]
+    related: [nt-104, nt-177]
+    statement: |
+      Let $p$ be an odd prime. Prove that exactly $\frac{p-1}{2}$ of $1, 2, \dots, p-1$ are squares mod $p$.
+    solution: |
+      The non-zero squares are $x^2$ for $x = 1, \dots, p - 1$. By nt-104, $x^2 \equiv y^2$ iff $y \equiv \pm x$, and $x \not\equiv -x$ since $p$ is odd. So $x \mapsto x^2$ is exactly two-to-one on the $p - 1$ non-zero residues, and its image has $\frac{p-1}{2}$ elements. $\blacksquare$
+
+  - id: nt-177
+    title: Quadratic residues mod 11 and 13
+    subtopic: Congruences
+    difficulty: easy
+    type: compute
+    tags: [quadratic residues]
+    related: [nt-176]
+    statement: |
+      List the non-zero quadratic residues mod 11 and mod 13. Check the result against nt-028.
+    solution: |
+      It's enough to square $1, \dots, \frac{p-1}{2}$.
+
+      - **Mod 11:** $1, 4, 9, 16 \equiv 5, 25 \equiv 3$. Residues $\{1, 3, 4, 5, 9\}$.
+      - **Mod 13:** $1, 4, 9, 16 \equiv 3, 25 \equiv 12, 36 \equiv 10$. Residues $\{1, 3, 4, 9, 10, 12\}$.
+
+      $-1 \equiv 10 \pmod{11}$ is not a residue ($11 \equiv 3 \bmod 4$), while $-1 \equiv 12 \pmod{13}$ is ($13 \equiv 1 \bmod 4$; indeed $5^2 = 25 \equiv -1$). This matches nt-028.
+
+  - id: nt-178
+    title: When is 2 a square mod p?
+    subtopic: Congruences
+    difficulty: hard
+    type: proof
+    tags: [quadratic residues, gauss lemma, euler criterion]
+    source: Gauss
+    related: [nt-175]
+    hints:
+      - |
+        Compute $2\cdot4\cdot6\cdots(p-1) = 2^{(p-1)/2}\left(\frac{p-1}{2}\right)!$ a second way, replacing each even $2k > \frac{p-1}{2}$ by $-(p - 2k)$.
+    statement: |
+      Let $p$ be an odd prime. Prove that 2 is a square mod $p$ if and only if $p \equiv \pm1 \pmod 8$.
+    solution: |
+      Let $h = \frac{p-1}{2}$ and consider the even numbers $2, 4, \dots, 2h = p - 1$. Leave each $2k \le h$ alone and replace each $2k > h$ by $p - 2k \equiv -2k$, which is odd and lies in $[1, h]$. The resulting $h$ numbers are distinct (evens among themselves, odds among themselves, and evens differ from odds), so they are exactly $1, \dots, h$. Hence, with $\mu$ the number of even $2k$ in $(h, 2h]$,
+      $$2^hh! = 2\cdot4\cdots2h \equiv (-1)^\mu h! \pmod p,\qquad\text{so}\qquad 2^h \equiv (-1)^\mu.$$
+      By Euler's criterion, 2 is a square iff $\mu$ is even. Now $\mu = h - \lfloor h/2\rfloor$:
+
+      | $p$ | $8m+1$ | $8m+3$ | $8m+5$ | $8m+7$ |
+      |---|---|---|---|---|
+      | $h$ | $4m$ | $4m+1$ | $4m+2$ | $4m+3$ |
+      | $\mu$ | $2m$ | $2m+1$ | $2m+1$ | $2m+2$ |
+
+      So $\mu$ is even exactly when $p \equiv \pm1 \pmod 8$. $\blacksquare$
+
+  - id: nt-179
+    title: Square roots of 1 mod a power of 2
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [congruences, squares, powers of two]
+    related: [nt-104]
+    statement: |
+      Prove that for $k \ge 3$, $x^2 \equiv 1 \pmod{2^k}$ has exactly four solutions mod $2^k$, namely $\pm1$ and $\pm1 + 2^{k-1}$.
+    solution: |
+      A solution is odd, so $x - 1$ and $x + 1$ are consecutive even numbers and one of them is $\equiv 2 \pmod 4$, contributing exactly one factor of 2. As $2^k \mid (x-1)(x+1)$, the other must be divisible by $2^{k-1}$: $x \equiv 1$ or $x \equiv -1 \pmod{2^{k-1}}$. Mod $2^k$ this gives $x \in \{1, 1 + 2^{k-1}, -1, -1 + 2^{k-1}\}$, which are distinct for $k \ge 3$.
+
+      Each works: $(\pm1 + 2^{k-1})^2 = 1 \pm 2^k + 2^{2k-2} \equiv 1$, as $2k - 2 \ge k$. $\blacksquare$
+
+      (Mod 32: $1, 15, 17, 31$.)
+
+  - id: nt-180
+    title: Square roots of 1 mod pq
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [crt, squares]
+    related: [nt-169, nt-104]
+    statement: |
+      Let $p, q$ be distinct odd primes. Prove that $x^2 \equiv 1 \pmod{pq}$ has exactly four solutions mod $pq$. Find them for $pq = 15$.
+    solution: |
+      By the CRT, $x^2 \equiv 1 \pmod{pq}$ iff $x^2 \equiv 1 \pmod p$ and $\pmod q$, iff $x \equiv \pm1 \pmod p$ and $x \equiv \pm1 \pmod q$ (nt-104). Each of the four sign choices gives exactly one $x$ mod $pq$, and they differ since $1 \not\equiv -1$ mod an odd prime.
+
+      For 15: $x \equiv \pm1 \bmod 3$ and $\pm1 \bmod 5$ give $1, 4, 11, 14$. $\blacksquare$
+
+      (Finding a non-trivial square root of 1 mod $n$ factors $n$: $\gcd(4 - 1, 15) = 3$.)
+
+  - id: nt-181
+    title: Lifting a square root
+    subtopic: Congruences
+    difficulty: medium
+    type: compute
+    tags: [hensel lifting, congruences, squares]
+    statement: |
+      Solve $x^2 \equiv 2 \pmod{49}$.
+    solution: |
+      Mod 7: $3^2 = 9 \equiv 2$ and $4^2 = 16 \equiv 2$, so $x \equiv \pm3 \pmod 7$.
+
+      **Lift $x \equiv 3$.** Put $x = 3 + 7t$: $x^2 = 9 + 42t + 49t^2 \equiv 9 + 42t \pmod{49}$. We need $9 + 42t \equiv 2$, i.e. $42t \equiv -7$, i.e. $6t \equiv -1 \equiv 6 \pmod 7$, so $t \equiv 1$ and $x \equiv 10$. Check: $100 = 2\cdot49 + 2$.
+
+      The other lift is $x \equiv -10 \equiv 39$. **Answer:** $x \equiv 10$ or $39 \pmod{49}$.
+
+  - id: nt-182
+    title: 561 is a Carmichael number
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [carmichael numbers, fermat, pseudoprimes]
+    source: Carmichael, 1910
+    related: [nt-183]
+    statement: |
+      Prove that $a^{561} \equiv a \pmod{561}$ for every integer $a$, although $561 = 3\cdot11\cdot17$ is composite.
+    solution: |
+      It suffices to prove $a^{561} \equiv a$ modulo $3$, $11$ and $17$. Let $p$ be one of these. If $p \mid a$, both sides are $0$. Otherwise $a^{p-1} \equiv 1$, and $p - 1 \in \{2, 10, 16\}$ divides $560$, so $a^{560} \equiv 1$ and $a^{561} \equiv a$. $\blacksquare$
+
+      (Korselt's criterion: squarefree $n$ is Carmichael iff $p - 1 \mid n - 1$ for each prime $p \mid n$. So Fermat's test alone can't certify primality.)
+
+  - id: nt-183
+    title: 341 fools the base-2 Fermat test
+    subtopic: Congruences
+    difficulty: easy
+    type: proof
+    tags: [pseudoprimes, fermat]
+    related: [nt-182]
+    statement: |
+      Show that $2^{340} \equiv 1 \pmod{341}$ although $341$ is not prime. Does 3 expose it?
+    solution: |
+      $341 = 11\cdot31$. $2^{10} = 1024 = 3\cdot341 + 1$, so $2^{10} \equiv 1$ and $2^{340} = (2^{10})^{34} \equiv 1 \pmod{341}$.
+
+      With base 3: $3^5 = 243 \equiv 1 \pmod{11}$, so $3^{340} \equiv 1 \pmod{11}$; but mod 31 the order of 3 is 30, and $340 \equiv 10 \pmod{30}$, so $3^{340} \equiv 3^{10} \not\equiv 1 \pmod{31}$ (as the order is 30, not dividing 10). So $3^{340} \not\equiv 1 \pmod{341}$, and base 3 exposes it.
+
+  - id: nt-184
+    title: A test for divisibility by 7
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [divisibility tests, congruences]
+    statement: |
+      Write $n = 10a + b$ with $b$ the last digit. Prove that $7 \mid n$ if and only if $7 \mid a - 2b$. Apply it to $343$ and $2023$.
+    solution: |
+      $-2\cdot10 = -20 \equiv 1 \pmod 7$, so $-2n = -20a - 2b \equiv a - 2b \pmod 7$. Since $-2$ is invertible mod 7, $7 \mid n$ iff $7 \mid -2n$ iff $7 \mid a - 2b$.
+
+      - $343$: $34 - 6 = 28 = 7\cdot4$. Divisible ($343 = 7^3$).
+      - $2023$: $202 - 6 = 196$, then $19 - 12 = 7$. Divisible ($2023 = 7\cdot17^2$). $\blacksquare$
+
+  - id: nt-185
+    title: What day of the week?
+    subtopic: Congruences
+    difficulty: easy
+    type: compute
+    tags: [congruences, calendar]
+    statement: |
+      1 January 2000 was a Saturday. What day of the week is 1 January 2100? (Leap years are multiples of 4, except multiples of 100 that aren't multiples of 400.)
+    solution: |
+      The years 2000–2099 contain 25 leap years ($2000, 2004, \dots, 2096$; 2000 is a leap year as $400 \mid 2000$). So the number of days is $100\cdot365 + 25 = 36525$.
+
+      $36525 = 7\cdot5217 + 6$, so we move 6 days on from Saturday: **Friday**.
+
+  - id: nt-186
+    title: The square of half a factorial
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [wilson, congruences]
+    related: [nt-019, nt-028]
+    statement: |
+      Let $p$ be an odd prime. Prove that $\left(\left(\frac{p-1}{2}\right)!\right)^2 \equiv (-1)^{(p+1)/2} \pmod p$.
+    solution: |
+      Pair $k$ with $p - k \equiv -k$ for $k = 1, \dots, \frac{p-1}2$:
+      $$(p-1)! = \prod_{k=1}^{(p-1)/2}k(p-k) \equiv \prod_{k=1}^{(p-1)/2}(-k^2) = (-1)^{(p-1)/2}\left(\left(\tfrac{p-1}2\right)!\right)^2.$$
+      By Wilson the left side is $-1$, so $\left(\left(\frac{p-1}{2}\right)!\right)^2 \equiv -(-1)^{(p-1)/2} = (-1)^{(p+1)/2}$. $\blacksquare$
+
+  - id: nt-187
+    title: A sum of Fermat powers
+    subtopic: Congruences
+    difficulty: easy
+    type: proof
+    tags: [fermat, sums]
+    related: [nt-188]
+    statement: |
+      Prove that $1^{p-1} + 2^{p-1} + \cdots + (p-1)^{p-1} \equiv -1 \pmod p$ for every prime $p$.
+    solution: |
+      Each $k$ with $1 \le k \le p - 1$ has $k^{p-1} \equiv 1$ by Fermat, so the sum is $\equiv p - 1 \equiv -1$. $\blacksquare$
+
+  - id: nt-188
+    title: Power sums modulo a prime
+    subtopic: Congruences
+    difficulty: hard
+    type: proof
+    tags: [power sums, lagrange, permutation]
+    related: [nt-174, nt-187]
+    statement: |
+      Let $p$ be prime and $m \ge 1$ with $p - 1 \nmid m$. Prove that $1^m + 2^m + \cdots + (p-1)^m \equiv 0 \pmod p$.
+    solution: |
+      Let $S$ be the sum. First, some $a \in \{1, \dots, p-1\}$ has $a^m \not\equiv 1$. Indeed, let $m' = m \bmod (p - 1)$, so $0 < m' < p - 1$ and $x^m \equiv x^{m'}$ for $x \not\equiv 0$ (Fermat). By Lagrange (nt-174), $x^{m'} - 1$ has at most $m' < p - 1$ roots, so not every non-zero residue is a root.
+
+      Multiplication by $a$ permutes the non-zero residues, so
+      $$S = \sum_{k=1}^{p-1}k^m \equiv \sum_{k=1}^{p-1}(ak)^m = a^mS \pmod p.$$
+      Hence $(a^m - 1)S \equiv 0$, and since $a^m - 1 \not\equiv 0$, $S \equiv 0$. $\blacksquare$
+
+  - id: nt-189
+    title: Periods of decimal expansions
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [order, decimals, repeating decimals]
+    related: [nt-172]
+    statement: |
+      Let $n > 1$ with $\gcd(n, 10) = 1$. Prove that the decimal expansion of $\frac1n$ is purely periodic with period equal to the order of 10 mod $n$. Find the periods of $\frac17$, $\frac1{13}$ and $\frac1{17}$.
+    solution: |
+      A purely periodic expansion with period $k$ and repeating block $A$ means $\frac1n = \frac{A}{10^k - 1}$, i.e. $n \mid 10^k - 1$ with $A = \frac{10^k - 1}{n}$. Conversely if $n \mid 10^k - 1$, writing $\frac1n = \frac{A}{10^k-1} = A(10^{-k} + 10^{-2k} + \cdots)$ with $0 < A < 10^k$ gives a repeating block of length $k$. So the possible periods are the $k$ with $10^k \equiv 1 \pmod n$, and the least one is the order of 10.
+
+      - $\frac17 = 0.\overline{142857}$: period 6 ($10^3 \equiv -1 \pmod 7$).
+      - $\frac1{13} = 0.\overline{076923}$: period 6 ($10^3 = 1000 \equiv -1 \pmod{13}$).
+      - $\frac1{17}$: period 16 (10 is a primitive root mod 17). $\blacksquare$
+
+  - id: nt-190
+    title: A classic divisibility by 7
+    subtopic: Congruences
+    difficulty: medium
+    type: compute
+    tags: [congruences, fermat, powers]
+    statement: |
+      Prove that $7 \mid 2222^{5555} + 5555^{2222}$.
+    solution: |
+      $2222 = 7\cdot317 + 3 \equiv 3$ and $5555 = 7\cdot793 + 4 \equiv 4 \pmod 7$.
+
+      - $3^6 \equiv 1$ and $5555 = 6\cdot925 + 5$, so $3^{5555} \equiv 3^5 = 243 \equiv 5$.
+      - $4^3 = 64 \equiv 1$ and $2222 = 3\cdot740 + 2$, so $4^{2222} \equiv 16 \equiv 2$.
+
+      The sum is $\equiv 5 + 2 = 7 \equiv 0 \pmod 7$. $\blacksquare$
+
+  - id: nt-191
+    title: Fermat's little theorem by counting necklaces
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [fermat, combinatorial proof, necklaces]
+    related: [nt-017, in-083]
+    statement: |
+      Give a combinatorial proof that $p \mid a^p - a$ for prime $p$ and positive integer $a$, by considering strings of length $p$ over an alphabet of $a$ letters up to rotation.
+    solution: |
+      There are $a^p$ strings, of which $a$ are constant. Group the $a^p - a$ non-constant strings by rotation: rotating a string by $r$ places, $0 \le r < p$, gives its rotation class.
+
+      If a non-constant string $s$ equals its rotation by $r$ with $0 < r < p$, then $s_i = s_{i+r}$ for all $i$ (indices mod $p$). Since $\gcd(r, p) = 1$, the multiples of $r$ cover all residues mod $p$, so all letters are equal, a contradiction. So the $p$ rotations of a non-constant string are distinct, every class has exactly $p$ members, and $p \mid a^p - a$. $\blacksquare$
+
+  - id: nt-192
+    title: Numbers that aren't sums of three squares
+    subtopic: Congruences
+    difficulty: easy
+    type: proof
+    tags: [squares, congruences, sums of squares]
+    related: [nt-003]
+    statement: |
+      Prove that no integer $n \equiv 7 \pmod 8$ is a sum of three squares.
+    solution: |
+      Squares mod 8 are $0, 1, 4$ ($0^2, 1^2, 2^2, 3^2, 4^2 \equiv 0, 1, 4, 1, 0$ and symmetric). Sums of three of them lie in $\{0, 1, 2, 3, 4, 5, 6\}$: with entries from $\{0, 1, 4\}$ the possible totals are $0,1,2,3,4,5,6,8,9,12$, and mod 8 these are $0,1,2,3,4,5,6,0,1,4$. Never $7$. $\blacksquare$
+
+      (Legendre proved the converse: $n$ is a sum of three squares unless $n = 4^a(8b + 7)$.)
+
+  - id: nt-193
+    title: Casting out nines
+    subtopic: Congruences
+    difficulty: easy
+    type: compute
+    tags: [congruences, digit sums, checking]
+    related: [nt-033]
+    statement: |
+      Use casting out nines to check $1234 \times 5678 = 7\,006\,652$. What kind of error would the check miss?
+    solution: |
+      Digit sums mod 9: $1234 \to 10 \to 1$, $5678 \to 26 \to 8$, so the product should be $\equiv 8$. And $7\,006\,652 \to 26 \to 8$. Consistent.
+
+      The check only sees the answer mod 9, so it misses errors that change the result by a multiple of 9, for example swapping two digits (nt-057).
+
+  - id: nt-194
+    title: RSA in miniature
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [rsa, euler theorem, cryptography]
+    source: Rivest, Shamir, Adleman, 1977
+    related: [nt-169]
+    statement: |
+      Let $p, q$ be distinct primes, $n = pq$, and $ed \equiv 1 \pmod{(p-1)(q-1)}$. Prove that $(m^e)^d \equiv m \pmod n$ for every integer $m$. Then with $p = 5$, $q = 11$, $e = 3$, find $d$, encrypt $m = 2$ and decrypt.
+    solution: |
+      Write $ed = 1 + t(p-1)(q-1)$. Mod $p$: if $p \mid m$ both sides are $0$; otherwise $m^{ed} = m\cdot\left(m^{p-1}\right)^{t(q-1)} \equiv m$ by Fermat. Likewise mod $q$. Since $p, q$ are coprime, $m^{ed} \equiv m \pmod{pq}$.
+
+      **Example.** $(p-1)(q-1) = 40$ and $3\cdot27 = 81 \equiv 1$, so $d = 27$. Encrypt: $2^3 = 8$. Decrypt: $8^{27} = 2^{81} = 2\cdot(2^{40})^2 \equiv 2 \pmod{55}$ (as $2^{40} \equiv 1$ mod 5 and mod 11). $\blacksquare$
+
+  - id: nt-195
+    title: A discrete logarithm
+    subtopic: Congruences
+    difficulty: easy
+    type: compute
+    tags: [discrete logarithm, order]
+    related: [nt-173]
+    statement: |
+      Find all $x \ge 0$ with $2^x \equiv 3 \pmod{11}$.
+    solution: |
+      Powers of 2 mod 11: $2, 4, 8, 5, 10, 9, 7, 3, 6, 1$ for $x = 1, \dots, 10$. So $2^8 \equiv 3$, and since 2 has order 10, the solutions are $x \equiv 8 \pmod{10}$.
+
+  - id: nt-196
+    title: Combining exponents
+    subtopic: Congruences
+    difficulty: easy
+    type: proof
+    tags: [order, bezout]
+    related: [nt-172]
+    statement: |
+      Let $\gcd(a, n) = 1$. Prove that if $a^m \equiv 1$ and $a^k \equiv 1 \pmod n$ then $a^{\gcd(m,k)} \equiv 1$.
+    solution: |
+      By nt-172 the order $d$ of $a$ divides both $m$ and $k$, hence divides $\gcd(m, k)$, so $a^{\gcd(m,k)} \equiv 1$. $\blacksquare$
+
+      (Alternatively, with $\gcd(m,k) = mx + ky$, $a^{\gcd(m,k)} = (a^m)^x(a^k)^y$, inverses existing as $a$ is a unit.)
+
+  - id: nt-197
+    title: φ(n) is even
+    subtopic: Congruences
+    difficulty: easy
+    type: proof
+    tags: [euler phi, parity]
+    statement: |
+      Prove that $\varphi(n)$ is even for every $n \ge 3$.
+    solution: |
+      **Pairing.** If $\gcd(k, n) = 1$ then $\gcd(n - k, n) = 1$, and $k \ne n - k$ (else $n = 2k$ and $\gcd(k, n) = k = 1$, so $n = 2$). So the units mod $n$ pair off as $\{k, n - k\}$. $\blacksquare$
+
+  - id: nt-198
+    title: φ characterises primes
+    subtopic: Congruences
+    difficulty: easy
+    type: proof
+    tags: [euler phi, primes]
+    statement: |
+      Prove that for $n > 1$, $\varphi(n) = n - 1$ iff $n$ is prime, and that $\varphi(p^k) = p^k - p^{k-1}$.
+    solution: |
+      $\varphi(n) = n - 1$ means every $k \in \{1, \dots, n-1\}$ is coprime to $n$, i.e. no $k$ with $1 < k < n$ divides $n$, i.e. $n$ is prime.
+
+      Among $1, \dots, p^k$, the numbers not coprime to $p^k$ are the $p^{k-1}$ multiples of $p$. $\blacksquare$
+
+  - id: nt-199
+    title: Solving φ(n) = 4
+    subtopic: Congruences
+    difficulty: medium
+    type: compute
+    tags: [euler phi]
+    related: [nt-167]
+    statement: |
+      Find all $n$ with $\varphi(n) = 4$.
+    solution: |
+      If $p^a \| n$ then $p^{a-1}(p - 1) \mid \varphi(n) = 4$. So $p - 1 \mid 4$, i.e. $p \in \{2, 3, 5\}$, with $2^a$ for $a \le 3$, $3^1$ only ($3^2$ would give a factor 3), and $5^1$ only. Check combinations ($\varphi$ is multiplicative):
+      - $5$: $4$. $\ 8$: $4$. $\ 2\cdot5 = 10$: $4$. $\ 4\cdot3 = 12$: $2\cdot2 = 4$.
+      - $3\cdot5$: $8$. $\ 4\cdot5$: $8$. $\ 8\cdot3$: $8$. $\ 2\cdot3$: $2$. Others are too small or too large.
+
+      **Answer:** $n \in \{5, 8, 10, 12\}$.
+
+  - id: nt-200
+    title: 2730 divides n¹³ − n
+    subtopic: Congruences
+    difficulty: medium
+    type: proof
+    tags: [fermat, divisibility]
+    related: [nt-037]
+    statement: |
+      Prove that $2730 \mid n^{13} - n$ for every integer $n$.
+    solution: |
+      $2730 = 2\cdot3\cdot5\cdot7\cdot13$, and for each of these primes $p - 1 \in \{1, 2, 4, 6, 12\}$ divides 12. If $p \mid n$, both $n^{13}$ and $n$ are $\equiv 0$. Otherwise $n^{p-1} \equiv 1$ gives $n^{12} \equiv 1$, so $n^{13} \equiv n \pmod p$. The primes are distinct, so their product divides $n^{13} - n$. $\blacksquare$
+
+  - id: nt-201
+    title: n never divides 2ⁿ − 1
+    subtopic: Congruences
+    difficulty: hard
+    type: proof
+    tags: [order, smallest prime factor]
+    related: [nt-172]
+    hints:
+      - |
+        Let $p$ be the smallest prime factor of $n$ and look at the order of 2 mod $p$.
+    statement: |
+      Prove that $n \nmid 2^n - 1$ for every integer $n > 1$.
+    solution: |
+      Suppose $n \mid 2^n - 1$ with $n > 1$. Then $n$ is odd. Let $p$ be its smallest prime factor, and $d$ the order of 2 mod $p$. Then $2^n \equiv 1 \pmod p$, so $d \mid n$; and $d \mid p - 1$ by Fermat.
+
+      Every prime factor of $d$ divides $n$ and is at most $p - 1 < p$, contradicting minimality of $p$, unless $d$ has no prime factors: $d = 1$. But then $2 \equiv 1 \pmod p$, impossible. $\blacksquare$
+
+  - id: nt-202
+    title: Sophie Germain primes and Mersenne numbers
+    subtopic: Congruences
+    difficulty: hard
+    type: proof
+    tags: [mersenne, quadratic residues, euler criterion]
+    source: Euler
+    related: [nt-178, nt-175]
+    statement: |
+      Let $p \equiv 3 \pmod 4$ be prime and suppose $q = 2p + 1$ is also prime. Prove that $q \mid 2^p - 1$. Deduce that $2^{11} - 1$ and $2^{23} - 1$ are composite.
+    solution: |
+      $q = 2p + 1 \equiv 7 \pmod 8$, so by nt-178, 2 is a square mod $q$. By Euler's criterion, $2^{(q-1)/2} = 2^p \equiv 1 \pmod q$. $\blacksquare$
+
+      For $p = 11$: $q = 23 \mid 2^{11} - 1$. For $p = 23$: $q = 47 \mid 2^{23} - 1$ (nt-114). In both cases $q < 2^p - 1$, so $2^p - 1$ is composite.
+
+  - id: nt-203
+    title: Solving a linear congruence by inverses
+    subtopic: Congruences
+    difficulty: easy
+    type: compute
+    tags: [congruences, modular inverse]
+    related: [nt-016]
+    statement: |
+      Solve $7x \equiv 5 \pmod{12}$.
+    solution: |
+      $7\cdot7 = 49 = 4\cdot12 + 1$, so $7^{-1} \equiv 7 \pmod{12}$. Then $x \equiv 7\cdot5 = 35 \equiv 11 \pmod{12}$.
+
+      Check: $7\cdot11 = 77 = 6\cdot12 + 5$.
+
+  - id: nt-204
+    title: The freshman's dream
+    subtopic: Congruences
+    difficulty: easy
+    type: proof
+    tags: [binomial theorem, primes, fermat]
+    related: [in-083]
+    statement: |
+      Prove that $(a + b)^p \equiv a^p + b^p \pmod p$ for prime $p$ and integers $a, b$. Show that it fails mod 4 with exponent 4.
+    solution: |
+      By the binomial theorem the cross terms are $\binom pka^kb^{p-k}$ with $1 \le k \le p - 1$, and $p \mid \binom pk$ (in-083). So they vanish mod $p$.
+
+      **Mod 4:** $(1 + 1)^4 = 16 \equiv 0$ but $1 + 1 = 2$. (The term $\binom42 = 6$ is not divisible by 4.) $\blacksquare$
+
+  - id: nt-205
+    title: A primitive root mod 7
+    subtopic: Congruences
+    difficulty: easy
+    type: compute
+    tags: [primitive roots, discrete logarithm]
+    related: [nt-173]
+    statement: |
+      Show that 3 is a primitive root mod 7 and use it to solve $3^x \equiv 6 \pmod 7$ and $x^2 \equiv 2 \pmod 7$.
+    solution: |
+      Powers of 3 mod 7: $3^1, \dots, 3^6 \equiv 3, 2, 6, 4, 5, 1$. All six non-zero residues appear, so 3 has order 6: a primitive root.
+
+      - $3^x \equiv 6$: $x \equiv 3 \pmod 6$.
+      - $x^2 \equiv 2 = 3^2$: writing $x = 3^k$, $3^{2k} \equiv 3^2$ iff $2k \equiv 2 \pmod 6$, i.e. $k \equiv 1 \pmod 3$, so $k = 1$ or $4$: $x \equiv 3$ or $4$. (Check: $16 \equiv 2$.)
+
+  - id: nt-206
+    title: Wilson's theorem from a polynomial identity
+    subtopic: Congruences
+    difficulty: hard
+    type: proof
+    tags: [wilson, lagrange, polynomials]
+    related: [nt-174, nt-019]
+    statement: |
+      Let $p$ be an odd prime. Prove that, as polynomials with coefficients mod $p$,
+      $$x^{p-1} - 1 \equiv (x - 1)(x - 2)\cdots(x - (p-1)),$$
+      and deduce Wilson's theorem.
+    solution: |
+      Both sides are monic of degree $p - 1$, so their difference $g$ has degree at most $p - 2$. Every $a \in \{1, \dots, p-1\}$ is a root of both sides (of the left by Fermat), hence of $g$. If $g$ were not the zero polynomial mod $p$, Lagrange (nt-174) would allow it at most $p - 2$ roots. So every coefficient of $g$ is $\equiv 0$.
+
+      Comparing constant terms: $-1 \equiv (-1)^{p-1}(p-1)! = (p-1)!$, since $p - 1$ is even. $\blacksquare$
+
+  - id: nt-207
+    title: All primitive Pythagorean triples
+    subtopic: Diophantine equations
+    difficulty: hard
+    type: proof
+    tags: [pythagorean triples, gcd, squares]
+    source: Euclid
+    related: [nt-130, lg-154]
+    hints:
+      - |
+        With $b$ even, write $b^2 = (c - a)(c + a)$ and show $\frac{c-a}{2}$ and $\frac{c+a}{2}$ are coprime squares.
+    statement: |
+      Prove that the positive solutions of $a^2 + b^2 = c^2$ with $\gcd(a, b) = 1$ and $b$ even are exactly
+      $$a = m^2 - n^2,\quad b = 2mn,\quad c = m^2 + n^2,$$
+      with $m > n > 0$ coprime and of opposite parity.
+    solution: |
+      **These work.** $(m^2 - n^2)^2 + (2mn)^2 = (m^2 + n^2)^2$. If a prime $p$ divided $a$ and $b$, it would divide $c$, hence $c + a = 2m^2$ and $c - a = 2n^2$; $p$ is odd (as $a$ is odd), so $p \mid m$ and $p \mid n$, impossible.
+
+      **Every solution arises.** Since $\gcd(a,b) = 1$, $a$ is odd and $c$ is odd. Then $c \pm a$ are even; put $u = \frac{c - a}{2}$, $v = \frac{c + a}{2}$. A common divisor of $u, v$ divides $v + u = c$ and $v - u = a$, so $\gcd(u, v) = 1$. Now
+      $$\left(\tfrac b2\right)^2 = uv,$$
+      so by nt-130, $u = n^2$ and $v = m^2$ with $m > n > 0$, $\gcd(m,n) = 1$. Then $c = m^2 + n^2$, $a = m^2 - n^2$, $b = 2mn$, and $m, n$ have opposite parity because $c$ is odd. $\blacksquare$
+
+  - id: nt-208
+    title: Triples with a given side
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [pythagorean triples, factorisation]
+    statement: |
+      Find all Pythagorean triples (positive integers $a < b < c$ with $a^2 + b^2 = c^2$) with $c = 25$, and all those having 12 as a leg.
+    solution: |
+      **$c = 25$.** Check $a < b$ with $a^2 + b^2 = 625$: $(7, 24)$ and $(15, 20)$.
+
+      **Leg 12.** $144 = c^2 - b^2 = (c - b)(c + b)$ with both factors of the same parity and $c - b < c + b$: $(2, 72), (4, 36), (6, 24), (8, 18)$. These give $(b, c) = (35, 37), (16, 20), (9, 15), (5, 13)$. So the triples are
+      $$(12, 35, 37),\ (12, 16, 20),\ (9, 12, 15),\ (5, 12, 13).$$
+
+  - id: nt-209
+    title: A difference of squares equal to 45
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [difference of squares, factorisation]
+    related: [nt-024]
+    statement: |
+      Find all positive integer solutions of $x^2 - y^2 = 45$.
+    solution: |
+      $(x - y)(x + y) = 45$ with $0 < x - y < x + y$, both odd. The factor pairs are $(1, 45), (3, 15), (5, 9)$, giving
+      $$(x, y) = (23, 22),\ (9, 6),\ (7, 2).$$
+
+  - id: nt-210
+    title: Product equals sum
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [factorisation, simon's trick]
+    statement: |
+      Find all integer solutions of $xy = x + y$.
+    solution: |
+      Rearranging, $xy - x - y + 1 = 1$, i.e. $(x - 1)(y - 1) = 1$. So $x - 1 = y - 1 = \pm1$: $(x,y) = (2, 2)$ or $(0, 0)$.
+
+  - id: nt-211
+    title: Two unit fractions summing to 1/6
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [egyptian fractions, factorisation, divisor function]
+    statement: |
+      How many ordered pairs of positive integers satisfy $\frac1x + \frac1y = \frac16$?
+    solution: |
+      Clearing denominators, $xy - 6x - 6y = 0$, i.e. $(x - 6)(y - 6) = 36$. Both $x, y > 6$ (if $x \le 6$ then $\frac1x \ge \frac16$), so both factors are positive divisors of 36. There are $\tau(36) = 9$ ordered pairs:
+      $$(7,42), (8,24), (9,18), (10,15), (12,12), (15,10), (18,9), (24,8), (42,7).$$
+
+  - id: nt-212
+    title: Pell's equation x² − 3y² = 1
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [pell equation, recurrence]
+    related: [in-205]
+    statement: |
+      Find the smallest positive solution of $x^2 - 3y^2 = 1$, and use $(x + y\sqrt3)(2 + \sqrt3)$ to generate two more.
+    solution: |
+      $y = 1$: $x^2 = 4$, so $(2, 1)$.
+
+      If $x^2 - 3y^2 = 1$ then $(x + y\sqrt3)(2 + \sqrt3) = (2x + 3y) + (x + 2y)\sqrt3$, and
+      $$(2x + 3y)^2 - 3(x + 2y)^2 = 4x^2 + 12xy + 9y^2 - 3x^2 - 12xy - 12y^2 = x^2 - 3y^2 = 1.$$
+      From $(2,1)$: $(7, 4)$ ($49 - 48 = 1$), then $(26, 15)$ ($676 - 675 = 1$).
+
+  - id: nt-213
+    title: x² + y² + z² = 2xyz
+    subtopic: Diophantine equations
+    difficulty: hard
+    type: proof
+    tags: [infinite descent, parity]
+    related: [nt-027]
+    hints:
+      - |
+        Prove more generally: if $x^2 + y^2 + z^2 = 2^kxyz$ with $k \ge 1$, then $x, y, z$ are all even.
+    statement: |
+      Prove that the only integer solution of $x^2 + y^2 + z^2 = 2xyz$ is $x = y = z = 0$.
+    solution: |
+      **Claim.** If $x^2 + y^2 + z^2 = 2^kxyz$ with $k \ge 1$, then $x, y, z$ are all even.
+
+      The right side is even, so an even number of $x, y, z$ are odd: none or two. If two are odd, the left side is $\equiv 1 + 1 + 0 = 2 \pmod 4$, but the right side has the factor $2^k$ and an even factor among $x, y, z$, so it is $\equiv 0 \pmod 4$. Hence none is odd.
+
+      Writing $x = 2x_1$ etc., $4(x_1^2 + y_1^2 + z_1^2) = 2^{k+3}x_1y_1z_1$, i.e. $x_1^2 + y_1^2 + z_1^2 = 2^{k+1}x_1y_1z_1$, of the same form.
+
+      Starting from $k = 1$ and repeating, $x, y, z$ are divisible by every power of 2, so they are all $0$. $\blacksquare$
+
+  - id: nt-214
+    title: x³ + 3y³ + 9z³ = 0
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: proof
+    tags: [infinite descent, divisibility]
+    related: [lg-138]
+    statement: |
+      Prove that the only integer solution of $x^3 + 3y^3 + 9z^3 = 0$ is $x = y = z = 0$.
+    solution: |
+      Take a solution with $|x| + |y| + |z|$ minimal and positive. $3 \mid x^3$, so $x = 3x_1$: $27x_1^3 + 3y^3 + 9z^3 = 0$, i.e. $y^3 + 3z^3 + 9x_1^3 = 0$. Then $3 \mid y$, $y = 3y_1$, and similarly $z^3 + 3x_1^3 + 9y_1^3 = 0$ gives $z = 3z_1$, and finally
+      $$x_1^3 + 3y_1^3 + 9z_1^3 = 0.$$
+      This solution has a third of the size, contradicting minimality. $\blacksquare$
+
+  - id: nt-215
+    title: Fermat's theorem for fourth powers
+    subtopic: Diophantine equations
+    difficulty: hard
+    type: proof
+    tags: [infinite descent, pythagorean triples, fermat]
+    source: Fermat
+    related: [nt-207, nt-130]
+    statement: |
+      Prove that $x^4 + y^4 = z^2$ has no solutions in positive integers. Deduce that $x^4 + y^4 = z^4$ has none.
+    solution: |
+      Take a solution with $z$ minimal. Then $\gcd(x, y) = 1$ (a common prime $p$ would give $p^4 \mid z^2$, so $p^2 \mid z$, and dividing gives a smaller solution). So $(x^2, y^2, z)$ is a primitive triple; say $y$ is even. By nt-207,
+      $$x^2 = m^2 - n^2,\quad y^2 = 2mn,\quad z = m^2 + n^2,$$
+      with $m, n$ coprime of opposite parity. From $x^2 + n^2 = m^2$ with $x$ odd: if $m$ were even and $n$ odd, then $x^2 + n^2 \equiv 2 \pmod 4$, impossible. So $n$ is even, and $(x, n, m)$ is a primitive triple: $n = 2rs$, $m = r^2 + s^2$ with $r, s$ coprime.
+
+      Then $\left(\frac y2\right)^2 = \frac{mn}{2} = rs(r^2 + s^2)$, and $r$, $s$, $r^2 + s^2$ are pairwise coprime, so each is a square (nt-130): $r = u^2$, $s = v^2$, $r^2 + s^2 = w^2$. Thus $u^4 + v^4 = w^2$ with
+      $$w \le w^2 = m < m^2 + n^2 = z,$$
+      contradicting minimality.
+
+      If $x^4 + y^4 = z^4$ then $(x, y, z^2)$ would solve the first equation. $\blacksquare$
+
+  - id: nt-216
+    title: Powers of 2 one more than powers of 3
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: proof
+    tags: [exponential equations, congruences]
+    related: [nt-217]
+    statement: |
+      Find all non-negative integers $x, y$ with $2^x = 3^y + 1$.
+    solution: |
+      $y = 0$ gives $2^x = 2$, so $x = 1$.
+
+      If $y \ge 1$, then $3^y + 1 \equiv 1 \pmod 3$, so $2^x \equiv (-1)^x \equiv 1$ and $x$ is even, $x = 2k$. Then
+      $$(2^k - 1)(2^k + 1) = 3^y.$$
+      Both factors are powers of 3 differing by 2, so they are $1$ and $3$: $k = 1$, $x = 2$, $y = 1$.
+
+      **Solutions:** $(1, 0)$ and $(2, 1)$.
+
+  - id: nt-217
+    title: Powers of 3 one more than powers of 2
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: proof
+    tags: [exponential equations, congruences]
+    related: [nt-216]
+    statement: |
+      Find all positive integers $x, y$ with $3^x = 2^y + 1$.
+    solution: |
+      If $y = 1$: $3^x = 3$, $x = 1$.
+
+      If $y \ge 2$: $3^x \equiv 1 \pmod 4$, so $(-1)^x \equiv 1$ and $x = 2k$ is even. Then
+      $$(3^k - 1)(3^k + 1) = 2^y.$$
+      Both factors are powers of 2 differing by 2, so they are $2$ and $4$: $k = 1$, $x = 2$, $y = 3$.
+
+      **Solutions:** $(1, 1)$ and $(2, 3)$. (Catalan's conjecture, proved by Mihăilescu in 2002, says $9 - 8$ is the only case of consecutive perfect powers.)
+
+  - id: nt-218
+    title: Primes 3 mod 4 in sums of two squares
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: proof
+    tags: [sums of squares, quadratic residues]
+    related: [nt-028, nt-095]
+    statement: |
+      Let $p \equiv 3 \pmod 4$ be prime. Prove that if $p \mid a^2 + b^2$ then $p \mid a$ and $p \mid b$. Deduce that if $n$ is a sum of two squares then $p$ divides $n$ to an even power.
+    solution: |
+      If $p \nmid a$, let $c$ be an inverse of $a$ mod $p$. Then $(bc)^2 \equiv -a^2c^2 \equiv -1$, contradicting nt-028. So $p \mid a$, and then $p \mid b^2$, so $p \mid b$.
+
+      **Even power.** Induct on $n$. If $p \mid n = a^2 + b^2$, then $p \mid a, b$, so $p^2 \mid n$ and $n/p^2 = (a/p)^2 + (b/p)^2$ is a smaller sum of two squares, in which $p$ appears to an even power by hypothesis. $\blacksquare$
+
+      (Together with nt-095 and lg-152, $n$ is a sum of two squares iff every prime $\equiv 3 \bmod 4$ divides it to an even power.)
+
+  - id: nt-219
+    title: Which numbers are sums of two squares?
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [sums of squares]
+    related: [nt-218]
+    statement: |
+      List the integers from 1 to 30 that are sums of two squares (of non-negative integers), and check the rule in nt-218.
+    solution: |
+      $$1, 2, 4, 5, 8, 9, 10, 13, 16, 17, 18, 20, 25, 26, 29.$$
+      The others, $3, 6, 7, 11, 12, 14, 15, 19, 21, 22, 23, 24, 27, 28, 30$, all have a prime $\equiv 3 \pmod 4$ to an odd power ($3, 7, 11, 19, 23$). Those in the list don't: $9 = 3^2$ and $18 = 2\cdot3^2$ have 3 to an even power, and $9 = 0^2 + 3^2$, $18 = 3^2 + 3^2$.
+
+  - id: nt-220
+    title: Fourth powers mod 16
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: proof
+    tags: [congruences, fourth powers]
+    source: USAMO 1979
+    statement: |
+      Prove that $x_1^4 + x_2^4 + \cdots + x_{14}^4 = 1599$ has no integer solutions.
+    solution: |
+      For even $x$, $x^4 \equiv 0 \pmod{16}$. For odd $x$, $x^2 \equiv 1 \pmod 8$, so $x^2 = 8k + 1$ and $x^4 = 64k^2 + 16k + 1 \equiv 1 \pmod{16}$.
+
+      So a sum of 14 fourth powers is congruent to the number of odd terms, between $0$ and $14$, mod 16. But $1599 = 16\cdot99 + 15 \equiv 15$. $\blacksquare$
+
+  - id: nt-221
+    title: 2023 is not a sum of two squares
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: proof
+    tags: [sums of squares]
+    related: [nt-218]
+    statement: |
+      Prove that $x^2 + y^2 = 2023$ has no integer solutions.
+    solution: |
+      $2023 = 7\cdot17^2$, and $7 \equiv 3 \pmod 4$ appears to the first power. By nt-218, 2023 is not a sum of two squares.
+
+      (Directly: $2023 \equiv 3 \pmod 4$ also does it, by nt-003.) $\blacksquare$
+
+  - id: nt-222
+    title: Counting non-negative solutions
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [linear diophantine, counting]
+    statement: |
+      How many solutions does $2x + 3y = 100$ have in non-negative integers?
+    solution: |
+      $3y = 100 - 2x$ must be even, so $y$ is even, and $0 \le y \le 33$. So $y \in \{0, 2, \dots, 32\}$, each giving $x = \frac{100 - 3y}{2} \ge 2$. **17 solutions.**
+
+  - id: nt-223
+    title: When is x² + x + 1 a square?
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: compute
+    tags: [squares, factorisation]
+    statement: |
+      Find all integers $x, y$ with $x^2 + x + 1 = y^2$.
+    solution: |
+      Multiply by 4: $(2x + 1)^2 + 3 = (2y)^2$, so
+      $$(2y - 2x - 1)(2y + 2x + 1) = 3.$$
+      The factor pairs of 3 are $(1, 3), (3, 1), (-1, -3), (-3, -1)$. Adding the factors gives $4y \in \{4, 4, -4, -4\}$, so $y = \pm1$, and then $2x + 1 = \pm1$, so $x \in \{0, -1\}$.
+
+      **Solutions:** $(0, \pm1)$ and $(-1, \pm1)$. (For $x > 0$, $x^2 < x^2 + x + 1 < (x+1)^2$, so it can't be a square.)
+
+  - id: nt-224
+    title: One more than a power of 2
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [squares, powers of two]
+    statement: |
+      Find all positive integers $n, m$ with $2^n + 1 = m^2$.
+    solution: |
+      $(m - 1)(m + 1) = 2^n$, so both factors are powers of 2 differing by 2: $2$ and $4$. Hence $m = 3$ and $n = 3$.
+
+  - id: nt-225
+    title: Brocard's problem
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [factorial, squares, open problems]
+    source: Brocard, 1876
+    statement: |
+      Find all $n \le 10$ for which $n! + 1$ is a perfect square.
+    solution: |
+      $n! + 1$ for $n = 1, \dots, 10$: $2, 3, 7, 25, 121, 721, 5041, 40321, 362881, 3628801$. The squares are $25 = 5^2$, $121 = 11^2$ and $5041 = 71^2$, so $n = 4, 5, 7$.
+
+      (No other solution is known, and it is an open problem whether there are any.)
+
+  - id: nt-226
+    title: Markov triples
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: proof
+    tags: [vieta jumping, quadratics]
+    source: Markov, 1879
+    statement: |
+      Prove that if $(x, y, z)$ satisfies $x^2 + y^2 + z^2 = 3xyz$ then so does $(x, y, 3xy - z)$. Starting from $(1, 1, 1)$, deduce that there are infinitely many solutions in positive integers.
+    solution: |
+      For fixed $x, y$, the equation is the quadratic $t^2 - 3xy\,t + (x^2 + y^2) = 0$ in $t = z$. Its two roots sum to $3xy$, so if $z$ is a root then so is $3xy - z$.
+
+      **Infinitely many.** Given a positive solution with $x \le y \le z$, replace $x$ by $x' = 3yz - x$ (the same argument with $x$ as the variable). Then $x' = 3yz - x \ge 3z - z = 2z > z$, a positive solution with a larger maximum. Repeating from $(1,1,1)$:
+      $$(1,1,1) \to (1,1,2) \to (1,2,5) \to (2,5,29) \to \cdots$$
+      gives infinitely many. $\blacksquare$
+
+  - id: nt-227
+    title: IMO 1988 Problem 6
+    subtopic: Diophantine equations
+    difficulty: hard
+    type: proof
+    tags: [vieta jumping, infinite descent, squares]
+    source: IMO 1988
+    related: [nt-226]
+    hints:
+      - |
+        Fix $k$ and take a solution with $a + b$ minimal. Replace $a$ by the other root of $t^2 - kb\,t + b^2 - k = 0$.
+    statement: |
+      Let $a, b$ be positive integers such that $k = \dfrac{a^2 + b^2}{ab + 1}$ is an integer. Prove that $k$ is a perfect square.
+    solution: |
+      Fix $k$ and suppose it is not a square. Among pairs of non-negative integers $(a, b)$ with $a^2 + b^2 = k(ab + 1)$, choose one with $a + b$ minimal and $a \ge b$. If $b = 0$ then $k = a^2$, so $b \ge 1$.
+
+      $a$ is a root of $t^2 - kb\,t + (b^2 - k) = 0$. The other root is $a' = kb - a = \frac{b^2 - k}{a}$, an integer, and $(a', b)$ also satisfies the equation, so $k(a'b + 1) = a'^2 + b^2 > 0$.
+
+      - If $a' < 0$, then $a'b + 1 \le -b + 1 \le 0$, contradiction.
+      - If $a' = 0$, then $k = b^2$, a square, contradiction.
+      - So $a' > 0$, and $a' = \frac{b^2 - k}{a} < \frac{b^2}{a} \le a$. Then $(a', b)$ has smaller sum, contradicting minimality.
+
+      $\blacksquare$
+
+  - id: nt-228
+    title: Solutions of x² − xy + y² = 3
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [quadratic forms, bounding]
+    statement: |
+      Find all integer solutions of $x^2 - xy + y^2 = 3$.
+    solution: |
+      Multiply by 4: $(2x - y)^2 + 3y^2 = 12$. So $y^2 \le 4$.
+
+      - $y = 0$: $(2x)^2 = 12$, no.
+      - $y = \pm1$: $(2x - y)^2 = 9$, so $2x - y = \pm3$: $y = 1$ gives $x = 2, -1$; $y = -1$ gives $x = 1, -2$.
+      - $y = \pm2$: $2x - y = 0$, so $x = \pm1$.
+
+      **Six solutions:** $(2,1), (-1,1), (1,-1), (-2,-1), (1,2), (-1,-2)$.
+
+  - id: nt-229
+    title: Positive solutions of a linear equation
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [linear diophantine]
+    related: [nt-023]
+    statement: |
+      Find all positive integer solutions of $5x + 7y = 100$.
+    solution: |
+      Mod 5, $7y \equiv 0$, so $5 \mid y$. With $y > 0$ and $7y < 100$: $y \in \{5, 10\}$, giving $x = 13$ and $x = 6$.
+
+      **Solutions:** $(13, 5)$ and $(6, 10)$.
+
+  - id: nt-230
+    title: xʸ = yˣ
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: proof
+    tags: [exponential equations, calculus]
+    statement: |
+      Find all pairs of positive integers $x < y$ with $x^y = y^x$.
+    solution: |
+      Taking logs, $\frac{\ln x}{x} = \frac{\ln y}{y}$. The function $f(t) = \frac{\ln t}{t}$ has $f'(t) = \frac{1 - \ln t}{t^2}$, so it increases on $(0, e]$ and decreases on $[e, \infty)$. Two different points with the same value must straddle $e$: $x < e < y$, so $x \in \{1, 2\}$.
+
+      - $x = 1$: $1 = y$, contradicting $x < y$.
+      - $x = 2$: $2^y = y^2$ with $y \ge 3$. $y = 3$ fails ($8 \ne 9$), $y = 4$ works, and for $y \ge 5$, $2^y > y^2$ (in-012).
+
+      **Answer:** $(2, 4)$ only.
+
+  - id: nt-231
+    title: Right triangles with sides in arithmetic progression
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: proof
+    tags: [pythagorean triples]
+    statement: |
+      Prove that if the sides of a right triangle form an arithmetic progression then they are proportional to $3, 4, 5$.
+    solution: |
+      Let the sides be $b - d, b, b + d$ with $0 < d < b$; the hypotenuse is the longest, $b + d$. Then
+      $$(b - d)^2 + b^2 = (b + d)^2 \iff b^2 = 4bd \iff b = 4d.$$
+      So the sides are $3d, 4d, 5d$. $\blacksquare$
+
+  - id: nt-232
+    title: Area equals perimeter
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: compute
+    tags: [pythagorean triples, factorisation]
+    statement: |
+      Find all right triangles with integer sides whose area equals their perimeter.
+    solution: |
+      With legs $a, b$ and hypotenuse $c$: $\frac{ab}{2} = a + b + c$, so $c = \frac{ab}{2} - a - b$. Squaring and using $c^2 = a^2 + b^2$:
+      $$\frac{a^2b^2}{4} - ab(a + b) + (a+b)^2 = a^2 + b^2 \implies \frac{ab}{4} - (a + b) + 2 = 0,$$
+      after dividing by $ab$. So $ab - 4a - 4b + 8 = 0$, i.e. $(a - 4)(b - 4) = 8$. Positive legs force $(a - 4, b - 4) \in \{(1,8), (2,4), (4,2), (8,1)\}$ (negative factor pairs give a leg $\le 0$).
+
+      **Answer:** the $(5, 12, 13)$ and $(6, 8, 10)$ triangles.
+
+  - id: nt-233
+    title: Product twice the sum
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [factorisation, simon's trick]
+    related: [nt-210]
+    statement: |
+      Find all positive integers with $xy = 2(x + y)$.
+    solution: |
+      $(x - 2)(y - 2) = 4$. For positive $x, y$, negative factor pairs give $x \le 0$ or $y \le 0$ (e.g. $(-1, -4) \to (1, -2)$), and $(-2,-2) \to (0,0)$. So $(x-2, y-2) \in \{(1,4), (2,2), (4,1)\}$.
+
+      **Solutions:** $(3, 6), (4, 4), (6, 3)$.
+
+  - id: nt-234
+    title: Three unit fractions summing to 1
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: compute
+    tags: [egyptian fractions, bounding]
+    related: [in-242]
+    statement: |
+      Find all positive integers $x \le y \le z$ with $\frac1x + \frac1y + \frac1z = 1$.
+    solution: |
+      The largest term is $\frac1x$, so $\frac3x \ge 1$ and $x \le 3$; also $x \ge 2$.
+
+      - $x = 2$: $\frac1y + \frac1z = \frac12$, so $\frac2y \ge \frac12$, $y \le 4$, and $y \ge 3$. $y = 3 \Rightarrow z = 6$; $y = 4 \Rightarrow z = 4$.
+      - $x = 3$: $\frac1y + \frac1z = \frac23$, so $y \le 3$, hence $y = z = 3$.
+
+      **Solutions:** $(2,3,6), (2,4,4), (3,3,3)$. (These are the regular tilings of the plane by triangles, squares and hexagons.)
+
+  - id: nt-235
+    title: A difference of cubes equal to 91
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: compute
+    tags: [cubes, factorisation]
+    statement: |
+      Find all integer solutions of $x^3 - y^3 = 91$.
+    solution: |
+      $(x - y)(x^2 + xy + y^2) = 91 = 7\cdot13$. Since $x^2 + xy + y^2 \ge 0$, $d = x - y > 0$, so $d \in \{1, 7, 13, 91\}$. Substituting $y = x - d$, $x^2 + xy + y^2 = 3x^2 - 3dx + d^2 = 91/d$:
+
+      - $d = 1$: $3x^2 - 3x + 1 = 91$, $x^2 - x - 30 = 0$, $x = 6$ or $-5$: $(6, 5)$, $(-5, -6)$.
+      - $d = 7$: $3x^2 - 21x + 49 = 13$, $x^2 - 7x + 12 = 0$, $x = 3$ or $4$: $(3, -4)$, $(4, -3)$.
+      - $d = 13$: $x^2 - 13x + 54 = 0$, discriminant $169 - 216 < 0$.
+      - $d = 91$: $x^2 - 91x + 2760 = 0$, discriminant $8281 - 11040 < 0$.
+
+      **Solutions:** $(6,5), (-5,-6), (4,-3), (3,-4)$.
+
+  - id: nt-236
+    title: Sums of consecutive integers
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: proof
+    tags: [consecutive integers, powers of two, factorisation]
+    statement: |
+      Prove that a positive integer $n$ is a sum of two or more consecutive positive integers if and only if $n$ is not a power of 2.
+    solution: |
+      $n = a + (a+1) + \cdots + (a + k - 1)$ with $k \ge 2$, $a \ge 1$ iff $2n = k(2a + k - 1)$. The factors $k$ and $2a + k - 1$ have opposite parity, and $2 \le k < 2a + k - 1$.
+
+      **Powers of 2 fail.** One factor is odd and at least 2, hence at least 3, but $2n = 2^{m+1}$ has no odd factor greater than 1.
+
+      **Others work.** Let $n = de$ with $d \ge 3$ odd. Then $2n = d\cdot2e$, the two factors $d, 2e$ have opposite parity (so are unequal) and are both at least 2. Let $k$ be the smaller and $2a + k - 1$ the larger; then $a = \frac{\text{larger} - k + 1}{2}$ is a positive integer, since the larger minus $k$ is odd and positive. $\blacksquare$
+
+      (E.g. $15 = 7 + 8 = 4 + 5 + 6 = 1 + 2 + 3 + 4 + 5$.)
+
+  - id: nt-237
+    title: Rational points on the circle
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: proof
+    tags: [rational points, pythagorean triples, geometry]
+    related: [nt-207]
+    statement: |
+      Prove that the rational points on $x^2 + y^2 = 1$ other than $(-1, 0)$ are exactly
+      $$\left(\frac{1 - t^2}{1 + t^2},\ \frac{2t}{1 + t^2}\right),\qquad t \in \Q.$$
+    solution: |
+      Draw the line through $(-1, 0)$ with slope $t$: $y = t(x + 1)$. Substituting,
+      $$x^2 + t^2(x+1)^2 = 1 \iff (x + 1)\big[(x - 1) + t^2(x + 1)\big] = 0.$$
+      The second intersection has $x = \frac{1 - t^2}{1 + t^2}$ and $y = t(x + 1) = \frac{2t}{1 + t^2}$. If $t$ is rational, so is this point.
+
+      Conversely, a rational point $(x, y) \ne (-1, 0)$ on the circle lies on the line through $(-1, 0)$ with slope $t = \frac{y}{x + 1}$, which is rational (note $x \ne -1$, as $x = -1$ forces $y = 0$). So it is the point given by this $t$. $\blacksquare$
+
+      (Writing $t = n/m$ recovers the triples $(m^2 - n^2, 2mn, m^2 + n^2)$.)
+
+  - id: nt-238
+    title: 3ⁿ + 4ⁿ = 5ⁿ
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: proof
+    tags: [exponential equations, inequalities]
+    statement: |
+      Prove that $3^n + 4^n = 5^n$ only for $n = 2$ (among positive integers).
+    solution: |
+      Divide by $5^n$: $f(n) = \left(\frac35\right)^n + \left(\frac45\right)^n = 1$. $f$ is strictly decreasing in $n$ (both terms are). $f(1) = \frac75 > 1$ and $f(2) = \frac{9 + 16}{25} = 1$, so $f(n) < 1$ for $n \ge 3$. $\blacksquare$
+
+  - id: nt-239
+    title: Factorials adding to a factorial
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: proof
+    tags: [factorial, bounding]
+    statement: |
+      Find all positive integers $x, y, z$ with $x! + y! = z!$.
+    solution: |
+      By symmetry let $x \le y$. Then $z > y$, so $z! \ge (y+1)! = (y+1)\,y!$. But $x! + y! \le 2\,y!$. So $(y + 1)\,y! \le 2\,y!$, i.e. $y \le 1$. Hence $x = y = 1$, and $z! = 2$ gives $z = 2$.
+
+      **Only solution:** $1! + 1! = 2!$.
+
+  - id: nt-240
+    title: When is n² + 2n + 12 a square?
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [squares, factorisation]
+    statement: |
+      Find all integers $n$ for which $n^2 + 2n + 12$ is a perfect square.
+    solution: |
+      $(n + 1)^2 + 11 = m^2$ with $m \ge 0$, so $(m - n - 1)(m + n + 1) = 11$. As 11 is prime, $\{m - (n+1), m + (n+1)\} = \{1, 11\}$ (the negative pairs give $m < 0$). So $m = 6$ and $n + 1 = \pm5$.
+
+      **Answer:** $n = 4$ or $n = -6$ (both give 36).
+
+  - id: nt-241
+    title: No solutions by reduction mod 5
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: proof
+    tags: [congruences, quadratic residues]
+    related: [nt-026]
+    statement: |
+      Prove that $15x^2 - 7y^2 = 9$ has no integer solutions.
+    solution: |
+      Mod 5: $-7y^2 \equiv 9$, i.e. $3y^2 \equiv 4$, and multiplying by $2 = 3^{-1}$, $y^2 \equiv 8 \equiv 3 \pmod 5$. But squares mod 5 are $0, 1, 4$. $\blacksquare$
+
+  - id: nt-242
+    title: When is 2ⁿ + 3 a square?
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [squares, congruences]
+    statement: |
+      Find all $n \ge 0$ with $2^n + 3$ a perfect square.
+    solution: |
+      $n = 0$: $4 = 2^2$. $n = 1$: $5$, not a square. For $n \ge 2$, $2^n + 3 \equiv 3 \pmod 4$, and no square is (nt-003).
+
+      **Answer:** $n = 0$ only.
+
+  - id: nt-243
+    title: 60 divides the product of a Pythagorean triple
+    subtopic: Diophantine equations
+    difficulty: hard
+    type: proof
+    tags: [pythagorean triples, congruences]
+    related: [nt-207, nt-025]
+    statement: |
+      Prove that if $a^2 + b^2 = c^2$ in positive integers then $60 \mid abc$.
+    solution: |
+      **3.** $3 \mid a$ or $3 \mid b$ (nt-025).
+
+      **5.** Squares mod 5 are $0, 1, 4$. If $5 \nmid a$ and $5 \nmid b$, then $a^2 + b^2 \in \{1+1, 1+4, 4+4\} \equiv \{2, 0, 3\}$. Since $c^2$ must be $0, 1$ or $4$, the only possibility is $0$, so $5 \mid c$.
+
+      **4.** Divide by $d = \gcd(a, b)$ to get a primitive triple $(a', b', c')$; by nt-207 one leg is $2mn$ with $m, n$ of opposite parity, so $4$ divides that leg, and hence divides the corresponding leg $da'$ or $db'$.
+
+      As $3, 4, 5$ are pairwise coprime, $60 \mid abc$. (For $(3,4,5)$, $abc = 60$, so 60 is best possible.) $\blacksquare$
+
+  - id: nt-244
+    title: Lebesgue's equation y² = x³ + 7
+    subtopic: Diophantine equations
+    difficulty: hard
+    type: proof
+    tags: [sums of squares, congruences, quadratic residues]
+    source: Lebesgue, 1869
+    related: [nt-079]
+    hints:
+      - |
+        Add 1: $y^2 + 1 = (x + 2)(x^2 - 2x + 4)$.
+    statement: |
+      Prove that $y^2 = x^3 + 7$ has no integer solutions.
+    solution: |
+      If $x$ is even, $y^2 = x^3 + 7 \equiv 7 \pmod 8$, impossible (squares are $0, 1, 4 \bmod 8$).
+
+      So $x$ is odd. Then
+      $$y^2 + 1 = x^3 + 8 = (x + 2)(x^2 - 2x + 4).$$
+      Now $x^2 - 2x + 4 = (x - 1)^2 + 3 \equiv 3 \pmod 4$ (as $x - 1$ is even), and it is positive. A positive number $\equiv 3 \pmod 4$ has a prime factor $q \equiv 3 \pmod 4$ (a product of numbers $\equiv 1$ is $\equiv 1$). Then $q \mid y^2 + 1$, contradicting nt-079. $\blacksquare$
+
+  - id: nt-245
+    title: No rational point on x² + y² = 3
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: proof
+    tags: [rational points, infinite descent]
+    related: [nt-027, nt-237]
+    statement: |
+      Prove that the circle $x^2 + y^2 = 3$ has no rational points.
+    solution: |
+      Suppose $x = a/c$, $y = b/c$ with integers and $c \ne 0$. Then $a^2 + b^2 = 3c^2$, and by nt-027 the only integer solution is $a = b = c = 0$, contradicting $c \ne 0$. $\blacksquare$
+
+      (Compare nt-237: whether a conic has one rational point decides whether it has infinitely many.)
+
+  - id: nt-246
+    title: A quadratic that is a square
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [squares, factorisation]
+    statement: |
+      Find all integers $x, y$ with $x^2 - 6x + 13 = y^2$.
+    solution: |
+      $(x - 3)^2 + 4 = y^2$, so $(y - x + 3)(y + x - 3) = 4$. The factors have the same parity (they sum to $2y$), so they are $(2, 2)$ or $(-2, -2)$. Then $x - 3 = 0$ and $y = \pm2$.
+
+      **Solutions:** $(3, 2)$ and $(3, -2)$.
+
+  - id: nt-247
+    title: One more than a power of 2 is never a cube
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: proof
+    tags: [cubes, factorisation, powers of two]
+    related: [nt-224]
+    statement: |
+      Prove that $2^n + 1$ is never a perfect cube for $n \ge 0$.
+    solution: |
+      Suppose $2^n + 1 = m^3$. Then $(m - 1)(m^2 + m + 1) = 2^n$. But $m^2 + m + 1 = m(m+1) + 1$ is odd and positive, so it equals 1, giving $m = 0$ or $m = -1$. Then $m^3 - 1 \in \{-1, -2\}$, not a power of 2. $\blacksquare$
+
+  - id: nt-248
+    title: a² + b² + c² = a²b²
+    subtopic: Diophantine equations
+    difficulty: hard
+    type: proof
+    tags: [infinite descent, congruences]
+    related: [nt-213]
+    statement: |
+      Prove that the only integer solution of $a^2 + b^2 + c^2 = a^2b^2$ is $a = b = c = 0$.
+    solution: |
+      **Step 1.** If $a$ or $b$ is odd there is no solution. Squares are $0$ or $1 \pmod 4$. If $a, b$ are both odd, $c^2 = a^2b^2 - a^2 - b^2 \equiv 1 - 1 - 1 \equiv 3 \pmod 4$. If exactly one is odd, say $a$, then $c^2 \equiv 0 - 1 - 0 \equiv 3$. Both impossible.
+
+      So $a, b$ are even, hence $c^2 \equiv 0 \pmod 4$ and $c$ is even. Writing $a = 2a_1$ etc.: $a_1^2 + b_1^2 + c_1^2 = 4a_1^2b_1^2$.
+
+      **Step 2.** If $a^2 + b^2 + c^2 = 4^ka^2b^2$ with $k \ge 1$, then the right side is $\equiv 0 \pmod 4$, so $a, b, c$ are all even (a sum of three squares is $\equiv 0 \bmod 4$ only if all are even), and halving gives the same equation with $4^{k+1}$.
+
+      By repetition, $a, b, c$ are divisible by every power of 2, so all are $0$. $\blacksquare$
+
+  - id: nt-249
+    title: The taxicab number
+    subtopic: Diophantine equations
+    difficulty: easy
+    type: compute
+    tags: [cubes, sums of cubes]
+    source: Ramanujan, Hardy
+    statement: |
+      Show that $1729$ is a sum of two positive cubes in two different ways.
+    solution: |
+      $1729 = 1^3 + 12^3 = 1 + 1728$ and $1729 = 9^3 + 10^3 = 729 + 1000$.
+
+      (It is the smallest such number: Ramanujan's remark to Hardy about the "dull" taxi number.)
+
+  - id: nt-250
+    title: A sum of two squares equal to a fourth power
+    subtopic: Diophantine equations
+    difficulty: medium
+    type: compute
+    tags: [pythagorean triples, gaussian integers]
+    related: [nt-207, nt-215]
+    statement: |
+      Find positive integers $x, y, z$ with $x^2 + y^2 = z^4$.
+    solution: |
+      We need a Pythagorean triple whose hypotenuse $z^2$ is itself a hypotenuse. Take $z = 5 = 2^2 + 1^2$, so $z^2 = 25 = m^2 + n^2$ with $(m, n) = (4, 3)$. By nt-207 the triple with these parameters is
+      $$x = m^2 - n^2 = 7,\quad y = 2mn = 24,\quad z^2 = 25.$$
+      Check: $49 + 576 = 625 = 5^4$.
+
+      (In Gaussian integers this is $(2 + i)^4 = -7 + 24i$, and $|{-7} + 24i|^2 = |2 + i|^8 = 5^4$.)

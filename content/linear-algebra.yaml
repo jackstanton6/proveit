@@ -479,3 +479,1711 @@ problems:
       Let $w_1, \dots, w_k$ be a basis of $W$ and let $M$ be the $k\times n$ matrix with these as rows. Then $x \in W^\perp$ iff $x$ is orthogonal to each $w_i$ (and hence to all their combinations), iff $Mx = 0$. So $W^\perp = \ker M$. The rows of $M$ are independent, so $\rank M = k$, and rank–nullity gives $\dim W^\perp = n - k$.
 
       Every $w \in W$ is orthogonal to every element of $W^\perp$, so $W \subseteq (W^\perp)^\perp$. Applying the dimension formula to $W^\perp$, $\dim (W^\perp)^\perp = n - (n - k) = k = \dim W$. A subspace contained in another of the same finite dimension is equal to it. $\blacksquare$
+
+  - id: la-031
+    title: The one-step subspace test
+    subtopic: Subspaces
+    difficulty: easy
+    type: proof
+    tags: [subspaces, subspace test]
+    related: [la-001]
+    statement: |
+      Prove that a subset $W$ of a vector space $V$ is a subspace if and only if $W$ is non-empty and $au + bw \in W$ for all $u, w \in W$ and scalars $a, b$.
+    solution: |
+      **($\Rightarrow$)** A subspace contains 0 and is closed under scalar multiplication and addition, so it contains $au$, $bw$ and their sum.
+
+      **($\Leftarrow$)** Pick $u \in W$; then $0 = 0u + 0u \in W$. With $b = 0$ we get closure under scalars, and with $a = b = 1$ closure under addition. The vector space axioms hold in $W$ because they hold in $V$. $\blacksquare$
+
+  - id: la-032
+    title: Solution sets of linear systems
+    subtopic: Subspaces
+    difficulty: easy
+    type: proof
+    tags: [subspaces, linear systems, kernel]
+    related: [la-010]
+    statement: |
+      Let $A$ be an $m\times n$ matrix. Prove that $\{x : Ax = 0\}$ is a subspace of $\R^n$, that $\{x : Ax = b\}$ is not one when $b \ne 0$, and that if $x_0$ solves $Ax = b$ then every solution is $x_0 + z$ with $Az = 0$.
+    solution: |
+      **Homogeneous.** $A0 = 0$, and $A(ax + by) = aAx + bAy = 0$ if $Ax = Ay = 0$.
+
+      **Inhomogeneous.** $A0 = 0 \ne b$, so $0$ is not a solution.
+
+      **Structure.** If $Ax = b$ then $A(x - x_0) = b - b = 0$; conversely $A(x_0 + z) = b + 0$. $\blacksquare$
+
+  - id: la-033
+    title: Which subsets of R³ are subspaces?
+    subtopic: Subspaces
+    difficulty: easy
+    type: compute
+    tags: [subspaces, counterexample]
+    related: [la-001]
+    statement: |
+      Decide which of these are subspaces of $\R^3$:
+
+      1. $\{(x,y,z) : x + y + z = 0\}$
+      2. $\{(x,y,z) : x + y + z = 1\}$
+      3. $\{(x,y,z) : x = y^2\}$
+      4. $\{(x,y,z) : xyz = 0\}$
+      5. $\{t(1, 2, 3) : t \in \R\}$
+    solution: |
+      1. **Yes**: the kernel of the linear map $(x,y,z) \mapsto x + y + z$.
+      2. **No**: does not contain $0$.
+      3. **No**: $(1, 1, 0)$ is in it but $-1\cdot(1,1,0) = (-1,-1,0)$ is not, as $-1 \ne 1$.
+      4. **No**: $(1,1,0)$ and $(0,0,1)$ are in it but their sum $(1,1,1)$ is not.
+      5. **Yes**: a line through the origin, $\Span\{(1,2,3)\}$.
+
+  - id: la-034
+    title: Subspaces of function spaces
+    subtopic: Subspaces
+    difficulty: easy
+    type: compute
+    tags: [subspaces, function spaces, differential equations]
+    statement: |
+      In the space of all functions $\R \to \R$, which of these are subspaces? (1) even functions; (2) continuous functions; (3) polynomials of degree exactly 2; (4) solutions of $y'' + y = 0$.
+    solution: |
+      1. **Yes**: $0$ is even, and if $f, g$ are even so is $af + bg$.
+      2. **Yes**: sums and scalar multiples of continuous functions are continuous.
+      3. **No**: $x^2$ and $-x^2 + x$ have degree 2 but their sum $x$ does not (and $0$ is not in the set).
+      4. **Yes**: if $y_1'' + y_1 = 0$ and $y_2'' + y_2 = 0$ then $(ay_1 + by_2)'' + (ay_1 + by_2) = 0$. It is the kernel of the linear map $y \mapsto y'' + y$ (on twice-differentiable functions), and equals $\Span\{\cos, \sin\}$.
+
+  - id: la-035
+    title: Symmetric plus skew-symmetric
+    subtopic: Subspaces
+    difficulty: medium
+    type: proof
+    tags: [direct sum, symmetric matrices, dimension]
+    related: [la-037]
+    statement: |
+      Prove that the symmetric matrices $S$ and the skew-symmetric matrices $K$ ($A^T = -A$) are subspaces of $M_n(\R)$ with $M_n(\R) = S \oplus K$, and find their dimensions.
+    solution: |
+      Both are kernels of linear maps ($A \mapsto A - A^T$ and $A \mapsto A + A^T$), hence subspaces.
+
+      **Sum.** Any $A = \frac{A + A^T}{2} + \frac{A - A^T}{2}$, symmetric plus skew.
+
+      **Intersection.** If $A^T = A$ and $A^T = -A$, then $A = -A$, so $A = 0$.
+
+      **Dimensions.** A symmetric matrix is determined by its entries on and above the diagonal: $\dim S = \frac{n(n+1)}{2}$. A skew one has zero diagonal and is determined by the entries above it: $\dim K = \frac{n(n-1)}{2}$. These add to $n^2$, as they must. $\blacksquare$
+
+  - id: la-036
+    title: The sum of two subspaces
+    subtopic: Subspaces
+    difficulty: easy
+    type: proof
+    tags: [subspaces, sums]
+    related: [la-009]
+    statement: |
+      Prove that $U + W = \{u + w : u \in U, w \in W\}$ is a subspace, and that it is the smallest subspace containing both $U$ and $W$.
+    solution: |
+      $0 = 0 + 0 \in U + W$, and $a(u + w) + b(u' + w') = (au + bu') + (aw + bw') \in U + W$.
+
+      It contains $U$ (take $w = 0$) and $W$. Any subspace containing $U$ and $W$ contains all sums $u + w$, by closure. $\blacksquare$
+
+  - id: la-037
+    title: When is a sum direct?
+    subtopic: Subspaces
+    difficulty: medium
+    type: proof
+    tags: [direct sum, uniqueness]
+    related: [la-035, la-036]
+    statement: |
+      Prove that every element of $U + W$ has a **unique** expression $u + w$ ($u \in U$, $w \in W$) if and only if $U \cap W = \{0\}$.
+    solution: |
+      **($\Leftarrow$)** If $u + w = u' + w'$ then $u - u' = w' - w$ lies in $U \cap W = \{0\}$, so $u = u'$ and $w = w'$.
+
+      **($\Rightarrow$)** If $v \in U \cap W$, then $v = v + 0 = 0 + v$ are two expressions of $v$ (with $v \in U$, $0 \in W$, and $0 \in U$, $v \in W$). Uniqueness forces $v = 0$. $\blacksquare$
+
+  - id: la-038
+    title: The span is the smallest subspace
+    subtopic: Subspaces
+    difficulty: easy
+    type: proof
+    tags: [span, subspaces]
+    statement: |
+      Prove that for any set $S$ of vectors, $\Span S$ is a subspace containing $S$, and is contained in every subspace that contains $S$.
+    solution: |
+      A linear combination of linear combinations of elements of $S$ is again one, and the empty combination is $0$; so $\Span S$ is a subspace. It contains each $s \in S$ as $1\cdot s$.
+
+      A subspace containing $S$ is closed under linear combinations, so it contains every combination of elements of $S$. $\blacksquare$
+
+  - id: la-039
+    title: Describing a span by an equation
+    subtopic: Subspaces
+    difficulty: easy
+    type: compute
+    tags: [span, planes, dimension]
+    statement: |
+      Show that $\Span\{(1,1,0), (0,1,1)\}$ is the plane $x - y + z = 0$.
+    solution: |
+      Both vectors satisfy $x - y + z = 0$ ($1 - 1 + 0$ and $0 - 1 + 1$), and the plane is a subspace, so the span lies in it. The two vectors are independent (neither is a multiple of the other), so the span has dimension 2. The plane also has dimension 2 (the kernel of a non-zero map $\R^3 \to \R$). A 2-dimensional subspace of a 2-dimensional space is all of it (la-050).
+
+  - id: la-040
+    title: All subspaces of the plane
+    subtopic: Subspaces
+    difficulty: medium
+    type: proof
+    tags: [subspaces, dimension]
+    statement: |
+      Prove that the subspaces of $\R^2$ are exactly $\{0\}$, the lines through the origin, and $\R^2$.
+    solution: |
+      These are subspaces. Conversely, a subspace $W$ has dimension 0, 1 or 2. Dimension 0 means $W = \{0\}$. Dimension 1 means $W = \Span\{v\}$ for some $v \ne 0$, a line through the origin. Dimension 2 means $W = \R^2$ (la-050). $\blacksquare$
+
+  - id: la-041
+    title: A space is not a finite union of proper subspaces
+    subtopic: Subspaces
+    difficulty: hard
+    type: proof
+    tags: [subspaces, union]
+    related: [la-002]
+    hints:
+      - |
+        In a minimal covering $U_1 \cup \cdots \cup U_k$, take $u$ only in $U_1$ and $v \notin U_1$, and look at the line $u + tv$.
+    statement: |
+      Prove that a real vector space $V$ is never the union of finitely many proper subspaces.
+    solution: |
+      Suppose $V = U_1 \cup \cdots \cup U_k$ with each $U_i \ne V$, and $k$ minimal. Then $k \ge 2$, and by minimality some $u \in U_1$ lies in no other $U_j$. Pick $v \notin U_1$.
+
+      Consider the vectors $u + tv$, $t \in \R$, all different. For $t \ne 0$, $u + tv \notin U_1$ (else $v = \frac{(u + tv) - u}{t} \in U_1$). And each $U_j$, $j \ge 2$, contains at most one of them: if $u + tv, u + sv \in U_j$ with $t \ne s$, then $v \in U_j$ and then $u \in U_j$, a contradiction. So the $U_i$ contain at most $1 + (k - 1)$ of these infinitely many vectors. Contradiction. $\blacksquare$
+
+      (The proof works over any infinite field; over $\F_2$, $\F_2^2$ is the union of its three lines.)
+
+  - id: la-042
+    title: Every subspace has a complement
+    subtopic: Subspaces
+    difficulty: medium
+    type: proof
+    tags: [direct sum, basis, complement]
+    related: [la-008, la-037]
+    statement: |
+      Let $U$ be a subspace of a finite-dimensional space $V$. Prove that there is a subspace $W$ with $V = U \oplus W$. Is $W$ unique?
+    solution: |
+      Take a basis $u_1, \dots, u_k$ of $U$ and extend it to a basis $u_1, \dots, u_k, w_1, \dots, w_m$ of $V$ (la-008). Let $W = \Span\{w_j\}$. Every $v$ is a combination of the basis, so $V = U + W$. If $v \in U \cap W$, then $v = \sum a_iu_i = \sum b_jw_j$, and independence of the basis forces all coefficients to be 0. So $U \cap W = \{0\}$.
+
+      **Not unique:** in $\R^2$ with $U$ the $x$-axis, any line through 0 other than $U$ is a complement. $\blacksquare$
+
+  - id: la-043
+    title: Intersecting two planes
+    subtopic: Subspaces
+    difficulty: easy
+    type: compute
+    tags: [intersection, linear systems]
+    statement: |
+      Find a basis for the intersection of the planes $x + y + z = 0$ and $x - y = 0$ in $\R^3$.
+    solution: |
+      $x = y$, and then $2x + z = 0$, so $z = -2x$. The intersection is $\{x(1, 1, -2)\}$, with basis $(1, 1, -2)$. (Two distinct planes through 0 meet in a line, as la-009 predicts: $2 + 2 - 3 = 1$.)
+
+  - id: la-044
+    title: Spaces of sequences
+    subtopic: Subspaces
+    difficulty: easy
+    type: proof
+    tags: [subspaces, sequences]
+    statement: |
+      In the space of all real sequences, show that the convergent sequences, the sequences tending to 0, the bounded sequences, and the sequences with only finitely many non-zero terms are all subspaces. Which contain which?
+    solution: |
+      Each set contains the zero sequence and is closed under linear combinations: limits of $a x_n + by_n$ are $a\lim x_n + b\lim y_n$ (limit laws); $|ax_n + by_n| \le |a|M + |b|M'$; and a combination of two sequences that are eventually zero is eventually zero.
+
+      Inclusions: finitely supported $\subset$ tend to 0 $\subset$ convergent $\subset$ bounded, all strict (e.g. $\frac1n$, the constant 1, and $(-1)^n$ show strictness).
+
+  - id: la-045
+    title: Polynomials vanishing at 1
+    subtopic: Subspaces
+    difficulty: medium
+    type: compute
+    tags: [subspaces, polynomials, rank-nullity]
+    related: [la-012]
+    statement: |
+      Let $W = \{p \in P_n : p(1) = 0\}$. Show $W$ is a subspace of dimension $n$ and give a basis.
+    solution: |
+      $W$ is the kernel of the linear map $\mathrm{ev}_1 : P_n \to \R$, $p \mapsto p(1)$, which is surjective (constants). By rank–nullity $\dim W = (n + 1) - 1 = n$.
+
+      Basis: $(x - 1), (x-1)^2, \dots, (x-1)^n$. They lie in $W$, and they are independent (different degrees), so $n$ of them form a basis.
+
+  - id: la-046
+    title: Matrices commuting with a diagonal matrix
+    subtopic: Subspaces
+    difficulty: medium
+    type: compute
+    tags: [subspaces, commuting matrices]
+    statement: |
+      Prove that $C(A) = \{X : AX = XA\}$ is a subspace of $M_n$, and find it when $A = \operatorname{diag}(a_1, \dots, a_n)$ with distinct $a_i$.
+    solution: |
+      $X \mapsto AX - XA$ is linear, and $C(A)$ is its kernel.
+
+      $(AX)_{ij} = a_ix_{ij}$ and $(XA)_{ij} = x_{ij}a_j$. So $AX = XA$ iff $(a_i - a_j)x_{ij} = 0$ for all $i, j$, iff $x_{ij} = 0$ whenever $i \ne j$. So $C(A)$ is the space of diagonal matrices, of dimension $n$.
+
+  - id: la-047
+    title: Trace-zero matrices
+    subtopic: Subspaces
+    difficulty: easy
+    type: proof
+    tags: [trace, rank-nullity, dimension]
+    related: [la-003]
+    statement: |
+      Prove that the $n\times n$ matrices of trace zero form a subspace of dimension $n^2 - 1$.
+    solution: |
+      $\tr : M_n \to \R$ is linear and surjective ($\tr(cE_{11}) = c$). Its kernel has dimension $n^2 - 1$ by rank–nullity. $\blacksquare$
+
+  - id: la-048
+    title: Square-zero matrices are not a subspace
+    subtopic: Subspaces
+    difficulty: easy
+    type: proof
+    tags: [subspaces, nilpotent, counterexample]
+    statement: |
+      Show that $\{A \in M_2(\R) : A^2 = 0\}$ is not a subspace.
+    solution: |
+      $E = \begin{pmatrix}0&1\\0&0\end{pmatrix}$ and $F = \begin{pmatrix}0&0\\1&0\end{pmatrix}$ satisfy $E^2 = F^2 = 0$, but $(E + F)^2 = \begin{pmatrix}0&1\\1&0\end{pmatrix}^2 = I \ne 0$. $\blacksquare$
+
+  - id: la-049
+    title: How small can an intersection be?
+    subtopic: Subspaces
+    difficulty: medium
+    type: proof
+    tags: [dimension, intersection]
+    related: [la-009]
+    statement: |
+      Prove that $\dim(U \cap W) \ge \dim U + \dim W - \dim V$ for subspaces of a finite-dimensional $V$. Deduce that two planes through 0 in $\R^3$ share a line, and show that in $\R^4$ they may meet only in $0$.
+    solution: |
+      By la-009, $\dim(U \cap W) = \dim U + \dim W - \dim(U + W)$, and $\dim(U + W) \le \dim V$.
+
+      In $\R^3$: $\dim(U\cap W) \ge 2 + 2 - 3 = 1$. In $\R^4$ the bound is $0$, attained by $\Span\{e_1, e_2\}$ and $\Span\{e_3, e_4\}$. $\blacksquare$
+
+  - id: la-050
+    title: A subspace of full dimension is everything
+    subtopic: Subspaces
+    difficulty: easy
+    type: proof
+    tags: [dimension, basis]
+    related: [la-008]
+    statement: |
+      Let $U \subseteq W$ be subspaces with $\dim U = \dim W < \infty$. Prove that $U = W$.
+    solution: |
+      A basis of $U$ is an independent set in $W$ with $\dim W$ elements. If it didn't span $W$, la-008 would extend it to a larger independent set in $W$, which is impossible. So it spans $W$, and $W = \Span(\text{basis of } U) = U$. $\blacksquare$
+
+  - id: la-051
+    title: Testing independence with a determinant
+    subtopic: Independence & bases
+    difficulty: easy
+    type: compute
+    tags: [linear independence, determinants]
+    related: [la-007]
+    statement: |
+      Are $(1,0,1)$, $(1,1,0)$, $(0,1,1)$ linearly independent in $\R^3$?
+    solution: |
+      Put them as columns of $A$: $\det A = \det\begin{pmatrix}1&1&0\\0&1&1\\1&0&1\end{pmatrix} = 1(1 - 0) - 1(0 - 1) + 0 = 2 \ne 0$. So $Ax = 0$ has only the trivial solution and they are **independent** (hence a basis of $\R^3$).
+
+      (Over a field where $2 = 0$ they would be dependent: compare la-005.)
+
+  - id: la-052
+    title: Coordinates centred at 1
+    subtopic: Independence & bases
+    difficulty: easy
+    type: compute
+    tags: [basis, polynomials, coordinates, taylor]
+    related: [la-004]
+    statement: |
+      Show that $1, x - 1, (x - 1)^2$ is a basis of $P_2$, and find the coordinates of $x^2$.
+    solution: |
+      They have degrees 0, 1, 2, so they are independent (look at the highest degree in a dependency), and three independent vectors in the 3-dimensional $P_2$ form a basis.
+
+      $x^2 = ((x - 1) + 1)^2 = 1 + 2(x - 1) + (x - 1)^2$: coordinates $(1, 2, 1)$. (These are $\frac{f^{(k)}(1)}{k!}$, the Taylor coefficients at 1.)
+
+  - id: la-053
+    title: Independence of functions
+    subtopic: Independence & bases
+    difficulty: medium
+    type: proof
+    tags: [linear independence, function spaces, trigonometry]
+    statement: |
+      Prove that $\sin x$ and $\cos x$ are linearly independent functions, but $1, \sin^2x, \cos^2x$ are dependent.
+    solution: |
+      If $a\sin x + b\cos x = 0$ for **all** $x$, then $x = 0$ gives $b = 0$ and $x = \frac\pi2$ gives $a = 0$.
+
+      $1 - \sin^2x - \cos^2x = 0$ for all $x$ is a non-trivial dependency. $\blacksquare$
+
+      (A relation must hold identically; evaluating at well-chosen points extracts the coefficients.)
+
+  - id: la-054
+    title: Exponentials are independent
+    subtopic: Independence & bases
+    difficulty: medium
+    type: proof
+    tags: [linear independence, exponential, limits]
+    statement: |
+      Prove that $e^x$, $e^{2x}$, $e^{3x}$ are linearly independent functions on $\R$. Generalise.
+    solution: |
+      Suppose $ae^x + be^{2x} + ce^{3x} = 0$ for all $x$. Divide by $e^{3x}$: $ae^{-2x} + be^{-x} + c = 0$, and let $x \to \infty$: $c = 0$. Then divide by $e^{2x}$ and let $x \to \infty$: $b = 0$. Then $a = 0$. $\blacksquare$
+
+      In general $e^{\lambda_1x}, \dots, e^{\lambda_nx}$ with distinct $\lambda_i$ are independent, by the same argument (divide by the largest). They are eigenvectors of $\frac{d}{dx}$ with distinct eigenvalues (la-022).
+
+  - id: la-055
+    title: Spanning sets contain bases
+    subtopic: Independence & bases
+    difficulty: medium
+    type: proof
+    tags: [basis, spanning sets]
+    related: [la-008]
+    statement: |
+      Prove that every finite spanning set of a vector space $V$ contains a basis of $V$.
+    solution: |
+      Let $S$ span $V$. If $S$ is dependent, some $s \in S$ is a combination of the others, and removing it doesn't change the span (any combination using $s$ can substitute for it). Repeat. Each step shrinks the finite set, so we stop at a spanning set that is independent, i.e. a basis. $\blacksquare$
+
+  - id: la-056
+    title: The Steinitz exchange lemma
+    subtopic: Independence & bases
+    difficulty: hard
+    type: proof
+    tags: [basis, linear independence, exchange lemma]
+    source: Steinitz
+    related: [la-057]
+    statement: |
+      Prove that if $u_1, \dots, u_m$ are linearly independent and lie in $\Span\{w_1, \dots, w_n\}$, then $m \le n$.
+    solution: |
+      We show by induction on $k$ that for $0 \le k \le \min(m, n)$, after renumbering the $w$'s, $\{u_1, \dots, u_k, w_{k+1}, \dots, w_n\}$ spans the same space $W = \Span\{w_j\}$. For $k = 0$ this is given.
+
+      Given it for $k < m$, write $u_{k+1} = \sum_{i\le k}a_iu_i + \sum_{j>k}b_jw_j$. Some $b_j \ne 0$: otherwise $u_{k+1}$ would be a combination of $u_1, \dots, u_k$, contradicting independence. In particular $k < n$. Renumber so $b_{k+1} \ne 0$; then $w_{k+1}$ is a combination of $u_1, \dots, u_{k+1}, w_{k+2}, \dots, w_n$, so swapping $w_{k+1}$ for $u_{k+1}$ keeps the span.
+
+      The argument shows that whenever $k < m$ we also have $k < n$. Running it up to $k = m - 1$ gives $m - 1 < n$, i.e. $m \le n$. $\blacksquare$
+
+  - id: la-057
+    title: Dimension is well defined
+    subtopic: Independence & bases
+    difficulty: easy
+    type: proof
+    tags: [basis, dimension]
+    related: [la-056]
+    statement: |
+      Deduce from the exchange lemma that any two bases of a finite-dimensional space have the same number of elements.
+    solution: |
+      Let $\{u_1, \dots, u_m\}$ and $\{w_1, \dots, w_n\}$ be bases. The $u$'s are independent and lie in the span of the $w$'s, so $m \le n$; symmetrically $n \le m$. $\blacksquare$
+
+  - id: la-058
+    title: n vectors in an n-dimensional space
+    subtopic: Independence & bases
+    difficulty: medium
+    type: proof
+    tags: [basis, dimension]
+    related: [la-050, la-055]
+    statement: |
+      Let $\dim V = n$ and $v_1, \dots, v_n \in V$. Prove that the $v_i$ are independent iff they span $V$.
+    solution: |
+      **Independent ⇒ span.** Their span is an $n$-dimensional subspace of $V$, hence all of $V$ (la-050).
+
+      **Span ⇒ independent.** By la-055 they contain a basis, which has $n$ elements, so it is all of them. $\blacksquare$
+
+      (So to check that $n$ vectors form a basis it suffices to check one of the two conditions.)
+
+  - id: la-059
+    title: Some dimensions
+    subtopic: Independence & bases
+    difficulty: easy
+    type: compute
+    tags: [dimension, basis]
+    statement: |
+      Give bases and dimensions for: (1) $\C$ as a real vector space; (2) the $m\times n$ real matrices; (3) $P_n$, the real polynomials of degree at most $n$.
+    solution: |
+      1. $\{1, i\}$: every complex number is uniquely $a + bi$. **Dimension 2.**
+      2. The matrix units $E_{ij}$ (1 in position $(i,j)$, 0 elsewhere): a matrix is $\sum a_{ij}E_{ij}$ uniquely. **Dimension $mn$.**
+      3. $1, x, \dots, x^n$. **Dimension $n + 1$.**
+
+  - id: la-060
+    title: Coordinates are unique
+    subtopic: Independence & bases
+    difficulty: easy
+    type: proof
+    tags: [basis, coordinates]
+    statement: |
+      Prove that if $v_1, \dots, v_n$ is a basis then every $v$ is a linear combination $\sum a_iv_i$ in exactly one way.
+    solution: |
+      Existence is spanning. If $\sum a_iv_i = \sum b_iv_i$ then $\sum(a_i - b_i)v_i = 0$, so $a_i = b_i$ by independence. $\blacksquare$
+
+  - id: la-061
+    title: Changing basis
+    subtopic: Independence & bases
+    difficulty: easy
+    type: compute
+    tags: [change of basis, coordinates]
+    statement: |
+      Find the coordinates of $(3, 5)$ with respect to the basis $b_1 = (1, 1)$, $b_2 = (1, -1)$ of $\R^2$.
+    solution: |
+      Solve $a(1,1) + b(1,-1) = (3,5)$: $a + b = 3$, $a - b = 5$, so $a = 4$, $b = -1$. Coordinates $(4, -1)$.
+
+      Equivalently, with $P = \begin{pmatrix}1&1\\1&-1\end{pmatrix}$ (columns $b_1, b_2$), the coordinates are $P^{-1}\begin{pmatrix}3\\5\end{pmatrix}$.
+
+  - id: la-062
+    title: A basis for a span
+    subtopic: Independence & bases
+    difficulty: medium
+    type: compute
+    tags: [span, basis, row reduction]
+    related: [la-007]
+    statement: |
+      Find a basis for $\Span\{(1,2,1,0), (2,4,2,0), (1,0,1,1), (0,2,0,-1)\}$ and its dimension.
+    solution: |
+      $(2,4,2,0) = 2(1,2,1,0)$ and $(0,2,0,-1) = (1,2,1,0) - (1,0,1,1)$. So the span is $\Span\{(1,2,1,0), (1,0,1,1)\}$, and these two are independent (not multiples). **Basis** $\{(1,2,1,0), (1,0,1,1)\}$, **dimension 2**.
+
+      (Row reducing the matrix with these vectors as columns finds the same thing: pivots in columns 1 and 3.)
+
+  - id: la-063
+    title: Vandermonde vectors
+    subtopic: Independence & bases
+    difficulty: easy
+    type: proof
+    tags: [linear independence, vandermonde]
+    related: [la-018, la-101]
+    statement: |
+      Prove that $(1, a, a^2)$, $(1, b, b^2)$, $(1, c, c^2)$ are linearly independent if and only if $a, b, c$ are distinct.
+    solution: |
+      The determinant of the matrix with these rows is $(b - a)(c - a)(c - b)$ (la-018), which is non-zero iff the three numbers are distinct. $\blacksquare$
+
+      (Equivalently: a polynomial of degree at most 2 vanishing at three distinct points is zero.)
+
+  - id: la-064
+    title: Polynomials are infinite-dimensional
+    subtopic: Independence & bases
+    difficulty: medium
+    type: proof
+    tags: [dimension, polynomials]
+    statement: |
+      Prove that the space $P$ of all real polynomials has no finite spanning set.
+    solution: |
+      Any finite set of polynomials has a largest degree $d$, and every linear combination has degree at most $d$. So $x^{d+1}$ is not in its span. $\blacksquare$
+
+      (Equivalently, $1, x, x^2, \dots$ are independent, and an infinite independent set can't live in a finite-dimensional space.)
+
+  - id: la-065
+    title: The null space of a 3×5 matrix
+    subtopic: Independence & bases
+    difficulty: medium
+    type: compute
+    tags: [kernel, rank-nullity, row reduction]
+    related: [la-013]
+    statement: |
+      Find a basis for the solutions of $Ax = 0$, where
+      $$A = \begin{pmatrix}1&0&0&1&1\\0&1&0&1&2\\0&0&1&1&3\end{pmatrix}.$$
+    solution: |
+      $A$ is already in reduced echelon form with pivots in columns 1–3, so $x_4 = s$, $x_5 = t$ are free and
+      $$x_1 = -s - t,\quad x_2 = -s - 2t,\quad x_3 = -s - 3t.$$
+      Basis: $(-1, -1, -1, 1, 0)$ and $(-1, -2, -3, 0, 1)$. Dimension $2 = 5 - \rank A$.
+
+  - id: la-066
+    title: Subsets and supersets
+    subtopic: Independence & bases
+    difficulty: easy
+    type: proof
+    tags: [linear independence]
+    statement: |
+      Prove: (1) any set containing $0$ is dependent; (2) every subset of an independent set is independent; (3) every superset of a dependent set is dependent.
+    solution: |
+      1. $1\cdot0 = 0$ is a non-trivial relation.
+      2. A non-trivial relation among a subset is also one for the whole set (with zero coefficients on the rest).
+      3. This is the contrapositive of (2). $\blacksquare$
+
+  - id: la-067
+    title: Independence depends on the field
+    subtopic: Independence & bases
+    difficulty: medium
+    type: proof
+    tags: [linear independence, fields, irrationality]
+    related: [lg-009]
+    statement: |
+      Regard $\R$ as a vector space over $\Q$ and over $\R$. Prove that $1$ and $\sqrt2$ are independent over $\Q$ but dependent over $\R$.
+    solution: |
+      **Over $\Q$.** If $a + b\sqrt2 = 0$ with $a, b \in \Q$ and $b \ne 0$, then $\sqrt2 = -a/b \in \Q$, contradicting lg-009. So $b = 0$ and then $a = 0$.
+
+      **Over $\R$.** $\sqrt2\cdot1 + (-1)\cdot\sqrt2 = 0$. $\blacksquare$
+
+  - id: la-068
+    title: R is infinite-dimensional over Q
+    subtopic: Independence & bases
+    difficulty: hard
+    type: proof
+    tags: [dimension, countability]
+    related: [la-067]
+    statement: |
+      Prove that $\R$, as a vector space over $\Q$, is not finite-dimensional. (You may use that $\Q^n$ is countable and $\R$ is not.)
+    solution: |
+      If $\R$ had a finite basis $r_1, \dots, r_n$ over $\Q$, then $(q_1, \dots, q_n) \mapsto \sum q_ir_i$ would be a bijection $\Q^n \to \R$ (surjective by spanning, injective by uniqueness of coordinates). But $\Q^n$ is countable and $\R$ is uncountable. $\blacksquare$
+
+  - id: la-069
+    title: Magic squares
+    subtopic: Independence & bases
+    difficulty: hard
+    type: proof
+    tags: [dimension, magic squares, subspaces]
+    statement: |
+      A $3\times3$ real matrix is **magic** if all rows, columns and both diagonals have the same sum. Show the magic matrices form a subspace and that it has dimension 3.
+    solution: |
+      The conditions "row/column/diagonal sum equals the first row sum" are linear, so the magic squares form a subspace.
+
+      **The magic sum is 3 times the centre.** The middle row, middle column and two diagonals each sum to $s$ and together cover every cell once except the centre $c$, which is covered 4 times: $4s = 3s + 3c$, so $s = 3c$.
+
+      **Parametrisation.** Set $a = m_{11} - c$ and $b = m_{13} - c$. The diagonals force $m_{33} = c - a$ and $m_{31} = c - b$; then the first row, last row, first column and last column force the rest:
+      $$\begin{pmatrix}c + a & c - a - b & c + b\\ c - a + b & c & c + a - b\\ c - b & c + a + b & c - a\end{pmatrix}.$$
+      Conversely every such matrix is magic (each line sums to $3c$). So the map $(a, b, c) \mapsto$ this matrix is a linear bijection from $\R^3$ onto the magic squares. **Dimension 3.** $\blacksquare$
+
+  - id: la-070
+    title: Fibonacci-type sequences form a plane
+    subtopic: Independence & bases
+    difficulty: medium
+    type: proof
+    tags: [recurrence, dimension, basis]
+    related: [in-210]
+    statement: |
+      Let $V$ be the set of real sequences with $a_{n+2} = a_{n+1} + a_n$ for all $n \ge 0$. Prove that $V$ is a 2-dimensional vector space, and that $(\varphi^n)$ and $(\psi^n)$ form a basis, where $\varphi, \psi = \frac{1 \pm \sqrt5}{2}$.
+    solution: |
+      $V$ is a subspace of all sequences (the recurrence is linear). The map $V \to \R^2$, $(a_n) \mapsto (a_0, a_1)$, is linear, injective (the recurrence determines everything from $a_0, a_1$) and surjective (any starting pair extends). So $\dim V = 2$.
+
+      Since $\varphi^2 = \varphi + 1$, $\varphi^{n+2} = \varphi^{n+1} + \varphi^n$, so $(\varphi^n) \in V$; likewise $(\psi^n)$. Their images $(1, \varphi)$ and $(1, \psi)$ are independent as $\varphi \ne \psi$, so they form a basis. Expressing $F_n$ (with $(F_0, F_1) = (0, 1)$) in this basis gives Binet's formula $F_n = \frac{\varphi^n - \psi^n}{\sqrt5}$. $\blacksquare$
+
+  - id: la-071
+    title: Linear or not?
+    subtopic: Linear maps
+    difficulty: easy
+    type: compute
+    tags: [linear maps, counterexample]
+    statement: |
+      Which are linear? (1) $T(x,y) = (x + y, 2x)$; (2) $T(x,y) = (x^2, y)$; (3) $T(x,y) = (x + 1, y)$; (4) $T(f) = \int_0^1f(t)\,dt$ on $C[0,1]$.
+    solution: |
+      1. **Linear**: each coordinate is a linear combination of $x, y$ (it is multiplication by $\begin{pmatrix}1&1\\2&0\end{pmatrix}$).
+      2. **Not**: $T(2, 0) = (4, 0) \ne 2T(1, 0) = (2, 0)$.
+      3. **Not**: $T(0,0) = (1, 0) \ne 0$.
+      4. **Linear**: $\int(af + bg) = a\int f + b\int g$.
+
+  - id: la-072
+    title: A linear map is determined by a basis
+    subtopic: Linear maps
+    difficulty: medium
+    type: proof
+    tags: [linear maps, basis, existence and uniqueness]
+    statement: |
+      Let $v_1, \dots, v_n$ be a basis of $V$ and $w_1, \dots, w_n$ any vectors in $W$. Prove that there is exactly one linear map $T : V \to W$ with $T(v_i) = w_i$ for all $i$.
+    solution: |
+      **Uniqueness.** A linear $T$ with these values must satisfy $T\left(\sum a_iv_i\right) = \sum a_iw_i$, and every $v$ has this form.
+
+      **Existence.** Define $T\left(\sum a_iv_i\right) = \sum a_iw_i$; this is well defined because coordinates are unique (la-060). It is linear: if $v = \sum a_iv_i$ and $v' = \sum b_iv_i$, then $cv + dv' = \sum(ca_i + db_i)v_i$ maps to $\sum(ca_i + db_i)w_i = cT(v) + dT(v')$. $\blacksquare$
+
+  - id: la-073
+    title: Matrices of rotations and reflections
+    subtopic: Linear maps
+    difficulty: easy
+    type: compute
+    tags: [matrix of a linear map, rotation, reflection]
+    related: [la-144]
+    statement: |
+      Find the standard matrices of rotation of $\R^2$ by angle $\theta$, and of reflection in the line $y = x$.
+    solution: |
+      The columns are the images of $e_1, e_2$.
+
+      **Rotation:** $e_1 \mapsto (\cos\theta, \sin\theta)$, $e_2 \mapsto (-\sin\theta, \cos\theta)$:
+      $$R_\theta = \begin{pmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{pmatrix}.$$
+
+      **Reflection in $y = x$:** swaps the coordinates, $e_1 \leftrightarrow e_2$: $\begin{pmatrix}0&1\\1&0\end{pmatrix}$.
+
+  - id: la-074
+    title: The matrix of a shift
+    subtopic: Linear maps
+    difficulty: easy
+    type: compute
+    tags: [matrix of a linear map, polynomials]
+    related: [la-014]
+    statement: |
+      Find the matrix of $T : P_2 \to P_2$, $T(p)(x) = p(x + 1)$, in the basis $1, x, x^2$, and use it to compute $T(3 - x + 2x^2)$.
+    solution: |
+      $T(1) = 1$, $T(x) = 1 + x$, $T(x^2) = 1 + 2x + x^2$. As columns:
+      $$[T] = \begin{pmatrix}1&1&1\\0&1&2\\0&0&1\end{pmatrix}.$$
+      $[T]\begin{pmatrix}3\\-1\\2\end{pmatrix} = \begin{pmatrix}4\\3\\2\end{pmatrix}$, so $T(3 - x + 2x^2) = 4 + 3x + 2x^2$. (Check: $3 - (x+1) + 2(x+1)^2 = 4 + 3x + 2x^2$.)
+
+  - id: la-075
+    title: Composition is matrix multiplication
+    subtopic: Linear maps
+    difficulty: medium
+    type: proof
+    tags: [matrix of a linear map, composition, matrix multiplication]
+    statement: |
+      Let $T : \R^p \to \R^n$ and $S : \R^n \to \R^m$ be linear with standard matrices $B$ and $A$. Prove that $S \circ T$ has matrix $AB$.
+    solution: |
+      The $j$th column of the matrix of $S\circ T$ is $S(T(e_j)) = A(Be_j)$. And $Be_j$ is the $j$th column $b_j$ of $B$, so this is $Ab_j$. The $j$th column of $AB$ is also $Ab_j$, by the definition of matrix multiplication ($(AB)_{ij} = \sum_ka_{ik}b_{kj}$). $\blacksquare$
+
+      (This is why matrix multiplication is defined the way it is, and why it is associative.)
+
+  - id: la-076
+    title: Kernels and images of simple maps
+    subtopic: Linear maps
+    difficulty: easy
+    type: compute
+    tags: [kernel, image, rank-nullity]
+    statement: |
+      Find the kernel and image of (1) $P(x, y) = (x, 0)$ on $\R^2$; (2) $T : \R^3 \to \R^2$, $T(x,y,z) = (x - y, y - z)$.
+    solution: |
+      1. $\ker P$ is the $y$-axis and $\im P$ is the $x$-axis.
+      2. $T(x,y,z) = 0$ iff $x = y = z$: $\ker T = \Span\{(1,1,1)\}$. By rank–nullity $\dim\im T = 3 - 1 = 2$, so $\im T = \R^2$. (Directly: $T(a + b, b, 0) = (a, b)$.)
+
+  - id: la-077
+    title: Surjectivity and rank
+    subtopic: Linear maps
+    difficulty: easy
+    type: proof
+    tags: [surjective, rank]
+    related: [la-015]
+    statement: |
+      Let $T: V \to W$ be linear with $W$ finite-dimensional. Prove that $T$ is surjective iff $\dim\im T = \dim W$.
+    solution: |
+      $\im T$ is a subspace of $W$. It equals $W$ iff it has the same dimension (la-050). $\blacksquare$
+
+  - id: la-078
+    title: Spaces of the same dimension are isomorphic
+    subtopic: Linear maps
+    difficulty: medium
+    type: proof
+    tags: [isomorphism, dimension, basis]
+    related: [la-072]
+    statement: |
+      Prove that finite-dimensional spaces $V$ and $W$ (over the same field) are isomorphic iff $\dim V = \dim W$.
+    solution: |
+      **($\Rightarrow$)** An isomorphism has trivial kernel and is onto, so rank–nullity gives $\dim V = 0 + \dim W$.
+
+      **($\Leftarrow$)** Pick bases $v_1, \dots, v_n$ and $w_1, \dots, w_n$. By la-072 there are linear maps $T$ with $T(v_i) = w_i$ and $S$ with $S(w_i) = v_i$; then $S\circ T$ and $T\circ S$ fix the bases, so they are identities. $\blacksquare$
+
+      (In particular every $n$-dimensional real space is isomorphic to $\R^n$, via coordinates.)
+
+  - id: la-079
+    title: Injective and surjective maps and dimension
+    subtopic: Linear maps
+    difficulty: easy
+    type: proof
+    tags: [rank-nullity, injective, surjective]
+    related: [la-012]
+    statement: |
+      Let $T : V \to W$ be linear between finite-dimensional spaces. Prove that if $T$ is injective then $\dim V \le \dim W$, and if $T$ is surjective then $\dim V \ge \dim W$.
+    solution: |
+      Rank–nullity: $\dim V = \dim\ker T + \dim\im T$. Injective: $\dim V = \dim\im T \le \dim W$. Surjective: $\dim V \ge \dim\im T = \dim W$. $\blacksquare$
+
+  - id: la-080
+    title: Projections split the space
+    subtopic: Linear maps
+    difficulty: medium
+    type: proof
+    tags: [projections, direct sum, idempotent]
+    related: [la-037]
+    statement: |
+      Let $P : V \to V$ be linear with $P^2 = P$. Prove that $V = \ker P \oplus \im P$, and that $P$ acts as the identity on $\im P$.
+    solution: |
+      **Identity on the image.** If $v = Pw$ then $Pv = P^2w = Pw = v$.
+
+      **Sum.** $v = Pv + (v - Pv)$, with $Pv \in \im P$ and $P(v - Pv) = Pv - P^2v = 0$.
+
+      **Intersection.** If $v \in \ker P \cap \im P$ then $v = Pv = 0$. $\blacksquare$
+
+  - id: la-081
+    title: Nilpotent maps with a cyclic vector
+    subtopic: Linear maps
+    difficulty: medium
+    type: proof
+    tags: [nilpotent, basis, linear independence]
+    related: [la-014, la-109]
+    statement: |
+      Let $T : V \to V$ with $\dim V = n$, $T^n = 0$, and $T^{n-1}v \ne 0$ for some $v$. Prove that $v, Tv, \dots, T^{n-1}v$ is a basis of $V$, and find the matrix of $T$ in it.
+    solution: |
+      Suppose $\sum_{i=0}^{n-1}a_iT^iv = 0$ with some $a_i \ne 0$, and let $k$ be the least such index. Apply $T^{n-1-k}$: every term with $i > k$ becomes $T^{n-1-k+i}v = 0$ (exponent $\ge n$), leaving $a_kT^{n-1}v = 0$. So $a_k = 0$, a contradiction. Thus the $n$ vectors are independent, hence a basis.
+
+      $T$ sends each basis vector to the next and the last to 0, so its matrix has 1s just below the diagonal and 0s elsewhere. $\blacksquare$
+
+  - id: la-082
+    title: Kernels of composites
+    subtopic: Linear maps
+    difficulty: hard
+    type: proof
+    tags: [kernel, rank-nullity, composition]
+    related: [la-084]
+    statement: |
+      Let $T : U \to V$ and $S : V \to W$ be linear, with $U$ finite-dimensional. Prove that $\dim\ker(ST) \le \dim\ker S + \dim\ker T$.
+    solution: |
+      Restrict $T$ to $K = \ker(ST)$. For $u \in K$, $S(Tu) = 0$, so $T$ maps $K$ into $\ker S$. The kernel of $T|_K$ is $\ker T \cap K = \ker T$ (as $\ker T \subseteq K$). Rank–nullity for $T|_K$:
+      $$\dim K = \dim\ker T + \dim T(K) \le \dim\ker T + \dim\ker S. \qquad\blacksquare$$
+
+  - id: la-083
+    title: Rank is subadditive
+    subtopic: Linear maps
+    difficulty: medium
+    type: proof
+    tags: [rank, column space]
+    related: [la-016]
+    statement: |
+      Prove that $\rank(A + B) \le \rank A + \rank B$ for matrices of the same size.
+    solution: |
+      Each column of $A + B$ is a column of $A$ plus a column of $B$, so $\operatorname{col}(A + B) \subseteq \operatorname{col}A + \operatorname{col}B$. Then
+      $$\rank(A + B) \le \dim(\operatorname{col}A + \operatorname{col}B) \le \rank A + \rank B,$$
+      using la-009. $\blacksquare$
+
+  - id: la-084
+    title: Sylvester's rank inequality
+    subtopic: Linear maps
+    difficulty: hard
+    type: proof
+    tags: [rank, rank-nullity]
+    source: Sylvester
+    related: [la-082, la-016]
+    statement: |
+      Let $A$ be $m\times n$ and $B$ be $n\times p$. Prove that $\rank(AB) \ge \rank A + \rank B - n$.
+    solution: |
+      Apply la-082 with $T = B : \R^p \to \R^n$ and $S = A : \R^n \to \R^m$:
+      $$\dim\ker(AB) \le \dim\ker A + \dim\ker B = (n - \rank A) + (p - \rank B).$$
+      By rank–nullity for $AB$, $\rank(AB) = p - \dim\ker(AB) \ge \rank A + \rank B - n$. $\blacksquare$
+
+      (Together with la-016: $\rank A + \rank B - n \le \rank(AB) \le \min(\rank A, \rank B)$.)
+
+  - id: la-085
+    title: The dual basis
+    subtopic: Linear maps
+    difficulty: medium
+    type: proof
+    tags: [dual space, linear functionals, basis]
+    related: [la-072]
+    statement: |
+      Let $v_1, \dots, v_n$ be a basis of $V$ and $V^*$ the space of linear maps $V \to \R$. Prove that there are unique $f_1, \dots, f_n \in V^*$ with $f_i(v_j) = 1$ if $i = j$ and $0$ otherwise, and that they form a basis of $V^*$.
+    solution: |
+      Existence and uniqueness of each $f_i$ is la-072. ($f_i$ is "the $i$th coordinate".)
+
+      **Independent.** If $\sum c_if_i = 0$, evaluate at $v_j$: $c_j = 0$.
+
+      **Spanning.** For $f \in V^*$, the functional $\sum_if(v_i)f_i$ agrees with $f$ on each $v_j$, hence everywhere (la-072). $\blacksquare$
+
+      (So $\dim V^* = \dim V$.)
+
+  - id: la-086
+    title: The space of linear maps
+    subtopic: Linear maps
+    difficulty: medium
+    type: proof
+    tags: [linear maps, dimension, matrices]
+    related: [la-072, la-059]
+    statement: |
+      Prove that if $\dim V = n$ and $\dim W = m$ then the space $\mathrm{Hom}(V, W)$ of linear maps $V \to W$ has dimension $mn$.
+    solution: |
+      Fix bases. Sending $T$ to its matrix is linear ($[aS + bT] = a[S] + b[T]$), injective (a map with zero matrix kills a basis, so is 0) and surjective (any matrix defines a map by la-072). So $\mathrm{Hom}(V, W) \cong M_{m\times n}$, of dimension $mn$. $\blacksquare$
+
+  - id: la-087
+    title: Polynomials determined by three values
+    subtopic: Linear maps
+    difficulty: medium
+    type: proof
+    tags: [isomorphism, polynomials, interpolation]
+    related: [in-240]
+    statement: |
+      Prove that $E : P_2 \to \R^3$, $E(p) = (p(0), p(1), p(2))$, is an isomorphism. Find $p$ with $E(p) = (1, 0, 3)$.
+    solution: |
+      $E$ is linear. If $E(p) = 0$, then $p$ has three roots but degree at most 2, so $p = 0$. Thus $E$ is injective, and as $\dim P_2 = 3 = \dim\R^3$, it is an isomorphism (la-015).
+
+      Write $p = a + bx + cx^2$: $a = 1$, $a + b + c = 0$, $a + 2b + 4c = 3$. So $b + c = -1$ and $2b + 4c = 2$, giving $c = 2$, $b = -3$: $p = 1 - 3x + 2x^2$.
+
+  - id: la-088
+    title: Shift operators
+    subtopic: Linear maps
+    difficulty: easy
+    type: proof
+    tags: [injective, surjective, infinite dimensions]
+    related: [la-015]
+    statement: |
+      On the space of real sequences, let $L(a_0, a_1, \dots) = (a_1, a_2, \dots)$ and $R(a_0, a_1, \dots) = (0, a_0, a_1, \dots)$. Show $L$ is surjective but not injective, $R$ is injective but not surjective, and $LR = I \ne RL$.
+    solution: |
+      $L$ is onto: $L(0, b_0, b_1, \dots) = (b_0, b_1, \dots)$. Not injective: $L(1, 0, 0, \dots) = 0$.
+
+      $R$ is injective: if $R(a) = 0$ then all $a_i = 0$. Not onto: nothing maps to $(1, 0, 0, \dots)$.
+
+      $LR(a) = a$, but $RL(a) = (0, a_1, a_2, \dots) \ne a$ when $a_0 \ne 0$. (In finite dimensions a one-sided inverse is two-sided; here it isn't.) $\blacksquare$
+
+  - id: la-089
+    title: Images and preimages of subspaces
+    subtopic: Linear maps
+    difficulty: easy
+    type: proof
+    tags: [linear maps, subspaces, image, preimage]
+    related: [la-010]
+    statement: |
+      Let $T: V \to W$ be linear. Prove that $T(U)$ is a subspace of $W$ for every subspace $U \subseteq V$, and $T^{-1}(Y)$ is a subspace of $V$ for every subspace $Y \subseteq W$.
+    solution: |
+      $T(0) = 0$, so both contain 0.
+
+      If $Tu, Tu' \in T(U)$ then $aTu + bTu' = T(au + bu') \in T(U)$.
+
+      If $Tv, Tv' \in Y$ then $T(av + bv') = aTv + bTv' \in Y$. $\blacksquare$
+
+  - id: la-090
+    title: AB − BA is never the identity
+    subtopic: Linear maps
+    difficulty: medium
+    type: proof
+    tags: [trace, commutators]
+    related: [la-047]
+    statement: |
+      Prove that $\tr(AB) = \tr(BA)$ for $n\times n$ matrices, and deduce that there are no $A, B$ with $AB - BA = I$.
+    solution: |
+      $\tr(AB) = \sum_i\sum_ka_{ik}b_{ki} = \sum_k\sum_ib_{ki}a_{ik} = \tr(BA)$.
+
+      So $\tr(AB - BA) = 0$, but $\tr I = n \ne 0$. $\blacksquare$
+
+      (In infinite dimensions it can happen: on polynomials, $D(xp) - xD(p) = p$ for $D = \frac{d}{dx}$.)
+
+  - id: la-091
+    title: Matrix multiplication is not commutative
+    subtopic: Matrices & determinants
+    difficulty: easy
+    type: compute
+    tags: [matrix multiplication]
+    statement: |
+      Compute $AB$ and $BA$ for $A = \begin{pmatrix}1&1\\0&1\end{pmatrix}$ and $B = \begin{pmatrix}1&0\\1&1\end{pmatrix}$. Find non-zero $C, D$ with $CD = 0$.
+    solution: |
+      $AB = \begin{pmatrix}2&1\\1&1\end{pmatrix}$ and $BA = \begin{pmatrix}1&1\\1&2\end{pmatrix}$, which differ.
+
+      $C = \begin{pmatrix}1&0\\0&0\end{pmatrix}$, $D = \begin{pmatrix}0&0\\0&1\end{pmatrix}$: $CD = 0$ although neither is 0. (So matrices can't be cancelled freely.)
+
+  - id: la-092
+    title: Inverting by row reduction
+    subtopic: Matrices & determinants
+    difficulty: easy
+    type: compute
+    tags: [inverse, row reduction]
+    related: [la-017]
+    statement: |
+      Find the inverse of $A = \begin{pmatrix}1&2&0\\0&1&3\\0&0&1\end{pmatrix}$.
+    solution: |
+      Row reduce $[A \mid I]$: $R_2 \to R_2 - 3R_3$, then $R_1 \to R_1 - 2R_2$:
+      $$\left[\begin{array}{ccc|ccc}1&0&0&1&-2&6\\0&1&0&0&1&-3\\0&0&1&0&0&1\end{array}\right].$$
+      So $A^{-1} = \begin{pmatrix}1&-2&6\\0&1&-3\\0&0&1\end{pmatrix}$. Check: $AA^{-1} = I$.
+
+  - id: la-093
+    title: Determinants of triangular matrices
+    subtopic: Matrices & determinants
+    difficulty: easy
+    type: proof
+    tags: [determinants, triangular matrices]
+    statement: |
+      Prove that the determinant of an upper triangular matrix is the product of its diagonal entries.
+    solution: |
+      Induct on $n$; $n = 1$ is clear. Expand along the first column: its only possibly non-zero entry is $a_{11}$, whose minor is the upper triangular matrix with diagonal $a_{22}, \dots, a_{nn}$. By hypothesis $\det A = a_{11}\cdot a_{22}\cdots a_{nn}$. $\blacksquare$
+
+  - id: la-094
+    title: Row operations and determinants
+    subtopic: Matrices & determinants
+    difficulty: medium
+    type: proof
+    tags: [determinants, row operations, multilinear]
+    statement: |
+      Treat $\det$ as a function of the rows that is linear in each row, changes sign when two rows are swapped, and has $\det I = 1$. Prove that a matrix with two equal rows has determinant 0, and that adding a multiple of one row to another doesn't change the determinant.
+    solution: |
+      **Equal rows.** Swapping them leaves the matrix unchanged but negates the determinant, so $\det = -\det$, i.e. $\det = 0$ (over $\R$).
+
+      **Adding a multiple.** By linearity in row $i$,
+      $$\det(\dots, r_i + cr_j, \dots, r_j, \dots) = \det(\dots, r_i, \dots, r_j, \dots) + c\det(\dots, r_j, \dots, r_j, \dots),$$
+      and the last determinant has two equal rows. $\blacksquare$
+
+      (With scaling, these rules compute any determinant by row reduction.)
+
+  - id: la-095
+    title: Transposing preserves the determinant
+    subtopic: Matrices & determinants
+    difficulty: medium
+    type: proof
+    tags: [determinants, transpose, permutations]
+    statement: |
+      Using $\det A = \sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\prod_{i=1}^na_{i\sigma(i)}$, prove that $\det A^T = \det A$.
+    solution: |
+      $\det A^T = \sum_\sigma\operatorname{sgn}(\sigma)\prod_ia_{\sigma(i)i}$. Reindex the product by $j = \sigma(i)$, i.e. $i = \sigma^{-1}(j)$: $\prod_ja_{j\sigma^{-1}(j)}$. As $\sigma$ runs over $S_n$, so does $\tau = \sigma^{-1}$, and $\operatorname{sgn}(\sigma^{-1}) = \operatorname{sgn}(\sigma)$. So
+      $$\det A^T = \sum_\tau\operatorname{sgn}(\tau)\prod_ja_{j\tau(j)} = \det A. \qquad\blacksquare$$
+
+      (So every row rule for determinants also holds for columns.)
+
+  - id: la-096
+    title: The determinant is multiplicative
+    subtopic: Matrices & determinants
+    difficulty: hard
+    type: proof
+    tags: [determinants, elementary matrices, products]
+    related: [la-094, la-097]
+    statement: |
+      Prove that $\det(AB) = \det A\det B$ for $n\times n$ matrices. (Use la-094 and la-097, and that an invertible matrix is a product of elementary matrices.)
+    solution: |
+      **Elementary matrices.** Multiplying by an elementary matrix $E$ on the left performs a row operation, which multiplies the determinant by $\det E$: $-1$ for a swap, $c$ for scaling a row by $c$, $1$ for adding a multiple of a row (la-094). So $\det(EB) = \det E\det B$.
+
+      **$A$ invertible.** $A = E_1\cdots E_k$, and applying the above $k$ times gives $\det(AB) = \det E_1\cdots\det E_k\det B = \det A\det B$ (the case $B = I$ shows $\det A = \prod\det E_i$).
+
+      **$A$ singular.** Then $AB$ is singular (its rank is at most $\rank A < n$), so both sides are 0 by la-097. $\blacksquare$
+
+  - id: la-097
+    title: Invertible iff non-zero determinant
+    subtopic: Matrices & determinants
+    difficulty: medium
+    type: proof
+    tags: [determinants, invertibility, row reduction]
+    related: [la-094]
+    statement: |
+      Prove that a square matrix $A$ is invertible if and only if $\det A \ne 0$.
+    solution: |
+      Row reduce $A$ to reduced echelon form $R$. Each row operation multiplies the determinant by a non-zero number (la-094), so $\det A = 0$ iff $\det R = 0$.
+
+      If $A$ is invertible, $R = I$ and $\det R = 1$. If not, $R$ has fewer than $n$ pivots, hence a zero row, and $\det R = 0$ (linearity in that row). $\blacksquare$
+
+  - id: la-098
+    title: Cramer's rule
+    subtopic: Matrices & determinants
+    difficulty: easy
+    type: compute
+    tags: [cramer's rule, linear systems]
+    statement: |
+      Solve $2x + y = 5$, $x - y = 1$ by Cramer's rule.
+    solution: |
+      $\det A = \det\begin{pmatrix}2&1\\1&-1\end{pmatrix} = -3$. Replacing columns by the right-hand side:
+      $$x = \frac{\det\begin{pmatrix}5&1\\1&-1\end{pmatrix}}{-3} = \frac{-6}{-3} = 2,\qquad y = \frac{\det\begin{pmatrix}2&5\\1&1\end{pmatrix}}{-3} = \frac{-3}{-3} = 1.$$
+
+  - id: la-099
+    title: A tridiagonal determinant
+    subtopic: Matrices & determinants
+    difficulty: medium
+    type: proof
+    tags: [determinants, recurrence, tridiagonal]
+    statement: |
+      Let $D_n$ be the determinant of the $n\times n$ matrix with 2 on the diagonal, $-1$ just above and below it, and 0 elsewhere. Prove that $D_n = n + 1$.
+    solution: |
+      Expanding along the first row: the $(1,1)$ minor is $D_{n-1}$; the $(1,2)$ entry $-1$ has a minor whose first column is $(-1, 0, \dots, 0)^T$, and expanding that gives $-D_{n-2}$. So
+      $$D_n = 2D_{n-1} - (-1)(-1)D_{n-2} = 2D_{n-1} - D_{n-2}.$$
+      $D_1 = 2$, $D_2 = 3$, and if $D_k = k + 1$ for $k < n$ then $D_n = 2n - (n - 1) = n + 1$. $\blacksquare$
+
+  - id: la-100
+    title: The determinant of J − I
+    subtopic: Matrices & determinants
+    difficulty: medium
+    type: proof
+    tags: [determinants, eigenvalues, all-ones matrix]
+    statement: |
+      Let $J$ be the $n\times n$ all-ones matrix. Prove that $\det(J - I) = (-1)^{n-1}(n-1)$.
+    solution: |
+      $J\mathbf 1 = n\mathbf 1$ for the all-ones vector, and $Jv = 0$ for every $v$ with coordinate sum 0, an $(n-1)$-dimensional space. Together these give a basis of eigenvectors of $J$ with eigenvalues $n, 0, \dots, 0$. Then $J - I$ has the same eigenvectors with eigenvalues $n - 1, -1, \dots, -1$, and the determinant is their product, $(n-1)(-1)^{n-1}$. $\blacksquare$
+
+      (E.g. $n = 3$: $\det\begin{pmatrix}0&1&1\\1&0&1\\1&1&0\end{pmatrix} = 2$.)
+
+  - id: la-101
+    title: The Vandermonde determinant
+    subtopic: Matrices & determinants
+    difficulty: hard
+    type: proof
+    tags: [determinants, vandermonde, polynomials]
+    related: [la-018, la-063]
+    statement: |
+      Prove that $\det\left(x_i^{j-1}\right)_{i,j=1}^n = \prod_{1\le i<j\le n}(x_j - x_i)$.
+    solution: |
+      Induct on $n$; $n = 1$ gives $1$. For the step, subtract $x_1$ times column $j - 1$ from column $j$, for $j = n, n-1, \dots, 2$ (in that order). Row $i$ becomes $(1, x_i - x_1, x_i(x_i - x_1), \dots, x_i^{n-2}(x_i - x_1))$. Row 1 is now $(1, 0, \dots, 0)$; expand along it, then factor $x_i - x_1$ out of each row $i \ge 2$:
+      $$\det = \prod_{i=2}^n(x_i - x_1)\cdot\det\left(x_i^{j-1}\right)_{i,j = 2}^{n}.$$
+      The remaining determinant is the Vandermonde for $x_2, \dots, x_n$, equal by hypothesis to $\prod_{2 \le i<j}(x_j - x_i)$. $\blacksquare$
+
+  - id: la-102
+    title: The adjugate formula
+    subtopic: Matrices & determinants
+    difficulty: medium
+    type: proof
+    tags: [adjugate, cofactors, inverse]
+    related: [la-017, la-110]
+    statement: |
+      Let $C_{ij}$ be the cofactors of $A$ and $\operatorname{adj}A$ the matrix with $(i,j)$ entry $C_{ji}$. Prove that $A\operatorname{adj}A = (\det A)I$, and deduce $A^{-1} = \frac{\operatorname{adj}A}{\det A}$ when $\det A \ne 0$.
+    solution: |
+      $(A\operatorname{adj}A)_{ik} = \sum_ja_{ij}C_{kj}$.
+
+      - If $i = k$, this is the cofactor expansion of $\det A$ along row $i$.
+      - If $i \ne k$, it is the expansion along row $k$ of the matrix obtained from $A$ by replacing row $k$ with row $i$. That matrix has two equal rows, so its determinant is 0.
+
+      So $A\operatorname{adj}A = (\det A)I$. $\blacksquare$
+
+  - id: la-103
+    title: Block triangular determinants
+    subtopic: Matrices & determinants
+    difficulty: medium
+    type: proof
+    tags: [determinants, block matrices, permutations]
+    statement: |
+      Let $M = \begin{pmatrix}A&B\\0&D\end{pmatrix}$ with $A$ $k\times k$ and $D$ $(n-k)\times(n-k)$. Prove that $\det M = \det A\det D$.
+    solution: |
+      In the permutation expansion $\det M = \sum_\sigma\operatorname{sgn}\sigma\prod_im_{i\sigma(i)}$, a term is non-zero only if no factor comes from the zero block, i.e. $\sigma$ sends each row $i > k$ to a column $> k$. Then $\sigma$ permutes $\{k+1, \dots, n\}$, and so also permutes $\{1, \dots, k\}$: $\sigma = \alpha\beta$ with $\alpha$ on the first $k$ indices and $\beta$ on the rest, $\operatorname{sgn}\sigma = \operatorname{sgn}\alpha\operatorname{sgn}\beta$, and entries of $B$ never appear. The sum factorises as
+      $$\left(\sum_\alpha\operatorname{sgn}\alpha\prod_{i\le k}a_{i\alpha(i)}\right)\left(\sum_\beta\operatorname{sgn}\beta\prod_{i>k}d_{i\beta(i)}\right) = \det A\det D. \qquad\blacksquare$$
+
+  - id: la-104
+    title: Area of a triangle by determinant
+    subtopic: Matrices & determinants
+    difficulty: easy
+    type: compute
+    tags: [determinants, area]
+    statement: |
+      Find the area of the triangle with vertices $(0,0)$, $(3,1)$, $(1,2)$, and of the triangle with vertices $(1,1)$, $(4,2)$, $(2,3)$.
+    solution: |
+      The parallelogram spanned by $u, v$ has area $|\det(u\ v)|$, and the triangle is half of it.
+
+      First: $\frac12\left|\det\begin{pmatrix}3&1\\1&2\end{pmatrix}\right| = \frac12|6 - 1| = \frac52$.
+
+      Second: translate by $(-1,-1)$ to get $(0,0), (3,1), (1,2)$, the same triangle, area $\frac52$.
+
+  - id: la-105
+    title: Skew-symmetric matrices of odd size
+    subtopic: Matrices & determinants
+    difficulty: medium
+    type: proof
+    tags: [determinants, skew-symmetric]
+    related: [la-035]
+    statement: |
+      Prove that $\det(cA) = c^n\det A$ for $n\times n$ $A$, and deduce that every real skew-symmetric matrix of odd size is singular.
+    solution: |
+      $cA$ multiplies each of the $n$ rows by $c$, and $\det$ is linear in each row: a factor $c^n$.
+
+      If $A^T = -A$ with $n$ odd, then $\det A = \det A^T = \det(-A) = (-1)^n\det A = -\det A$, so $\det A = 0$. $\blacksquare$
+
+  - id: la-106
+    title: Elementary matrices perform row operations
+    subtopic: Matrices & determinants
+    difficulty: easy
+    type: proof
+    tags: [elementary matrices, row operations]
+    related: [la-096]
+    statement: |
+      Let $E$ be obtained from $I$ by a single row operation. Prove that $EA$ is obtained from $A$ by the same row operation, and that $E$ is invertible.
+    solution: |
+      Row $i$ of $EA$ is (row $i$ of $E$)$\cdot A$, a combination of the rows of $A$ with coefficients from row $i$ of $E$. For each type:
+
+      - swap rows $j, k$: row $j$ of $E$ is $e_k^T$, so row $j$ of $EA$ is row $k$ of $A$, and vice versa;
+      - scale row $j$ by $c$: row $j$ of $E$ is $ce_j^T$;
+      - add $c$ times row $k$ to row $j$: row $j$ of $E$ is $e_j^T + ce_k^T$.
+
+      Each operation is undone by another of the same type (swap again, scale by $\frac1c$, add $-c$ times), whose matrix is therefore $E^{-1}$. $\blacksquare$
+
+  - id: la-107
+    title: Row rank equals column rank
+    subtopic: Matrices & determinants
+    difficulty: hard
+    type: proof
+    tags: [rank, row space, column space]
+    statement: |
+      Prove that the dimension of the row space of any matrix equals the dimension of its column space.
+    solution: |
+      Let $A$ be $m\times n$ with column rank $r$, and let $c_1, \dots, c_r$ be a basis of its column space. Each column of $A$ is a combination of the $c_k$: $A = CR$, where $C$ is $m\times r$ with columns $c_k$ and $R$ is $r\times n$ holding the coefficients.
+
+      Then each row of $A = CR$ is a combination of the $r$ rows of $R$. So the row space has dimension at most $r$: row rank $\le$ column rank. Applying this to $A^T$ gives the reverse inequality. $\blacksquare$
+
+  - id: la-108
+    title: An LU factorisation
+    subtopic: Matrices & determinants
+    difficulty: easy
+    type: compute
+    tags: [lu decomposition, row reduction]
+    statement: |
+      Write $A = \begin{pmatrix}2&1\\4&5\end{pmatrix}$ as $LU$ with $L$ lower triangular with 1s on the diagonal and $U$ upper triangular, and use it to solve $Ax = (3, 13)^T$.
+    solution: |
+      Eliminating with $R_2 \to R_2 - 2R_1$ gives $U = \begin{pmatrix}2&1\\0&3\end{pmatrix}$, and the multiplier goes in $L = \begin{pmatrix}1&0\\2&1\end{pmatrix}$. Check: $LU = A$.
+
+      Solve $Ly = (3, 13)$: $y = (3, 7)$. Then $Ux = y$: $3x_2 = 7$, $x_2 = \frac73$; $2x_1 + \frac73 = 3$, $x_1 = \frac13$. Check: $\frac23 + \frac73 = 3$ and $\frac43 + \frac{35}{3} = 13$.
+
+  - id: la-109
+    title: Strictly triangular matrices are nilpotent
+    subtopic: Matrices & determinants
+    difficulty: medium
+    type: proof
+    tags: [nilpotent, triangular matrices]
+    related: [la-081, la-019]
+    statement: |
+      Prove that if $N$ is strictly upper triangular ($n\times n$, zero on and below the diagonal) then $N^n = 0$.
+    solution: |
+      Let $V_k = \Span\{e_1, \dots, e_k\}$ ($V_0 = \{0\}$). Column $j$ of $N$ has non-zero entries only in rows $< j$, so $Ne_j \in V_{j-1}$, and hence $N(V_k) \subseteq V_{k-1}$. Then $N^n(\R^n) = N^n(V_n) \subseteq V_0 = \{0\}$. $\blacksquare$
+
+  - id: la-110
+    title: Integer matrices with integer inverses
+    subtopic: Matrices & determinants
+    difficulty: medium
+    type: proof
+    tags: [determinants, adjugate, integers]
+    related: [la-102]
+    statement: |
+      Let $A$ have integer entries. Prove that $A^{-1}$ exists and has integer entries if and only if $\det A = \pm1$.
+    solution: |
+      **($\Leftarrow$)** By la-102, $A^{-1} = \pm\operatorname{adj}A$, and the cofactors are integers.
+
+      **($\Rightarrow$)** $\det A\cdot\det A^{-1} = \det I = 1$, and both determinants are integers, so each is $\pm1$. $\blacksquare$
+
+  - id: la-111
+    title: Eigenvalues of triangular matrices
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: proof
+    tags: [eigenvalues, triangular matrices, characteristic polynomial]
+    related: [la-093]
+    statement: |
+      Prove that the eigenvalues of a triangular matrix are its diagonal entries.
+    solution: |
+      $A - \lambda I$ is triangular with diagonal $a_{ii} - \lambda$, so $\det(A - \lambda I) = \prod_i(a_{ii} - \lambda)$ (la-093). This vanishes exactly when $\lambda$ is some $a_{ii}$. $\blacksquare$
+
+  - id: la-112
+    title: A swap and a shear
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: compute
+    tags: [eigenvalues, diagonalisation]
+    related: [la-021]
+    statement: |
+      Find the eigenvalues and eigenvectors of $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ and of $\begin{pmatrix}1&1\\0&1\end{pmatrix}$. Which is diagonalisable?
+    solution: |
+      **Swap.** $\lambda^2 - 1 = 0$: $\lambda = 1$ with eigenvector $(1,1)$, $\lambda = -1$ with $(1,-1)$. Two independent eigenvectors: **diagonalisable**.
+
+      **Shear.** $(1 - \lambda)^2 = 0$: only $\lambda = 1$. $(A - I)v = 0$ means $v_2 = 0$, so the eigenvectors are the multiples of $(1, 0)$. There is no basis of eigenvectors: **not diagonalisable**.
+
+  - id: la-113
+    title: Trace and determinant from eigenvalues
+    subtopic: Eigenvalues
+    difficulty: medium
+    type: proof
+    tags: [characteristic polynomial, trace, determinant]
+    related: [la-026]
+    statement: |
+      Let $A$ be $n\times n$ with complex eigenvalues $\lambda_1, \dots, \lambda_n$ (listed with multiplicity, i.e. $\det(xI - A) = \prod(x - \lambda_i)$). Prove that $\sum\lambda_i = \tr A$ and $\prod\lambda_i = \det A$.
+    solution: |
+      Put $x = 0$: $\det(-A) = \prod(-\lambda_i)$, so $(-1)^n\det A = (-1)^n\prod\lambda_i$.
+
+      **Coefficient of $x^{n-1}$.** In the permutation expansion of $\det(xI - A)$, any non-identity permutation leaves at least two diagonal positions unused, so its term has degree at most $n - 2$ in $x$. The identity term is $\prod(x - a_{ii})$, whose $x^{n-1}$ coefficient is $-\sum a_{ii}$. On the other side, $\prod(x - \lambda_i)$ has $x^{n-1}$ coefficient $-\sum\lambda_i$. $\blacksquare$
+
+  - id: la-114
+    title: Similar matrices share eigenvalues
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: proof
+    tags: [similarity, characteristic polynomial]
+    statement: |
+      Prove that if $B = P^{-1}AP$ then $A$ and $B$ have the same characteristic polynomial, and describe how their eigenvectors are related.
+    solution: |
+      $\det(xI - P^{-1}AP) = \det\big(P^{-1}(xI - A)P\big) = \det P^{-1}\det(xI - A)\det P = \det(xI - A)$.
+
+      If $Av = \lambda v$ then $B(P^{-1}v) = P^{-1}APP^{-1}v = \lambda P^{-1}v$. So $v \mapsto P^{-1}v$ maps eigenvectors of $A$ to those of $B$. $\blacksquare$
+
+  - id: la-115
+    title: A matrix and its transpose
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: proof
+    tags: [eigenvalues, transpose]
+    related: [la-095]
+    statement: |
+      Prove that $A$ and $A^T$ have the same eigenvalues. Do they have the same eigenvectors?
+    solution: |
+      $\det(xI - A^T) = \det\big((xI - A)^T\big) = \det(xI - A)$ (la-095).
+
+      **Not the same eigenvectors:** $A = \begin{pmatrix}1&1\\0&2\end{pmatrix}$ has eigenvector $(1, 0)$ for $\lambda = 1$, but $A^T(1,0)^T = (1, 1)^T$, not a multiple of $(1,0)$. $\blacksquare$
+
+  - id: la-116
+    title: Eigenvalues of special maps
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: proof
+    tags: [eigenvalues, projections, nilpotent]
+    related: [la-080]
+    statement: |
+      Prove that the only possible eigenvalues of a projection ($P^2 = P$) are 0 and 1, of a matrix with $A^2 = I$ are $\pm1$, and of a nilpotent matrix ($N^k = 0$) is 0.
+    solution: |
+      If $Av = \lambda v$ with $v \ne 0$, then $p(A)v = p(\lambda)v$ for any polynomial $p$.
+
+      - $P^2 - P = 0$ gives $(\lambda^2 - \lambda)v = 0$, so $\lambda \in \{0, 1\}$.
+      - $A^2 - I = 0$ gives $\lambda^2 = 1$.
+      - $N^k = 0$ gives $\lambda^k = 0$, so $\lambda = 0$. $\blacksquare$
+
+  - id: la-117
+    title: Diagonalisable means an eigenbasis
+    subtopic: Eigenvalues
+    difficulty: medium
+    type: proof
+    tags: [diagonalisation, eigenvectors, basis]
+    related: [la-021]
+    statement: |
+      Prove that an $n\times n$ matrix $A$ satisfies $A = PDP^{-1}$ with $D$ diagonal iff $\R^n$ (or $\C^n$) has a basis of eigenvectors of $A$, and that the columns of $P$ are then such a basis.
+    solution: |
+      $A = PDP^{-1}$ iff $AP = PD$. Column $j$ of $AP$ is $Ap_j$, and of $PD$ is $d_jp_j$. So $AP = PD$ says exactly that each column $p_j$ is an eigenvector with eigenvalue $d_j$.
+
+      $P$ is invertible iff its columns form a basis. So a diagonalisation is the same thing as a basis of eigenvectors placed in the columns of $P$. $\blacksquare$
+
+  - id: la-118
+    title: Diagonalising a 3×3 matrix
+    subtopic: Eigenvalues
+    difficulty: medium
+    type: compute
+    tags: [diagonalisation, eigenvalues, eigenvectors]
+    statement: |
+      Diagonalise $A = \begin{pmatrix}1&2&0\\2&1&0\\0&0&3\end{pmatrix}$.
+    solution: |
+      The block structure gives $\det(A - \lambda I) = \big((1 - \lambda)^2 - 4\big)(3 - \lambda) = (\lambda - 3)^2(\lambda + 1)$.
+
+      - $\lambda = 3$: $A - 3I = \begin{pmatrix}-2&2&0\\2&-2&0\\0&0&0\end{pmatrix}$, kernel spanned by $(1,1,0)$ and $(0,0,1)$.
+      - $\lambda = -1$: $A + I$ has kernel spanned by $(1, -1, 0)$.
+
+      With $P = \begin{pmatrix}1&0&1\\1&0&-1\\0&1&0\end{pmatrix}$ and $D = \operatorname{diag}(3, 3, -1)$, $A = PDP^{-1}$. (The eigenvectors are orthogonal, as they must be for a symmetric matrix.)
+
+  - id: la-119
+    title: Fibonacci numbers from a matrix
+    subtopic: Eigenvalues
+    difficulty: medium
+    type: proof
+    tags: [matrix powers, fibonacci, eigenvalues]
+    related: [in-054, la-070]
+    statement: |
+      Let $Q = \begin{pmatrix}1&1\\1&0\end{pmatrix}$. Prove that $Q^n = \begin{pmatrix}F_{n+1}&F_n\\F_n&F_{n-1}\end{pmatrix}$ for $n \ge 1$, find the eigenvalues of $Q$, and deduce Cassini's identity.
+    solution: |
+      **Powers.** $Q^1 = \begin{pmatrix}F_2&F_1\\F_1&F_0\end{pmatrix}$. If it holds for $n$,
+      $$Q^{n+1} = Q^nQ = \begin{pmatrix}F_{n+1} + F_n & F_{n+1}\\ F_n + F_{n-1} & F_n\end{pmatrix} = \begin{pmatrix}F_{n+2}&F_{n+1}\\F_{n+1}&F_n\end{pmatrix}.$$
+
+      **Eigenvalues.** $\lambda^2 - \lambda - 1 = 0$: $\varphi, \psi = \frac{1\pm\sqrt5}{2}$. Diagonalising gives Binet's formula.
+
+      **Cassini.** $\det Q = -1$, so $\det Q^n = (-1)^n$, i.e. $F_{n+1}F_{n-1} - F_n^2 = (-1)^n$. $\blacksquare$
+
+  - id: la-120
+    title: Cayley–Hamilton for diagonalisable matrices
+    subtopic: Eigenvalues
+    difficulty: medium
+    type: proof
+    tags: [cayley-hamilton, diagonalisation]
+    related: [la-027]
+    statement: |
+      Let $p(x) = \det(xI - A)$. Prove that $p(A) = 0$ when $A$ is diagonalisable.
+    solution: |
+      Write $A = PDP^{-1}$ with $D = \operatorname{diag}(\lambda_1, \dots, \lambda_n)$. Then $A^k = PD^kP^{-1}$, so $p(A) = P\,p(D)\,P^{-1}$, and $p(D) = \operatorname{diag}(p(\lambda_1), \dots, p(\lambda_n)) = 0$ since each $\lambda_i$ is a root of $p$. $\blacksquare$
+
+      (The theorem holds for all square matrices; one proof approximates any complex matrix by diagonalisable ones and uses continuity.)
+
+  - id: la-121
+    title: Geometric multiplicity is at most algebraic
+    subtopic: Eigenvalues
+    difficulty: hard
+    type: proof
+    tags: [eigenvalues, multiplicity, block matrices]
+    related: [la-103, la-112]
+    statement: |
+      Let $\lambda$ be an eigenvalue of $A$ whose eigenspace has dimension $g$. Prove that $(x - \lambda)^g$ divides $\det(xI - A)$.
+    solution: |
+      Take a basis $v_1, \dots, v_g$ of the eigenspace and extend it to a basis of the whole space, forming the columns of $P$. Since $Av_i = \lambda v_i$ for $i \le g$,
+      $$P^{-1}AP = \begin{pmatrix}\lambda I_g & B\\ 0 & C\end{pmatrix}.$$
+      By la-114 and la-103, $\det(xI - A) = \det\big((x - \lambda)I_g\big)\det(xI - C) = (x - \lambda)^g\det(xI - C)$. $\blacksquare$
+
+      (The shear in la-112 has algebraic multiplicity 2 and geometric multiplicity 1.)
+
+  - id: la-122
+    title: AB and BA have the same eigenvalues
+    subtopic: Eigenvalues
+    difficulty: medium
+    type: proof
+    tags: [eigenvalues, products]
+    statement: |
+      Let $A, B$ be $n\times n$. Prove that every non-zero eigenvalue of $AB$ is an eigenvalue of $BA$, and that $AB$ and $BA$ are either both invertible or both singular.
+    solution: |
+      Let $ABv = \lambda v$ with $v \ne 0$, $\lambda \ne 0$. Then $Bv \ne 0$ (else $\lambda v = 0$), and $BA(Bv) = B(ABv) = \lambda Bv$. So $\lambda$ is an eigenvalue of $BA$ with eigenvector $Bv$. By symmetry the non-zero eigenvalues coincide.
+
+      For $0$: $\det(AB) = \det A\det B = \det(BA)$. $\blacksquare$
+
+      (In fact $AB$ and $BA$ have the same characteristic polynomial.)
+
+  - id: la-123
+    title: Involutions are diagonalisable
+    subtopic: Eigenvalues
+    difficulty: medium
+    type: proof
+    tags: [diagonalisation, involutions, eigenspaces]
+    related: [la-116, la-080]
+    statement: |
+      Prove that if $A^2 = I$ then $\R^n$ is the direct sum of the eigenspaces of $A$ for $1$ and $-1$, so $A$ is diagonalisable.
+    solution: |
+      Every $v$ splits as
+      $$v = \frac{v + Av}{2} + \frac{v - Av}{2},$$
+      and $A(v + Av) = Av + v$, $A(v - Av) = -(v - Av)$. So $\R^n = E_1 + E_{-1}$, and $E_1 \cap E_{-1} = \{0\}$ (a vector with $Av = v = -v$ is 0). Combining bases of the two eigenspaces gives an eigenbasis. $\blacksquare$
+
+  - id: la-124
+    title: Markov matrices have eigenvalue 1
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: proof
+    tags: [eigenvalues, markov chains, stochastic matrices]
+    related: [la-115]
+    statement: |
+      Let $A$ have non-negative entries and every column summing to 1. Prove that $1$ is an eigenvalue of $A$.
+    solution: |
+      The column sums are the entries of $\mathbf 1^TA$, so $\mathbf 1^TA = \mathbf 1^T$, i.e. $A^T\mathbf 1 = \mathbf 1$. So $1$ is an eigenvalue of $A^T$, hence of $A$ (la-115). $\blacksquare$
+
+      (Its eigenvector for $A$, scaled to be a probability vector, is a stationary distribution of the Markov chain.)
+
+  - id: la-125
+    title: Gershgorin's circle theorem
+    subtopic: Eigenvalues
+    difficulty: medium
+    type: proof
+    tags: [eigenvalues, gershgorin, diagonal dominance]
+    source: Gershgorin, 1931
+    statement: |
+      Prove that every (complex) eigenvalue $\lambda$ of $A$ satisfies $|\lambda - a_{ii}| \le \sum_{j \ne i}|a_{ij}|$ for some $i$. Deduce that a matrix with $|a_{ii}| > \sum_{j\ne i}|a_{ij}|$ for every $i$ is invertible.
+    solution: |
+      Let $Ax = \lambda x$, $x \ne 0$, and choose $i$ with $|x_i|$ maximal, so $|x_i| > 0$. Row $i$ gives $(\lambda - a_{ii})x_i = \sum_{j\ne i}a_{ij}x_j$, so
+      $$|\lambda - a_{ii}|\,|x_i| \le \sum_{j\ne i}|a_{ij}|\,|x_j| \le \sum_{j\ne i}|a_{ij}|\,|x_i|.$$
+      Divide by $|x_i|$.
+
+      If the matrix is strictly diagonally dominant, $\lambda = 0$ would need $|a_{ii}| \le \sum_{j\ne i}|a_{ij}|$ for some $i$. So 0 is not an eigenvalue. $\blacksquare$
+
+  - id: la-126
+    title: Complex eigenvalues of a rotation
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: compute
+    tags: [eigenvalues, rotation, complex numbers]
+    related: [la-026]
+    statement: |
+      Find the complex eigenvalues and eigenvectors of $R_\theta = \begin{pmatrix}\cos\theta & -\sin\theta\\ \sin\theta & \cos\theta\end{pmatrix}$.
+    solution: |
+      $\lambda^2 - 2\cos\theta\,\lambda + 1 = 0$ gives $\lambda = \cos\theta \pm i\sin\theta = e^{\pm i\theta}$.
+
+      For $e^{i\theta}$: $R_\theta\begin{pmatrix}1\\-i\end{pmatrix} = \begin{pmatrix}\cos\theta + i\sin\theta\\ \sin\theta - i\cos\theta\end{pmatrix} = e^{i\theta}\begin{pmatrix}1\\-i\end{pmatrix}$. Conjugating, $(1, i)$ is an eigenvector for $e^{-i\theta}$.
+
+      (Identifying $\R^2$ with $\C$, rotation is multiplication by $e^{i\theta}$.)
+
+  - id: la-127
+    title: Commuting matrices share an eigenvector
+    subtopic: Eigenvalues
+    difficulty: hard
+    type: proof
+    tags: [eigenvectors, commuting matrices, invariant subspaces]
+    statement: |
+      Let $A, B$ be complex $n\times n$ matrices with $AB = BA$. Prove that they have a common eigenvector.
+    solution: |
+      Let $\lambda$ be an eigenvalue of $A$ (one exists, since the characteristic polynomial has a complex root) and $E = \ker(A - \lambda I) \ne \{0\}$.
+
+      $E$ is invariant under $B$: if $v \in E$ then $A(Bv) = BAv = \lambda Bv$, so $Bv \in E$. So $B$ restricts to a linear map $E \to E$, which (over $\C$) has an eigenvector $w \in E$. Then $Bw = \mu w$ and $Aw = \lambda w$. $\blacksquare$
+
+  - id: la-128
+    title: Symmetric 2×2 matrices diagonalise
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: proof
+    tags: [symmetric matrices, discriminant, diagonalisation]
+    related: [la-024]
+    statement: |
+      Prove directly that $\begin{pmatrix}a&b\\b&c\end{pmatrix}$ has real eigenvalues and is diagonalisable over $\R$.
+    solution: |
+      The characteristic polynomial $\lambda^2 - (a + c)\lambda + (ac - b^2)$ has discriminant
+      $$(a + c)^2 - 4(ac - b^2) = (a - c)^2 + 4b^2 \ge 0.$$
+      If it is positive there are two distinct real eigenvalues, and their eigenvectors form a basis (la-022). If it is zero then $a = c$ and $b = 0$, so the matrix is already diagonal. $\blacksquare$
+
+  - id: la-129
+    title: Powers of a Jordan block
+    subtopic: Eigenvalues
+    difficulty: easy
+    type: compute
+    tags: [matrix powers, jordan blocks, induction]
+    related: [in-060]
+    statement: |
+      Prove that $\begin{pmatrix}a&1\\0&a\end{pmatrix}^n = \begin{pmatrix}a^n & na^{n-1}\\0&a^n\end{pmatrix}$ for $n \ge 1$.
+    solution: |
+      True for $n = 1$. If it holds for $n$, multiplying by the matrix once more:
+      $$\begin{pmatrix}a^n & na^{n-1}\\0&a^n\end{pmatrix}\begin{pmatrix}a&1\\0&a\end{pmatrix} = \begin{pmatrix}a^{n+1} & a^n + na^n\\0 & a^{n+1}\end{pmatrix}.$$
+      The corner is $(n+1)a^n$. $\blacksquare$
+
+      (Write $J = aI + N$ with $N^2 = 0$; then $J^n = a^nI + na^{n-1}N$ by the binomial theorem, as $aI$ and $N$ commute.)
+
+  - id: la-130
+    title: The spectral theorem
+    subtopic: Eigenvalues
+    difficulty: hard
+    type: proof
+    tags: [spectral theorem, symmetric matrices, orthonormal basis]
+    related: [la-024, la-025]
+    hints:
+      - |
+        Take a unit eigenvector $u$ and show $u^\perp$ is invariant under $A$.
+    statement: |
+      Prove that every real symmetric $n\times n$ matrix has an orthonormal basis of eigenvectors, i.e. $A = QDQ^T$ with $Q$ orthogonal and $D$ diagonal.
+    solution: |
+      Induct on $n$; $n = 1$ is trivial. By la-024, $A$ has a real eigenvalue $\lambda$; let $u$ be a unit eigenvector. Let $W = u^\perp$, of dimension $n - 1$.
+
+      $W$ is invariant under $A$: if $w \cdot u = 0$ then $(Aw)\cdot u = w\cdot(Au) = \lambda(w\cdot u) = 0$.
+
+      The restriction of $A$ to $W$ is again symmetric with respect to the dot product: $(Aw)\cdot w' = w\cdot(Aw')$. In an orthonormal basis of $W$ its matrix is therefore symmetric, so by induction $W$ has an orthonormal basis of eigenvectors of $A$. Adding $u$ gives one for $\R^n$. $\blacksquare$
+
+  - id: la-131
+    title: An inner product on functions
+    subtopic: Inner products
+    difficulty: medium
+    type: proof
+    tags: [inner products, function spaces, integrals]
+    related: [ca-117]
+    statement: |
+      Prove that $\langle f, g\rangle = \int_0^1f(t)g(t)\,dt$ is an inner product on $C[0,1]$.
+    solution: |
+      Symmetry and linearity in each argument follow from properties of the integral. For positivity, $\langle f, f\rangle = \int_0^1f^2 \ge 0$.
+
+      **Definiteness.** Suppose $\int_0^1f^2 = 0$ but $f(c) \ne 0$. By continuity $f^2 > \frac{f(c)^2}{2}$ on some interval of length $\delta > 0$ around $c$ (within $[0,1]$), so $\int_0^1f^2 \ge \frac{f(c)^2}{2}\delta > 0$. Contradiction, so $f = 0$. $\blacksquare$
+
+      (Continuity matters: on all integrable functions, a function non-zero at one point has $\int f^2 = 0$.)
+
+  - id: la-132
+    title: The triangle inequality
+    subtopic: Inner products
+    difficulty: easy
+    type: proof
+    tags: [inner products, triangle inequality, cauchy-schwarz]
+    related: [la-028]
+    statement: |
+      In a real inner product space, prove $\norm{u + v} \le \norm u + \norm v$.
+    solution: |
+      $$\norm{u+v}^2 = \norm u^2 + 2\langle u, v\rangle + \norm v^2 \le \norm u^2 + 2\norm u\norm v + \norm v^2 = (\norm u + \norm v)^2,$$
+      by Cauchy–Schwarz. Take square roots. $\blacksquare$
+
+  - id: la-133
+    title: The parallelogram law
+    subtopic: Inner products
+    difficulty: easy
+    type: proof
+    tags: [inner products, norms, parallelogram law]
+    related: [la-134]
+    statement: |
+      Prove that $\norm{u + v}^2 + \norm{u - v}^2 = 2\norm u^2 + 2\norm v^2$ in any inner product space, and interpret it geometrically.
+    solution: |
+      $\norm{u \pm v}^2 = \norm u^2 \pm 2\langle u,v\rangle + \norm v^2$. Adding, the cross terms cancel. $\blacksquare$
+
+      The sum of the squares of a parallelogram's diagonals equals the sum of the squares of its four sides.
+
+  - id: la-134
+    title: The polarisation identity
+    subtopic: Inner products
+    difficulty: easy
+    type: proof
+    tags: [inner products, polarisation]
+    related: [la-133, la-143]
+    statement: |
+      Prove that $\langle u, v\rangle = \frac14\left(\norm{u + v}^2 - \norm{u - v}^2\right)$ in a real inner product space. Deduce that a linear map preserving lengths preserves inner products.
+    solution: |
+      Subtracting the expansions in la-133 gives $4\langle u, v\rangle$.
+
+      If $\norm{Tx} = \norm x$ for all $x$, then applying this to $Tu \pm Tv = T(u \pm v)$:
+      $$\langle Tu, Tv\rangle = \tfrac14\left(\norm{T(u+v)}^2 - \norm{T(u-v)}^2\right) = \tfrac14\left(\norm{u+v}^2 - \norm{u - v}^2\right) = \langle u, v\rangle. \qquad\blacksquare$$
+
+  - id: la-135
+    title: Pythagoras
+    subtopic: Inner products
+    difficulty: easy
+    type: proof
+    tags: [inner products, orthogonality]
+    statement: |
+      Prove that if $v_1, \dots, v_k$ are pairwise orthogonal then $\norm{v_1 + \cdots + v_k}^2 = \norm{v_1}^2 + \cdots + \norm{v_k}^2$.
+    solution: |
+      Expand $\left\langle\sum_iv_i, \sum_jv_j\right\rangle = \sum_{i,j}\langle v_i, v_j\rangle$. The terms with $i \ne j$ vanish, leaving $\sum_i\norm{v_i}^2$. $\blacksquare$
+
+  - id: la-136
+    title: Orthogonal vectors are independent
+    subtopic: Inner products
+    difficulty: easy
+    type: proof
+    tags: [orthogonality, linear independence]
+    statement: |
+      Prove that pairwise orthogonal non-zero vectors are linearly independent.
+    solution: |
+      If $\sum c_iv_i = 0$, take the inner product with $v_j$: $c_j\norm{v_j}^2 = 0$, and $\norm{v_j} \ne 0$, so $c_j = 0$. $\blacksquare$
+
+  - id: la-137
+    title: Distance from a point to a line
+    subtopic: Inner products
+    difficulty: easy
+    type: compute
+    tags: [orthogonal projection, distance]
+    related: [la-138]
+    statement: |
+      Find the orthogonal projection of $v = (1, 2, 3)$ onto the line spanned by $u = (1, 1, 1)$, and the distance from $v$ to the line.
+    solution: |
+      $\operatorname{proj}_uv = \frac{v\cdot u}{u\cdot u}u = \frac63(1,1,1) = (2,2,2)$. The residual $v - (2,2,2) = (-1, 0, 1)$ is orthogonal to $u$, and the distance is its length $\sqrt2$.
+
+  - id: la-138
+    title: Projection is the best approximation
+    subtopic: Inner products
+    difficulty: medium
+    type: proof
+    tags: [orthogonal projection, best approximation, pythagoras]
+    related: [la-137, la-139]
+    statement: |
+      Let $W$ be a subspace with orthonormal basis $e_1, \dots, e_k$, and $p = \sum\langle v, e_i\rangle e_i$. Prove that $v - p \perp W$, and that $\norm{v - w} > \norm{v - p}$ for every $w \in W$ with $w \ne p$.
+    solution: |
+      $\langle v - p, e_j\rangle = \langle v, e_j\rangle - \langle v, e_j\rangle = 0$ for each $j$, so $v - p$ is orthogonal to all of $W$.
+
+      For $w \in W$, $v - w = (v - p) + (p - w)$ with $p - w \in W$ orthogonal to $v - p$. By Pythagoras,
+      $$\norm{v - w}^2 = \norm{v - p}^2 + \norm{p - w}^2 > \norm{v - p}^2$$
+      unless $w = p$. $\blacksquare$
+
+  - id: la-139
+    title: The normal equations of least squares
+    subtopic: Inner products
+    difficulty: medium
+    type: proof
+    tags: [least squares, normal equations, orthogonal projection]
+    related: [la-138, la-149]
+    statement: |
+      Let $A$ be $m\times n$ and $b \in \R^m$. Prove that $x$ minimises $\norm{Ax - b}$ if and only if $A^TAx = A^Tb$.
+    solution: |
+      $\{Ax\}$ is the column space $W$ of $A$. By la-138, $Ax$ is closest to $b$ iff $b - Ax \perp W$, i.e. iff $b - Ax$ is orthogonal to every column of $A$, i.e. iff $A^T(b - Ax) = 0$. $\blacksquare$
+
+      (If the columns of $A$ are independent then $A^TA$ is invertible and $x = (A^TA)^{-1}A^Tb$ is unique.)
+
+  - id: la-140
+    title: The first Legendre polynomials
+    subtopic: Inner products
+    difficulty: medium
+    type: compute
+    tags: [gram-schmidt, orthogonal polynomials, legendre]
+    related: [la-029]
+    statement: |
+      Apply Gram–Schmidt (without normalising) to $1, x, x^2$ with $\langle f, g\rangle = \int_{-1}^1fg$.
+    solution: |
+      $p_0 = 1$.
+
+      $p_1 = x - \frac{\langle x, 1\rangle}{\langle1,1\rangle}1 = x$, since $\int_{-1}^1x = 0$.
+
+      $p_2 = x^2 - \frac{\langle x^2, 1\rangle}{\langle 1, 1\rangle}1 - \frac{\langle x^2, x\rangle}{\langle x, x\rangle}x = x^2 - \frac{2/3}{2} - 0 = x^2 - \frac13$.
+
+      (Scaled so $p(1) = 1$, these are the Legendre polynomials $1$, $x$, $\frac12(3x^2 - 1)$.)
+
+  - id: la-141
+    title: Coordinates in an orthonormal basis
+    subtopic: Inner products
+    difficulty: easy
+    type: proof
+    tags: [orthonormal basis, parseval]
+    statement: |
+      Let $e_1, \dots, e_n$ be an orthonormal basis. Prove that $v = \sum\langle v, e_i\rangle e_i$ and $\norm v^2 = \sum\langle v, e_i\rangle^2$.
+    solution: |
+      Write $v = \sum c_ie_i$. Taking the inner product with $e_j$ gives $\langle v, e_j\rangle = c_j$. Then by Pythagoras (la-135), $\norm v^2 = \sum c_i^2$. $\blacksquare$
+
+      (No linear system needs solving: orthonormal coordinates are just inner products.)
+
+  - id: la-142
+    title: Bessel's inequality
+    subtopic: Inner products
+    difficulty: medium
+    type: proof
+    tags: [orthonormal sets, bessel inequality]
+    related: [la-138, la-141]
+    statement: |
+      Let $e_1, \dots, e_k$ be orthonormal (not necessarily a basis). Prove that $\sum_{i=1}^k\langle v, e_i\rangle^2 \le \norm v^2$, with equality iff $v \in \Span\{e_i\}$.
+    solution: |
+      Let $p = \sum\langle v, e_i\rangle e_i$. By la-138, $v - p \perp p$, so
+      $$\norm v^2 = \norm p^2 + \norm{v - p}^2 \ge \norm p^2 = \sum\langle v, e_i\rangle^2.$$
+      Equality iff $v = p$, iff $v$ is in the span. $\blacksquare$
+
+  - id: la-143
+    title: Three descriptions of orthogonal matrices
+    subtopic: Inner products
+    difficulty: medium
+    type: proof
+    tags: [orthogonal matrices, orthonormal basis]
+    related: [la-020, la-134]
+    statement: |
+      Prove that for a real $n\times n$ matrix $Q$ the following are equivalent: (a) $Q^TQ = I$; (b) the columns of $Q$ are orthonormal; (c) $Qx\cdot Qy = x\cdot y$ for all $x, y$.
+    solution: |
+      **(a) ⟺ (b).** $(Q^TQ)_{ij} = q_i\cdot q_j$, where $q_i$ are the columns. So $Q^TQ = I$ says $q_i\cdot q_j$ is 1 if $i = j$ and 0 otherwise.
+
+      **(a) ⇒ (c).** $Qx\cdot Qy = x^TQ^TQy = x^Ty$.
+
+      **(c) ⇒ (a).** Take $x = e_i$, $y = e_j$: $(Q^TQ)_{ij} = Qe_i\cdot Qe_j = e_i\cdot e_j$. $\blacksquare$
+
+  - id: la-144
+    title: All 2×2 orthogonal matrices
+    subtopic: Inner products
+    difficulty: medium
+    type: proof
+    tags: [orthogonal matrices, rotations, reflections]
+    related: [la-073, la-143]
+    statement: |
+      Prove that every $2\times2$ orthogonal matrix is either a rotation $\begin{pmatrix}\cos\theta&-\sin\theta\\ \sin\theta&\cos\theta\end{pmatrix}$ (determinant 1) or a reflection $\begin{pmatrix}\cos\theta&\sin\theta\\ \sin\theta&-\cos\theta\end{pmatrix}$ (determinant $-1$).
+    solution: |
+      The first column is a unit vector, so it is $(\cos\theta, \sin\theta)$ for some $\theta$. The second is a unit vector orthogonal to it, and in $\R^2$ there are exactly two: $\pm(-\sin\theta, \cos\theta)$. The $+$ sign gives the rotation, the $-$ sign the other matrix.
+
+      The second matrix $M$ is symmetric with $M^2 = I$, eigenvalues $\pm1$, and fixes the line at angle $\frac\theta2$: it is the reflection in that line. $\blacksquare$
+
+  - id: la-145
+    title: Distance from a point to a plane
+    subtopic: Inner products
+    difficulty: easy
+    type: compute
+    tags: [distance, orthogonal projection, planes]
+    statement: |
+      Find the distance from $(1, 2, 3)$ to the plane $x + 2y + 2z = 0$, and derive the general formula $\frac{|n\cdot p|}{\norm n}$ for the distance from $p$ to the plane $n\cdot x = 0$.
+    solution: |
+      The distance from $p$ to the plane is the length of the component of $p$ along the normal $n$, i.e. of $\frac{n\cdot p}{n\cdot n}n$, which is $\frac{|n\cdot p|}{\norm n}$ (la-138 with the plane's orthogonal complement).
+
+      Here $n = (1,2,2)$, $\norm n = 3$, $n\cdot p = 1 + 4 + 6 = 11$: distance $\frac{11}{3}$.
+
+  - id: la-146
+    title: Angles between vectors
+    subtopic: Inner products
+    difficulty: easy
+    type: compute
+    tags: [angles, dot product]
+    statement: |
+      Find the angle between $(1, 0, 1)$ and $(0, 1, 1)$, and between a main diagonal and an edge of a cube.
+    solution: |
+      $\cos\theta = \frac{1}{\sqrt2\sqrt2} = \frac12$, so $\theta = 60^\circ$.
+
+      Diagonal $(1,1,1)$ and edge $(1,0,0)$: $\cos\theta = \frac1{\sqrt3}$, so $\theta = \arccos\frac1{\sqrt3} \approx 54.7^\circ$.
+
+  - id: la-147
+    title: Positive definite matrices give inner products
+    subtopic: Inner products
+    difficulty: medium
+    type: proof
+    tags: [positive definite, inner products]
+    statement: |
+      Let $B$ be an invertible $n\times n$ real matrix and $A = B^TB$. Prove that $\langle x, y\rangle_A = x^TAy$ is an inner product on $\R^n$.
+    solution: |
+      Bilinearity is clear. Symmetry: $A^T = B^TB = A$, and $x^TAy$ is a $1\times1$ matrix, equal to its transpose $y^TA^Tx = y^TAx$.
+
+      Positivity: $x^TAx = (Bx)^T(Bx) = \norm{Bx}^2 \ge 0$, with equality iff $Bx = 0$, iff $x = 0$ since $B$ is invertible. $\blacksquare$
+
+      (In fact every inner product on $\R^n$ arises this way: take $B$ to send an orthonormal basis for $\langle\cdot,\cdot\rangle$ to the standard basis.)
+
+  - id: la-148
+    title: Orthogonality of sines and cosines
+    subtopic: Inner products
+    difficulty: medium
+    type: proof
+    tags: [fourier series, orthogonality, integrals]
+    statement: |
+      With $\langle f,g\rangle = \int_{-\pi}^\pi fg$, prove that for positive integers $m \ne n$: $\langle\sin mx, \sin nx\rangle = 0$, $\langle\cos mx, \cos nx\rangle = 0$, and $\langle\sin mx, \cos nx\rangle = 0$ for all $m, n$. Find $\norm{\sin nx}$.
+    solution: |
+      Product-to-sum: $\sin mx\sin nx = \frac12[\cos(m-n)x - \cos(m+n)x]$, and $\int_{-\pi}^\pi\cos kx\,dx = 0$ for every integer $k \ne 0$. With $m \ne n$ both $k = m \pm n$ are non-zero. Similarly for $\cos mx\cos nx = \frac12[\cos(m-n)x + \cos(m+n)x]$. And $\sin mx\cos nx$ is odd, so its integral over $[-\pi, \pi]$ is 0.
+
+      $\norm{\sin nx}^2 = \int_{-\pi}^\pi\sin^2nx\,dx = \pi$, so $\norm{\sin nx} = \sqrt\pi$. $\blacksquare$
+
+  - id: la-149
+    title: Projection matrices
+    subtopic: Inner products
+    difficulty: medium
+    type: proof
+    tags: [projections, least squares, symmetric matrices]
+    related: [la-139, la-080]
+    statement: |
+      Let $A$ be $m\times n$ with independent columns. Prove that $A^TA$ is invertible, and that $P = A(A^TA)^{-1}A^T$ is symmetric, satisfies $P^2 = P$, fixes every vector in the column space of $A$, and kills every vector orthogonal to it.
+    solution: |
+      **Invertible.** If $A^TAx = 0$ then $\norm{Ax}^2 = x^TA^TAx = 0$, so $Ax = 0$ and $x = 0$ (independent columns).
+
+      **Symmetric.** $P^T = A\left((A^TA)^{-1}\right)^TA^T = A(A^TA)^{-1}A^T$, since $A^TA$ is symmetric.
+
+      **Idempotent.** $P^2 = A(A^TA)^{-1}(A^TA)(A^TA)^{-1}A^T = P$.
+
+      **Action.** $P(Ax) = A(A^TA)^{-1}A^TAx = Ax$. If $y \perp$ every column of $A$ then $A^Ty = 0$ and $Py = 0$. So $P$ is the orthogonal projection onto the column space. $\blacksquare$
+
+  - id: la-150
+    title: A QR factorisation
+    subtopic: Inner products
+    difficulty: easy
+    type: compute
+    tags: [qr decomposition, gram-schmidt]
+    related: [la-029]
+    statement: |
+      Find $Q$ with orthonormal columns and $R$ upper triangular with $A = QR$, for $A = \begin{pmatrix}3&1\\4&2\end{pmatrix}$.
+    solution: |
+      Gram–Schmidt on the columns $a_1 = (3,4)$, $a_2 = (1, 2)$:
+
+      $q_1 = \frac{a_1}{5} = \left(\frac35, \frac45\right)$, $r_{11} = 5$.
+
+      $r_{12} = q_1\cdot a_2 = \frac{11}{5}$, and $a_2 - r_{12}q_1 = \left(1 - \frac{33}{25}, 2 - \frac{44}{25}\right) = \left(-\frac8{25}, \frac6{25}\right)$, of length $r_{22} = \frac25$; $q_2 = \left(-\frac45, \frac35\right)$.
+      $$Q = \begin{pmatrix}\frac35 & -\frac45\\ \frac45 & \frac35\end{pmatrix},\qquad R = \begin{pmatrix}5 & \frac{11}5\\ 0 & \frac25\end{pmatrix}.$$
+      Check: $\det A = 2 = \det Q\det R = 1\cdot2$.

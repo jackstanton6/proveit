@@ -334,7 +334,7 @@ problems:
 
   - id: in-020
     title: Fibonacci identities
-    subtopic: Strong induction
+    subtopic: Sums
     difficulty: medium
     type: proof
     tags: [weak induction, fibonacci]
@@ -508,3 +508,3678 @@ problems:
       **Base.** $n = 0$: the empty set has one subset, $\varnothing$, and $2^0 = 1$.
 
       **Step.** Let $|S| = k + 1$ and choose $x \in S$; let $T = S \setminus \{x\}$, so $|T| = k$. Each subset of $S$ either omits $x$, in which case it is a subset of $T$, or contains $x$, in which case it is $A \cup \{x\}$ for a unique $A \subseteq T$. By hypothesis there are $2^k$ subsets of each kind, so $2^{k+1}$ in total. $\blacksquare$
+
+  - id: in-031
+    title: Sum of fourth powers
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, sums, algebra]
+    related: [in-002, in-003]
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$\sum_{i=1}^n i^4 = \frac{n(n+1)(2n+1)(3n^2+3n-1)}{30}.$$
+    solution: |
+      **Base.** $n = 1$: $\frac{1\cdot2\cdot3\cdot5}{30} = 1$.
+
+      **Step.** Assume the formula for $k$. Then
+      $$\sum_{i=1}^{k+1} i^4 = \frac{(k+1)\big[k(2k+1)(3k^2+3k-1) + 30(k+1)^3\big]}{30}.$$
+      Expanding, $k(2k+1)(3k^2+3k-1) = 6k^4 + 9k^3 + k^2 - k$ and $30(k+1)^3 = 30k^3 + 90k^2 + 90k + 30$, so the bracket is $6k^4 + 39k^3 + 91k^2 + 89k + 30$.
+
+      The target for $n = k+1$ is $\frac{(k+1)(k+2)(2k+3)(3k^2+9k+5)}{30}$, since $3(k+1)^2 + 3(k+1) - 1 = 3k^2 + 9k + 5$. Multiplying out, $(k+2)(2k+3)(3k^2+9k+5) = (2k^2+7k+6)(3k^2+9k+5) = 6k^4 + 39k^3 + 91k^2 + 89k + 30$. The two agree. $\blacksquare$
+
+  - id: in-032
+    title: Sum of k times k factorial
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, sums, factorial]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n k\cdot k! = (n+1)! - 1$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $1 \cdot 1! = 1 = 2! - 1$.
+
+      **Step.** If $\sum_{k=1}^{m} k\cdot k! = (m+1)! - 1$, then
+      $$\sum_{k=1}^{m+1} k\cdot k! = (m+1)! - 1 + (m+1)(m+1)! = (m+1)!\,(m+2) - 1 = (m+2)! - 1. \qquad\blacksquare$$
+
+      (Directly: $k \cdot k! = (k+1)! - k!$, so the sum telescopes.)
+
+  - id: in-033
+    title: Sum of consecutive products
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, sums]
+    related: [in-051]
+    statement: |
+      Prove that $1\cdot2 + 2\cdot3 + \cdots + n(n+1) = \dfrac{n(n+1)(n+2)}{3}$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $2 = \frac{1\cdot2\cdot3}{3}$.
+
+      **Step.** Assuming the formula for $k$,
+      $$\frac{k(k+1)(k+2)}{3} + (k+1)(k+2) = \frac{(k+1)(k+2)(k+3)}{3}. \qquad\blacksquare$$
+
+  - id: in-034
+    title: Products of consecutive odd numbers
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, sums, telescoping]
+    related: [in-005]
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$\frac{1}{1\cdot3} + \frac{1}{3\cdot5} + \cdots + \frac{1}{(2n-1)(2n+1)} = \frac{n}{2n+1}.$$
+    solution: |
+      **Base.** $n = 1$: $\frac13 = \frac{1}{3}$.
+
+      **Step.** Assuming the formula for $k$,
+      $$\frac{k}{2k+1} + \frac{1}{(2k+1)(2k+3)} = \frac{k(2k+3) + 1}{(2k+1)(2k+3)} = \frac{(2k+1)(k+1)}{(2k+1)(2k+3)} = \frac{k+1}{2k+3}. \qquad\blacksquare$$
+
+  - id: in-035
+    title: An arithmetic–geometric sum
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, sums, powers of two]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n k\,2^k = (n-1)2^{n+1} + 2$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $2 = 0 + 2$.
+
+      **Step.** Assuming the formula for $m$,
+      $$\sum_{k=1}^{m+1} k\,2^k = (m-1)2^{m+1} + 2 + (m+1)2^{m+1} = 2m\cdot2^{m+1} + 2 = m\,2^{m+2} + 2,$$
+      which is the formula for $n = m + 1$. $\blacksquare$
+
+  - id: in-036
+    title: Sum of odd squares
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, sums]
+    related: [in-047]
+    statement: |
+      Prove that $1^2 + 3^2 + 5^2 + \cdots + (2n-1)^2 = \dfrac{n(2n-1)(2n+1)}{3}$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $1 = \frac{1\cdot1\cdot3}{3}$.
+
+      **Step.** Assuming the formula for $k$,
+      $$\frac{k(2k-1)(2k+1)}{3} + (2k+1)^2 = \frac{(2k+1)\big[2k^2 - k + 6k + 3\big]}{3} = \frac{(2k+1)(k+1)(2k+3)}{3},$$
+      which is the formula with $n = k+1$ (as $2(k+1) - 1 = 2k+1$). $\blacksquare$
+
+  - id: in-037
+    title: A series converging to 2
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, sums, powers of two]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n \frac{k}{2^k} = 2 - \frac{n+2}{2^n}$ for all $n \ge 1$, and deduce the value of $\displaystyle\sum_{k=1}^\infty \frac{k}{2^k}$.
+    solution: |
+      **Base.** $n = 1$: $\frac12 = 2 - \frac32$.
+
+      **Step.** Assuming it for $m$,
+      $$2 - \frac{m+2}{2^m} + \frac{m+1}{2^{m+1}} = 2 - \frac{2(m+2) - (m+1)}{2^{m+1}} = 2 - \frac{m+3}{2^{m+1}}.$$
+
+      Since $\frac{n+2}{2^n} \to 0$, the partial sums tend to $2$, so $\sum_{k\ge1} k/2^k = 2$. $\blacksquare$
+
+  - id: in-038
+    title: Alternating sum of squares
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, sums, alternating]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n (-1)^{k+1}k^2 = (-1)^{n+1}\frac{n(n+1)}{2}$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $1 = 1$.
+
+      **Step.** Assuming it for $m$,
+      $$(-1)^{m+1}\frac{m(m+1)}{2} + (-1)^{m+2}(m+1)^2 = (-1)^{m}(m+1)\left[(m+1) - \frac m2\right] = (-1)^{m+2}\frac{(m+1)(m+2)}{2},$$
+      using $(-1)^m = (-1)^{m+2}$. This is the formula for $n = m+1$. $\blacksquare$
+
+  - id: in-039
+    title: Products of three consecutive integers
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, sums, telescoping]
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$\sum_{k=1}^n \frac{1}{k(k+1)(k+2)} = \frac{n(n+3)}{4(n+1)(n+2)}.$$
+    solution: |
+      **Base.** $n = 1$: $\frac16 = \frac{4}{4\cdot2\cdot3}$.
+
+      **Step.** Assuming it for $m$,
+      $$\frac{m(m+3)}{4(m+1)(m+2)} + \frac{1}{(m+1)(m+2)(m+3)} = \frac{m(m+3)^2 + 4}{4(m+1)(m+2)(m+3)}.$$
+      Now $m(m+3)^2 + 4 = m^3 + 6m^2 + 9m + 4 = (m+1)^2(m+4)$, so this equals $\dfrac{(m+1)(m+4)}{4(m+2)(m+3)}$, the formula for $n = m+1$. $\blacksquare$
+
+  - id: in-040
+    title: A telescoping product
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, products]
+    statement: |
+      Prove that for all $n \ge 2$,
+      $$\prod_{k=2}^{n}\left(1 - \frac{1}{k^2}\right) = \frac{n+1}{2n}.$$
+    solution: |
+      **Base.** $n = 2$: $1 - \frac14 = \frac34 = \frac{3}{4}$.
+
+      **Step.** Assuming it for $m \ge 2$,
+      $$\frac{m+1}{2m}\left(1 - \frac{1}{(m+1)^2}\right) = \frac{m+1}{2m}\cdot\frac{m(m+2)}{(m+1)^2} = \frac{m+2}{2(m+1)}. \qquad\blacksquare$$
+
+  - id: in-041
+    title: Differentiating the geometric series
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, sums, geometric series]
+    related: [in-004, in-035]
+    statement: |
+      Let $r \ne 1$. Prove that for all $n \ge 1$,
+      $$\sum_{k=1}^n k r^{k-1} = \frac{1 - (n+1)r^n + nr^{n+1}}{(1-r)^2}.$$
+    solution: |
+      **Base.** $n = 1$: the right side is $\frac{1 - 2r + r^2}{(1-r)^2} = 1$.
+
+      **Step.** Assuming it for $m$, add $(m+1)r^m = \frac{(m+1)r^m(1 - 2r + r^2)}{(1-r)^2}$. The numerator becomes
+      $$1 - (m+1)r^m + mr^{m+1} + (m+1)r^m - 2(m+1)r^{m+1} + (m+1)r^{m+2} = 1 - (m+2)r^{m+1} + (m+1)r^{m+2},$$
+      which is the formula for $n = m+1$. $\blacksquare$
+
+  - id: in-042
+    title: Fibonacci numbers with odd and even indices
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, fibonacci, sums]
+    related: [in-020]
+    statement: |
+      With $F_1 = F_2 = 1$ and $F_{n+1} = F_n + F_{n-1}$, prove that for all $n \ge 1$,
+      $$F_1 + F_3 + \cdots + F_{2n-1} = F_{2n} \qquad\text{and}\qquad F_2 + F_4 + \cdots + F_{2n} = F_{2n+1} - 1.$$
+    solution: |
+      **Odd indices.** $n = 1$: $F_1 = 1 = F_2$. If the sum up to $F_{2k-1}$ is $F_{2k}$, adding $F_{2k+1}$ gives $F_{2k} + F_{2k+1} = F_{2k+2}$.
+
+      **Even indices.** $n = 1$: $F_2 = 1 = F_3 - 1$. If the sum up to $F_{2k}$ is $F_{2k+1} - 1$, adding $F_{2k+2}$ gives $F_{2k+1} + F_{2k+2} - 1 = F_{2k+3} - 1$. $\blacksquare$
+
+  - id: in-043
+    title: De Moivre's theorem
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, complex numbers, trigonometry]
+    source: De Moivre
+    statement: |
+      Prove that $(\cos\theta + i\sin\theta)^n = \cos n\theta + i \sin n\theta$ for every real $\theta$ and every integer $n \ge 0$. Then extend it to negative integers $n$.
+    solution: |
+      **Base.** $n = 0$: both sides are $1$.
+
+      **Step.** Assuming it for $k$,
+      $$(\cos\theta + i\sin\theta)^{k+1} = (\cos k\theta + i\sin k\theta)(\cos\theta + i\sin\theta).$$
+      The real part is $\cos k\theta\cos\theta - \sin k\theta\sin\theta = \cos(k+1)\theta$ and the imaginary part is $\sin k\theta\cos\theta + \cos k\theta\sin\theta = \sin(k+1)\theta$, by the angle-addition formulas.
+
+      **Negative $n$.** $(\cos\theta + i\sin\theta)(\cos\theta - i\sin\theta) = \cos^2\theta + \sin^2\theta = 1$, so $(\cos\theta + i\sin\theta)^{-1} = \cos(-\theta) + i\sin(-\theta)$. For $n = -m$ with $m > 0$, apply the result for $m$ with $-\theta$ in place of $\theta$. $\blacksquare$
+
+  - id: in-044
+    title: A sum of sines
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, trigonometry, sums]
+    hints:
+      - |
+        Use $\sin((n+1)x) = 2\sin\frac{(n+1)x}{2}\cos\frac{(n+1)x}{2}$ and $2\sin A\cos B = \sin(A+B) + \sin(A - B)$.
+    statement: |
+      Let $x$ be real and not a multiple of $2\pi$. Prove that for all $n \ge 1$,
+      $$\sum_{k=1}^n \sin kx = \frac{\sin\frac{nx}{2}\,\sin\frac{(n+1)x}{2}}{\sin\frac x2}.$$
+    solution: |
+      Note $\sin\frac x2 \ne 0$. Multiply through by $\sin\frac x2$ and prove $S_n := \sin\frac x2\sum_{k=1}^n\sin kx = \sin\frac{nx}{2}\sin\frac{(n+1)x}{2}$.
+
+      **Base.** $n = 1$: both sides are $\sin\frac x2\sin x$.
+
+      **Step.** Assuming it for $m$,
+      $$S_{m+1} = \sin\tfrac{mx}{2}\sin\tfrac{(m+1)x}{2} + \sin\tfrac x2 \cdot 2\sin\tfrac{(m+1)x}{2}\cos\tfrac{(m+1)x}{2} = \sin\tfrac{(m+1)x}{2}\Big[\sin\tfrac{mx}{2} + 2\sin\tfrac x2\cos\tfrac{(m+1)x}{2}\Big].$$
+      By $2\sin A\cos B = \sin(A+B) + \sin(A-B)$ with $A = \frac x2$, $B = \frac{(m+1)x}{2}$, the second term in the bracket is $\sin\frac{(m+2)x}{2} - \sin\frac{mx}{2}$. So the bracket is $\sin\frac{(m+2)x}{2}$ and $S_{m+1} = \sin\frac{(m+1)x}{2}\sin\frac{(m+2)x}{2}$. $\blacksquare$
+
+  - id: in-045
+    title: A product of cosines
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, trigonometry, products]
+    statement: |
+      Let $\sin x \ne 0$. Prove that for all $n \ge 1$,
+      $$\cos x\cos 2x\cos 4x\cdots\cos 2^{n-1}x = \frac{\sin 2^n x}{2^n\sin x}.$$
+      Deduce that $\cos\frac{\pi}{7}\cos\frac{2\pi}{7}\cos\frac{4\pi}{7} = -\frac18$.
+    solution: |
+      **Base.** $n = 1$: $\frac{\sin 2x}{2\sin x} = \frac{2\sin x\cos x}{2\sin x} = \cos x$.
+
+      **Step.** Assuming it for $k$, multiply by $\cos 2^k x$:
+      $$\frac{\sin 2^kx\,\cos 2^kx}{2^k\sin x} = \frac{\sin 2^{k+1}x}{2^{k+1}\sin x}.$$
+
+      **Application.** With $x = \frac\pi7$, $n = 3$: the product is $\frac{\sin(8\pi/7)}{8\sin(\pi/7)}$, and $\sin\frac{8\pi}{7} = \sin\left(\pi + \frac\pi7\right) = -\sin\frac\pi7$. So the product is $-\frac18$. $\blacksquare$
+
+  - id: in-046
+    title: Reciprocals of triangular numbers
+    subtopic: Sums
+    difficulty: easy
+    type: compute
+    tags: [sums, telescoping, conjecture]
+    related: [in-005]
+    statement: |
+      Let $T_k = \frac{k(k+1)}{2}$. Compute $\displaystyle S_n = \sum_{k=1}^n \frac1{T_k}$ for $n = 1, 2, 3, 4$, conjecture a formula, and prove it by induction.
+    solution: |
+      $S_1 = 1$, $S_2 = 1 + \frac13 = \frac43$, $S_3 = \frac43 + \frac16 = \frac32$, $S_4 = \frac32 + \frac1{10} = \frac85$.
+
+      **Conjecture:** $S_n = \dfrac{2n}{n+1}$ (giving $\frac22, \frac43, \frac64, \frac85$).
+
+      **Proof.** True for $n = 1$. If $S_k = \frac{2k}{k+1}$, then
+      $$S_{k+1} = \frac{2k}{k+1} + \frac{2}{(k+1)(k+2)} = \frac{2k(k+2) + 2}{(k+1)(k+2)} = \frac{2(k+1)^2}{(k+1)(k+2)} = \frac{2(k+1)}{k+2}.$$
+
+  - id: in-047
+    title: Sum of odd cubes
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, sums]
+    related: [in-036]
+    statement: |
+      Prove that $1^3 + 3^3 + \cdots + (2n-1)^3 = n^2(2n^2 - 1)$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $1 = 1\cdot1$.
+
+      **Step.** Assume it for $k$. Then the sum up to $(2k+1)^3$ is
+      $$k^2(2k^2-1) + (2k+1)^3 = 2k^4 + 8k^3 + 11k^2 + 6k + 1.$$
+      The formula for $n = k+1$ is $(k+1)^2\big(2(k+1)^2 - 1\big) = (k^2 + 2k + 1)(2k^2 + 4k + 1)$, which also expands to $2k^4 + 8k^3 + 11k^2 + 6k + 1$. $\blacksquare$
+
+  - id: in-048
+    title: A sum of arctangents
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, trigonometry, sums]
+    hints:
+      - |
+        Use $\tan(\alpha + \beta) = \dfrac{\tan\alpha + \tan\beta}{1 - \tan\alpha\tan\beta}$, and check that the angles stay in $(0, \frac\pi2)$.
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$\sum_{k=1}^n \arctan\frac{1}{2k^2} = \arctan\frac{n}{n+1}.$$
+    solution: |
+      **Base.** $n = 1$: both sides are $\arctan\frac12$.
+
+      **Step.** Assume it for $m$. Let $\alpha = \arctan\frac{m}{m+1}$ and $\beta = \arctan\frac{1}{2(m+1)^2}$, both in $(0, \frac\pi4]$, so $\alpha + \beta \in (0, \frac\pi2)$, where $\tan$ is injective. Write $a = \frac{m}{m+1}$, $b = \frac1{2(m+1)^2}$. Then
+      $$a + b = \frac{2m^2 + 2m + 1}{2(m+1)^2}, \qquad 1 - ab = \frac{2(m+1)^3 - m}{2(m+1)^3},$$
+      so
+      $$\tan(\alpha+\beta) = \frac{(2m^2 + 2m + 1)(m+1)}{2(m+1)^3 - m}.$$
+      Now $(2m^2 + 2m + 1)(m+2) = 2m^3 + 6m^2 + 5m + 2 = 2(m+1)^3 - m$, so $\tan(\alpha + \beta) = \frac{m+1}{m+2}$. As $\arctan\frac{m+1}{m+2}$ is also in $(0, \frac\pi2)$, $\alpha + \beta = \arctan\frac{m+1}{m+2}$. $\blacksquare$
+
+      (Letting $n \to \infty$: $\sum_{k\ge1}\arctan\frac{1}{2k^2} = \frac\pi4$.)
+
+  - id: in-049
+    title: An alternating sum of integers
+    subtopic: Sums
+    difficulty: easy
+    type: compute
+    tags: [sums, alternating, conjecture]
+    statement: |
+      Find a single closed form for $S_n = -1 + 2 - 3 + \cdots + (-1)^n n$ and prove it by induction.
+    solution: |
+      $S_1 = -1$, $S_2 = 1$, $S_3 = -2$, $S_4 = 2$, $S_5 = -3$. So $S_n = \frac n2$ for even $n$ and $-\frac{n+1}{2}$ for odd $n$. Both cases are captured by
+      $$S_n = \frac{(-1)^n(2n+1) - 1}{4}.$$
+
+      **Proof.** $n = 1$: $\frac{-3-1}{4} = -1$. If it holds for $k$, then
+      $$S_{k+1} = \frac{(-1)^k(2k+1) - 1}{4} + (-1)^{k+1}(k+1) = \frac{(-1)^{k+1}\big(4(k+1) - (2k+1)\big) - 1}{4} = \frac{(-1)^{k+1}(2k+3) - 1}{4}.$$
+
+  - id: in-050
+    title: Sum of products of three consecutive integers
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, sums]
+    related: [in-033]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n k(k+1)(k+2) = \frac{n(n+1)(n+2)(n+3)}{4}$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $6 = \frac{24}{4}$.
+
+      **Step.** Assuming it for $m$,
+      $$\frac{m(m+1)(m+2)(m+3)}{4} + (m+1)(m+2)(m+3) = \frac{(m+1)(m+2)(m+3)(m+4)}{4}. \qquad\blacksquare$$
+
+      (Compare with in-033: the pattern is $\sum_{k=1}^n k(k+1)\cdots(k+r-1) = \frac{n(n+1)\cdots(n+r)}{r+1}$.)
+
+  - id: in-051
+    title: Rationalising a telescoping sum
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, sums, square roots]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n \frac{1}{\sqrt k + \sqrt{k+1}} = \sqrt{n+1} - 1$ for all $n \ge 1$.
+    solution: |
+      First note $\dfrac{1}{\sqrt k + \sqrt{k+1}} = \dfrac{\sqrt{k+1} - \sqrt k}{(k+1) - k} = \sqrt{k+1} - \sqrt k$.
+
+      **Base.** $n = 1$: $\sqrt2 - 1$ on both sides.
+
+      **Step.** Assuming it for $m$, the sum to $m+1$ is $\sqrt{m+1} - 1 + \sqrt{m+2} - \sqrt{m+1} = \sqrt{m+2} - 1$. $\blacksquare$
+
+  - id: in-052
+    title: Alternating Fibonacci sums
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, fibonacci, alternating]
+    statement: |
+      With $F_0 = 0$, $F_1 = 1$, $F_{n+1} = F_n + F_{n-1}$, prove that for all $n \ge 1$,
+      $$F_1 - F_2 + F_3 - \cdots + (-1)^{n+1}F_n = (-1)^{n+1}F_{n-1} + 1.$$
+    solution: |
+      **Base.** $n = 1$: $F_1 = 1 = F_0 + 1$.
+
+      **Step.** Assume it for $k$. Adding $(-1)^{k+2}F_{k+1} = (-1)^kF_{k+1}$,
+      $$(-1)^{k+1}F_{k-1} + 1 + (-1)^kF_{k+1} = (-1)^k\left(F_{k+1} - F_{k-1}\right) + 1 = (-1)^kF_k + 1 = (-1)^{(k+1)+1}F_k + 1,$$
+      which is the formula for $n = k+1$. $\blacksquare$
+
+  - id: in-053
+    title: A weighted Fibonacci sum
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, fibonacci, sums]
+    statement: |
+      With $F_1 = F_2 = 1$ and $F_{n+1} = F_n + F_{n-1}$, prove that for all $n \ge 1$,
+      $$\sum_{k=1}^n kF_k = nF_{n+2} - F_{n+3} + 2.$$
+    solution: |
+      **Base.** $n = 1$: $1 = F_3 - F_4 + 2 = 2 - 3 + 2$.
+
+      **Step.** Assume it for $m$. Then
+      $$\sum_{k=1}^{m+1} kF_k - 2 = mF_{m+2} - F_{m+3} + (m+1)F_{m+1} = m(F_{m+2} + F_{m+1}) + F_{m+1} - F_{m+3} = mF_{m+3} - F_{m+2},$$
+      using $F_{m+3} - F_{m+1} = F_{m+2}$. The target is $(m+1)F_{m+3} - F_{m+4} = mF_{m+3} + (F_{m+3} - F_{m+4}) = mF_{m+3} - F_{m+2}$. They agree. $\blacksquare$
+
+  - id: in-054
+    title: Cassini's identity
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [weak induction, fibonacci]
+    source: Cassini, 1680
+    statement: |
+      With $F_0 = 0$, $F_1 = 1$, $F_{n+1} = F_n + F_{n-1}$, prove that $F_{n+1}F_{n-1} - F_n^2 = (-1)^n$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $F_2F_0 - F_1^2 = 0 - 1 = -1$.
+
+      **Step.** Assume $F_{k+1}F_{k-1} - F_k^2 = (-1)^k$. Then
+      $$F_{k+2}F_k - F_{k+1}^2 = (F_{k+1} + F_k)F_k - F_{k+1}(F_k + F_{k-1}) = F_k^2 - F_{k+1}F_{k-1} = -(-1)^k = (-1)^{k+1}. \qquad\blacksquare$$
+
+      (Consequently consecutive Fibonacci numbers are coprime, and the famous "64 = 65" dissection puzzle works.)
+
+  - id: in-055
+    title: An odd-looking telescoping sum
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, sums, telescoping]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n\frac{2k+1}{k^2(k+1)^2} = 1 - \frac{1}{(n+1)^2}$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $\frac34 = 1 - \frac14$.
+
+      **Step.** Assuming it for $m$,
+      $$1 - \frac{1}{(m+1)^2} + \frac{2m+3}{(m+1)^2(m+2)^2} = 1 - \frac{(m+2)^2 - (2m+3)}{(m+1)^2(m+2)^2} = 1 - \frac{(m+1)^2}{(m+1)^2(m+2)^2} = 1 - \frac{1}{(m+2)^2}. \qquad\blacksquare$$
+
+      (Directly: $\frac{2k+1}{k^2(k+1)^2} = \frac1{k^2} - \frac1{(k+1)^2}$.)
+
+  - id: in-056
+    title: The convolution sum
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, sums]
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$1\cdot n + 2(n-1) + 3(n-2) + \cdots + n\cdot1 = \frac{n(n+1)(n+2)}{6}.$$
+    solution: |
+      Let $S_n = \sum_{k=1}^n k(n+1-k)$.
+
+      **Base.** $S_1 = 1 = \frac{6}{6}$.
+
+      **Step.** Going from $n$ to $n+1$, each term $k(n+1-k)$ with $k \le n$ becomes $k(n+2-k)$, an increase of $k$, and a new term $(n+1)\cdot1$ appears. So
+      $$S_{n+1} = S_n + (1 + 2 + \cdots + n) + (n+1) = S_n + \frac{(n+1)(n+2)}{2}.$$
+      Assuming $S_n = \frac{n(n+1)(n+2)}{6}$,
+      $$S_{n+1} = \frac{(n+1)(n+2)}{6}(n + 3). \qquad\blacksquare$$
+
+  - id: in-057
+    title: A ratio of squares to odd products
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, sums]
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$\sum_{k=1}^n\frac{k^2}{(2k-1)(2k+1)} = \frac{n(n+1)}{2(2n+1)}.$$
+    solution: |
+      **Base.** $n = 1$: $\frac13 = \frac{2}{6}$.
+
+      **Step.** Assuming it for $m$,
+      $$\frac{m(m+1)}{2(2m+1)} + \frac{(m+1)^2}{(2m+1)(2m+3)} = \frac{(m+1)\big[m(2m+3) + 2(m+1)\big]}{2(2m+1)(2m+3)} = \frac{(m+1)(2m+1)(m+2)}{2(2m+1)(2m+3)},$$
+      since $2m^2 + 5m + 2 = (2m+1)(m+2)$. This is $\frac{(m+1)(m+2)}{2(2m+3)}$. $\blacksquare$
+
+  - id: in-058
+    title: Fifth and seventh powers
+    subtopic: Sums
+    difficulty: hard
+    type: proof
+    tags: [weak induction, sums, difference of powers]
+    hints:
+      - |
+        With $T_k = \frac{k(k+1)}{2}$, factor $T_{k+1}^4 - T_k^4$ as a difference of squares twice.
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$\sum_{k=1}^n\left(k^5 + k^7\right) = 2\left(\frac{n(n+1)}{2}\right)^4.$$
+    solution: |
+      Let $T_n = \frac{n(n+1)}{2}$. The base case $n = 1$ reads $2 = 2$. For the step it suffices to show $2(T_{n+1}^4 - T_n^4) = (n+1)^5 + (n+1)^7$.
+
+      Factor:
+      $$T_{n+1}^4 - T_n^4 = (T_{n+1} - T_n)(T_{n+1} + T_n)(T_{n+1}^2 + T_n^2).$$
+      Here $T_{n+1} - T_n = n+1$, $T_{n+1} + T_n = \frac{(n+1)(n+2+n)}{2} = (n+1)^2$, and
+      $$T_{n+1}^2 + T_n^2 = \frac{(n+1)^2\big[(n+2)^2 + n^2\big]}{4} = \frac{(n+1)^2\big[(n+1)^2 + 1\big]}{2}.$$
+      Multiplying, $2(T_{n+1}^4 - T_n^4) = (n+1)^5\big[(n+1)^2 + 1\big] = (n+1)^7 + (n+1)^5$. $\blacksquare$
+
+  - id: in-059
+    title: Factorials in the denominator
+    subtopic: Sums
+    difficulty: easy
+    type: compute
+    tags: [sums, factorial, conjecture]
+    statement: |
+      Compute $\displaystyle S_n = \sum_{k=1}^n\frac{k}{(k+1)!}$ for $n = 1, 2, 3$, conjecture a closed form, and prove it.
+    solution: |
+      $S_1 = \frac12$, $S_2 = \frac12 + \frac26 = \frac56$, $S_3 = \frac56 + \frac{3}{24} = \frac{23}{24}$.
+
+      **Conjecture:** $S_n = 1 - \dfrac{1}{(n+1)!}$.
+
+      **Proof.** True for $n = 1$. If $S_k = 1 - \frac{1}{(k+1)!}$, then
+      $$S_{k+1} = 1 - \frac{k+2}{(k+2)!} + \frac{k+1}{(k+2)!} = 1 - \frac{1}{(k+2)!}.$$
+      (Directly, $\frac{k}{(k+1)!} = \frac1{k!} - \frac{1}{(k+1)!}$.)
+
+  - id: in-060
+    title: Sum of a geometric series of matrices
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, matrices, powers]
+    statement: |
+      Let $A = \begin{pmatrix}1&1\\0&1\end{pmatrix}$ and $B = \begin{pmatrix}2&1\\0&1\end{pmatrix}$. Prove that for all $n \ge 1$,
+      $$A^n = \begin{pmatrix}1&n\\0&1\end{pmatrix}, \qquad B^n = \begin{pmatrix}2^n&2^n - 1\\0&1\end{pmatrix}.$$
+    solution: |
+      Both hold for $n = 1$.
+
+      **$A$.** If $A^k = \begin{pmatrix}1&k\\0&1\end{pmatrix}$ then $A^{k+1} = A^kA = \begin{pmatrix}1&1 + k\\0&1\end{pmatrix}$.
+
+      **$B$.** If $B^k = \begin{pmatrix}2^k&2^k-1\\0&1\end{pmatrix}$ then
+      $$B^{k+1} = B^kB = \begin{pmatrix}2^{k+1} & 2^k + 2^k - 1\\ 0 & 1\end{pmatrix} = \begin{pmatrix}2^{k+1}&2^{k+1}-1\\0&1\end{pmatrix}. \qquad\blacksquare$$
+
+      (The top-right entry of $B^n$ is $1 + 2 + \cdots + 2^{n-1}$, a geometric series.)
+
+  - id: in-061
+    title: Three divides n³ + 2n
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $3 \mid n^3 + 2n$ for all $n \ge 0$.
+    solution: |
+      **Base.** $n = 0$: $0$ is divisible by 3.
+
+      **Step.** If $3 \mid k^3 + 2k$, then
+      $$(k+1)^3 + 2(k+1) = (k^3 + 2k) + 3(k^2 + k + 1),$$
+      a sum of two multiples of 3. $\blacksquare$
+
+  - id: in-062
+    title: Five divides n⁵ − n
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility, binomial theorem]
+    related: [in-083]
+    statement: |
+      Prove that $5 \mid n^5 - n$ for all $n \ge 0$.
+    solution: |
+      **Base.** $n = 0$ gives $0$.
+
+      **Step.** If $5 \mid k^5 - k$, then by the binomial theorem
+      $$(k+1)^5 - (k+1) = (k^5 - k) + 5(k^4 + 2k^3 + 2k^2 + k),$$
+      which is divisible by 5. $\blacksquare$
+
+  - id: in-063
+    title: Three consecutive cubes
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that the sum of the cubes of any three consecutive non-negative integers is divisible by 9.
+    solution: |
+      Let $a_n = n^3 + (n+1)^3 + (n+2)^3$.
+
+      **Base.** $a_0 = 0 + 1 + 8 = 9$.
+
+      **Step.** $a_{k+1} - a_k = (k+3)^3 - k^3 = 9k^2 + 27k + 27 = 9(k^2 + 3k + 3)$. So if $9 \mid a_k$ then $9 \mid a_{k+1}$. $\blacksquare$
+
+  - id: in-064
+    title: 64 divides 9ⁿ − 8n − 1
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $64 \mid 9^n - 8n - 1$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = 9^n - 8n - 1$. **Base.** $a_0 = 0$.
+
+      **Step.** 
+      $$a_{k+1} = 9\cdot9^k - 8k - 9 = 9(9^k - 8k - 1) + 72k + 9 - 8k - 9 = 9a_k + 64k.$$
+      If $64 \mid a_k$ then $64 \mid a_{k+1}$. $\blacksquare$
+
+  - id: in-065
+    title: 133 divides a sum of powers
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $133 \mid 11^{n+2} + 12^{2n+1}$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = 11^{n+2} + 12^{2n+1}$. **Base.** $a_0 = 121 + 12 = 133$.
+
+      **Step.**
+      $$a_{k+1} = 11\cdot11^{k+2} + 144\cdot12^{2k+1} = 11a_k + (144 - 11)\,12^{2k+1} = 11a_k + 133\cdot12^{2k+1}.$$
+      Both terms are multiples of $133$. $\blacksquare$
+
+  - id: in-066
+    title: 17 divides a mixed sum
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $17 \mid 3\cdot5^{2n+1} + 2^{3n+1}$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = 3\cdot5^{2n+1} + 2^{3n+1}$. **Base.** $a_0 = 15 + 2 = 17$.
+
+      **Step.**
+      $$a_{k+1} = 25\cdot3\cdot5^{2k+1} + 8\cdot2^{3k+1} = 8a_k + 17\cdot3\cdot5^{2k+1}.$$
+      Both terms are divisible by 17. $\blacksquare$
+
+  - id: in-067
+    title: 21 divides a sum of powers
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $21 \mid 4^{n+1} + 5^{2n-1}$ for all $n \ge 1$.
+    solution: |
+      Let $a_n = 4^{n+1} + 5^{2n-1}$. **Base.** $a_1 = 16 + 5 = 21$.
+
+      **Step.** $a_{k+1} = 4\cdot4^{k+1} + 25\cdot5^{2k-1} = 4a_k + 21\cdot5^{2k-1}$. $\blacksquare$
+
+  - id: in-068
+    title: 43 divides a sum of powers
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $43 \mid 6^{n+2} + 7^{2n+1}$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = 6^{n+2} + 7^{2n+1}$. **Base.** $a_0 = 36 + 7 = 43$.
+
+      **Step.** $a_{k+1} = 6\cdot6^{k+2} + 49\cdot7^{2k+1} = 6a_k + 43\cdot7^{2k+1}$. $\blacksquare$
+
+  - id: in-069
+    title: Seven divides a sum of powers
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $7 \mid 3^{2n+1} + 2^{n+2}$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = 3^{2n+1} + 2^{n+2}$. **Base.** $a_0 = 3 + 4 = 7$.
+
+      **Step.** $a_{k+1} = 9\cdot3^{2k+1} + 2\cdot2^{k+2} = 2a_k + 7\cdot3^{2k+1}$. $\blacksquare$
+
+  - id: in-070
+    title: x − y divides xⁿ − yⁿ
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility, factorisation]
+    related: [in-071, nt-009]
+    statement: |
+      Let $x, y$ be integers. Prove that $x - y \mid x^n - y^n$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $x - y \mid x - y$.
+
+      **Step.** Suppose $x - y \mid x^k - y^k$. Then
+      $$x^{k+1} - y^{k+1} = x(x^k - y^k) + y^k(x - y),$$
+      and both terms are divisible by $x - y$. $\blacksquare$
+
+  - id: in-071
+    title: x + y divides odd powers
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [weak induction, divisibility, factorisation]
+    related: [in-070]
+    statement: |
+      Let $x, y$ be integers. Prove that $x + y \mid x^{2n+1} + y^{2n+1}$ for all $n \ge 0$.
+    solution: |
+      **Base.** $n = 0$: $x + y \mid x + y$.
+
+      **Step.** Suppose $x + y \mid x^{2k+1} + y^{2k+1}$. Then
+      $$x^{2k+3} + y^{2k+3} = x^2\left(x^{2k+1} + y^{2k+1}\right) - y^{2k+1}(x^2 - y^2).$$
+      The first term is divisible by $x + y$ by hypothesis, and $x^2 - y^2 = (x+y)(x-y)$. $\blacksquare$
+
+  - id: in-072
+    title: Powers of 3 dividing 2^(3ⁿ) + 1
+    subtopic: Divisibility
+    difficulty: hard
+    type: proof
+    tags: [weak induction, divisibility, lifting the exponent]
+    hints:
+      - |
+        With $a = 2^{3^k}$, factor $a^3 + 1 = (a+1)(a^2 - a + 1)$ and look at the second factor mod 3.
+    statement: |
+      Prove that $3^{n+1} \mid 2^{3^n} + 1$ for all $n \ge 0$.
+    solution: |
+      **Base.** $n = 0$: $2^1 + 1 = 3$.
+
+      **Step.** Suppose $3^{k+1} \mid 2^{3^k} + 1$ and let $a = 2^{3^k}$. Then $2^{3^{k+1}} = a^3$ and
+      $$a^3 + 1 = (a + 1)(a^2 - a + 1).$$
+      By hypothesis $3^{k+1} \mid a + 1$, so $a \equiv -1 \pmod 3$ and $a^2 - a + 1 \equiv 1 + 1 + 1 \equiv 0 \pmod 3$. Hence $3^{k+1}\cdot 3 = 3^{k+2}$ divides the product. $\blacksquare$
+
+  - id: in-073
+    title: Powers of 2 dividing 3^(2ⁿ) − 1
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [weak induction, divisibility, difference of squares]
+    statement: |
+      Prove that $2^{n+2} \mid 3^{2^n} - 1$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $3^2 - 1 = 8 = 2^3$.
+
+      **Step.** Suppose $2^{k+2} \mid 3^{2^k} - 1$. Then
+      $$3^{2^{k+1}} - 1 = \left(3^{2^k} - 1\right)\left(3^{2^k} + 1\right).$$
+      The first factor is divisible by $2^{k+2}$ and the second is even ($3^{2^k}$ is odd), so the product is divisible by $2^{k+3}$. $\blacksquare$
+
+  - id: in-074
+    title: Products of Fermat numbers
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [weak induction, fermat numbers, gcd, primes]
+    source: Goldbach
+    related: [nt-005]
+    statement: |
+      Let $f_n = 2^{2^n} + 1$ (so $f_0 = 3$, $f_1 = 5$, $f_2 = 17$). Prove that $f_0f_1\cdots f_{n-1} = f_n - 2$ for all $n \ge 1$. Deduce that distinct $f_m$, $f_n$ are coprime, and hence that there are infinitely many primes.
+    solution: |
+      **Base.** $n = 1$: $f_0 = 3 = 5 - 2$.
+
+      **Step.** If $f_0\cdots f_{k-1} = f_k - 2$, then
+      $$f_0\cdots f_k = (f_k - 2)f_k = \left(2^{2^k} - 1\right)\left(2^{2^k} + 1\right) = 2^{2^{k+1}} - 1 = f_{k+1} - 2.$$
+
+      **Coprime.** Let $m < n$ and $d = \gcd(f_m, f_n)$. Then $d \mid f_0\cdots f_{n-1} = f_n - 2$ and $d \mid f_n$, so $d \mid 2$. As $f_n$ is odd, $d = 1$.
+
+      **Primes.** Each $f_n$ has a prime factor, and by coprimality these prime factors are all different. So there are infinitely many primes. $\blacksquare$
+
+  - id: in-075
+    title: Last digit of Fermat numbers
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, last digit]
+    related: [in-074]
+    statement: |
+      Prove that for $n \ge 2$ the last digit of $2^{2^n} + 1$ is $7$.
+    solution: |
+      It suffices to show $2^{2^n}$ ends in $6$ for $n \ge 2$.
+
+      **Base.** $2^{4} = 16$.
+
+      **Step.** $2^{2^{k+1}} = \left(2^{2^k}\right)^2$. If $x \equiv 6 \pmod{10}$ then $x^2 \equiv 36 \equiv 6 \pmod{10}$. $\blacksquare$
+
+  - id: in-076
+    title: Products of consecutive integers
+    subtopic: Divisibility
+    difficulty: hard
+    type: proof
+    tags: [double induction, divisibility, factorial]
+    related: [in-077]
+    hints:
+      - |
+        Induct on $k$. For fixed $k$, induct on $n$ and look at $f(n+1) - f(n)$.
+    statement: |
+      Prove that for all integers $k \ge 1$ and $n \ge 0$, the product $n(n+1)\cdots(n+k-1)$ of $k$ consecutive integers is divisible by $k!$.
+    solution: |
+      Induct on $k$. For $k = 1$, every $n$ is divisible by $1! = 1$.
+
+      Suppose the claim holds for $k - 1$ (for every $n \ge 0$), and let $f(n) = n(n+1)\cdots(n+k-1)$. We prove $k! \mid f(n)$ by induction on $n$.
+
+      **Base.** $f(0) = 0$.
+
+      **Step.** 
+      $$f(n+1) - f(n) = (n+1)\cdots(n+k-1)\big[(n+k) - n\big] = k\cdot(n+1)(n+2)\cdots(n+k-1).$$
+      The last product is $k - 1$ consecutive integers starting at $n + 1 \ge 0$, so by the hypothesis for $k - 1$ it is a multiple of $(k-1)!$. Hence $k! \mid f(n+1) - f(n)$, and if $k! \mid f(n)$ then $k! \mid f(n+1)$. $\blacksquare$
+
+      (Equivalently, $\binom{n+k-1}{k} = f(n)/k!$ is an integer.)
+
+  - id: in-077
+    title: 120 divides n⁵ − 5n³ + 4n
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [divisibility, factorisation, factorial]
+    related: [in-076]
+    statement: |
+      Prove that $120 \mid n^5 - 5n^3 + 4n$ for every integer $n$. (You may use in-076.)
+    solution: |
+      Factor:
+      $$n^5 - 5n^3 + 4n = n(n^2 - 1)(n^2 - 4) = (n-2)(n-1)n(n+1)(n+2).$$
+      This is a product of five consecutive integers. If $n \ge 2$, they start at $n - 2 \ge 0$ and in-076 gives divisibility by $5! = 120$. If $-2 \le n \le 2$, one factor is $0$. If $n \le -3$, the product is $-(m-2)(m-1)m(m+1)(m+2)$ with $m = -n \ge 3$, which is again divisible by 120. $\blacksquare$
+
+  - id: in-078
+    title: 24 divides 5^(2n) − 1
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $24 \mid 5^{2n} - 1$ for all $n \ge 0$.
+    solution: |
+      **Base.** $n = 0$: $0$.
+
+      **Step.** $5^{2k+2} - 1 = 25\cdot5^{2k} - 1 = 25\left(5^{2k} - 1\right) + 24$. If $24 \mid 5^{2k} - 1$, both terms are multiples of 24. $\blacksquare$
+
+  - id: in-079
+    title: The middle binomial product is divisible by 2ⁿ
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [weak induction, divisibility, powers of two]
+    statement: |
+      Let $P_n = (n+1)(n+2)\cdots(2n)$. Prove that $P_n = 2^n\cdot1\cdot3\cdot5\cdots(2n-1)$ for all $n \ge 1$. In particular $2^n \mid P_n$, and $2^{n+1} \nmid P_n$.
+    solution: |
+      **Base.** $P_1 = 2 = 2^1\cdot1$.
+
+      **Step.** 
+      $$P_{k+1} = (k+2)\cdots(2k+2) = \frac{P_k\,(2k+1)(2k+2)}{k+1} = 2(2k+1)P_k.$$
+      If $P_k = 2^k\cdot1\cdot3\cdots(2k-1)$, then $P_{k+1} = 2^{k+1}\cdot1\cdot3\cdots(2k-1)(2k+1)$.
+
+      The product of odd numbers is odd, so the exact power of 2 dividing $P_n$ is $2^n$. $\blacksquare$
+
+  - id: in-080
+    title: Repunits with 3ⁿ digits
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [weak induction, divisibility, repunits]
+    hints:
+      - |
+        $\underbrace{1\cdots1}_{3m} = \underbrace{1\cdots1}_{m}\cdot\left(10^{2m} + 10^m + 1\right)$.
+    statement: |
+      Let $R_m = \underbrace{11\cdots1}_{m \text{ ones}} = \frac{10^m - 1}{9}$. Prove that $3^n \mid R_{3^n}$ for all $n \ge 0$.
+    solution: |
+      **Base.** $n = 0$: $3^0 = 1$ divides $R_1 = 1$.
+
+      **Step.** For any $m$,
+      $$R_{3m} = \frac{10^{3m} - 1}{9} = \frac{10^m - 1}{9}\left(10^{2m} + 10^m + 1\right) = R_m\left(10^{2m} + 10^m + 1\right).$$
+      Since $10 \equiv 1 \pmod 3$, the second factor is $\equiv 3 \equiv 0 \pmod 3$. So if $3^k \mid R_{3^k}$, then with $m = 3^k$, $3^{k+1} \mid R_{3^{k+1}}$. $\blacksquare$
+
+  - id: in-081
+    title: A polynomial divisibility
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [weak induction, polynomials, divisibility]
+    statement: |
+      Prove that the polynomial $x^2 + x + 1$ divides $x^{n+2} + (x+1)^{2n+1}$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = x^{n+2} + (x+1)^{2n+1}$. **Base.** $a_0 = x^2 + x + 1$.
+
+      **Step.**
+      $$a_{k+1} = x\cdot x^{k+2} + (x+1)^2(x+1)^{2k+1} = x\,a_k + \big[(x+1)^2 - x\big](x+1)^{2k+1} = x\,a_k + (x^2 + x + 1)(x+1)^{2k+1}.$$
+      Both terms are divisible by $x^2 + x + 1$. $\blacksquare$
+
+  - id: in-082
+    title: Odd squares are 1 mod 8
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility, squares]
+    related: [nt-010]
+    statement: |
+      Prove by induction on odd $n \ge 1$ that $8 \mid n^2 - 1$.
+    solution: |
+      **Base.** $n = 1$: $0$.
+
+      **Step.** If $n$ is odd and $8 \mid n^2 - 1$, then the next odd number gives
+      $$(n+2)^2 - 1 = (n^2 - 1) + 4(n + 1).$$
+      As $n + 1$ is even, $8 \mid 4(n+1)$. $\blacksquare$
+
+  - id: in-083
+    title: Fermat's little theorem by induction
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [weak induction, fermat, binomial coefficients, primes]
+    related: [nt-017, in-062]
+    hints:
+      - |
+        For $1 \le j \le p - 1$, $p$ divides $\binom pj = \frac{p!}{j!(p-j)!}$ because $p$ divides the numerator but not the denominator.
+    statement: |
+      Let $p$ be prime. Prove that $p \mid n^p - n$ for all $n \ge 0$.
+    solution: |
+      **Lemma.** For $1 \le j \le p-1$, $p \mid \binom pj$. Indeed $j!(p-j)!\binom pj = p!$, so $p$ divides the left side; but $p$ does not divide $j!(p-j)!$ (all its factors are less than $p$), so by Euclid's lemma $p \mid \binom pj$.
+
+      **Base.** $n = 0$: $0$.
+
+      **Step.** By the binomial theorem,
+      $$(k+1)^p - (k+1) = (k^p - k) + \sum_{j=1}^{p-1}\binom pj k^j.$$
+      The first bracket is divisible by $p$ by hypothesis, and so is every term of the sum by the lemma. $\blacksquare$
+
+  - id: in-084
+    title: Powers of 2 avoid −1 mod 7
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, remainders]
+    statement: |
+      Prove that $7 \nmid 2^n + 1$ for every $n \ge 0$.
+    solution: |
+      We prove by induction that $2^n \bmod 7 \in \{1, 2, 4\}$.
+
+      **Base.** $2^0 = 1$.
+
+      **Step.** If $2^k \equiv r \pmod 7$ with $r \in \{1,2,4\}$, then $2^{k+1} \equiv 2r \in \{2, 4, 8\}$, and $8 \equiv 1$. So $2^{k+1} \bmod 7 \in \{1,2,4\}$.
+
+      Therefore $2^n + 1 \bmod 7 \in \{2, 3, 5\}$, never $0$. $\blacksquare$
+
+  - id: in-085
+    title: 13 divides a sum of powers
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $13 \mid 4^{2n+1} + 3^{n+2}$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = 4^{2n+1} + 3^{n+2}$. **Base.** $a_0 = 4 + 9 = 13$.
+
+      **Step.** $a_{k+1} = 16\cdot4^{2k+1} + 3\cdot3^{k+2} = 3a_k + 13\cdot4^{2k+1}$. $\blacksquare$
+
+  - id: in-086
+    title: Nine divides 4ⁿ + 6n − 1
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $9 \mid 4^n + 6n - 1$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = 4^n + 6n - 1$. **Base.** $a_0 = 0$.
+
+      **Step.** 
+      $$a_{k+1} = 4\cdot4^k + 6k + 5 = 4(4^k + 6k - 1) - 18k + 9 = 4a_k - 9(2k - 1).$$
+      So $9 \mid a_k$ implies $9 \mid a_{k+1}$. $\blacksquare$
+
+  - id: in-087
+    title: 16 divides 5ⁿ − 4n − 1
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility]
+    related: [in-064]
+    statement: |
+      Prove that $16 \mid 5^n - 4n - 1$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = 5^n - 4n - 1$. **Base.** $a_0 = 0$.
+
+      **Step.** $a_{k+1} = 5\cdot5^k - 4k - 5 = 5(5^k - 4k - 1) + 16k = 5a_k + 16k$. $\blacksquare$
+
+  - id: in-088
+    title: 25 divides a mixed expression
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $25 \mid 2^{n+2}3^n + 5n - 4$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = 2^{n+2}3^n + 5n - 4 = 4\cdot6^n + 5n - 4$. **Base.** $a_0 = 4 - 4 = 0$.
+
+      **Step.**
+      $$a_{k+1} = 24\cdot6^k + 5k + 1 = 6(4\cdot6^k + 5k - 4) - 30k + 24 + 5k + 1 = 6a_k - 25k + 25.$$
+      So $25 \mid a_k$ implies $25 \mid a_{k+1}$. $\blacksquare$
+
+  - id: in-089
+    title: Every third Fibonacci number is even
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, fibonacci, parity]
+    related: [in-090]
+    statement: |
+      With $F_1 = F_2 = 1$, $F_{n+1} = F_n + F_{n-1}$, prove that $F_n$ is even if and only if $3 \mid n$.
+    solution: |
+      We prove by induction on $k \ge 0$ that $F_{3k+1}, F_{3k+2}$ are odd and $F_{3k+3}$ is even.
+
+      **Base.** $F_1 = F_2 = 1$ odd, $F_3 = 2$ even.
+
+      **Step.** Assume it for $k$. Then $F_{3k+4} = F_{3k+3} + F_{3k+2}$ is even + odd = odd, $F_{3k+5} = F_{3k+4} + F_{3k+3}$ is odd + even = odd, and $F_{3k+6} = F_{3k+5} + F_{3k+4}$ is odd + odd = even. $\blacksquare$
+
+  - id: in-090
+    title: Every fifth Fibonacci number is divisible by 5
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [weak induction, fibonacci, divisibility]
+    related: [in-089]
+    statement: |
+      Prove that $5 \mid F_{5n}$ for all $n \ge 1$, where $F_1 = F_2 = 1$ and $F_{k+1} = F_k + F_{k-1}$.
+    solution: |
+      First, applying the recurrence repeatedly, for any $m \ge 1$:
+      $$F_{m+2} = F_{m+1} + F_m,\quad F_{m+3} = 2F_{m+1} + F_m,\quad F_{m+4} = 3F_{m+1} + 2F_m,\quad F_{m+5} = 5F_{m+1} + 3F_m.$$
+
+      **Base.** $F_5 = 5$.
+
+      **Step.** If $5 \mid F_{5k}$, then $F_{5k+5} = 5F_{5k+1} + 3F_{5k}$ is divisible by 5. $\blacksquare$
+
+  - id: in-091
+    title: Nine divides 2^(2n) − 3n − 1
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $9 \mid 2^{2n} - 3n - 1$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = 4^n - 3n - 1$. **Base.** $a_0 = 0$.
+
+      **Step.** $a_{k+1} = 4\cdot4^k - 3k - 4 = 4(4^k - 3k - 1) + 9k = 4a_k + 9k$. $\blacksquare$
+
+  - id: in-092
+    title: Three divides 5ⁿ + 2·11ⁿ
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $3 \mid 5^n + 2\cdot11^n$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = 5^n + 2\cdot11^n$. **Base.** $a_0 = 3$.
+
+      **Step.** $a_{k+1} = 5\cdot5^k + 22\cdot11^k = 5a_k + 12\cdot11^k$, and $3 \mid 12$. $\blacksquare$
+
+  - id: in-093
+    title: Powers of two outgrow n
+    subtopic: Inequalities
+    difficulty: easy
+    type: proof
+    tags: [weak induction, inequalities]
+    statement: |
+      Prove that $2^n \ge n + 1$ for all $n \ge 0$.
+    solution: |
+      **Base.** $2^0 = 1 \ge 1$.
+
+      **Step.** If $2^k \ge k + 1$, then $2^{k+1} = 2\cdot2^k \ge 2k + 2 \ge k + 2$. $\blacksquare$
+
+  - id: in-094
+    title: Where does 3ⁿ beat n³?
+    subtopic: Inequalities
+    difficulty: medium
+    type: compute
+    tags: [weak induction, inequalities, base case]
+    related: [in-012]
+    statement: |
+      Determine all integers $n \ge 0$ with $3^n > n^3$, and prove your answer.
+    solution: |
+      Check small cases: $n = 0, 1, 2$ give $1 > 0$, $3 > 1$, $9 > 8$; $n = 3$ gives $27 = 27$ (fails); $n = 4$ gives $81 > 64$.
+
+      **Claim:** $3^n > n^3$ for all $n \ge 0$ except $n = 3$. It remains to prove it for $n \ge 4$.
+
+      **Base.** $n = 4$ done.
+
+      **Step.** Suppose $3^k > k^3$ with $k \ge 4$. Then $3^{k+1} > 3k^3$, and $3k^3 \ge (k+1)^3$ iff $\left(1 + \frac1k\right)^3 \le 3$. For $k \ge 4$, $\left(1 + \frac1k\right)^3 \le \left(\frac54\right)^3 = \frac{125}{64} < 3$. So $3^{k+1} > (k+1)^3$.
+
+  - id: in-095
+    title: Factorials between two powers
+    subtopic: Inequalities
+    difficulty: easy
+    type: proof
+    tags: [weak induction, inequalities, factorial]
+    related: [in-013]
+    statement: |
+      Prove that $2^{n-1} \le n! \le n^n$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $1 \le 1 \le 1$.
+
+      **Step.** Assume both bounds for $k$. Then
+      $$(k+1)! = (k+1)\,k! \ge 2\cdot2^{k-1} = 2^k,$$
+      since $k + 1 \ge 2$, and
+      $$(k+1)! = (k+1)\,k! \le (k+1)k^k \le (k+1)(k+1)^k = (k+1)^{k+1}. \qquad\blacksquare$$
+
+  - id: in-096
+    title: A second-order Bernoulli inequality
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, inequalities, bernoulli]
+    related: [in-011]
+    statement: |
+      Prove that for $x \ge 0$ and all $n \ge 0$,
+      $$(1 + x)^n \ge 1 + nx + \frac{n(n-1)}{2}x^2.$$
+    solution: |
+      **Base.** $n = 0$: $1 \ge 1$.
+
+      **Step.** Assume it for $k$. Since $1 + x > 0$,
+      $$(1+x)^{k+1} \ge \left(1 + kx + \tfrac{k(k-1)}{2}x^2\right)(1 + x) = 1 + (k+1)x + \left(\tfrac{k(k-1)}{2} + k\right)x^2 + \tfrac{k(k-1)}{2}x^3.$$
+      The $x^2$ coefficient is $\frac{k(k+1)}{2} = \frac{(k+1)k}{2}$, and the last term is $\ge 0$ because $x \ge 0$. $\blacksquare$
+
+      (This gives a quick proof that $n/2^n \to 0$: with $x = 1$, $2^n \ge \frac{n(n-1)}{2}$.)
+
+  - id: in-097
+    title: The Weierstrass product inequality
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, inequalities, bernoulli]
+    related: [in-011]
+    statement: |
+      Let $x_1, \dots, x_n \ge -1$ all have the same sign (all $\ge 0$ or all $\le 0$). Prove that
+      $$(1 + x_1)(1 + x_2)\cdots(1 + x_n) \ge 1 + x_1 + x_2 + \cdots + x_n.$$
+    solution: |
+      Let $P_k = \prod_{i\le k}(1 + x_i)$ and $S_k = \sum_{i \le k}x_i$.
+
+      **Base.** $n = 1$: equality.
+
+      **Step.** Suppose $P_k \ge 1 + S_k$. Since $1 + x_{k+1} \ge 0$,
+      $$P_{k+1} = P_k(1 + x_{k+1}) \ge (1 + S_k)(1 + x_{k+1}) = 1 + S_{k+1} + S_kx_{k+1}.$$
+      All the $x_i$ have the same sign, so $S_k$ and $x_{k+1}$ do too, and $S_kx_{k+1} \ge 0$. $\blacksquare$
+
+      (Bernoulli's inequality is the case where all $x_i$ are equal.)
+
+  - id: in-098
+    title: The triangle inequality for n terms
+    subtopic: Inequalities
+    difficulty: easy
+    type: proof
+    tags: [weak induction, inequalities, absolute value]
+    statement: |
+      Assuming $|a + b| \le |a| + |b|$ for real $a, b$, prove that $|a_1 + \cdots + a_n| \le |a_1| + \cdots + |a_n|$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: equality.
+
+      **Step.** Assuming it for $k$ terms,
+      $$|a_1 + \cdots + a_{k+1}| \le |a_1 + \cdots + a_k| + |a_{k+1}| \le |a_1| + \cdots + |a_k| + |a_{k+1}|,$$
+      using the two-term inequality with $a = a_1 + \cdots + a_k$, $b = a_{k+1}$, then the hypothesis. $\blacksquare$
+
+  - id: in-099
+    title: Sine of a multiple angle
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, trigonometry, inequalities]
+    statement: |
+      Prove that $|\sin nx| \le n\,|\sin x|$ for all real $x$ and all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: equality.
+
+      **Step.** Assuming it for $k$,
+      $$|\sin(k+1)x| = |\sin kx\cos x + \cos kx\sin x| \le |\sin kx|\,|\cos x| + |\cos kx|\,|\sin x| \le |\sin kx| + |\sin x| \le (k+1)|\sin x|,$$
+      using $|\cos| \le 1$. $\blacksquare$
+
+  - id: in-100
+    title: Proving more to prove less
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, inequalities, strengthening]
+    related: [ca-029]
+    hints:
+      - |
+        "$\sum 1/k^2 < 2$" can't be proved by induction directly, because the bound doesn't change with $n$. Prove $\sum_{k=1}^n 1/k^2 \le 2 - \frac1n$ instead.
+    statement: |
+      Prove by induction that $\displaystyle\sum_{k=1}^n \frac1{k^2} < 2$ for all $n \ge 1$.
+    solution: |
+      We prove the stronger statement $\sum_{k=1}^n \frac{1}{k^2} \le 2 - \frac1n$, which implies the result.
+
+      **Base.** $n = 1$: $1 \le 1$.
+
+      **Step.** Assuming it for $m$,
+      $$\sum_{k=1}^{m+1}\frac1{k^2} \le 2 - \frac1m + \frac1{(m+1)^2}.$$
+      This is at most $2 - \frac{1}{m+1}$ iff $\frac1{(m+1)^2} \le \frac1m - \frac1{m+1} = \frac1{m(m+1)}$, which is true since $m < m + 1$. $\blacksquare$
+
+      (A direct induction on "$< 2$" fails: from $S_m < 2$ we learn nothing about $S_m + \frac1{(m+1)^2}$.)
+
+  - id: in-101
+    title: The Wallis product bound
+    subtopic: Inequalities
+    difficulty: hard
+    type: proof
+    tags: [weak induction, inequalities, strengthening]
+    hints:
+      - |
+        The bound $\frac{1}{\sqrt{3n}}$ is true but its inductive step fails. $\frac{1}{\sqrt{3n+1}}$ works.
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$\frac12\cdot\frac34\cdot\frac56\cdots\frac{2n-1}{2n} \le \frac{1}{\sqrt{3n+1}}.$$
+    solution: |
+      Let $P_n$ be the product.
+
+      **Base.** $n = 1$: $\frac12 \le \frac12$.
+
+      **Step.** Assume $P_k \le \frac1{\sqrt{3k+1}}$. Then $P_{k+1} = P_k\cdot\frac{2k+1}{2k+2} \le \frac{2k+1}{(2k+2)\sqrt{3k+1}}$, and this is $\le \frac1{\sqrt{3k+4}}$ iff
+      $$(2k+1)^2(3k+4) \le (2k+2)^2(3k+1).$$
+      The left side is $12k^3 + 28k^2 + 19k + 4$ and the right side is $12k^3 + 28k^2 + 20k + 4$. So the inequality holds. $\blacksquare$
+
+  - id: in-102
+    title: Bounds on the central binomial coefficient
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, inequalities, binomial coefficients]
+    statement: |
+      Let $c_n = \binom{2n}{n}$. Show that $c_{n+1} = \frac{2(2n+1)}{n+1}c_n$, and prove that for all $n \ge 0$,
+      $$\frac{4^n}{n+1} \le \binom{2n}{n} \le 4^n.$$
+    solution: |
+      $c_{n+1} = \frac{(2n+2)!}{(n+1)!^2} = \frac{(2n+2)(2n+1)}{(n+1)^2}\cdot\frac{(2n)!}{n!^2} = \frac{2(2n+1)}{n+1}c_n$.
+
+      **Base.** $n = 0$: $1 \le 1 \le 1$.
+
+      **Upper step.** If $c_k \le 4^k$, then $c_{k+1} \le \frac{2(2k+1)}{k+1}4^k \le 4^{k+1}$ since $2(2k+1) \le 4(k+1)$.
+
+      **Lower step.** If $c_k \ge \frac{4^k}{k+1}$, then $c_{k+1} \ge \frac{2(2k+1)\,4^k}{(k+1)^2}$, which is $\ge \frac{4^{k+1}}{k+2}$ iff $2(2k+1)(k+2) \ge 4(k+1)^2$, i.e. $4k^2 + 10k + 4 \ge 4k^2 + 8k + 4$. True. $\blacksquare$
+
+  - id: in-103
+    title: (1 + 1/n)ⁿ is less than 3
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [inequalities, binomial theorem, factorial]
+    related: [in-095, ca-020]
+    statement: |
+      Prove that $\left(1 + \frac1n\right)^n < 3$ for all $n \ge 1$. Deduce that $n^{n+1} > (n+1)^n$ for all $n \ge 3$.
+    solution: |
+      By the binomial theorem,
+      $$\left(1 + \frac1n\right)^n = \sum_{k=0}^n\binom nk\frac1{n^k}, \qquad \binom nk\frac{1}{n^k} = \frac{1}{k!}\cdot\frac{n(n-1)\cdots(n-k+1)}{n^k} \le \frac1{k!}.$$
+      By induction (in-095), $k! \ge 2^{k-1}$ for $k \ge 1$. So
+      $$\left(1 + \frac1n\right)^n \le 1 + \sum_{k=1}^n\frac1{2^{k-1}} = 1 + 2\left(1 - \frac1{2^n}\right) < 3.$$
+
+      For $n \ge 3$: $\frac{(n+1)^n}{n^n} = \left(1 + \frac1n\right)^n < 3 \le n$, so $(n+1)^n < n^{n+1}$. $\blacksquare$
+
+  - id: in-104
+    title: AM–GM by forward–backward induction
+    subtopic: Inequalities
+    difficulty: hard
+    type: proof
+    tags: [backward induction, am-gm, inequalities]
+    source: Cauchy
+    related: [in-016, in-105]
+    hints:
+      - |
+        Show that if AM–GM holds for $n$ variables then it holds for $n - 1$: apply it to $a_1, \dots, a_{n-1}$ together with their mean $A$.
+    statement: |
+      Assume AM–GM for $n = 2^k$ variables (in-016). Prove it for every $n \ge 1$: for non-negative $a_1, \dots, a_n$,
+      $$\frac{a_1 + \cdots + a_n}{n} \ge \sqrt[n]{a_1\cdots a_n}.$$
+    solution: |
+      **Backward step.** Suppose AM–GM holds for $n \ge 2$ variables; we show it for $n - 1$. Given $a_1, \dots, a_{n-1} \ge 0$ with mean $A$, apply the $n$-variable case to $a_1, \dots, a_{n-1}, A$. Their mean is $\frac{(n-1)A + A}{n} = A$, so
+      $$A \ge \sqrt[n]{a_1\cdots a_{n-1}A} \implies A^n \ge a_1\cdots a_{n-1}A.$$
+      If $A = 0$ all $a_i$ are $0$ and the claim is trivial. Otherwise divide by $A$: $A^{n-1} \ge a_1\cdots a_{n-1}$, which is AM–GM for $n - 1$.
+
+      **Conclusion.** Given any $n$, pick $k$ with $2^k \ge n$. AM–GM holds for $2^k$, and applying the backward step $2^k - n$ times gives it for $n$. $\blacksquare$
+
+  - id: in-105
+    title: Product one implies sum at least n
+    subtopic: Inequalities
+    difficulty: hard
+    type: proof
+    tags: [weak induction, am-gm, inequalities]
+    related: [in-104]
+    hints:
+      - |
+        Among $n+1$ numbers with product 1, one is $\ge 1$ and one is $\le 1$. Merge those two into their product.
+    statement: |
+      Prove by induction on $n$ that if $x_1, \dots, x_n > 0$ and $x_1x_2\cdots x_n = 1$, then $x_1 + \cdots + x_n \ge n$. Deduce AM–GM.
+    solution: |
+      **Base.** $n = 1$: $x_1 = 1$.
+
+      **Step.** Let $x_1\cdots x_{k+1} = 1$. Not all of them are $> 1$ and not all are $< 1$, so after relabelling $x_k \ge 1 \ge x_{k+1}$. The $k$ numbers $x_1, \dots, x_{k-1}, x_kx_{k+1}$ have product 1, so by hypothesis
+      $$x_1 + \cdots + x_{k-1} + x_kx_{k+1} \ge k.$$
+      Also $(x_k - 1)(1 - x_{k+1}) \ge 0$, i.e. $x_k + x_{k+1} \ge 1 + x_kx_{k+1}$. Adding,
+      $$x_1 + \cdots + x_{k+1} \ge k + 1.$$
+
+      **AM–GM.** For positive $a_i$ with geometric mean $G$, put $x_i = a_i/G$. Then $\prod x_i = 1$, so $\sum a_i/G \ge n$, i.e. $\frac{1}{n}\sum a_i \ge G$. (If some $a_i = 0$, AM–GM is trivial.) $\blacksquare$
+
+  - id: in-106
+    title: A sum that increases with n
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, inequalities, harmonic sums]
+    statement: |
+      Prove that for all $n \ge 2$,
+      $$\frac{1}{n+1} + \frac{1}{n+2} + \cdots + \frac{1}{2n} > \frac{13}{24}.$$
+    solution: |
+      Let $s_n = \sum_{k=n+1}^{2n}\frac1k$. Going from $s_n$ to $s_{n+1}$ we lose $\frac1{n+1}$ and gain $\frac1{2n+1} + \frac1{2n+2}$:
+      $$s_{n+1} - s_n = \frac1{2n+1} + \frac1{2n+2} - \frac{2}{2n+2} = \frac1{2n+1} - \frac1{2n+2} > 0.$$
+
+      **Base.** $s_2 = \frac13 + \frac14 = \frac{14}{24} > \frac{13}{24}$.
+
+      **Step.** If $s_k > \frac{13}{24}$ then $s_{k+1} > s_k > \frac{13}{24}$. $\blacksquare$
+
+  - id: in-107
+    title: A harmonic block exceeds 1
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, inequalities, harmonic sums]
+    hints:
+      - |
+        $\frac1a + \frac1b > \frac{4}{a+b}$ for distinct positive $a, b$.
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$\frac{1}{n+1} + \frac{1}{n+2} + \cdots + \frac{1}{3n+1} > 1.$$
+    solution: |
+      Let $t_n$ be the sum. **Base.** $t_1 = \frac12 + \frac13 + \frac14 = \frac{13}{12} > 1$.
+
+      **Step.** Going to $t_{k+1}$ we lose $\frac1{k+1}$ and gain three terms:
+      $$t_{k+1} - t_k = \frac1{3k+2} + \frac1{3k+3} + \frac1{3k+4} - \frac{1}{k+1}.$$
+      For distinct positive $a, b$, $\frac1a + \frac1b - \frac4{a+b} = \frac{(a-b)^2}{ab(a+b)} > 0$. With $a = 3k+2$, $b = 3k+4$: $\frac1{3k+2} + \frac1{3k+4} > \frac{4}{6k+6} = \frac{2}{3k+3}$. So
+      $$t_{k+1} - t_k > \frac{3}{3k+3} - \frac1{k+1} = 0,$$
+      and $t_{k+1} > t_k > 1$. $\blacksquare$
+
+  - id: in-108
+    title: A lower bound for a square-root sum
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, inequalities, square roots]
+    related: [in-015]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n\frac1{\sqrt k} \ge 2\sqrt{n+1} - 2$ for all $n \ge 1$. Together with in-015, this pins the sum to within $1$ of $2\sqrt n$.
+    solution: |
+      **Base.** $n = 1$: $1 \ge 2\sqrt2 - 2 \approx 0.83$.
+
+      **Step.** It suffices to show $\frac{1}{\sqrt{k+1}} \ge 2\sqrt{k+2} - 2\sqrt{k+1}$. Rationalising,
+      $$2\left(\sqrt{k+2} - \sqrt{k+1}\right) = \frac{2}{\sqrt{k+2} + \sqrt{k+1}} \le \frac{2}{2\sqrt{k+1}} = \frac1{\sqrt{k+1}}. \qquad\blacksquare$$
+
+  - id: in-109
+    title: Factorial against a power of the mean
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, inequalities, factorial, bernoulli]
+    statement: |
+      Prove that $n! \le \left(\dfrac{n+1}{2}\right)^n$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $1 \le 1$.
+
+      **Step.** Assuming it for $k$, $(k+1)! \le (k+1)\frac{(k+1)^k}{2^k} = \frac{(k+1)^{k+1}}{2^k}$. This is $\le \frac{(k+2)^{k+1}}{2^{k+1}}$ iff
+      $$2 \le \left(\frac{k+2}{k+1}\right)^{k+1} = \left(1 + \frac1{k+1}\right)^{k+1},$$
+      which holds by Bernoulli's inequality: $(1 + x)^m \ge 1 + mx$ with $x = \frac1{k+1}$, $m = k+1$. $\blacksquare$
+
+      (It also follows from AM–GM applied to $1, 2, \dots, n$.)
+
+  - id: in-110
+    title: Jensen's inequality for finite sums
+    subtopic: Inequalities
+    difficulty: hard
+    type: proof
+    tags: [weak induction, convexity, jensen]
+    source: Jensen, 1906
+    statement: |
+      A function $f$ on an interval $I$ is convex if $f(tx + (1-t)y) \le tf(x) + (1-t)f(y)$ for $x, y \in I$, $t \in [0,1]$. Prove that for $x_1, \dots, x_n \in I$ and weights $\lambda_i \ge 0$ with $\sum\lambda_i = 1$,
+      $$f\left(\sum_{i=1}^n\lambda_ix_i\right) \le \sum_{i=1}^n\lambda_if(x_i).$$
+    solution: |
+      Induct on $n$. $n = 1$ is trivial.
+
+      **Step.** Assume it for $k$ points and take $k + 1$. If $\lambda_{k+1} = 1$ the others are $0$ and there is nothing to prove. Otherwise let $s = 1 - \lambda_{k+1} = \lambda_1 + \cdots + \lambda_k > 0$ and
+      $$y = \sum_{i=1}^k\frac{\lambda_i}{s}x_i.$$
+      The weights $\lambda_i/s$ are non-negative and sum to 1, so $y$ lies in $I$ (between the smallest and largest $x_i$), and by hypothesis $f(y) \le \sum_{i\le k}\frac{\lambda_i}{s}f(x_i)$. Now $\sum_{i \le k+1}\lambda_ix_i = sy + \lambda_{k+1}x_{k+1}$, so by convexity
+      $$f\left(\sum_{i=1}^{k+1}\lambda_ix_i\right) \le sf(y) + \lambda_{k+1}f(x_{k+1}) \le \sum_{i=1}^k\lambda_if(x_i) + \lambda_{k+1}f(x_{k+1}). \qquad\blacksquare$$
+
+  - id: in-111
+    title: When does 2ⁿ beat n³?
+    subtopic: Inequalities
+    difficulty: easy
+    type: compute
+    tags: [weak induction, inequalities, base case]
+    related: [in-094]
+    statement: |
+      Find the least $N$ such that $2^n > n^3$ for all $n \ge N$, and prove it.
+    solution: |
+      $2^9 = 512 < 729 = 9^3$ but $2^{10} = 1024 > 1000$. So $N \ge 10$; we show $N = 10$ works.
+
+      **Base.** $n = 10$: done.
+
+      **Step.** If $2^k > k^3$ with $k \ge 10$, then $2^{k+1} > 2k^3 \ge (k+1)^3$, since $\left(1 + \frac1k\right)^3 \le 1.1^3 = 1.331 \le 2$. So $N = 10$.
+
+  - id: in-112
+    title: Cauchy–Schwarz by induction
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, cauchy-schwarz, inequalities]
+    related: [la-028]
+    statement: |
+      Prove that for real numbers $a_i, b_i$,
+      $$\left(\sum_{i=1}^n a_ib_i\right)^2 \le \left(\sum_{i=1}^na_i^2\right)\left(\sum_{i=1}^nb_i^2\right).$$
+    solution: |
+      **Base.** $n = 1$: equality.
+
+      **The case of two terms.** $(xy + uv)^2 \le (x^2 + u^2)(y^2 + v^2)$, since the difference is $x^2v^2 + u^2y^2 - 2xyuv = (xv - uy)^2 \ge 0$.
+
+      **Step.** Let $A = \sum_{i \le k}a_i^2$, $B = \sum_{i\le k}b_i^2$, $S = \sum_{i\le k}a_ib_i$, and assume $|S| \le \sqrt{A}\sqrt{B}$. Then
+      $$\left|S + a_{k+1}b_{k+1}\right| \le \sqrt A\sqrt B + |a_{k+1}||b_{k+1}| \le \sqrt{A + a_{k+1}^2}\,\sqrt{B + b_{k+1}^2},$$
+      the last step being the two-term case with $x = \sqrt A$, $u = |a_{k+1}|$, $y = \sqrt B$, $v = |b_{k+1}|$. Squaring gives the result for $k+1$. $\blacksquare$
+
+  - id: in-113
+    title: An upper bound for harmonic numbers
+    subtopic: Inequalities
+    difficulty: easy
+    type: proof
+    tags: [weak induction, harmonic series, inequalities]
+    related: [in-014]
+    statement: |
+      Let $H_m = 1 + \frac12 + \cdots + \frac1m$. Prove that $H_{2^{n+1} - 1} \le n + 1$ for all $n \ge 0$, and deduce that $H_m \le 1 + \log_2 m$ for every $m \ge 1$.
+    solution: |
+      **Base.** $n = 0$: $H_1 = 1$.
+
+      **Step.** The terms $\frac1i$ with $2^{k+1} \le i \le 2^{k+2} - 1$ number $2^{k+1}$ and each is at most $\frac1{2^{k+1}}$, so they add up to at most $1$. Hence
+      $$H_{2^{k+2} - 1} \le H_{2^{k+1} - 1} + 1 \le k + 2.$$
+
+      **Any $m$.** Let $n = \lfloor\log_2 m\rfloor$, so $2^n \le m \le 2^{n+1} - 1$. Then $H_m \le H_{2^{n+1} - 1} \le n + 1 \le 1 + \log_2 m$. $\blacksquare$
+
+  - id: in-114
+    title: Sum of reciprocal cubes
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, inequalities, strengthening]
+    related: [in-100]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n\frac1{k^3} < \frac54$ for all $n \ge 1$.
+    solution: |
+      For $n = 1$ the sum is $1 < \frac54$. For $n \ge 2$ we prove the stronger
+      $$\sum_{k=1}^n\frac{1}{k^3} \le \frac54 - \frac{1}{2n^2}.$$
+
+      **Base.** $n = 2$: $1 + \frac18 = \frac98 = \frac54 - \frac18$.
+
+      **Step.** It suffices that $\frac1{(m+1)^3} \le \frac1{2m^2} - \frac{1}{2(m+1)^2} = \frac{2m+1}{2m^2(m+1)^2}$, i.e. $2m^2 \le (2m+1)(m+1) = 2m^2 + 3m + 1$. True. $\blacksquare$
+
+  - id: in-115
+    title: Bounding an x + 1/x recursion
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, recurrence, inequalities]
+    statement: |
+      Let $a_1 = 1$ and $a_{n+1} = a_n + \dfrac1{a_n}$. Prove that $\sqrt{2n - 1} \le a_n \le \sqrt{3n - 2}$ for all $n \ge 1$. Deduce that $a_n \to \infty$ but $a_n/n \to 0$.
+    solution: |
+      Clearly every $a_n \ge 1$. Squaring the recurrence,
+      $$a_{n+1}^2 = a_n^2 + 2 + \frac{1}{a_n^2}, \qquad\text{so}\qquad a_n^2 + 2 \le a_{n+1}^2 \le a_n^2 + 3.$$
+
+      **Base.** $a_1 = 1$: $1 \le 1 \le 1$.
+
+      **Step.** If $2k - 1 \le a_k^2 \le 3k - 2$, then $a_{k+1}^2 \ge 2k + 1$ and $a_{k+1}^2 \le 3k + 1 = 3(k+1) - 2$.
+
+      Then $a_n \ge \sqrt{2n-1} \to \infty$, and $0 < \frac{a_n}{n} \le \frac{\sqrt{3n}}{n} \to 0$. $\blacksquare$
+
+  - id: in-116
+    title: A product bounded by 3
+    subtopic: Inequalities
+    difficulty: hard
+    type: proof
+    tags: [weak induction, products, strengthening]
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$\left(1 + \frac1{1^3}\right)\left(1 + \frac1{2^3}\right)\cdots\left(1 + \frac1{n^3}\right) < 3.$$
+    solution: |
+      We prove the stronger bound $P_n \le 3 - \frac1n$.
+
+      **Base.** $P_1 = 2 = 3 - 1$.
+
+      **Step.** Assume $P_k \le 3 - \frac1k$. Then $P_{k+1} \le \left(3 - \frac1k\right)\left(1 + \frac1{(k+1)^3}\right)$, and we need this to be $\le 3 - \frac1{k+1}$. Expanding, this is
+      $$\frac{3}{(k+1)^3} - \frac{1}{k(k+1)^3} \le \frac1k - \frac1{k+1} = \frac1{k(k+1)}.$$
+      Multiplying by $k(k+1)^3$: $3k - 1 \le (k+1)^2$, i.e. $k^2 - k + 2 \ge 0$, which holds since $k^2 - k + 2 = (k - \frac12)^2 + \frac74 > 0$. $\blacksquare$
+
+  - id: in-117
+    title: Power means of two numbers
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, inequalities, power means]
+    statement: |
+      Let $a, b > 0$. Prove that for all $n \ge 1$,
+      $$\left(\frac{a+b}{2}\right)^n \le \frac{a^n + b^n}{2}.$$
+    solution: |
+      **Base.** $n = 1$: equality.
+
+      **Step.** Assuming it for $k$,
+      $$\left(\frac{a+b}2\right)^{k+1} \le \frac{a^k + b^k}{2}\cdot\frac{a + b}{2}.$$
+      This is $\le \frac{a^{k+1} + b^{k+1}}{2}$ iff $(a^k + b^k)(a + b) \le 2(a^{k+1} + b^{k+1})$, iff $a^kb + ab^k \le a^{k+1} + b^{k+1}$, iff
+      $$(a^k - b^k)(a - b) \ge 0.$$
+      This holds because $a^k - b^k$ and $a - b$ have the same sign (powers are increasing on $(0,\infty)$). $\blacksquare$
+
+  - id: in-118
+    title: Exponential beats its Taylor polynomials
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, exponential, derivatives]
+    related: [ca-015]
+    statement: |
+      Prove that for all $x \ge 0$ and $n \ge 0$,
+      $$e^x \ge 1 + x + \frac{x^2}{2!} + \cdots + \frac{x^n}{n!}.$$
+      You may use that a differentiable function with non-negative derivative on $[0,\infty)$ is increasing there.
+    solution: |
+      Let $f_n(x) = e^x - \sum_{k=0}^n\frac{x^k}{k!}$. Then $f_n(0) = 0$ for every $n$, and $f_n' = f_{n-1}$ for $n \ge 1$.
+
+      **Base.** $f_0(x) = e^x - 1 \ge 0$ for $x \ge 0$, since $e^x$ is increasing.
+
+      **Step.** If $f_{k} \ge 0$ on $[0,\infty)$, then $f_{k+1}' = f_k \ge 0$, so $f_{k+1}$ is increasing and $f_{k+1}(x) \ge f_{k+1}(0) = 0$. $\blacksquare$
+
+  - id: in-119
+    title: Harmonic numbers against 2n/(n+1)
+    subtopic: Inequalities
+    difficulty: easy
+    type: proof
+    tags: [weak induction, harmonic series, inequalities]
+    statement: |
+      Prove that $1 + \frac12 + \cdots + \frac1n \ge \dfrac{2n}{n+1}$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $1 \ge 1$.
+
+      **Step.** Assuming it for $k$, $H_{k+1} \ge \frac{2k}{k+1} + \frac1{k+1} = \frac{2k+1}{k+1}$. This is $\ge \frac{2k+2}{k+2}$ iff $(2k+1)(k+2) \ge (2k+2)(k+1)$, i.e. $2k^2 + 5k + 2 \ge 2k^2 + 4k + 2$. True. $\blacksquare$
+
+  - id: in-120
+    title: Squared factorials
+    subtopic: Inequalities
+    difficulty: easy
+    type: proof
+    tags: [inequalities, factorial, pairing]
+    statement: |
+      Prove that $(n!)^2 \ge n^n$ for all $n \ge 1$.
+    solution: |
+      Write $(n!)^2 = \prod_{k=1}^n k\,(n + 1 - k)$, pairing the $k$th factor of one copy of $n!$ with the $(n+1-k)$th of the other. For $1 \le k \le n$,
+      $$k(n+1-k) - n = (k - 1)(n - k) \ge 0.$$
+      So each of the $n$ factors is at least $n$, and $(n!)^2 \ge n^n$. $\blacksquare$
+
+  - id: in-121
+    title: Postage with 3- and 5-cent stamps
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, frobenius]
+    related: [in-018]
+    statement: |
+      Prove that every amount of at least 8 cents can be paid exactly with 3-cent and 5-cent stamps.
+    solution: |
+      Strong induction on $n \ge 8$.
+
+      **Base cases.** $8 = 3 + 5$, $9 = 3 + 3 + 3$, $10 = 5 + 5$.
+
+      **Step.** Let $n \ge 11$ and assume every amount from $8$ to $n - 1$ can be paid. Then $n - 3 \ge 8$ can be paid, and one more 3-cent stamp gives $n$. $\blacksquare$
+
+  - id: in-122
+    title: The largest amount you can't pay
+    subtopic: Strong induction
+    difficulty: easy
+    type: compute
+    tags: [strong induction, frobenius]
+    related: [nt-022]
+    statement: |
+      Using only 3-cent and 7-cent stamps, find the largest amount that **cannot** be paid exactly, and prove that every larger amount can.
+    solution: |
+      The amounts $1$–$11$ that can be paid are $3, 6, 7, 9, 10$. In particular $11$ cannot: $11 - 7 = 4$ and $11$ are not multiples of 3.
+
+      **Claim:** every $n \ge 12$ can be paid. Bases: $12 = 3\cdot4$, $13 = 3\cdot2 + 7$, $14 = 7\cdot2$. For $n \ge 15$, $n - 3 \ge 12$ can be paid by strong induction, so add a 3-cent stamp.
+
+      **Answer: 11.** (This matches Sylvester's formula $ab - a - b = 21 - 3 - 7 = 11$.)
+
+  - id: in-123
+    title: Zeckendorf's theorem, existence
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, fibonacci, representations]
+    source: Zeckendorf
+    related: [in-124, in-029]
+    statement: |
+      With $F_1 = F_2 = 1$, $F_{k+1} = F_k + F_{k-1}$, prove that every positive integer is a sum of distinct Fibonacci numbers $F_k$ ($k \ge 2$), no two of which have consecutive indices.
+    solution: |
+      Strong induction on $n$. If $n$ is itself a Fibonacci number $F_j$ ($j \ge 2$), we are done; this covers $n = 1, 2, 3$.
+
+      Otherwise let $F_j$ be the largest Fibonacci number below $n$, so $F_j < n < F_{j+1}$, and set $m = n - F_j$. Then
+      $$1 \le m < F_{j+1} - F_j = F_{j-1}.$$
+      By hypothesis $m$ is a sum of non-consecutive Fibonacci numbers, each at most $m < F_{j-1}$, so each has index at most $j - 2$. Adding $F_j$ gives a representation of $n$ in which no two indices are consecutive. $\blacksquare$
+
+  - id: in-124
+    title: Zeckendorf's theorem, uniqueness
+    subtopic: Strong induction
+    difficulty: hard
+    type: proof
+    tags: [weak induction, fibonacci, uniqueness]
+    source: Zeckendorf
+    related: [in-123]
+    hints:
+      - |
+        First show: a sum of distinct, non-consecutive $F_k$ with $2 \le k \le j$ is less than $F_{j+1}$.
+    statement: |
+      Prove that the representation in in-123 is unique: a positive integer cannot be written in two different ways as a sum of distinct, pairwise non-consecutive Fibonacci numbers $F_k$ with $k \ge 2$.
+    solution: |
+      **Lemma.** If $S$ is a set of pairwise non-consecutive indices in $\{2, \dots, j\}$, then $\sum_{k\in S}F_k < F_{j+1}$.
+
+      Induct on $j$. For $j = 2$ the sum is at most $F_2 = 1 < 2 = F_3$; for $j = 3$ the sets are $\varnothing, \{2\}, \{3\}$ with sums at most $2 < 3 = F_4$. For $j \ge 4$: if $j \notin S$, the sum is $< F_j < F_{j+1}$ by the lemma for $j - 1$. If $j \in S$ then $j - 1 \notin S$, so the rest of $S$ lies in $\{2, \dots, j-2\}$ and sums to less than $F_{j-1}$; the total is $< F_j + F_{j-1} = F_{j+1}$.
+
+      **Uniqueness.** Suppose two different such sets $A \ne B$ have the same sum. Removing their common elements gives disjoint sets $A', B'$, still with equal sums and not both empty. Let $j$ be the largest index in $A' \cup B'$, say $j \in A'$. Then $B' \subseteq \{2, \dots, j-1\}$, so by the lemma $\sum_{B'}F_k < F_j \le \sum_{A'}F_k$, a contradiction. $\blacksquare$
+
+  - id: in-125
+    title: Base-b representation
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, number representation, division algorithm]
+    related: [in-029]
+    statement: |
+      Let $b \ge 2$. Prove that every integer $n \ge 0$ can be written uniquely as $n = \sum_{i=0}^{k}d_ib^i$ with digits $0 \le d_i \le b - 1$ and $d_k \ne 0$ (with the empty sum for $n = 0$).
+    solution: |
+      **Existence.** Strong induction on $n$. $n = 0$ is the empty sum. For $n \ge 1$ write $n = bq + r$ with $0 \le r < b$. Then $q < n$ (since $b \ge 2$ and $n \ge 1$). By hypothesis $q = \sum_i e_ib^i$, so
+      $$n = r + \sum_i e_ib^{i+1},$$
+      which is a representation with lowest digit $r$ and the digits of $q$ shifted up. (If $q = 0$, $n = r$ is a single non-zero digit.)
+
+      **Uniqueness.** Strong induction on $n$. If $n = \sum d_ib^i = \sum e_ib^i$ with $n \ge 1$, reduce mod $b$: $d_0 \equiv e_0$, and both lie in $[0, b-1]$, so $d_0 = e_0$. Subtracting and dividing by $b$ gives two representations of $\frac{n - d_0}{b} < n$, which agree by hypothesis. So all digits agree. $\blacksquare$
+
+  - id: in-126
+    title: Balanced ternary
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, number representation]
+    statement: |
+      Prove that every integer $n$ (positive, negative or zero) can be written as $\sum_{i=0}^k e_i3^i$ with each $e_i \in \{-1, 0, 1\}$.
+    solution: |
+      Strong induction on $|n|$. For $n = 0$ take the empty sum.
+
+      Let $n \ne 0$. Choose $r \in \{-1, 0, 1\}$ with $r \equiv n \pmod 3$ and let $q = \frac{n - r}{3}$, an integer. Then
+      $$|q| \le \frac{|n| + 1}{3} < |n|,$$
+      since $|n| \ge 1$. By hypothesis $q = \sum_i e_i3^i$ with $e_i \in \{-1, 0, 1\}$, and so
+      $$n = 3q + r = r + \sum_i e_i3^{i+1}. \qquad\blacksquare$$
+
+      (For example $5 = 9 - 3 - 1$. This is why a balance with weights $1, 3, 9, \dots$ on either pan can weigh any integer amount.)
+
+  - id: in-127
+    title: The factorial number system
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, number representation, factorial]
+    statement: |
+      Prove that every integer $n \ge 0$ can be written as $n = \sum_{k=1}^m d_k\,k!$ with $0 \le d_k \le k$ for each $k$. (For example $23 = 3\cdot3! + 2\cdot2! + 1\cdot1!$.)
+    solution: |
+      We prove the stronger statement: if $n < (m+1)!$ then $n$ has such a representation using only $1!, \dots, m!$. Strong induction on $n$; $n = 0$ is the empty sum.
+
+      Let $n \ge 1$ and choose the least $m$ with $n < (m+1)!$, so $m! \le n$. Let $d = \lfloor n/m! \rfloor$ and $r = n - d\,m!$. Then $1 \le d$, and since $n < (m+1)\,m!$, $d \le m$. Also $0 \le r < m!$, so $r < n$ and by hypothesis $r = \sum_{k=1}^{m-1}d_k\,k!$ with $0 \le d_k \le k$. Then
+      $$n = d\,m! + \sum_{k=1}^{m-1}d_k\,k!. \qquad\blacksquare$$
+
+      (These representations are also unique, and they index permutations: there are exactly $(m+1)!$ digit strings $d_1, \dots, d_m$.)
+
+  - id: in-128
+    title: Egyptian fractions
+    subtopic: Strong induction
+    difficulty: hard
+    type: proof
+    tags: [strong induction, egyptian fractions, greedy algorithm]
+    source: Fibonacci, 1202
+    hints:
+      - |
+        Subtract the largest unit fraction $\frac1n \le \frac ab$, and show the numerator of what is left is smaller than $a$.
+    statement: |
+      Prove that every rational number $\frac ab$ with $0 < \frac ab < 1$ can be written as a sum of distinct unit fractions $\frac1{n_1} + \cdots + \frac1{n_k}$.
+    solution: |
+      Strong induction on the numerator $a \ge 1$ (over all denominators). If $a = 1$ we are done.
+
+      Let $a \ge 2$ and let $n$ be the least positive integer with $\frac1n \le \frac ab$. As $\frac ab < 1$, $n \ge 2$, and by minimality $\frac{1}{n-1} > \frac ab$, i.e. $a(n-1) < b$. Then
+      $$\frac ab - \frac1n = \frac{an - b}{bn}, \qquad 0 \le an - b < a.$$
+      If $an - b = 0$ we are done. Otherwise $\frac{an-b}{bn}$ has a smaller numerator (before or after reducing), so by hypothesis it is a sum of distinct unit fractions. Moreover
+      $$\frac{an - b}{bn} < \frac1{n-1} - \frac1n = \frac{1}{n(n-1)} \le \frac1n,$$
+      so every unit fraction in that sum is less than $\frac1n$, and adding $\frac1n$ keeps the fractions distinct. $\blacksquare$
+
+  - id: in-129
+    title: Take one, two or three
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, games]
+    related: [in-130]
+    statement: |
+      A pile has $n$ counters. Two players alternately remove 1, 2 or 3 counters; whoever takes the last counter wins. Prove that the player to move loses (against best play) if and only if $4 \mid n$.
+    solution: |
+      Strong induction on $n$. When $n = 0$ the player to move has already lost (the opponent took the last counter), and $4 \mid 0$.
+
+      Let $n \ge 1$ and assume the claim for all smaller piles.
+
+      - If $4 \nmid n$, the player to move removes $n \bmod 4 \in \{1,2,3\}$ counters, leaving a multiple of 4. By hypothesis the opponent, now to move, loses.
+      - If $4 \mid n$, any move removes $j \in \{1,2,3\}$, leaving $n - j$, which is not a multiple of 4. By hypothesis the opponent, now to move, wins.
+
+      $\blacksquare$
+
+  - id: in-130
+    title: Take one, three or four
+    subtopic: Strong induction
+    difficulty: medium
+    type: compute
+    tags: [strong induction, games]
+    related: [in-129]
+    statement: |
+      Two players alternately remove 1, 3 or 4 counters from a pile of $n$; whoever takes the last counter wins. For which $n$ does the second player win? Prove your answer.
+    solution: |
+      Call $n$ **losing** if the player to move loses. Working up: $0$ is losing; $1, 3, 4$ are winning (move to $0$); $2$ is losing (only move is to $1$); $5, 6$ are winning (move to $2$); $7$ is losing (moves to $6, 4, 3$, all winning); $8$ wins (to $7$); $9$ is losing (to $8, 6, 5$).
+
+      **Claim:** $n$ is losing iff $n \equiv 0$ or $2 \pmod 7$.
+
+      **Proof** by strong induction, the cases $n < 7$ being checked above. Let $n \ge 7$.
+
+      - If $n \equiv 0$ or $2$, the moves lead to residues $\{6, 4, 3\}$ or $\{1, 6, 5\}$, none of which is $0$ or $2$, so by hypothesis every move hands the opponent a winning position.
+      - Otherwise there is a move to a residue $0$ or $2$: from $1$ take 1; from $3$ take 3; from $4$ take 4; from $5$ take 3; from $6$ take 4. By hypothesis this leaves the opponent in a losing position.
+
+      **Answer:** the second player wins exactly when $n \equiv 0$ or $2 \pmod 7$.
+
+  - id: in-131
+    title: Triangulating a polygon
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, geometry, triangulation]
+    statement: |
+      A convex $n$-gon ($n \ge 3$) is cut into triangles by non-crossing diagonals. Prove that there are exactly $n - 2$ triangles and $n - 3$ diagonals, however it is done.
+    solution: |
+      Strong induction on $n$. For $n = 3$ there is one triangle and no diagonal.
+
+      Let $n \ge 4$. The polygon itself is not a triangle, so at least one diagonal is used. It joins two vertices and splits the polygon into a convex $k$-gon and a convex $(n - k + 2)$-gon, with $3 \le k \le n - 1$ (both pieces have fewer than $n$ sides). The other diagonals triangulate the two pieces, so by hypothesis we get
+      $$(k - 2) + (n - k + 2 - 2) = n - 2 \text{ triangles}, \qquad (k - 3) + (n - k - 1) + 1 = n - 3 \text{ diagonals}. \qquad\blacksquare$$
+
+  - id: in-132
+    title: Angles of a convex polygon
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [weak induction, geometry]
+    related: [in-131]
+    statement: |
+      Prove that the interior angles of a convex $n$-gon ($n \ge 3$) add up to $(n - 2)\pi$.
+    solution: |
+      **Base.** $n = 3$: the angles of a triangle add up to $\pi$.
+
+      **Step.** Let $v_1, \dots, v_{k+1}$ be a convex $(k+1)$-gon. The diagonal $v_1v_3$ cuts off triangle $v_1v_2v_3$, leaving the convex $k$-gon $v_1v_3v_4\cdots v_{k+1}$. The angles at $v_1$ and $v_3$ are split between the two pieces (by convexity the diagonal lies inside), and the angle at $v_2$ belongs to the triangle. So the angle sum of the $(k+1)$-gon is
+      $$\pi + (k - 2)\pi = (k - 1)\pi. \qquad\blacksquare$$
+
+  - id: in-133
+    title: Every tournament has a Hamiltonian path
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [weak induction, tournaments, graphs]
+    source: Rédei, 1934
+    statement: |
+      In a round-robin tournament on $n$ players, every pair plays once and there are no draws. Prove that the players can be listed $p_1, p_2, \dots, p_n$ so that $p_i$ beat $p_{i+1}$ for every $i$.
+    solution: |
+      Induct on $n$. One player is a valid list.
+
+      Given $n + 1$ players, remove one, $v$. By hypothesis the rest can be listed $u_1, \dots, u_n$ with each $u_i$ beating $u_{i+1}$.
+
+      - If $v$ beat $u_1$, list $v, u_1, \dots, u_n$.
+      - Otherwise $u_1$ beat $v$. If $u_n$ beat $v$, list $u_1, \dots, u_n, v$.
+      - Otherwise $u_1$ beat $v$ and $v$ beat $u_n$. Let $i$ be the least index with $v$ beating $u_i$; then $i \ge 2$ and $u_{i-1}$ beat $v$. List $u_1, \dots, u_{i-1}, v, u_i, \dots, u_n$.
+
+      $\blacksquare$
+
+  - id: in-134
+    title: The unstacking game
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, invariant, games]
+    related: [in-021]
+    statement: |
+      Start with a stack of $n$ boxes. A move splits any stack of size $a + b$ ($a, b \ge 1$) into stacks of sizes $a$ and $b$ and scores $ab$ points. Play continues until every stack has one box. Prove that the total score is always $\frac{n(n-1)}{2}$.
+    solution: |
+      Strong induction on $n$. With $n = 1$ no moves are possible and the score is $0$.
+
+      For $n \ge 2$, the first move splits the stack into $a + b = n$ and scores $ab$. The two stacks are then dismantled independently (interleaving moves doesn't change the points each stack contributes), scoring $\frac{a(a-1)}{2}$ and $\frac{b(b-1)}{2}$ by hypothesis. The total is
+      $$ab + \frac{a^2 - a + b^2 - b}{2} = \frac{(a+b)^2 - (a+b)}{2} = \frac{n(n-1)}{2}. \qquad\blacksquare$$
+
+      (Combinatorially: each pair of boxes contributes 1 point, at the moment they are separated.)
+
+  - id: in-135
+    title: The Fibonacci addition formula
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, fibonacci]
+    related: [in-136, in-137]
+    statement: |
+      With $F_0 = 0$, $F_1 = 1$, $F_{k+1} = F_k + F_{k-1}$, prove that for all $m \ge 1$ and $n \ge 0$,
+      $$F_{m+n} = F_mF_{n+1} + F_{m-1}F_n.$$
+    solution: |
+      Fix $m \ge 1$ and use induction on $n$ with two base cases.
+
+      **Bases.** $n = 0$: $F_m = F_m\cdot1 + F_{m-1}\cdot0$. $n = 1$: $F_{m+1} = F_m\cdot1 + F_{m-1}\cdot1$.
+
+      **Step.** Assuming the formula for $n$ and $n - 1$ (with $n \ge 1$),
+      $$F_{m+n+1} = F_{m+n} + F_{m+n-1} = F_m(F_{n+1} + F_n) + F_{m-1}(F_n + F_{n-1}) = F_mF_{n+2} + F_{m-1}F_{n+1}. \qquad\blacksquare$$
+
+  - id: in-136
+    title: Fibonacci divisibility
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [weak induction, fibonacci, divisibility]
+    related: [in-135, in-090]
+    statement: |
+      Prove that $F_m \mid F_{km}$ for all $m, k \ge 1$. (You may use in-135.)
+    solution: |
+      Fix $m$ and induct on $k$. $k = 1$ is trivial.
+
+      **Step.** By in-135 with $km$ in place of $m$ and $m$ in place of $n$,
+      $$F_{(k+1)m} = F_{km}F_{m+1} + F_{km-1}F_m.$$
+      The first term is divisible by $F_m$ by hypothesis, the second obviously. $\blacksquare$
+
+  - id: in-137
+    title: gcd of Fibonacci numbers
+    subtopic: Strong induction
+    difficulty: hard
+    type: proof
+    tags: [strong induction, fibonacci, gcd]
+    related: [in-135, nt-014, nt-015]
+    hints:
+      - |
+        Show $\gcd(F_{m+n}, F_n) = \gcd(F_m, F_n)$ using in-135 and $\gcd(F_n, F_{n+1}) = 1$.
+    statement: |
+      Prove that $\gcd(F_m, F_n) = F_{\gcd(m, n)}$ for all $m, n \ge 0$ (with $F_0 = 0$).
+    solution: |
+      **Lemma.** For $m \ge 1$, $n \ge 0$: $\gcd(F_{m+n}, F_n) = \gcd(F_m, F_n)$. By in-135, $F_{m+n} = F_mF_{n+1} + F_{m-1}F_n$, so
+      $$\gcd(F_{m+n}, F_n) = \gcd(F_mF_{n+1}, F_n) = \gcd(F_m, F_n),$$
+      the last step because $\gcd(F_{n+1}, F_n) = 1$ (nt-014), so any common divisor of $F_mF_{n+1}$ and $F_n$ divides $F_m$.
+
+      **Main proof.** Strong induction on $m + n$. If $n = 0$: $\gcd(F_m, 0) = F_m = F_{\gcd(m,0)}$; similarly if $m = 0$; and if $m = n$ it is trivial. Otherwise, by symmetry $m > n \ge 1$. By the lemma (applied to $m - n \ge 1$ and $n$) and the hypothesis for the smaller sum $(m - n) + n$,
+      $$\gcd(F_m, F_n) = \gcd(F_{m-n}, F_n) = F_{\gcd(m-n, n)} = F_{\gcd(m,n)}. \qquad\blacksquare$$
+
+  - id: in-138
+    title: Fibonacci and Lucas numbers
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [fibonacci, lucas numbers]
+    related: [in-135]
+    statement: |
+      The Lucas numbers are $L_n = F_{n-1} + F_{n+1}$ ($L_1 = 1$, $L_2 = 3$, $L_3 = 4, \dots$). Prove that $F_{2n} = F_nL_n$ and $F_{2n+1} = F_n^2 + F_{n+1}^2$ for all $n \ge 1$. (You may use in-135.)
+    solution: |
+      In-135 with $m = n$: $F_{2n} = F_nF_{n+1} + F_{n-1}F_n = F_n(F_{n+1} + F_{n-1}) = F_nL_n$.
+
+      In-135 with $m = n + 1$: $F_{2n+1} = F_{n+1}F_{n+1} + F_nF_n$. $\blacksquare$
+
+  - id: in-139
+    title: A tribonacci bound
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, recurrence, inequalities]
+    statement: |
+      Let $t_1 = t_2 = t_3 = 1$ and $t_n = t_{n-1} + t_{n-2} + t_{n-3}$ for $n \ge 4$. Prove that $t_n < 2^n$ for all $n \ge 1$.
+    solution: |
+      **Bases.** $t_1 = 1 < 2$, $t_2 = 1 < 4$, $t_3 = 1 < 8$.
+
+      **Step.** Let $n \ge 4$ and assume $t_k < 2^k$ for all $k < n$. Then
+      $$t_n < 2^{n-1} + 2^{n-2} + 2^{n-3} = \frac78\cdot2^n < 2^n.$$
+      (Three base cases are needed because the step reaches back three places.) $\blacksquare$
+
+  - id: in-140
+    title: Guessing a closed form
+    subtopic: Strong induction
+    difficulty: easy
+    type: compute
+    tags: [strong induction, recurrence, closed form]
+    statement: |
+      Let $a_0 = 2$, $a_1 = 3$ and $a_n = 3a_{n-1} - 2a_{n-2}$ for $n \ge 2$. Compute a few terms, guess a closed form and prove it.
+    solution: |
+      $a_2 = 9 - 4 = 5$, $a_3 = 15 - 6 = 9$, $a_4 = 27 - 10 = 17$. **Guess:** $a_n = 2^n + 1$.
+
+      **Proof.** True for $n = 0, 1$. For $n \ge 2$, assuming it for $n - 1$ and $n - 2$,
+      $$a_n = 3(2^{n-1} + 1) - 2(2^{n-2} + 1) = 3\cdot2^{n-1} - 2^{n-1} + 1 = 2^n + 1.$$
+
+  - id: in-141
+    title: A recurrence with alternating signs
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, recurrence, closed form]
+    statement: |
+      Let $a_1 = 1$, $a_2 = 8$ and $a_n = a_{n-1} + 2a_{n-2}$ for $n \ge 3$. Prove that $a_n = 3\cdot2^{n-1} + 2(-1)^n$ for all $n \ge 1$.
+    solution: |
+      **Bases.** $n = 1$: $3 - 2 = 1$. $n = 2$: $6 + 2 = 8$.
+
+      **Step.** For $n \ge 3$, assuming the formula for $n-1$ and $n-2$,
+      $$a_n = 3\cdot2^{n-2} + 2(-1)^{n-1} + 2\left(3\cdot2^{n-3} + 2(-1)^{n-2}\right) = 3\cdot2^{n-1} + (-1)^n(-2 + 4) = 3\cdot2^{n-1} + 2(-1)^n. \qquad\blacksquare$$
+
+  - id: in-142
+    title: Fibonacci numbers grow slower than (7/4)ⁿ
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, fibonacci, inequalities]
+    related: [in-019]
+    statement: |
+      Prove that $F_n < \left(\frac74\right)^n$ for all $n \ge 1$, where $F_1 = F_2 = 1$ and $F_n = F_{n-1} + F_{n-2}$.
+    solution: |
+      **Bases.** $F_1 = 1 < \frac74$ and $F_2 = 1 < \frac{49}{16}$.
+
+      **Step.** For $n \ge 3$, assuming the bound for $n-1$ and $n-2$,
+      $$F_n < \left(\tfrac74\right)^{n-1} + \left(\tfrac74\right)^{n-2} = \left(\tfrac74\right)^{n-2}\cdot\tfrac{11}{4} < \left(\tfrac74\right)^{n-2}\cdot\tfrac{49}{16} = \left(\tfrac74\right)^n,$$
+      since $\frac{11}{4} = \frac{44}{16}$. $\blacksquare$
+
+  - id: in-143
+    title: Odd part and power of two
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, parity]
+    related: [cb-012]
+    statement: |
+      Prove that every positive integer $n$ can be written as $n = 2^a m$ with $a \ge 0$ and $m$ odd.
+    solution: |
+      Strong induction on $n$. If $n$ is odd, take $a = 0$, $m = n$ (this includes $n = 1$).
+
+      If $n$ is even, $n = 2k$ with $1 \le k < n$. By hypothesis $k = 2^b m$ with $m$ odd, so $n = 2^{b+1}m$. $\blacksquare$
+
+  - id: in-144
+    title: Cutting a square into n squares
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, geometry, dissection]
+    statement: |
+      Prove that for every $n \ge 6$ a square can be cut into exactly $n$ smaller squares (not necessarily of equal size).
+    solution: |
+      Cutting one square into four quarters increases the number of squares by $3$. So it suffices to handle $6, 7, 8$ and then use strong induction stepping back by 3.
+
+      **Bases.**
+      - $n = 6$: cut into a $3\times3$ grid of 9 squares, then merge a $2\times2$ block of them into one square: $9 - 4 + 1 = 6$.
+      - $n = 7$: cut into 4 quarters, then cut one quarter into 4: $4 - 1 + 4 = 7$.
+      - $n = 8$: cut into a $4\times4$ grid of 16, then merge a $3\times3$ block into one: $16 - 9 + 1 = 8$.
+
+      **Step.** For $n \ge 9$, $n - 3 \ge 6$, so by hypothesis a square can be cut into $n - 3$ squares; cut one of them into four. $\blacksquare$
+
+      (It is impossible for $n = 2, 3, 5$.)
+
+  - id: in-145
+    title: Binary representation is unique
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, number representation, uniqueness]
+    related: [in-029]
+    statement: |
+      Prove that a non-negative integer has only one representation as a sum of distinct powers of 2.
+    solution: |
+      Strong induction on $n$. For $n = 0$ the only representation is the empty sum (any non-empty sum is positive).
+
+      Let $n \ge 1$ and suppose $n = \sum_{i\in A}2^i = \sum_{i\in B}2^i$ for finite sets $A, B$. Every term except $2^0$ is even, so $0 \in A$ iff $n$ is odd iff $0 \in B$. Removing $2^0$ if present and halving gives two representations of $\lfloor n/2\rfloor < n$:
+      $$\left\lfloor\tfrac n2\right\rfloor = \sum_{i\in A, i\ge1}2^{i-1} = \sum_{i\in B,i\ge1}2^{i-1}.$$
+      By hypothesis $\{i - 1 : i \in A, i \ge 1\} = \{i - 1 : i\in B, i \ge 1\}$, so $A$ and $B$ agree on indices $\ge 1$, and we saw they agree on $0$. $\blacksquare$
+
+  - id: in-146
+    title: A divide-and-conquer recurrence
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, recurrence, floor and ceiling]
+    statement: |
+      Let $a_1 = 1$ and $a_n = a_{\lfloor n/2\rfloor} + a_{\lceil n/2\rceil}$ for $n \ge 2$. Prove that $a_n = n$ for all $n \ge 1$.
+    solution: |
+      Strong induction. $a_1 = 1$.
+
+      For $n \ge 2$, both $\lfloor n/2\rfloor$ and $\lceil n/2\rceil$ lie between $1$ and $n - 1$, so by hypothesis $a_n = \lfloor n/2\rfloor + \lceil n/2\rceil = n$. $\blacksquare$
+
+  - id: in-147
+    title: The largest power of two below n
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, recurrence, powers of two]
+    statement: |
+      Let $a_1 = 1$ and $a_n = 2a_{\lfloor n/2\rfloor}$ for $n \ge 2$. Prove that $a_n$ is the largest power of 2 that is at most $n$.
+    solution: |
+      Strong induction. $a_1 = 1 = 2^0$.
+
+      Let $n \ge 2$ and let $2^k \le n < 2^{k+1}$, so $k \ge 1$. Then $\frac n2 \ge 2^{k-1}$ gives $\lfloor n/2\rfloor \ge 2^{k-1}$ (the floor of a number at least an integer is at least that integer), and $\lfloor n/2\rfloor \le \frac n2 < 2^k$. So the largest power of 2 below $\lfloor n/2\rfloor$ is $2^{k-1}$, and by hypothesis $a_{\lfloor n/2\rfloor} = 2^{k-1}$. Hence $a_n = 2^k$. $\blacksquare$
+
+  - id: in-148
+    title: The Josephus problem
+    subtopic: Strong induction
+    difficulty: hard
+    type: proof
+    tags: [strong induction, recurrence, josephus]
+    source: Josephus
+    hints:
+      - |
+        After one lap around the circle, half the people are gone. Relabel the survivors to get $J(2n) = 2J(n) - 1$ and $J(2n+1) = 2J(n) + 1$.
+    statement: |
+      People $1, 2, \dots, n$ stand in a circle. Starting from person 1, every second person is eliminated (2, 4, 6, …, going round repeatedly) until one remains; call the survivor $J(n)$. Prove that if $n = 2^m + \ell$ with $0 \le \ell < 2^m$, then $J(n) = 2\ell + 1$.
+    solution: |
+      **Recurrences.** With $2n$ people, the first lap removes $2, 4, \dots, 2n$, and the count then continues from $1$ (skipped). We are left with $1, 3, \dots, 2n - 1$ in the same situation as a fresh game of $n$ people, where person $j$ of the new game is $2j - 1$. So $J(2n) = 2J(n) - 1$.
+
+      With $2n + 1$ people, the first lap removes $2, 4, \dots, 2n$; then $2n+1$ is skipped and $1$ is removed. We are left with $3, 5, \dots, 2n+1$, starting from $3$: a fresh game of $n$ people with $j \mapsto 2j + 1$. So $J(2n+1) = 2J(n) + 1$.
+
+      **Formula.** Strong induction. $J(1) = 1$ matches $m = \ell = 0$. Let $n = 2^m + \ell \ge 2$, so $m \ge 1$.
+
+      - If $n$ is even, $\ell$ is even and $n/2 = 2^{m-1} + \ell/2$ with $0 \le \ell/2 < 2^{m-1}$. So $J(n) = 2(\ell + 1) - 1 = 2\ell + 1$.
+      - If $n$ is odd, $\ell$ is odd and $\frac{n-1}{2} = 2^{m-1} + \frac{\ell - 1}{2}$. So $J(n) = 2\ell + 1$.
+
+      $\blacksquare$
+
+  - id: in-149
+    title: Every integer as ±1² ± 2² ± ⋯ ± m²
+    subtopic: Strong induction
+    difficulty: hard
+    type: proof
+    tags: [strong induction, squares, representations]
+    hints:
+      - |
+        $(k+1)^2 - (k+2)^2 - (k+3)^2 + (k+4)^2 = 4$.
+    statement: |
+      Prove that every positive integer $n$ can be written as $\pm1^2 \pm 2^2 \pm\cdots\pm m^2$ for some $m \ge 1$ and some choice of signs.
+    solution: |
+      **Key identity.** For any $k$, $(k+1)^2 - (k+2)^2 - (k+3)^2 + (k+4)^2 = (2k^2 + 10k + 17) - (2k^2 + 10k + 13) = 4$.
+
+      **Bases.**
+      $$1 = 1^2,\quad 2 = -1^2 - 2^2 - 3^2 + 4^2,\quad 3 = -1^2 + 2^2,\quad 4 = -1^2 - 2^2 + 3^2.$$
+
+      **Step.** Let $n \ge 5$. By strong induction $n - 4 = \pm1^2 \pm\cdots\pm m^2$. Appending $+(m+1)^2 - (m+2)^2 - (m+3)^2 + (m+4)^2 = 4$ gives $n$. $\blacksquare$
+
+  - id: in-150
+    title: Each term is the sum of all before it
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, recurrence]
+    statement: |
+      Let $a_0 = 1$ and $a_n = a_0 + a_1 + \cdots + a_{n-1}$ for $n \ge 1$. Prove that $a_n = 2^{n-1}$ for $n \ge 1$.
+    solution: |
+      Strong induction. $a_1 = a_0 = 1 = 2^0$.
+
+      For $n \ge 2$, assuming $a_k = 2^{k-1}$ for $1 \le k < n$,
+      $$a_n = 1 + \sum_{k=1}^{n-1}2^{k-1} = 1 + (2^{n-1} - 1) = 2^{n-1}. \qquad\blacksquare$$
+
+  - id: in-151
+    title: Finding the heavy coin
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [weak induction, weighing, information]
+    statement: |
+      Among $3^k$ identical-looking coins one is heavier than the rest. Prove that $k$ weighings on a balance scale suffice to find it. Explain why $k$ weighings cannot handle $3^k + 1$ coins.
+    solution: |
+      **Sufficiency**, by induction on $k$. With $k = 0$ there is one coin, which is the heavy one.
+
+      Given $3^{k+1}$ coins, split them into three groups of $3^k$ and weigh two groups against each other. If one side is heavier, the heavy coin is in that group; if they balance, it is in the third group. Either way one weighing narrows it to $3^k$ coins, and by hypothesis $k$ more weighings suffice.
+
+      **Necessity.** Each weighing has 3 outcomes (left, right, balance), so a strategy with $k$ weighings has at most $3^k$ possible outcome sequences. With $3^k + 1$ coins there are $3^k + 1$ possible answers, so two of them would produce the same outcomes and could not be told apart. $\blacksquare$
+
+  - id: in-152
+    title: Euclid's algorithm is correct
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, euclidean algorithm, gcd]
+    related: [nt-011]
+    statement: |
+      Define $E(a, 0) = a$ and $E(a, b) = E(b, a \bmod b)$ for $b > 0$, on non-negative integers $a, b$ not both $0$. Prove that the recursion terminates and $E(a, b) = \gcd(a, b)$.
+    solution: |
+      Strong induction on $b$.
+
+      **$b = 0$.** $E(a, 0) = a = \gcd(a, 0)$, since $a > 0$.
+
+      **$b > 0$.** Write $a = qb + r$ with $r = a \bmod b$, $0 \le r < b$. Then $E(a, b) = E(b, r)$, and since $r < b$ (and $b > 0$), by hypothesis $E(b, r)$ terminates and equals $\gcd(b, r)$.
+
+      Finally $\gcd(b, r) = \gcd(a, b)$: if $d \mid a$ and $d \mid b$ then $d \mid a - qb = r$; if $d \mid b$ and $d \mid r$ then $d \mid qb + r = a$. So the pairs have the same common divisors. $\blacksquare$
+
+  - id: in-153
+    title: Powers of x + 1/x
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, recurrence, algebra]
+    statement: |
+      Let $x \ne 0$ be a real number such that $x + \frac1x$ is an integer. Prove that $x^n + \frac1{x^n}$ is an integer for every $n \ge 0$.
+    solution: |
+      Let $t_n = x^n + x^{-n}$. Then
+      $$t_1t_n = \left(x + x^{-1}\right)\left(x^n + x^{-n}\right) = t_{n+1} + t_{n-1}, \quad\text{so}\quad t_{n+1} = t_1t_n - t_{n-1}.$$
+
+      **Bases.** $t_0 = 2$ and $t_1$ are integers.
+
+      **Step.** If $t_{n-1}$ and $t_n$ are integers then so is $t_{n+1} = t_1t_n - t_{n-1}$. $\blacksquare$
+
+  - id: in-154
+    title: Chebyshev polynomials
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, trigonometry, polynomials]
+    source: Chebyshev
+    statement: |
+      Prove that for each $n \ge 1$ there is a polynomial $T_n$ of degree $n$ with integer coefficients and leading coefficient $2^{n-1}$ such that $\cos n\theta = T_n(\cos\theta)$ for all $\theta$.
+    solution: |
+      From the angle-addition formulas,
+      $$\cos(n+1)\theta + \cos(n-1)\theta = 2\cos\theta\cos n\theta.$$
+      Define $T_0(x) = 1$, $T_1(x) = x$ and $T_{n+1}(x) = 2xT_n(x) - T_{n-1}(x)$.
+
+      **Claim.** For $n \ge 1$, $T_n$ has integer coefficients, degree $n$, leading coefficient $2^{n-1}$, and $\cos n\theta = T_n(\cos\theta)$; also $T_0(\cos\theta) = 1 = \cos 0$.
+
+      **Bases.** $n = 1$: $T_1 = x$. ($n = 2$: $T_2 = 2x^2 - 1$ and $\cos 2\theta = 2\cos^2\theta - 1$.)
+
+      **Step.** Assume it for $n$ and $n - 1$. Then $T_{n+1} = 2xT_n - T_{n-1}$ has integer coefficients; $2xT_n$ has degree $n+1$ and leading coefficient $2\cdot2^{n-1} = 2^n$, while $T_{n-1}$ has smaller degree. And
+      $$T_{n+1}(\cos\theta) = 2\cos\theta\cos n\theta - \cos(n-1)\theta = \cos(n+1)\theta. \qquad\blacksquare$$
+
+  - id: in-155
+    title: Compositions into odd parts
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, compositions, fibonacci]
+    related: [cb-023]
+    statement: |
+      Let $c_n$ be the number of ways to write $n$ as an ordered sum of **odd** positive integers (so $c_4 = 3$: $1+3$, $3+1$, $1+1+1+1$). Prove that $c_n = F_n$, the $n$th Fibonacci number.
+    solution: |
+      $c_1 = 1$ (just $1$) and $c_2 = 1$ (just $1+1$), matching $F_1 = F_2 = 1$.
+
+      For $n \ge 3$, split the compositions of $n$ by their last part.
+
+      - Last part $1$: removing it gives any odd composition of $n - 1$. That's $c_{n-1}$.
+      - Last part $\ge 3$: subtracting 2 from the last part gives an odd composition of $n - 2$ (its last part is still odd and positive), and adding 2 back reverses this. That's $c_{n-2}$.
+
+      So $c_n = c_{n-1} + c_{n-2}$, and by strong induction $c_n = F_n$. $\blacksquare$
+
+  - id: in-156
+    title: A two-root recurrence
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, recurrence, closed form]
+    statement: |
+      Let $a_0 = 0$, $a_1 = 1$ and $a_n = 5a_{n-1} - 6a_{n-2}$ for $n \ge 2$. Prove that $a_n = 3^n - 2^n$.
+    solution: |
+      **Bases.** $3^0 - 2^0 = 0$ and $3 - 2 = 1$.
+
+      **Step.** For $n \ge 2$, assuming the formula for $n - 1$ and $n - 2$,
+      $$5(3^{n-1} - 2^{n-1}) - 6(3^{n-2} - 2^{n-2}) = 3^{n-2}(15 - 6) - 2^{n-2}(10 - 6) = 3^n - 2^n. \qquad\blacksquare$$
+
+  - id: in-157
+    title: Strong induction from ordinary induction
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, foundations]
+    related: [in-023]
+    statement: |
+      Assume the ordinary principle of induction. Prove the principle of strong induction: if, for every $n \ge 0$, the truth of $P(0), \dots, P(n-1)$ implies $P(n)$, then $P(n)$ holds for every $n \ge 0$.
+    solution: |
+      Let $Q(n)$ be the statement "$P(k)$ holds for all $0 \le k \le n$". We prove $Q(n)$ for all $n$ by ordinary induction.
+
+      **Base.** The hypothesis with $n = 0$ says $P(0)$ holds outright (there is nothing to assume). So $Q(0)$.
+
+      **Step.** If $Q(n)$ holds then $P(0), \dots, P(n)$ hold, so by hypothesis $P(n+1)$ holds. Together these give $Q(n+1)$.
+
+      Since $Q(n)$ implies $P(n)$, every $P(n)$ holds. $\blacksquare$
+
+  - id: in-158
+    title: Counting prime factors
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, primes, logarithms]
+    related: [in-017]
+    statement: |
+      Let $\Omega(n)$ be the number of prime factors of $n$ counted with multiplicity ($\Omega(12) = 3$). Prove that $\Omega(n) \le \log_2 n$ for all $n \ge 1$.
+    solution: |
+      Strong induction. $\Omega(1) = 0 = \log_2 1$.
+
+      For $n \ge 2$, let $p$ be a prime factor and $n = pm$ with $1 \le m < n$. Then $\Omega(n) = 1 + \Omega(m) \le 1 + \log_2 m = \log_2(2m) \le \log_2(pm) = \log_2 n$, as $p \ge 2$. $\blacksquare$
+
+  - id: in-159
+    title: Sums of squares of Fibonacci numbers
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [fibonacci, identities]
+    related: [in-135, in-138]
+    statement: |
+      Prove that $F_n^2 + F_{n+1}^2 = F_{2n+1}$ and $F_{n+1}^2 - F_{n-1}^2 = F_{2n}$ for all $n \ge 1$. (You may use in-135.)
+    solution: |
+      In-135 with $m = n + 1$: $F_{2n+1} = F_{n+1}F_{n+1} + F_nF_n$.
+
+      In-138 gives $F_{2n} = F_n(F_{n+1} + F_{n-1})$, and $F_n = F_{n+1} - F_{n-1}$, so
+      $$F_{2n} = (F_{n+1} - F_{n-1})(F_{n+1} + F_{n-1}) = F_{n+1}^2 - F_{n-1}^2. \qquad\blacksquare$$
+
+  - id: in-160
+    title: Twenty questions
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, decision trees, logarithms]
+    related: [in-151]
+    statement: |
+      One of $n$ objects has been secretly chosen. You may ask yes/no questions about it (each question may depend on earlier answers). Prove that any strategy that always identifies the object needs at least $\lceil\log_2 n\rceil$ questions in the worst case, and that this many suffice.
+    solution: |
+      Let $q(n)$ be the least worst-case number of questions. We show $2^{q(n)} \ge n$ by strong induction on $n$.
+
+      **Base.** $n = 1$: $q = 0$ and $2^0 = 1$.
+
+      **Step.** Let $n \ge 2$ and take a strategy whose worst case is $q(n)$ questions. It asks at least one question (otherwise it can't tell two objects apart), and its first question splits the objects into a "yes" set and a "no" set, both non-empty: if one were empty the question would tell us nothing, and deleting it would give a strategy with fewer questions. So the sizes satisfy $a + b = n$ with $1 \le a, b \le n - 1$; say $a \ge n/2$. The rest of the strategy must identify the object among those $a$, needing at least $q(a)$ more questions in the worst case. So $q(n) \ge 1 + q(a)$ and
+      $$2^{q(n)} \ge 2\cdot 2^{q(a)} \ge 2a \ge n.$$
+      Hence $q(n) \ge \log_2 n$, and since $q(n)$ is an integer, $q(n) \ge \lceil\log_2 n\rceil$.
+
+      **Sufficiency.** Repeatedly ask "is it in this half?", splitting the remaining candidates as evenly as possible. After $j$ questions at most $\lceil n/2^j\rceil$ remain, which is $1$ once $2^j \ge n$. $\blacksquare$
+
+  - id: in-161
+    title: Sylvester's sequence
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [weak induction, recurrence, egyptian fractions, coprime]
+    source: Sylvester, 1880
+    statement: |
+      Let $a_1 = 2$ and $a_{n+1} = a_1a_2\cdots a_n + 1$ (so $2, 3, 7, 43, 1807, \dots$). Prove that
+      $$\frac1{a_1} + \frac1{a_2} + \cdots + \frac1{a_n} = 1 - \frac{1}{a_{n+1} - 1}$$
+      for all $n \ge 1$, and that the $a_n$ are pairwise coprime.
+    solution: |
+      By definition $a_{n+1} - 1 = a_1\cdots a_n$, so $a_{n+2} - 1 = (a_{n+1} - 1)a_{n+1}$.
+
+      **Base.** $n = 1$: $\frac12 = 1 - \frac1{3-1}$.
+
+      **Step.** Assuming the formula for $n$,
+      $$\sum_{i=1}^{n+1}\frac1{a_i} = 1 - \frac1{a_{n+1} - 1} + \frac1{a_{n+1}} = 1 - \frac{1}{(a_{n+1} - 1)a_{n+1}} = 1 - \frac{1}{a_{n+2} - 1}.$$
+
+      **Coprime.** If $i < j$, then $a_i$ divides $a_1\cdots a_{j-1} = a_j - 1$, so any common divisor of $a_i$ and $a_j$ divides $a_j - (a_j - 1) = 1$. $\blacksquare$
+
+  - id: in-162
+    title: Powers of 1 + √2
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [weak induction, pell equation, recurrence]
+    related: [in-205]
+    statement: |
+      Prove that for every $n \ge 1$ there are positive integers $a_n, b_n$ with $(1 + \sqrt2)^n = a_n + b_n\sqrt2$, and that $a_n^2 - 2b_n^2 = (-1)^n$.
+    solution: |
+      **Base.** $a_1 = b_1 = 1$, and $1 - 2 = -1$.
+
+      **Step.** If $(1+\sqrt2)^k = a_k + b_k\sqrt2$, then
+      $$(1+\sqrt2)^{k+1} = (a_k + b_k\sqrt2)(1 + \sqrt2) = (a_k + 2b_k) + (a_k + b_k)\sqrt2,$$
+      so $a_{k+1} = a_k + 2b_k$ and $b_{k+1} = a_k + b_k$ are positive integers. Then
+      $$a_{k+1}^2 - 2b_{k+1}^2 = a_k^2 + 4a_kb_k + 4b_k^2 - 2a_k^2 - 4a_kb_k - 2b_k^2 = -(a_k^2 - 2b_k^2) = (-1)^{k+1}. \qquad\blacksquare$$
+
+      (So $\frac{a_n}{b_n}$ are better and better approximations to $\sqrt2$: $\frac11, \frac32, \frac75, \frac{17}{12}, \dots$)
+
+  - id: in-163
+    title: Regions cut by circles
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: compute
+    tags: [recurrence, geometry, counting]
+    related: [in-027]
+    statement: |
+      $n \ge 1$ circles are drawn in the plane so that every two meet in exactly two points and no three pass through a common point. Into how many regions do they divide the plane?
+    solution: |
+      Let $R_n$ be the number of regions; $R_1 = 2$.
+
+      Adding the $n$th circle ($n \ge 2$), it meets each of the other $n - 1$ circles in 2 points, all distinct, so $2(n-1)$ points on it. These cut it into $2(n-1)$ arcs, and each arc splits one existing region into two. So $R_n = R_{n-1} + 2(n-1)$, and
+      $$R_n = 2 + \sum_{k=2}^{n}2(k-1) = 2 + n(n-1) = n^2 - n + 2.$$
+      (Check by induction: $(n-1)^2 - (n-1) + 2 + 2(n-1) = n^2 - n + 2$.)
+
+  - id: in-164
+    title: Regions cut by planes
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: compute
+    tags: [recurrence, geometry, counting]
+    related: [in-027]
+    statement: |
+      $n$ planes in space are in general position: every three meet in exactly one point, and no four share a point (so in particular no two are parallel). Into how many regions do they divide space?
+    solution: |
+      Let $S_n$ be the number of regions; $S_0 = 1$.
+
+      The $n$th plane meets the other $n - 1$ planes in $n - 1$ lines in general position within it (no two parallel, no three concurrent). By in-027 these cut the plane into $1 + \frac{(n-1)n}{2}$ regions, and each splits one region of space into two. So
+      $$S_n = S_{n-1} + 1 + \binom n2.$$
+      Summing, and using $\sum_{k=1}^n\binom k2 = \binom{n+1}{3}$,
+      $$S_n = 1 + n + \binom{n+1}{3} = 1 + n + \frac{(n+1)n(n-1)}{6} = \frac{n^3 + 5n + 6}{6}.$$
+      Values: $1, 2, 4, 8, 15, 26, \dots$
+
+  - id: in-165
+    title: No integer between 0 and 1
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [well-ordering, foundations]
+    related: [in-023]
+    statement: |
+      Use the well-ordering principle to prove that there is no integer $n$ with $0 < n < 1$.
+    solution: |
+      Suppose there is one. Then $S = \{n \in \Z : 0 < n < 1\}$ is a non-empty set of positive integers, so it has a least element $m$, with $0 < m < 1$.
+
+      Multiplying $0 < m < 1$ by $m > 0$ gives $0 < m^2 < m < 1$. So $m^2$ is an integer in $S$ smaller than $m$, a contradiction. $\blacksquare$
+
+  - id: in-166
+    title: √2 is irrational, by well-ordering
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [well-ordering, irrationality]
+    related: [lg-009]
+    hints:
+      - |
+        If $q\sqrt2$ is an integer, so is $q(\sqrt2 - 1)\cdot\sqrt2$.
+    statement: |
+      Prove that $\sqrt2$ is irrational using the well-ordering principle and without using any facts about parity or primes.
+    solution: |
+      Suppose $\sqrt2$ is rational. Then $S = \{q \in \Z_{>0} : q\sqrt2 \in \Z\}$ is non-empty; let $q$ be its least element and $p = q\sqrt2$.
+
+      Let $q' = q(\sqrt2 - 1) = p - q$, an integer. Since $1 < \sqrt2 < 2$, we have $0 < q' < q$. And
+      $$q'\sqrt2 = q\cdot2 - q\sqrt2 = 2q - p$$
+      is an integer. So $q' \in S$ and $q' < q$, contradicting minimality. $\blacksquare$
+
+  - id: in-167
+    title: Least elements of sets bounded below
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [well-ordering, integers]
+    statement: |
+      Using the well-ordering principle for $\N = \{0, 1, 2, \dots\}$, prove that every non-empty set $S \subseteq \Z$ that is bounded below has a least element. Does every non-empty set of integers bounded above have a greatest element?
+    solution: |
+      Let $b$ be a lower bound for $S$, so $s \ge b$ for every $s \in S$. Then $T = \{s - b : s \in S\} \subseteq \N$ is non-empty, so it has a least element $t_0 = s_0 - b$. For every $s \in S$, $s - b \ge s_0 - b$, so $s \ge s_0$. Thus $s_0$ is the least element of $S$.
+
+      **Yes.** If $S$ is bounded above by $c$, then $-S = \{-s : s\in S\}$ is bounded below by $-c$, so it has a least element $-s_1$, and $s_1$ is the greatest element of $S$. $\blacksquare$
+
+  - id: in-168
+    title: Finite sets have a maximum
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [weak induction, sets, maximum]
+    statement: |
+      Prove by induction on $n \ge 1$ that every set of $n$ real numbers has a largest element.
+    solution: |
+      **Base.** A one-element set $\{x\}$ has largest element $x$.
+
+      **Step.** Let $S$ have $k + 1$ elements, pick $x \in S$, and let $T = S \setminus\{x\}$, with $k$ elements. By hypothesis $T$ has a largest element $m$. Then $\max(m, x)$ is in $S$ and is at least every element of $T$ and at least $x$, so it is the largest element of $S$. $\blacksquare$
+
+      (Infinite sets need not have one: $\{1 - \frac1n : n \ge 1\}$ doesn't.)
+
+  - id: in-169
+    title: Laws of exponents from the definition
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [recursive definitions, exponents]
+    statement: |
+      For a real $a$, define $a^0 = 1$ and $a^{n+1} = a^n\cdot a$. Prove that for all $m, n \ge 0$,
+      $$a^{m+n} = a^m a^n \qquad\text{and}\qquad (a^m)^n = a^{mn}.$$
+    solution: |
+      Fix $m$ and induct on $n$.
+
+      **First law.** $n = 0$: $a^{m+0} = a^m = a^m\cdot1 = a^ma^0$. Step: $a^{m+n+1} = a^{m+n}a = a^ma^na = a^ma^{n+1}$.
+
+      **Second law.** $n = 0$: $(a^m)^0 = 1 = a^0$. Step: $(a^m)^{n+1} = (a^m)^na^m = a^{mn}a^m = a^{mn+m}$ by the first law, and $mn + m = m(n+1)$. $\blacksquare$
+
+  - id: in-170
+    title: Addition in Peano arithmetic is associative
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [peano axioms, recursive definitions, foundations]
+    related: [in-171]
+    statement: |
+      In the Peano axioms, $\N$ has a starting element $0$ and a successor function $S$. Addition is defined by $m + 0 = m$ and $m + S(n) = S(m + n)$. Prove that $0 + n = n$ and $(a + b) + c = a + (b + c)$ for all $a, b, c, n$.
+    solution: |
+      **$0 + n = n$**, by induction on $n$. $0 + 0 = 0$ by definition. If $0 + n = n$ then $0 + S(n) = S(0 + n) = S(n)$.
+
+      **Associativity**, by induction on $c$. $c = 0$: $(a + b) + 0 = a + b = a + (b + 0)$. If it holds for $c$, then
+      $$(a + b) + S(c) = S((a+b) + c) = S(a + (b + c)) = a + S(b + c) = a + (b + S(c)). \qquad\blacksquare$$
+
+  - id: in-171
+    title: Addition in Peano arithmetic is commutative
+    subtopic: Recursion & well-ordering
+    difficulty: hard
+    type: proof
+    tags: [peano axioms, recursive definitions, foundations]
+    related: [in-170]
+    hints:
+      - |
+        First prove $S(m) + n = S(m + n)$ by induction on $n$.
+    statement: |
+      With addition defined as in in-170, prove that $m + n = n + m$ for all $m, n$.
+    solution: |
+      **Lemma.** $S(m) + n = S(m + n)$. Induct on $n$: $S(m) + 0 = S(m) = S(m + 0)$; and if it holds for $n$ then
+      $$S(m) + S(n) = S(S(m) + n) = S(S(m + n)) = S(m + S(n)).$$
+
+      **Commutativity**, by induction on $n$. $n = 0$: $m + 0 = m = 0 + m$ by in-170. If $m + n = n + m$, then
+      $$m + S(n) = S(m + n) = S(n + m) = S(n) + m,$$
+      the last step by the lemma. $\blacksquare$
+
+  - id: in-172
+    title: Parentheses in formulas balance
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [structural induction, logic, formulas]
+    statement: |
+      Propositional formulas are built as follows: every variable $p, q, \dots$ is a formula, and if $A$ and $B$ are formulas then so are $\neg A$, $(A \wedge B)$, $(A \vee B)$ and $(A \to B)$. Prove that every formula has equally many left and right parentheses.
+    solution: |
+      Structural induction. Write $\ell(A)$, $r(A)$ for the numbers of left and right parentheses.
+
+      **Base.** A variable has $\ell = r = 0$.
+
+      **Step.** If $\ell(A) = r(A)$ and $\ell(B) = r(B)$, then $\ell(\neg A) = \ell(A) = r(A) = r(\neg A)$, and for $\star \in \{\wedge, \vee, \to\}$,
+      $$\ell((A\star B)) = 1 + \ell(A) + \ell(B) = 1 + r(A) + r(B) = r((A \star B)).$$
+      Every formula is built by finitely many of these steps, so every formula has the property. $\blacksquare$
+
+  - id: in-173
+    title: Formulas without negation are monotone
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [structural induction, logic, completeness]
+    related: [lg-004]
+    statement: |
+      Prove by structural induction that a formula built from variables using only $\wedge$ and $\vee$ is true whenever all its variables are true. Deduce that $\neg p$ cannot be expressed using only $\wedge$ and $\vee$.
+    solution: |
+      **Base.** A variable is true when it is assigned true.
+
+      **Step.** If $A$ and $B$ are true when all variables are true, then so are $A \wedge B$ and $A \vee B$.
+
+      **Consequence.** Any formula in $p$ built from $\wedge, \vee$ is true when $p$ is true, but $\neg p$ is false then. So no such formula is equivalent to $\neg p$, and $\{\wedge, \vee\}$ is not functionally complete. $\blacksquare$
+
+  - id: in-174
+    title: Negation normal form
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [structural induction, logic, normal forms, de morgan]
+    statement: |
+      Prove that every formula built from variables with $\neg$, $\wedge$, $\vee$ is equivalent to one in which $\neg$ is applied only to variables.
+    solution: |
+      Call such formulas NNF. We prove the stronger claim: **for every formula $A$, both $A$ and $\neg A$ are equivalent to NNF formulas.** (Proving only "$A$ has an NNF" gets stuck at $\neg A$.)
+
+      **Base.** For a variable $p$, both $p$ and $\neg p$ are NNF.
+
+      **Step.** Suppose the claim for $B$ and $C$, with NNF forms $B^+ \equiv B$, $B^- \equiv \neg B$, $C^+$, $C^-$.
+
+      - $A = \neg B$: $A \equiv B^-$ and $\neg A = \neg\neg B \equiv B \equiv B^+$.
+      - $A = B \wedge C$: $A \equiv B^+ \wedge C^+$ and, by De Morgan, $\neg A \equiv \neg B \vee \neg C \equiv B^- \vee C^-$.
+      - $A = B \vee C$: $A \equiv B^+ \vee C^+$ and $\neg A \equiv B^- \wedge C^-$.
+
+      All of these are NNF. $\blacksquare$
+
+  - id: in-175
+    title: Leaves of a full binary tree
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [structural induction, trees]
+    statement: |
+      Full binary trees are defined recursively: a single vertex is one, and if $T_1, T_2$ are full binary trees then joining them as the two children of a new root gives a full binary tree. Prove that every full binary tree has exactly one more leaf than it has internal (non-leaf) vertices.
+    solution: |
+      Write $L(T)$ for leaves and $I(T)$ for internal vertices.
+
+      **Base.** A single vertex: $L = 1$, $I = 0$.
+
+      **Step.** If $T$ is built from $T_1, T_2$, its leaves are those of $T_1$ and $T_2$, and its internal vertices are theirs plus the new root. So
+      $$L(T) = L(T_1) + L(T_2) = (I(T_1) + 1) + (I(T_2) + 1) = I(T) + 1. \qquad\blacksquare$$
+
+  - id: in-176
+    title: How big can a binary tree of height h be?
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [structural induction, trees, powers of two]
+    statement: |
+      A binary tree is either empty (height $-1$) or a root with a left and a right subtree, each a binary tree; its height is $1 + \max(h_L, h_R)$. Prove that a binary tree of height $h$ has at most $2^{h+1} - 1$ vertices.
+    solution: |
+      Structural induction.
+
+      **Base.** The empty tree has $0 = 2^0 - 1$ vertices.
+
+      **Step.** A non-empty tree of height $h$ has subtrees of height at most $h - 1$, each with at most $2^h - 1$ vertices by hypothesis. So it has at most $1 + 2(2^h - 1) = 2^{h+1} - 1$ vertices. $\blacksquare$
+
+      (Equivalently, a binary tree with $n$ vertices has height at least $\log_2(n+1) - 1$.)
+
+  - id: in-177
+    title: A recursively defined set
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [structural induction, recursive definitions]
+    statement: |
+      Let $S$ be the smallest set of integers such that $3 \in S$, and $x + y \in S$ whenever $x, y \in S$. Prove that $S = \{3k : k \ge 1\}$.
+    solution: |
+      Let $A = \{3k : k \ge 1\}$.
+
+      **$S \subseteq A$.** $3 \in A$, and $A$ is closed under addition ($3j + 3k = 3(j+k)$, $j + k \ge 1$). Since $S$ is the smallest set with these two properties, $S \subseteq A$. (Equivalently, by structural induction every element of $S$ is in $A$.)
+
+      **$A \subseteq S$.** By induction on $k$: $3 \in S$, and if $3k \in S$ then $3(k+1) = 3k + 3 \in S$ by the closure rule. $\blacksquare$
+
+  - id: in-178
+    title: Reversing strings
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [structural induction, strings, recursive definitions]
+    statement: |
+      Define the reverse of a string by $\mathrm{rev}(\varepsilon) = \varepsilon$ (the empty string) and $\mathrm{rev}(xw) = \mathrm{rev}(w)\,x$ for a letter $x$ and a string $w$. Prove that $\mathrm{rev}(uv) = \mathrm{rev}(v)\,\mathrm{rev}(u)$ for all strings $u, v$, and deduce that $\mathrm{rev}(\mathrm{rev}(w)) = w$.
+    solution: |
+      **First claim**, by induction on the length of $u$. If $u = \varepsilon$: $\mathrm{rev}(v) = \mathrm{rev}(v)\,\varepsilon$. If $u = xw$:
+      $$\mathrm{rev}(xwv) = \mathrm{rev}(wv)\,x = \mathrm{rev}(v)\,\mathrm{rev}(w)\,x = \mathrm{rev}(v)\,\mathrm{rev}(xw),$$
+      using the hypothesis for the shorter string $w$.
+
+      **Second claim**, by induction on the length of $w$. $\mathrm{rev}(\mathrm{rev}(\varepsilon)) = \varepsilon$. Note $\mathrm{rev}(x) = \mathrm{rev}(\varepsilon)\,x = x$ for a letter. For $w = xw'$,
+      $$\mathrm{rev}(\mathrm{rev}(xw')) = \mathrm{rev}(\mathrm{rev}(w')\,x) = \mathrm{rev}(x)\,\mathrm{rev}(\mathrm{rev}(w')) = xw'. \qquad\blacksquare$$
+
+  - id: in-179
+    title: McCarthy's 91 function
+    subtopic: Recursion & well-ordering
+    difficulty: hard
+    type: proof
+    tags: [strong induction, recursive definitions, termination]
+    source: McCarthy
+    hints:
+      - |
+        First show $M(n) = M(n+1)$ for $90 \le n \le 100$.
+    statement: |
+      Define $M$ on the integers by
+      $$M(n) = \begin{cases} n - 10 & n > 100,\\ M(M(n + 11)) & n \le 100.\end{cases}$$
+      Prove that the recursion terminates and $M(n) = 91$ for every $n \le 101$.
+    solution: |
+      $M(101) = 91$ directly.
+
+      **$90 \le n \le 100$.** Then $101 \le n + 11 \le 111$, so $M(n + 11) = n + 1$ and $M(n) = M(n+1)$. Working down from $n = 100$ to $n = 90$, each $M(n)$ terminates and equals $M(101) = 91$.
+
+      **$n < 90$.** Induct downwards: suppose $M(m)$ terminates with value 91 for every $m$ with $n < m \le 101$. Since $n < n + 11 < 101$, $M(n+11) = 91$, so $M(n) = M(91) = 91$. Every $n \le 89$ is reached after finitely many such steps from $90$. $\blacksquare$
+
+  - id: in-180
+    title: Small values of Ackermann's function
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: compute
+    tags: [double induction, recursive definitions, ackermann]
+    source: Ackermann, 1928
+    statement: |
+      Define $A(0, n) = n + 1$, $A(m+1, 0) = A(m, 1)$ and $A(m+1, n+1) = A(m, A(m+1, n))$ for $m, n \ge 0$. Find closed forms for $A(1, n)$, $A(2, n)$ and $A(3, n)$ and prove them.
+    solution: |
+      Each is by induction on $n$ using the previous one.
+
+      - **$A(1, n) = n + 2$.** $A(1,0) = A(0,1) = 2$; $A(1, n+1) = A(0, A(1,n)) = (n + 2) + 1$.
+      - **$A(2, n) = 2n + 3$.** $A(2, 0) = A(1, 1) = 3$; $A(2, n+1) = A(1, A(2, n)) = (2n + 3) + 2 = 2(n+1) + 3$.
+      - **$A(3, n) = 2^{n+3} - 3$.** $A(3, 0) = A(2, 1) = 5 = 2^3 - 3$; $A(3, n+1) = A(2, A(3, n)) = 2(2^{n+3} - 3) + 3 = 2^{n+4} - 3$.
+
+      (Next, $A(4, n)$ is a tower of $n + 3$ twos minus 3; $A(4, 2) = 2^{65536} - 3$.)
+
+  - id: in-181
+    title: "Where's the error? Every power is 1"
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [fallacy, strong induction]
+    related: [in-024]
+    statement: |
+      Find the flaw in this "proof" that $a^n = 1$ for every real $a \ne 0$ and every $n \ge 0$.
+
+      > Strong induction. $a^0 = 1$. Assume $a^k = 1$ for all $k \le n$. Then $a^{n+1} = \dfrac{a^n\cdot a^n}{a^{n-1}} = \dfrac{1\cdot1}{1} = 1$.
+    solution: |
+      The step from $n = 0$ to $n + 1 = 1$ uses $a^{n-1} = a^{-1}$, which is not among $a^0, \dots, a^n$, so the hypothesis says nothing about it (and indeed $a^{-1} \ne 1$ unless $a = 1$). The identity $a^1 = a^0a^0/a^{-1}$ is true, but it gives $a^1 = a$, not $1$.
+
+      So $P(0) \Rightarrow P(1)$ is never established. For $n \ge 1$ the step is valid, which is why the error is easy to miss.
+
+  - id: in-182
+    title: "Where's the error? All positive integers are equal"
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [fallacy, weak induction]
+    related: [in-024]
+    statement: |
+      Find the flaw in this argument.
+
+      > Let $P(n)$: "if $a, b$ are positive integers with $\max(a, b) = n$, then $a = b$." $P(1)$: $a = b = 1$. If $P(k)$ holds and $\max(a, b) = k + 1$, then $\max(a - 1, b - 1) = k$, so $a - 1 = b - 1$ by $P(k)$, so $a = b$. Hence any two positive integers are equal.
+    solution: |
+      $P(k)$ is about **positive** integers, but $a - 1$ or $b - 1$ may be $0$. For example $a = 1$, $b = 2$: $\max(a,b) = 2$, but $(a - 1, b - 1) = (0, 1)$ is not a pair of positive integers, so $P(1)$ cannot be applied.
+
+      So the step $P(k) \Rightarrow P(k+1)$ fails whenever $\min(a,b) = 1$, already at $k = 1$.
+
+  - id: in-183
+    title: "Where's the error? n² + n is odd"
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [fallacy, base case]
+    statement: |
+      Show that if $k^2 + k$ is odd then $(k+1)^2 + (k+1)$ is odd. Why doesn't this prove that $n^2 + n$ is odd for all $n$?
+    solution: |
+      $(k+1)^2 + (k+1) = (k^2 + k) + 2(k+1)$, which is odd + even = odd. So the inductive step is perfectly valid.
+
+      But there is no base case: $n^2 + n = n(n+1)$ is a product of consecutive integers, hence always **even**. A correct step $P(k)\Rightarrow P(k+1)$ proves nothing if $P$ never holds to begin with.
+
+  - id: in-184
+    title: "Where's the error? 6n = 0"
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [fallacy, strong induction]
+    statement: |
+      Find the flaw in this "proof" that $6n = 0$ for every $n \ge 0$.
+
+      > Strong induction. $6 \cdot 0 = 0$. For $n \ge 1$, write $n = a + b$ with $0 \le a, b < n$. By hypothesis $6a = 6b = 0$, so $6n = 6a + 6b = 0$.
+    solution: |
+      For $n = 1$ there are no $a, b$ with $0 \le a, b < 1$ and $a + b = 1$: the only option is $a = b = 0$, whose sum is $0$. So the step fails at $n = 1$.
+
+      For $n \ge 2$ the decomposition exists (e.g. $a = 1$, $b = n - 1$) and the step is valid, but the chain is broken at the first link.
+
+  - id: in-185
+    title: A recursion in two variables
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [double induction, recursive definitions]
+    statement: |
+      Define $f(0, n) = n$ and $f(m+1, n) = f(m, n+1)$ for $m, n \ge 0$. Prove that $f(m, n) = m + n$.
+    solution: |
+      We prove "$f(m, n) = m + n$ **for all** $n$" by induction on $m$. The "for all $n$" is essential, since the recursion changes $n$.
+
+      **Base.** $f(0, n) = n$.
+
+      **Step.** If $f(m, n') = m + n'$ for every $n'$, then $f(m+1, n) = f(m, n+1) = m + n + 1$. $\blacksquare$
+
+  - id: in-186
+    title: Linearity of sums from the definition
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [recursive definitions, sums]
+    statement: |
+      Define $\sum_{i=1}^0 a_i = 0$ and $\sum_{i=1}^{n+1}a_i = \sum_{i=1}^na_i + a_{n+1}$. Prove that for any constant $c$,
+      $$\sum_{i=1}^n(ca_i + b_i) = c\sum_{i=1}^na_i + \sum_{i=1}^nb_i.$$
+    solution: |
+      **Base.** $n = 0$: $0 = c\cdot0 + 0$.
+
+      **Step.** Assuming it for $n$,
+      $$\sum_{i=1}^{n+1}(ca_i + b_i) = c\sum_{i=1}^na_i + \sum_{i=1}^nb_i + ca_{n+1} + b_{n+1} = c\sum_{i=1}^{n+1}a_i + \sum_{i=1}^{n+1}b_i,$$
+      using commutativity, associativity and distributivity of real numbers. $\blacksquare$
+
+  - id: in-187
+    title: De Morgan's laws for n sets
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [weak induction, sets, de morgan]
+    related: [lg-016]
+    statement: |
+      Assuming $(A \cup B)^c = A^c \cap B^c$, prove that for all $n \ge 1$,
+      $$(A_1 \cup \cdots \cup A_n)^c = A_1^c \cap \cdots \cap A_n^c.$$
+    solution: |
+      **Base.** $n = 1$: trivial.
+
+      **Step.** With $B = A_1 \cup \cdots \cup A_k$,
+      $$(B \cup A_{k+1})^c = B^c \cap A_{k+1}^c = A_1^c \cap\cdots\cap A_k^c \cap A_{k+1}^c,$$
+      by the two-set law and then the hypothesis. $\blacksquare$
+
+  - id: in-188
+    title: The product rule for n functions
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [weak induction, derivatives, product rule]
+    related: [ca-007]
+    statement: |
+      Prove that if $f_1, \dots, f_n$ are differentiable then
+      $$(f_1f_2\cdots f_n)' = \sum_{i=1}^n f_1\cdots f_{i-1}\,f_i'\,f_{i+1}\cdots f_n.$$
+    solution: |
+      **Base.** $n = 1$: $f_1' = f_1'$.
+
+      **Step.** Let $P = f_1\cdots f_k$. By the product rule and the hypothesis,
+      $$(Pf_{k+1})' = P'f_{k+1} + Pf_{k+1}' = \sum_{i=1}^k f_1\cdots f_i'\cdots f_k\,f_{k+1} + f_1\cdots f_k\,f_{k+1}',$$
+      which is the formula for $k + 1$. $\blacksquare$
+
+      (Dividing by $f_1\cdots f_n$ gives logarithmic differentiation: $\frac{(f_1\cdots f_n)'}{f_1\cdots f_n} = \sum\frac{f_i'}{f_i}$.)
+
+  - id: in-189
+    title: Derivative of xⁿ
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [weak induction, derivatives]
+    related: [in-188]
+    statement: |
+      Using only the product rule and $\frac{d}{dx}x = 1$, prove that $\frac{d}{dx}x^n = nx^{n-1}$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $\frac{d}{dx}x = 1 = 1\cdot x^0$.
+
+      **Step.** $\frac{d}{dx}x^{k+1} = \frac{d}{dx}(x^k\cdot x) = kx^{k-1}\cdot x + x^k\cdot1 = (k+1)x^k$. $\blacksquare$
+
+  - id: in-190
+    title: Handshakes by induction
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [weak induction, counting]
+    statement: |
+      At a party of $n$ people everyone shakes hands with everyone else exactly once. Prove by induction that there are $\frac{n(n-1)}{2}$ handshakes.
+    solution: |
+      **Base.** $n = 1$: no handshakes, and $\frac{1\cdot0}{2} = 0$.
+
+      **Step.** When person $k + 1$ arrives at a party of $k$, they shake $k$ new hands, giving $\frac{k(k-1)}{2} + k = \frac{(k+1)k}{2}$. $\blacksquare$
+
+  - id: in-191
+    title: Diagonals of a convex polygon
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [weak induction, geometry, counting]
+    statement: |
+      Prove that a convex $n$-gon ($n \ge 3$) has $\frac{n(n-3)}{2}$ diagonals.
+    solution: |
+      **Base.** A triangle has $0$ diagonals.
+
+      **Step.** Insert a new vertex $v$ between consecutive vertices $u$ and $w$ of a convex $k$-gon, keeping it convex. The new diagonals are $v$ joined to the $k - 2$ vertices other than $u, w$, plus $uw$, which was a side and is now a diagonal. So
+      $$\frac{k(k-3)}{2} + (k - 1) = \frac{k^2 - k - 2}{2} = \frac{(k+1)(k-2)}{2}. \qquad\blacksquare$$
+
+  - id: in-192
+    title: Chords in a circle
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: compute
+    tags: [counting, geometry, binomial coefficients]
+    statement: |
+      $n$ points are placed on a circle and every chord between them is drawn; no three chords meet at an interior point. Show that the disc is divided into $1 + \binom n2 + \binom n4$ regions. Compute the values for $n = 1, \dots, 6$.
+    solution: |
+      Draw the chords one at a time. When a chord is added that crosses $c$ chords already drawn, the $c$ crossing points cut it into $c + 1$ pieces, and each piece splits a region in two, so the number of regions grows by $c + 1$.
+
+      Summing over all chords, the number of regions is $1 + (\text{number of chords}) + (\text{number of crossings})$, since each crossing is counted once (when the second of its two chords is drawn). There are $\binom n2$ chords, and each crossing comes from a unique set of 4 points (the endpoints of the two chords), while each 4 points give exactly one crossing. So there are $\binom n4$ crossings.
+
+      Values: $1, 2, 4, 8, 16, 31$. The pattern of powers of 2 breaks at $n = 6$, a classic warning against guessing from small cases.
+
+  - id: in-193
+    title: No infinite descent in the natural numbers
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [well-ordering, infinite descent, foundations]
+    related: [nt-027]
+    statement: |
+      Prove that the well-ordering principle for $\N$ is equivalent to: there is no infinite strictly decreasing sequence $a_1 > a_2 > a_3 > \cdots$ of natural numbers.
+    solution: |
+      **WOP $\Rightarrow$ no descent.** Given such a sequence, the set $\{a_1, a_2, \dots\}$ is non-empty, so it has a least element $a_k$. But $a_{k+1} < a_k$ is also in the set, a contradiction.
+
+      **No descent $\Rightarrow$ WOP.** Suppose $S \subseteq \N$ is non-empty with no least element. Pick $a_1 \in S$. Since $a_1$ is not least, there is $a_2 \in S$ with $a_2 < a_1$; since $a_2$ is not least, there is $a_3 \in S$ with $a_3 < a_2$; and so on. This builds an infinite strictly decreasing sequence, a contradiction. $\blacksquare$
+
+  - id: in-194
+    title: A rational recursion
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: compute
+    tags: [recurrence, closed form, conjecture]
+    statement: |
+      Let $a_1 = 1$ and $a_{n+1} = \dfrac{a_n}{1 + a_n}$. Find and prove a formula for $a_n$.
+    solution: |
+      $a_2 = \frac12$, $a_3 = \frac{1/2}{3/2} = \frac13$, $a_4 = \frac14$. **Guess:** $a_n = \frac1n$.
+
+      **Proof.** True for $n = 1$. If $a_k = \frac1k$ then $a_{k+1} = \dfrac{1/k}{1 + 1/k} = \dfrac{1}{k+1}$.
+
+      (Taking reciprocals, $\frac{1}{a_{n+1}} = \frac{1}{a_n} + 1$, which explains it.)
+
+  - id: in-195
+    title: Squaring the error
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [weak induction, recurrence, convergence]
+    statement: |
+      Let $0 < x_1 < 1$ and $x_{n+1} = x_n(2 - x_n)$. Prove that $1 - x_n = (1 - x_1)^{2^{n-1}}$ for all $n \ge 1$. Deduce that $0 < x_n < 1$, that $(x_n)$ is increasing, and that $x_n \to 1$.
+    solution: |
+      Note $1 - x_{n+1} = 1 - 2x_n + x_n^2 = (1 - x_n)^2$.
+
+      **Base.** $n = 1$: $1 - x_1 = (1 - x_1)^1$.
+
+      **Step.** If $1 - x_k = (1-x_1)^{2^{k-1}}$ then $1 - x_{k+1} = (1 - x_1)^{2^k}$.
+
+      Let $e = 1 - x_1 \in (0, 1)$. Then $1 - x_n = e^{2^{n-1}} \in (0, 1)$, so $0 < x_n < 1$. The exponents increase, so $e^{2^{n-1}}$ decreases and $x_n$ increases. And $e^{2^{n-1}} \le e^n \to 0$, so $x_n \to 1$. $\blacksquare$
+
+      (The error squares at each step: this is quadratic convergence, as in Newton's method.)
+
+  - id: in-196
+    title: Solving a first-order recurrence
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: compute
+    tags: [recurrence, closed form, conjecture]
+    statement: |
+      Let $a_1 = 1$ and $a_{n+1} = 2a_n + n$. Find a closed form and prove it.
+    solution: |
+      $a_2 = 3$, $a_3 = 8$, $a_4 = 19$, $a_5 = 42$. Try $a_n = c\,2^n - n - 1$ (a power of 2 plus a linear correction): $n = 1$ gives $2c - 2 = 1$, so $c = \frac32$. **Guess:** $a_n = 3\cdot2^{n-1} - n - 1$, giving $1, 3, 8, 19, 42$.
+
+      **Proof.** True for $n = 1$. If $a_k = 3\cdot2^{k-1} - k - 1$, then
+      $$a_{k+1} = 3\cdot2^k - 2k - 2 + k = 3\cdot2^k - (k+1) - 1.$$
+
+  - id: in-197
+    title: Ratios of Fibonacci numbers as a recursion
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [weak induction, fibonacci, continued fractions]
+    statement: |
+      Let $a_1 = 1$ and $a_{n+1} = \dfrac{1}{1 + a_n}$. Prove that $a_n = \dfrac{F_n}{F_{n+1}}$, where $F_1 = F_2 = 1$, $F_{k+1} = F_k + F_{k-1}$.
+    solution: |
+      **Base.** $a_1 = 1 = F_1/F_2$.
+
+      **Step.** If $a_k = F_k/F_{k+1}$, then
+      $$a_{k+1} = \frac{1}{1 + F_k/F_{k+1}} = \frac{F_{k+1}}{F_{k+1} + F_k} = \frac{F_{k+1}}{F_{k+2}}. \qquad\blacksquare$$
+
+      (So $a_n$ are the convergents of the continued fraction $\cfrac{1}{1 + \cfrac{1}{1 + \cdots}}$, and they tend to $\frac{\sqrt5 - 1}{2}$.)
+
+  - id: in-198
+    title: The rationals are not well-ordered
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [well-ordering, rationals]
+    statement: |
+      Prove that the set of positive rationals has no least element. Why does this mean "induction over the non-negative rationals" is not a valid proof method?
+    solution: |
+      If $q > 0$ is rational, so is $q/2$, and $0 < q/2 < q$. So no positive rational is least.
+
+      Induction (in its well-ordering form) works by taking a least counterexample. In $\Q_{\ge0}$ the set of counterexamples need not have a least element, so the argument has nowhere to start. Concretely, "$P(0)$, and $P(x) \Rightarrow P(x + 1)$" only reaches the integers, and there is no "next" rational to step to. $\blacksquare$
+
+  - id: in-199
+    title: f(f(n)) < f(n + 1)
+    subtopic: Recursion & well-ordering
+    difficulty: hard
+    type: proof
+    tags: [weak induction, functional equations]
+    source: IMO 1977
+    hints:
+      - |
+        Prove by induction on $k$: for all $n \ge k$, $f(n) \ge k$.
+    statement: |
+      Let $f$ be a function from the positive integers to the positive integers such that $f(f(n)) < f(n+1)$ for every $n$. Prove that $f(n) = n$ for every $n$.
+    solution: |
+      **Claim.** For every $k \ge 1$: $f(n) \ge k$ for all $n \ge k$. Induct on $k$. For $k = 1$ it holds since $f$ takes positive values. Suppose it holds for $k$ and let $n \ge k + 1$. Then $n - 1 \ge k$, so $f(n-1) \ge k$, and applying the claim for $k$ to $f(n-1)$ gives $f(f(n-1)) \ge k$. Hence $f(n) > f(f(n-1)) \ge k$, so $f(n) \ge k + 1$.
+
+      Taking $k = n$: $f(n) \ge n$ for all $n$.
+
+      **Increasing.** $f(n+1) > f(f(n)) \ge f(n)$, using $f(m) \ge m$ with $m = f(n)$. So $f$ is strictly increasing.
+
+      **Conclusion.** Since $f$ is strictly increasing, $f(f(n)) < f(n+1)$ forces $f(n) < n + 1$. Combined with $f(n) \ge n$, $f(n) = n$. $\blacksquare$
+
+  - id: in-200
+    title: Additive functions on the rationals
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [weak induction, functional equations, cauchy]
+    source: Cauchy
+    statement: |
+      Let $f : \Q \to \R$ satisfy $f(x + y) = f(x) + f(y)$ for all $x, y$. Prove that $f(x) = cx$ for all $x \in \Q$, where $c = f(1)$.
+    solution: |
+      $f(0) = f(0 + 0) = 2f(0)$, so $f(0) = 0$.
+
+      **Multiples.** For any $x$ and $n \ge 0$, $f(nx) = nf(x)$, by induction: $f(0\cdot x) = 0$, and $f((n+1)x) = f(nx) + f(x) = (n+1)f(x)$. Also $f(-x) + f(x) = f(0) = 0$, so $f(-x) = -f(x)$, and hence $f(nx) = nf(x)$ for all $n \in \Z$.
+
+      **Rationals.** Let $x = p/q$ with $q \ge 1$. Then $qf(p/q) = f(p) = pf(1)$, so $f(p/q) = \frac pq c$. $\blacksquare$
+
+      (Over $\R$, additivity alone does not force linearity; some regularity, such as continuity, is needed.)
+
+  - id: in-201
+    title: Counting ones in binary
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [strong induction, binary, recursive definitions]
+    statement: |
+      Define $f(1) = 1$, $f(2n) = f(n)$ and $f(2n+1) = f(n) + 1$ for $n \ge 1$. Prove that $f(n)$ is the number of 1s in the binary representation of $n$.
+    solution: |
+      Let $s(n)$ be the number of binary 1s in $n$. Strong induction. $f(1) = 1 = s(1)$.
+
+      For $n \ge 2$: the binary representation of $2m$ is that of $m$ with a $0$ appended, and of $2m + 1$ is that of $m$ with a $1$ appended. So $s(2m) = s(m)$ and $s(2m+1) = s(m) + 1$. Writing $n = 2m$ or $2m + 1$ with $1 \le m < n$, the hypothesis gives $f(m) = s(m)$, and then $f(n) = s(n)$ because $f$ and $s$ satisfy the same rule. $\blacksquare$
+
+  - id: in-202
+    title: Tower of Hanoi with adjacent moves only
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: compute
+    tags: [recurrence, tower of hanoi]
+    statement: |
+      Three pegs $A$, $B$, $C$ stand in a row, and a disc may only move between adjacent pegs ($A \leftrightarrow B$ or $B \leftrightarrow C$). As usual a larger disc may never sit on a smaller one. Give a recursive strategy moving $n$ discs from $A$ to $C$, find the number of moves $T(n)$ it uses, and prove a closed form.
+    solution: |
+      **Strategy.** To move $n$ discs $A \to C$: move the top $n - 1$ from $A$ to $C$; move the largest $A \to B$; move the $n - 1$ from $C$ back to $A$; move the largest $B \to C$; move the $n - 1$ from $A$ to $C$. (Moving $n-1$ discs from $C$ to $A$ is the mirror image of $A$ to $C$, so it costs the same.) With one disc: $A \to B \to C$, 2 moves.
+
+      So $T(1) = 2$ and $T(n) = 3T(n-1) + 2$.
+
+      **Closed form:** $T(n) = 3^n - 1$. True for $n = 1$; and $3(3^{n-1} - 1) + 2 = 3^n - 1$.
+
+      (This is optimal: the strategy visits every one of the $3^n$ legal arrangements exactly once.)
+
+  - id: in-203
+    title: Gray codes exist
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [weak induction, gray code, binary strings]
+    source: Gray, 1953
+    statement: |
+      Prove that for every $n \ge 1$ the $2^n$ binary strings of length $n$ can be listed in a cycle so that consecutive strings (including the last and first) differ in exactly one position.
+    solution: |
+      **Base.** $n = 1$: $0, 1$.
+
+      **Step.** Let $G = (g_1, \dots, g_N)$, $N = 2^k$, be such a cycle for length $k$. Form the list
+      $$0g_1, 0g_2, \dots, 0g_N, 1g_N, 1g_{N-1}, \dots, 1g_1.$$
+      - Every string of length $k+1$ appears exactly once: those starting with $0$ in the first half, those starting with $1$ in the second.
+      - Within each half, consecutive strings share the first bit and differ in one later position.
+      - At the join, $0g_N$ and $1g_N$ differ only in the first bit; and the last and first, $1g_1$ and $0g_1$, likewise.
+
+      $\blacksquare$
+
+  - id: in-204
+    title: Pascal's recursion gives the factorial formula
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [weak induction, binomial coefficients, recursive definitions]
+    related: [cb-007]
+    statement: |
+      Define $C(n, 0) = C(n, n) = 1$ and $C(n, k) = C(n-1, k-1) + C(n-1, k)$ for $0 < k < n$. Prove that $C(n, k) = \dfrac{n!}{k!\,(n-k)!}$ for $0 \le k \le n$.
+    solution: |
+      Induct on $n$. For $n = 0$ the only case is $k = 0$: $1 = \frac{0!}{0!0!}$.
+
+      Assume the formula for $n - 1$. The cases $k = 0, n$ are $1 = \frac{n!}{n!}$. For $0 < k < n$,
+      $$C(n,k) = \frac{(n-1)!}{(k-1)!\,(n-k)!} + \frac{(n-1)!}{k!\,(n-1-k)!} = \frac{(n-1)!}{k!\,(n-k)!}\big[k + (n-k)\big] = \frac{n!}{k!\,(n-k)!}. \qquad\blacksquare$$
+
+  - id: in-205
+    title: Generating solutions of x² − 2y² = 1
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [weak induction, pell equation, recurrence]
+    related: [in-162]
+    statement: |
+      Let $(x_0, y_0) = (1, 0)$ and $(x_{n+1}, y_{n+1}) = (3x_n + 4y_n,\ 2x_n + 3y_n)$. Prove that $x_n^2 - 2y_n^2 = 1$ for all $n$, and deduce that $x^2 - 2y^2 = 1$ has infinitely many solutions in positive integers.
+    solution: |
+      **Base.** $1 - 0 = 1$.
+
+      **Step.** 
+      $$x_{n+1}^2 - 2y_{n+1}^2 = 9x_n^2 + 24x_ny_n + 16y_n^2 - 2(4x_n^2 + 12x_ny_n + 9y_n^2) = x_n^2 - 2y_n^2 = 1.$$
+
+      By induction all $x_n, y_n$ are non-negative integers, and for $n \ge 1$ they are positive with $x_{n+1} > x_n$. So $(3,2), (17,12), (99,70), \dots$ are infinitely many distinct positive solutions. $\blacksquare$
+
+  - id: in-206
+    title: A recursion that stays integral
+    subtopic: Recursion & well-ordering
+    difficulty: hard
+    type: proof
+    tags: [strong induction, recurrence, invariant]
+    related: [in-205]
+    hints:
+      - |
+        Show that $a_{n+2}a_n - a_{n+1}^2$ is constant, and deduce that $\frac{a_{n+2} + a_n}{a_{n+1}}$ is constant.
+    statement: |
+      Let $a_1 = a_2 = 1$ and $a_{n+2} = \dfrac{a_{n+1}^2 + 2}{a_n}$. Prove that every $a_n$ is an integer.
+    solution: |
+      All $a_n$ are positive reals by induction, so the recursion is defined. By definition $a_{n+2}a_n - a_{n+1}^2 = 2$ for every $n$. Comparing consecutive $n$,
+      $$a_{n+2}a_n - a_{n+1}^2 = a_{n+3}a_{n+1} - a_{n+2}^2 \implies a_{n+2}(a_{n+2} + a_n) = a_{n+1}(a_{n+3} + a_{n+1}).$$
+      So $k_n := \dfrac{a_{n+2} + a_n}{a_{n+1}}$ satisfies $k_n = k_{n+1}$; it is constant, equal to $k_1 = \frac{a_3 + a_1}{a_2} = \frac{3 + 1}{1} = 4$.
+
+      Hence $a_{n+2} = 4a_{n+1} - a_n$ for all $n \ge 1$. Since $a_1, a_2$ are integers, induction gives that every $a_n$ is an integer: $1, 1, 3, 11, 41, 153, \dots$ $\blacksquare$
+
+  - id: in-207
+    title: The extended Euclidean algorithm is correct
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [strong induction, euclidean algorithm, bezout]
+    related: [in-152, nt-012]
+    statement: |
+      For non-negative integers $a, b$ not both zero, define $X(a, 0) = (a, 1, 0)$ and, for $b > 0$,
+      $$X(a, b) = (d,\ y,\ x - \lfloor a/b\rfloor y) \quad\text{where}\quad (d, x, y) = X(b, a \bmod b).$$
+      Prove that if $X(a, b) = (d, s, t)$ then $d = \gcd(a, b)$ and $as + bt = d$.
+    solution: |
+      Strong induction on $b$.
+
+      **$b = 0$.** $d = a = \gcd(a, 0)$ and $a\cdot1 + 0\cdot0 = a$.
+
+      **$b > 0$.** Let $q = \lfloor a/b\rfloor$ and $r = a \bmod b = a - qb < b$. By hypothesis $(d, x, y) = X(b, r)$ has $d = \gcd(b, r) = \gcd(a, b)$ and $bx + ry = d$. Then
+      $$a\,y + b\,(x - qy) = bx + (a - qb)y = bx + ry = d. \qquad\blacksquare$$
+
+  - id: in-208
+    title: Balanced strings, part 1
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [structural induction, strings, dyck words]
+    related: [in-209, cb-024]
+    statement: |
+      Let $S$ be the set of strings over $\{a, b\}$ defined by: the empty string $\varepsilon \in S$, and if $u, v \in S$ then $aubv \in S$. Prove that every $w \in S$ has as many $a$'s as $b$'s, and that every prefix of $w$ has at least as many $a$'s as $b$'s.
+    solution: |
+      Let $\delta(x) = \#a(x) - \#b(x)$. We show $\delta(w) = 0$ and $\delta(p) \ge 0$ for every prefix $p$ of $w$, by structural induction.
+
+      **Base.** $\varepsilon$ has only itself as a prefix, with $\delta = 0$.
+
+      **Step.** Let $w = aubv$ with $u, v$ satisfying the claim. Then $\delta(w) = 1 + 0 - 1 + 0 = 0$. A prefix of $w$ is one of: $\varepsilon$; $ap$ with $p$ a prefix of $u$, so $\delta = 1 + \delta(p) \ge 1$; $aub$, with $\delta = 0$; or $aubp$ with $p$ a prefix of $v$, so $\delta = \delta(p) \ge 0$. $\blacksquare$
+
+  - id: in-209
+    title: Balanced strings, part 2
+    subtopic: Recursion & well-ordering
+    difficulty: hard
+    type: proof
+    tags: [strong induction, strings, dyck words]
+    related: [in-208]
+    hints:
+      - |
+        Let $p$ be the shortest non-empty prefix of $w$ with equally many $a$'s and $b$'s, and show $p = aub$ with $u$ balanced.
+    statement: |
+      With $S$ as in in-208, prove the converse: if $w$ has as many $a$'s as $b$'s and every prefix has at least as many $a$'s as $b$'s, then $w \in S$.
+    solution: |
+      Call such strings **balanced**, and use $\delta$ from in-208. Strong induction on the length of $w$. If $w = \varepsilon$, $w \in S$.
+
+      Let $w$ be non-empty and balanced. Let $p$ be the shortest non-empty prefix with $\delta(p) = 0$ (it exists, as $w$ itself qualifies). The first letter is $a$, since the prefix of length 1 has $\delta \ge 0$. Every non-empty prefix of $p$ shorter than $p$ has $\delta \ge 1$ (it is $\ge 0$ and not $0$ by minimality), so the last letter of $p$ takes $\delta$ from $1$ to $0$ and must be $b$. Write $p = aub$.
+
+      - $u$ is balanced: $\delta(u) = \delta(p) - 1 + 1 = 0$, and for a prefix $u'$ of $u$, $\delta(au') \ge 1$, so $\delta(u') \ge 0$.
+      - Writing $w = pv$, $v$ is balanced: $\delta(v) = \delta(w) - \delta(p) = 0$, and for a prefix $v'$ of $v$, $\delta(v') = \delta(pv') \ge 0$.
+
+      Both $u$ and $v$ are shorter than $w$, so by hypothesis $u, v \in S$, and then $w = aubv \in S$. $\blacksquare$
+
+  - id: in-210
+    title: Parity and doubling for a linear recursion
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [strong induction, recurrence, closed form]
+    statement: |
+      Let $u_0 = 0$, $u_1 = 1$ and $u_{n+1} = 4u_n - u_{n-1}$. Prove that $u_n$ is even if and only if $n$ is even, and that $u_{2n} = u_n(u_{n+1} - u_{n-1})$ for $n \ge 1$.
+    solution: |
+      **Parity.** Mod 2 the recursion reads $u_{n+1} \equiv u_{n-1}$. So by induction in steps of 2, $u_n \equiv u_0 = 0$ for even $n$ and $u_n \equiv u_1 = 1$ for odd $n$.
+
+      **Closed form.** Let $\alpha = 2 + \sqrt3$ and $\beta = 2 - \sqrt3$, the roots of $x^2 = 4x - 1$; note $\alpha\beta = 1$. The sequence $v_n = \frac{\alpha^n - \beta^n}{\alpha - \beta}$ has $v_0 = 0$, $v_1 = 1$ and satisfies the same recursion (because $\alpha^{n+1} = 4\alpha^n - \alpha^{n-1}$, and likewise for $\beta$). By strong induction with two base cases, $u_n = v_n$ for all $n$.
+
+      **Doubling.** Since $\alpha^{-1} = \beta$, we have $\alpha^2 - 1 = \alpha(\alpha - \beta)$ and $\beta^2 - 1 = \beta(\beta - \alpha)$. So
+      $$u_{n+1} - u_{n-1} = \frac{\alpha^{n-1}(\alpha^2 - 1) - \beta^{n-1}(\beta^2 - 1)}{\alpha - \beta} = \alpha^n + \beta^n,$$
+      and
+      $$u_n(u_{n+1} - u_{n-1}) = \frac{(\alpha^n - \beta^n)(\alpha^n + \beta^n)}{\alpha - \beta} = \frac{\alpha^{2n} - \beta^{2n}}{\alpha - \beta} = u_{2n}. \qquad\blacksquare$$
+
+  - id: in-211
+    title: The Botez–Catalan identity
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, harmonic sums, alternating]
+    related: [ca-030]
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$1 - \frac12 + \frac13 - \cdots - \frac1{2n} = \frac1{n+1} + \frac1{n+2} + \cdots + \frac1{2n}.$$
+    solution: |
+      Let $L_n$, $R_n$ be the two sides. **Base.** $L_1 = \frac12 = R_1$.
+
+      **Step.** $L_{n+1} = L_n + \frac1{2n+1} - \frac1{2n+2}$. On the right we lose $\frac1{n+1}$ and gain $\frac1{2n+1} + \frac1{2n+2}$:
+      $$R_{n+1} = R_n + \frac1{2n+1} + \frac1{2n+2} - \frac{2}{2n+2} = R_n + \frac1{2n+1} - \frac1{2n+2}.$$
+      So if $L_n = R_n$ then $L_{n+1} = R_{n+1}$. $\blacksquare$
+
+  - id: in-212
+    title: A quartic telescoping sum
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, telescoping, sums]
+    hints:
+      - |
+        $k^4 + k^2 + 1 = (k^2 - k + 1)(k^2 + k + 1)$.
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$\sum_{k=1}^n\frac{k}{k^4 + k^2 + 1} = \frac{n(n+1)}{2(n^2 + n + 1)}.$$
+    solution: |
+      Since $k^4 + k^2 + 1 = (k^2+1)^2 - k^2 = (k^2 - k + 1)(k^2 + k + 1)$,
+      $$\frac{k}{k^4 + k^2 + 1} = \frac12\left(\frac{1}{k^2 - k + 1} - \frac{1}{k^2 + k + 1}\right).$$
+      Write $q(k) = k^2 - k + 1$, so $q(k+1) = k^2 + k + 1$.
+
+      **Base.** $n = 1$: $\frac13 = \frac{2}{6}$.
+
+      **Step.** The claim is $S_n = \frac12\left(1 - \frac1{q(n+1)}\right)$, since $1 - \frac1{n^2+n+1} = \frac{n(n+1)}{n^2+n+1}$. Assuming it for $n$,
+      $$S_{n+1} = \tfrac12\left(1 - \tfrac1{q(n+1)}\right) + \tfrac12\left(\tfrac{1}{q(n+1)} - \tfrac1{q(n+2)}\right) = \tfrac12\left(1 - \tfrac1{q(n+2)}\right). \qquad\blacksquare$$
+
+  - id: in-213
+    title: A sum of odd cosines
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, trigonometry, sums]
+    related: [in-044]
+    statement: |
+      Let $\sin x \ne 0$. Prove that for all $n \ge 1$,
+      $$\cos x + \cos 3x + \cdots + \cos(2n-1)x = \frac{\sin 2nx}{2\sin x}.$$
+    solution: |
+      **Base.** $n = 1$: $\frac{\sin 2x}{2\sin x} = \cos x$.
+
+      **Step.** Assuming it for $n$,
+      $$\frac{\sin 2nx}{2\sin x} + \cos(2n+1)x = \frac{\sin 2nx + 2\sin x\cos(2n+1)x}{2\sin x}.$$
+      By $2\sin A\cos B = \sin(A + B) + \sin(A - B)$, $2\sin x\cos(2n+1)x = \sin(2n+2)x - \sin 2nx$. So the numerator is $\sin(2n+2)x$. $\blacksquare$
+
+  - id: in-214
+    title: Sum of harmonic numbers
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, harmonic numbers, sums]
+    related: [in-215]
+    statement: |
+      With $H_k = 1 + \frac12 + \cdots + \frac1k$, prove that $\displaystyle\sum_{k=1}^n H_k = (n+1)H_n - n$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $1 = 2 - 1$.
+
+      **Step.** Using $H_n = H_{n+1} - \frac1{n+1}$,
+      $$(n+1)H_n - n + H_{n+1} = (n+1)H_{n+1} - 1 - n + H_{n+1} = (n+2)H_{n+1} - (n+1). \qquad\blacksquare$$
+
+  - id: in-215
+    title: A weighted sum of harmonic numbers
+    subtopic: Sums
+    difficulty: medium
+    type: proof
+    tags: [weak induction, harmonic numbers, sums]
+    related: [in-214]
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$\sum_{k=1}^n kH_k = \frac{n(n+1)}{2}H_{n+1} - \frac{n(n+1)}{4}.$$
+    solution: |
+      **Base.** $n = 1$: $1 = H_2 - \frac12 = 1$.
+
+      **Step.** Assuming it for $n$, add $(n+1)H_{n+1}$:
+      $$\left(\frac{n(n+1)}{2} + (n+1)\right)H_{n+1} - \frac{n(n+1)}{4} = \frac{(n+1)(n+2)}{2}H_{n+1} - \frac{n(n+1)}{4}.$$
+      The target is $\frac{(n+1)(n+2)}{2}H_{n+2} - \frac{(n+1)(n+2)}{4}$, and $\frac{(n+1)(n+2)}{2}H_{n+2} = \frac{(n+1)(n+2)}{2}H_{n+1} + \frac{n+1}{2}$. So the two differ by
+      $$\frac{n+1}{2} - \frac{(n+1)(n+2)}{4} + \frac{n(n+1)}{4} = \frac{n+1}{2} - \frac{2(n+1)}{4} = 0. \qquad\blacksquare$$
+
+  - id: in-216
+    title: Another telescoping product
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, products]
+    related: [in-040]
+    statement: |
+      Prove that $\displaystyle\prod_{k=1}^n\left(1 + \frac{1}{k(k+2)}\right) = \frac{2(n+1)}{n+2}$ for all $n \ge 1$.
+    solution: |
+      Note $1 + \frac{1}{k(k+2)} = \frac{(k+1)^2}{k(k+2)}$.
+
+      **Base.** $n = 1$: $\frac43 = \frac43$.
+
+      **Step.** Assuming it for $n$,
+      $$\frac{2(n+1)}{n+2}\cdot\frac{(n+2)^2}{(n+1)(n+3)} = \frac{2(n+2)}{n+3}. \qquad\blacksquare$$
+
+  - id: in-217
+    title: An alternating binomial sum gives harmonic numbers
+    subtopic: Sums
+    difficulty: hard
+    type: proof
+    tags: [weak induction, binomial coefficients, harmonic numbers]
+    hints:
+      - |
+        Compute $S_{n+1} - S_n$ with Pascal's rule, then use $\frac1k\binom{n}{k-1} = \frac{1}{n+1}\binom{n+1}{k}$.
+    statement: |
+      Prove that for all $n \ge 1$,
+      $$\sum_{k=1}^n\frac{(-1)^{k-1}}{k}\binom nk = 1 + \frac12 + \cdots + \frac1n.$$
+    solution: |
+      Let $S_n$ be the left side; $S_1 = 1 = H_1$. It suffices to show $S_{n+1} - S_n = \frac{1}{n+1}$.
+
+      By Pascal's rule $\binom{n+1}{k} - \binom nk = \binom{n}{k-1}$ (also for $k = n+1$, where $\binom n{n+1} = 0$), so
+      $$S_{n+1} - S_n = \sum_{k=1}^{n+1}\frac{(-1)^{k-1}}{k}\binom n{k-1}.$$
+      Now $\frac1k\binom n{k-1} = \frac{n!}{k!\,(n+1-k)!} = \frac{1}{n+1}\binom{n+1}{k}$, so
+      $$S_{n+1} - S_n = \frac{1}{n+1}\sum_{k=1}^{n+1}(-1)^{k-1}\binom{n+1}{k} = \frac{1}{n+1}\left(1 - \sum_{k=0}^{n+1}(-1)^k\binom{n+1}k\right) = \frac{1}{n+1},$$
+      because the alternating sum of a row of Pascal's triangle is $0$. $\blacksquare$
+
+  - id: in-218
+    title: Power sums are polynomials
+    subtopic: Sums
+    difficulty: hard
+    type: proof
+    tags: [strong induction, sums, polynomials, telescoping]
+    related: [in-002, in-003, in-031]
+    hints:
+      - |
+        Telescope $(n+1)^{k+1} - 1 = \sum_{j=1}^n\big[(j+1)^{k+1} - j^{k+1}\big]$ and expand with the binomial theorem.
+    statement: |
+      Let $S_k(n) = 1^k + 2^k + \cdots + n^k$. Prove that for each $k \ge 0$, $S_k(n)$ is a polynomial in $n$ of degree $k + 1$ with leading coefficient $\frac{1}{k+1}$.
+    solution: |
+      Strong induction on $k$. $S_0(n) = n$.
+
+      Let $k \ge 1$. Telescoping and the binomial theorem give
+      $$(n+1)^{k+1} - 1 = \sum_{j=1}^n\Big[(j+1)^{k+1} - j^{k+1}\Big] = \sum_{j=1}^n\sum_{i=0}^{k}\binom{k+1}{i}j^i = \sum_{i=0}^k\binom{k+1}{i}S_i(n).$$
+      The $i = k$ term is $(k+1)S_k(n)$, so
+      $$S_k(n) = \frac{1}{k+1}\left[(n+1)^{k+1} - 1 - \sum_{i=0}^{k-1}\binom{k+1}{i}S_i(n)\right].$$
+      By hypothesis each $S_i(n)$ with $i < k$ is a polynomial of degree $i + 1 \le k$. So the bracket is a polynomial whose only degree-$(k+1)$ term comes from $(n+1)^{k+1}$, namely $n^{k+1}$. Hence $S_k$ has degree $k+1$ and leading coefficient $\frac1{k+1}$. $\blacksquare$
+
+  - id: in-219
+    title: Cubes from hexagonal numbers
+    subtopic: Sums
+    difficulty: easy
+    type: proof
+    tags: [weak induction, sums]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n(3k^2 - 3k + 1) = n^3$ for all $n \ge 1$.
+    solution: |
+      **Base.** $n = 1$: $1 = 1$.
+
+      **Step.** $n^3 + 3(n+1)^2 - 3(n+1) + 1 = n^3 + 3n^2 + 3n + 1 = (n+1)^3$. $\blacksquare$
+
+      (The terms $1, 7, 19, 37, \dots$ are the centred hexagonal numbers, and $3k^2 - 3k + 1 = k^3 - (k-1)^3$.)
+
+  - id: in-220
+    title: Many prime factors of 2^(2ⁿ) − 1
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [fermat numbers, primes, coprime]
+    related: [in-074]
+    statement: |
+      Prove that $2^{2^n} - 1$ has at least $n$ distinct prime factors, for every $n \ge 1$. (You may use in-074.)
+    solution: |
+      By in-074, $2^{2^n} - 1 = f_n - 2 = f_0f_1\cdots f_{n-1}$, where $f_k = 2^{2^k} + 1$, and the $f_k$ are pairwise coprime. Each $f_k > 1$ has a prime factor $p_k$, and $p_k \mid 2^{2^n} - 1$. If $p_j = p_k$ with $j \ne k$, it would divide both $f_j$ and $f_k$, contradicting coprimality. So $p_0, \dots, p_{n-1}$ are $n$ distinct prime factors. $\blacksquare$
+
+  - id: in-221
+    title: Nine divides 4ⁿ + 15n − 1
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [weak induction, divisibility]
+    statement: |
+      Prove that $9 \mid 4^n + 15n - 1$ for all $n \ge 0$.
+    solution: |
+      Let $a_n = 4^n + 15n - 1$. **Base.** $a_0 = 0$.
+
+      **Step.** $a_{k+1} = 4\cdot4^k + 15k + 14 = 4(4^k + 15k - 1) - 45k + 18 = 4a_k - 9(5k - 2)$. $\blacksquare$
+
+  - id: in-222
+    title: Jacobsthal numbers
+    subtopic: Divisibility
+    difficulty: easy
+    type: proof
+    tags: [strong induction, recurrence, divisibility]
+    statement: |
+      Let $a_0 = 0$, $a_1 = 1$ and $a_n = a_{n-1} + 2a_{n-2}$. Prove that $a_n = \frac{2^n - (-1)^n}{3}$, and deduce that $3 \mid 2^n - (-1)^n$ for all $n$.
+    solution: |
+      **Bases.** $\frac{1 - 1}{3} = 0$ and $\frac{2 + 1}{3} = 1$.
+
+      **Step.** For $n \ge 2$, assuming it for $n-1$ and $n-2$,
+      $$a_n = \frac{2^{n-1} - (-1)^{n-1} + 2^{n-1} - 2(-1)^{n-2}}{3} = \frac{2^n + (-1)^n - 2(-1)^n}{3} = \frac{2^n - (-1)^n}{3}.$$
+
+      Since the recursion only adds integers, every $a_n$ is an integer, so $3 \mid 2^n - (-1)^n$. $\blacksquare$
+
+  - id: in-223
+    title: Powers of 2 dividing (3 + √5)ⁿ + (3 − √5)ⁿ
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [strong induction, recurrence, divisibility]
+    statement: |
+      Let $s_n = (3 + \sqrt5)^n + (3 - \sqrt5)^n$. Prove that $s_n$ is an integer divisible by $2^n$ for every $n \ge 0$.
+    solution: |
+      $\alpha = 3 + \sqrt5$ and $\beta = 3 - \sqrt5$ have sum $6$ and product $4$, so they are the roots of $x^2 = 6x - 4$. Multiplying by $x^{n-1}$ and adding the two versions,
+      $$s_{n+1} = 6s_n - 4s_{n-1}.$$
+
+      **Bases.** $s_0 = 2$ (divisible by $2^0$) and $s_1 = 6$ (divisible by $2$).
+
+      **Step.** If $2^n \mid s_n$ and $2^{n-1} \mid s_{n-1}$, then $6s_n$ is divisible by $2^{n+1}$ and $4s_{n-1}$ by $2^{n+1}$. So $s_{n+1}$ is an integer divisible by $2^{n+1}$. $\blacksquare$
+
+  - id: in-224
+    title: The integer part of (2 + √3)ⁿ is odd
+    subtopic: Divisibility
+    difficulty: medium
+    type: proof
+    tags: [strong induction, recurrence, floor function]
+    related: [in-210]
+    statement: |
+      Prove that $\lfloor(2 + \sqrt3)^n\rfloor$ is odd for every $n \ge 1$.
+    solution: |
+      Let $\alpha = 2 + \sqrt3$, $\beta = 2 - \sqrt3$ (roots of $x^2 = 4x - 1$) and $s_n = \alpha^n + \beta^n$. Then $s_0 = 2$, $s_1 = 4$ and $s_{n+1} = 4s_n - s_{n-1}$, so by induction every $s_n$ is an **even** integer.
+
+      Since $0 < \beta < 1$, for $n \ge 1$ we have $0 < \beta^n < 1$, so
+      $$s_n - 1 < \alpha^n = s_n - \beta^n < s_n.$$
+      Hence $\lfloor\alpha^n\rfloor = s_n - 1$, which is odd. $\blacksquare$
+
+  - id: in-225
+    title: A reciprocal Bernoulli bound
+    subtopic: Inequalities
+    difficulty: easy
+    type: proof
+    tags: [bernoulli, inequalities]
+    related: [in-011]
+    statement: |
+      Prove that $(1 - x)^n < \dfrac{1}{1 + nx}$ for $0 < x < 1$ and $n \ge 1$.
+    solution: |
+      $(1 - x)^n(1 + x)^n = (1 - x^2)^n < 1$, so $(1 - x)^n < \frac{1}{(1+x)^n}$. By Bernoulli's inequality $(1 + x)^n \ge 1 + nx$, so $\frac1{(1+x)^n} \le \frac1{1 + nx}$. $\blacksquare$
+
+  - id: in-226
+    title: A square-root sum exceeds √n
+    subtopic: Inequalities
+    difficulty: easy
+    type: proof
+    tags: [weak induction, inequalities, square roots]
+    related: [in-015, in-108]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n\frac{1}{\sqrt k} > \sqrt n$ for all $n \ge 2$.
+    solution: |
+      **Base.** $n = 2$: $1 + \frac1{\sqrt2} \approx 1.71 > 1.41$.
+
+      **Step.** If the sum to $n$ exceeds $\sqrt n$, the sum to $n+1$ exceeds $\sqrt n + \frac{1}{\sqrt{n+1}}$, and
+      $$\sqrt n + \frac1{\sqrt{n+1}} \ge \sqrt{n+1} \iff \sqrt{n(n+1)} + 1 \ge n + 1 \iff \sqrt{n(n+1)} \ge n,$$
+      which is true. $\blacksquare$
+
+  - id: in-227
+    title: A lower bound for the Basel sum
+    subtopic: Inequalities
+    difficulty: easy
+    type: proof
+    tags: [weak induction, inequalities]
+    related: [in-100]
+    statement: |
+      Prove that $\displaystyle\sum_{k=1}^n\frac1{k^2} \ge \frac32 - \frac{1}{n+1}$ for all $n \ge 1$, and deduce that $\sum_{k\ge1}\frac1{k^2} \ge \frac32$.
+    solution: |
+      **Base.** $n = 1$: $1 \ge \frac32 - \frac12$.
+
+      **Step.** It suffices that $\frac1{(n+1)^2} \ge \frac1{n+1} - \frac1{n+2} = \frac{1}{(n+1)(n+2)}$, which holds as $n + 1 < n + 2$.
+
+      Letting $n \to \infty$ gives the bound on the full sum (which is $\frac{\pi^2}{6} \approx 1.645$). $\blacksquare$
+
+  - id: in-228
+    title: (1 + 1/n)ⁿ is increasing
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [am-gm, inequalities, sequences]
+    related: [in-104, in-103]
+    statement: |
+      Prove that $\left(1 + \frac1n\right)^n < \left(1 + \frac1{n+1}\right)^{n+1}$ for all $n \ge 1$.
+    solution: |
+      Apply AM–GM to the $n + 1$ numbers $1 + \frac1n$ (repeated $n$ times) and $1$. Their arithmetic mean is
+      $$\frac{n\left(1 + \frac1n\right) + 1}{n+1} = \frac{n+2}{n+1} = 1 + \frac{1}{n+1},$$
+      and their geometric mean is $\left(1 + \frac1n\right)^{n/(n+1)}$. The numbers are not all equal, so AM–GM is strict:
+      $$\left(1 + \frac1n\right)^{n/(n+1)} < 1 + \frac1{n+1}.$$
+      Raising to the power $n + 1$ gives the result. $\blacksquare$
+
+      (With in-103 the sequence is increasing and bounded, so it converges; the limit is $e$.)
+
+  - id: in-229
+    title: A lower bound for n!
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, factorial, exponential]
+    related: [ca-025]
+    statement: |
+      Prove that $n! \ge \left(\dfrac ne\right)^n$ for all $n \ge 1$. You may use $e^x \ge 1 + x$.
+    solution: |
+      **Base.** $n = 1$: $1 \ge \frac1e$.
+
+      **Step.** Assuming it for $n$, $(n+1)! \ge (n+1)\frac{n^n}{e^n}$. This is $\ge \frac{(n+1)^{n+1}}{e^{n+1}}$ iff
+      $$e \ge \left(\frac{n+1}{n}\right)^n = \left(1 + \frac1n\right)^n.$$
+      From $e^{1/n} \ge 1 + \frac1n$, raising to the $n$th power gives exactly this. $\blacksquare$
+
+      (Directly: $e^n = \sum_k\frac{n^k}{k!} > \frac{n^n}{n!}$.)
+
+  - id: in-230
+    title: A slowly decaying recursion
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, recurrence, inequalities]
+    statement: |
+      Let $0 < a_1 < 1$ and $a_{n+1} = a_n - a_n^2$. Prove that $0 < a_n \le \frac{1}{n+1}$ for all $n \ge 2$.
+    solution: |
+      Let $f(x) = x(1 - x)$. On $(0,1)$, $0 < f(x) \le \frac14$, and $f$ is increasing on $[0, \frac12]$.
+
+      **Base.** $a_2 = f(a_1) \in (0, \frac14]$, and $\frac14 < \frac13$.
+
+      **Step.** Suppose $0 < a_n \le \frac{1}{n+1}$ with $n \ge 2$. Then $a_n \le \frac12$, so $a_{n+1} = f(a_n) \le f\left(\frac{1}{n+1}\right) = \frac{n}{(n+1)^2}$, and $a_{n+1} > 0$. Finally $\frac{n}{(n+1)^2} < \frac{1}{n+2}$ since $n(n+2) = (n+1)^2 - 1$. $\blacksquare$
+
+  - id: in-231
+    title: Nested square roots
+    subtopic: Inequalities
+    difficulty: medium
+    type: proof
+    tags: [weak induction, square roots, inequalities]
+    statement: |
+      Let $b_1 = 1$ and $b_n = \sqrt{n + b_{n-1}}$, so $b_n = \sqrt{n + \sqrt{(n-1) + \cdots + \sqrt{1}}}$. Prove that $\sqrt n < b_n < \sqrt n + 1$ for all $n \ge 2$.
+    solution: |
+      The lower bound is clear: $b_n^2 = n + b_{n-1} > n$.
+
+      For the upper bound we prove $b_n < \sqrt n + 1$ for all $n \ge 1$. **Base.** $b_1 = 1 < 2$.
+
+      **Step.** If $b_{n-1} < \sqrt{n-1} + 1$, then
+      $$b_n^2 = n + b_{n-1} < n + \sqrt{n-1} + 1 < n + 2\sqrt n + 1 = (\sqrt n + 1)^2. \qquad\blacksquare$$
+
+  - id: in-232
+    title: A second-order recurrence with a constant
+    subtopic: Strong induction
+    difficulty: easy
+    type: compute
+    tags: [strong induction, recurrence, closed form]
+    statement: |
+      Let $a_0 = 1$, $a_1 = 2$ and $a_n = 2a_{n-1} - a_{n-2} + 2$. Find and prove a closed form.
+    solution: |
+      $a_2 = 5$, $a_3 = 10$, $a_4 = 17$. **Guess:** $a_n = n^2 + 1$.
+
+      **Proof.** True for $n = 0, 1$. For $n \ge 2$, assuming it for $n - 1$ and $n - 2$,
+      $$2\big((n-1)^2 + 1\big) - \big((n-2)^2 + 1\big) + 2 = 2n^2 - 4n + 4 - n^2 + 4n - 5 + 2 = n^2 + 1.$$
+
+  - id: in-233
+    title: A multiplicative Fibonacci recursion
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, fibonacci, recurrence]
+    statement: |
+      Let $a_1 = 2$, $a_2 = 4$ and $a_n = a_{n-1}a_{n-2}$ for $n \ge 3$. Prove that $a_n = 2^{F_{n+1}}$, where $F_1 = F_2 = 1$ are the Fibonacci numbers.
+    solution: |
+      **Bases.** $a_1 = 2 = 2^{F_2}$ and $a_2 = 4 = 2^{F_3}$.
+
+      **Step.** For $n \ge 3$, $a_n = 2^{F_n}\cdot2^{F_{n-1}} = 2^{F_n + F_{n-1}} = 2^{F_{n+1}}$. $\blacksquare$
+
+      (Taking logarithms turns the multiplicative recursion into the Fibonacci one.)
+
+  - id: in-234
+    title: A Catalan-type recursion grows exponentially
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, catalan, inequalities]
+    related: [cb-024]
+    statement: |
+      Let $a_0 = 1$ and $a_n = \sum_{k=0}^{n-1}a_ka_{n-1-k}$ for $n \ge 1$. Prove that $a_n \ge 2^{n-1}$ for $n \ge 1$.
+    solution: |
+      By induction all $a_n$ are positive. $a_1 = a_0^2 = 1 = 2^0$.
+
+      For $n \ge 2$, the sum contains the two distinct terms $k = 0$ and $k = n-1$, each equal to $a_0a_{n-1} = a_{n-1}$, and the other terms are positive. So $a_n \ge 2a_{n-1} \ge 2\cdot2^{n-2} = 2^{n-1}$. $\blacksquare$
+
+  - id: in-235
+    title: Two-colouring a map of lines
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [weak induction, colouring, geometry]
+    related: [in-027]
+    statement: |
+      Any finite set of lines divides the plane into regions. Prove that the regions can be coloured black and white so that any two regions sharing a boundary segment get different colours.
+    solution: |
+      Induct on the number of lines. With none, colour the whole plane white.
+
+      **Step.** Suppose the regions of $k$ lines are properly coloured, and add a line $\ell$. Keep the colours on one side of $\ell$ and swap black and white on the other side.
+
+      Take two regions sharing a boundary segment $s$.
+
+      - If $s$ lies on $\ell$, the two regions are the two halves of a single old region, which had one colour; one half was swapped, so they now differ.
+      - If $s$ lies on an old line, then $s$ is on one side of $\ell$, and so are both regions near $s$. Either both were swapped or neither, and they differed before.
+
+      $\blacksquare$
+
+  - id: in-236
+    title: The gas station problem
+    subtopic: Strong induction
+    difficulty: hard
+    type: proof
+    tags: [weak induction, merging, circular arrangements]
+    hints:
+      - |
+        Some station has at least enough fuel to reach the next one. Merge those two stations into one.
+    statement: |
+      A car with an empty tank (of unlimited capacity) drives once around a circular road with $n$ fuel stations. Station $i$ supplies $g_i$ litres and the leg from station $i$ to the next needs $c_i$ litres. If $\sum g_i = \sum c_i$, prove that there is a station from which the car can start and complete the lap.
+    solution: |
+      Induct on $n$. For $n = 1$, $g_1 = c_1$ and starting there works.
+
+      **Step.** Let $n \ge 2$. Since $\sum g_i = \sum c_i$, some station $i$ has $g_i \ge c_i$. Merge station $i$ and the next station $i'$ into a single station with supply $g_i + g_{i'}$ and leg cost $c_i + c_{i'}$. The new road has $n - 1$ stations with equal totals, so by hypothesis it has a good starting station $s$.
+
+      Starting from the same station on the original road works:
+
+      - At every station other than $i$ and $i'$ the tank level is the same as on the merged road.
+      - Arriving at $i$ with $f \ge 0$ litres, the car has $f + g_i \ge c_i$ litres, so it reaches $i'$, and after refuelling holds $f + g_i - c_i + g_{i'}$, exactly what the merged station gives before its (combined) leg. So it completes the leg from $i'$ whenever the merged road does.
+
+      (If $s$ is the merged station, start at $i$: then $f = 0$.) $\blacksquare$
+
+  - id: in-237
+    title: Bouton's theorem on Nim
+    subtopic: Strong induction
+    difficulty: hard
+    type: proof
+    tags: [strong induction, games, nim, binary]
+    source: Bouton, 1901
+    related: [in-022]
+    hints:
+      - |
+        If the nim-sum $s = h_1 \oplus \cdots \oplus h_k$ is non-zero, look at its highest binary digit, and a heap that has that digit.
+    statement: |
+      In Nim there are heaps of sizes $h_1, \dots, h_k$; a move removes any positive number of counters from one heap, and whoever takes the last counter wins. Let $\oplus$ be bitwise exclusive or. Prove that the player to move loses (against best play) if and only if $h_1 \oplus h_2 \oplus\cdots\oplus h_k = 0$.
+    solution: |
+      Strong induction on the total number of counters. If it is $0$, the nim-sum is $0$ and the player to move has lost.
+
+      Otherwise, assume the claim for all smaller totals.
+
+      **Nim-sum $0$.** A move changes one heap from $h_i$ to some $h_i' \ne h_i$, changing the nim-sum to $h_i \oplus h_i' \ne 0$. By hypothesis the opponent, to move in that position, wins.
+
+      **Nim-sum $s \ne 0$.** Let $2^d$ be the highest power of 2 in the binary expansion of $s$. An odd number of heaps have the $2^d$ bit, so pick one, $h_i$. Then $h_i \oplus s$ agrees with $h_i$ above bit $d$ and has bit $d$ cleared, so $h_i \oplus s < h_i$. Reducing heap $i$ to $h_i \oplus s$ is a legal move, and the new nim-sum is $s \oplus h_i \oplus (h_i \oplus s) = 0$. By hypothesis the opponent now loses. $\blacksquare$
+
+  - id: in-238
+    title: A Fibonacci identity from Cassini
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [fibonacci, identities]
+    related: [in-054]
+    statement: |
+      With $F_0 = 0$, $F_1 = 1$, prove that $F_n^2 - F_{n-2}F_{n+2} = (-1)^n$ for all $n \ge 2$. (You may use Cassini's identity, in-054.)
+    solution: |
+      Write $F_{n+2} = F_{n+1} + F_n$ and $F_{n-2} = F_n - F_{n-1}$. Then
+      $$F_{n-2}F_{n+2} = F_nF_{n+1} + F_n^2 - F_{n-1}F_{n+1} - F_{n-1}F_n = F_n^2 + F_n(F_{n+1} - F_{n-1}) - F_{n-1}F_{n+1} = 2F_n^2 - F_{n-1}F_{n+1},$$
+      using $F_{n+1} - F_{n-1} = F_n$. So $F_n^2 - F_{n-2}F_{n+2} = F_{n-1}F_{n+1} - F_n^2 = (-1)^n$ by Cassini. $\blacksquare$
+
+  - id: in-239
+    title: A polynomial of degree n has at most n roots
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [weak induction, polynomials, roots]
+    related: [in-240]
+    statement: |
+      Prove that a non-zero real polynomial of degree $n$ has at most $n$ real roots. You may use the factor theorem: if $p(a) = 0$ then $p(x) = (x - a)q(x)$ for a polynomial $q$ of degree $\deg p - 1$.
+    solution: |
+      Induct on $n$. A non-zero constant ($n = 0$) has no roots.
+
+      **Step.** Let $\deg p = n + 1$. If $p$ has no root we are done. Otherwise let $p(a) = 0$ and write $p(x) = (x - a)q(x)$ with $\deg q = n$, $q \ne 0$. If $p(b) = 0$ with $b \ne a$, then $(b - a)q(b) = 0$, so $q(b) = 0$. Hence the roots of $p$ are $a$ together with roots of $q$, of which there are at most $n$ by hypothesis. So $p$ has at most $n + 1$ roots. $\blacksquare$
+
+  - id: in-240
+    title: Interpolating polynomials exist
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [weak induction, polynomials, interpolation]
+    source: Newton
+    related: [in-239]
+    statement: |
+      Let $x_0, \dots, x_n$ be distinct reals and $y_0, \dots, y_n$ any reals. Prove that there is a polynomial $p$ of degree at most $n$ with $p(x_i) = y_i$ for all $i$, and that it is unique.
+    solution: |
+      **Existence**, by induction on $n$. For $n = 0$ take $p = y_0$.
+
+      **Step.** Suppose $p_n$ has degree $\le n$ and $p_n(x_i) = y_i$ for $i \le n$. Let
+      $$p_{n+1}(x) = p_n(x) + c\prod_{i=0}^n(x - x_i).$$
+      For $i \le n$ the product vanishes, so $p_{n+1}(x_i) = y_i$. Choose
+      $$c = \frac{y_{n+1} - p_n(x_{n+1})}{\prod_{i=0}^n(x_{n+1} - x_i)},$$
+      possible since the $x_i$ are distinct. Then $p_{n+1}(x_{n+1}) = y_{n+1}$, and $\deg p_{n+1} \le n+1$.
+
+      **Uniqueness.** If $p, q$ both work, $p - q$ has degree $\le n$ and $n + 1$ roots $x_0, \dots, x_n$, so by in-239 it is the zero polynomial. $\blacksquare$
+
+  - id: in-241
+    title: Each element divides the sum
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [weak induction, construction, divisibility]
+    statement: |
+      Prove that for every $n \ge 3$ there is a set of $n$ distinct positive integers each of which divides the sum of all of them.
+    solution: |
+      **Base.** $\{1, 2, 3\}$ has sum $6$, divisible by each.
+
+      **Step.** Let $S$ work for $n$, with sum $\sigma$. Every element of $S$ is at most $\sigma$, and equals $\sigma$ only if $S$ has one element, so every element is less than $\sigma$. Let $S' = S \cup \{\sigma\}$, which has $n + 1$ distinct elements and sum $2\sigma$. Each old element divides $\sigma$, hence $2\sigma$; and $\sigma \mid 2\sigma$. $\blacksquare$
+
+      ($\{1,2,3\}, \{1,2,3,6\}, \{1,2,3,6,12\}, \dots$)
+
+  - id: in-242
+    title: Reciprocals summing to 1
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [weak induction, egyptian fractions, construction]
+    related: [in-128]
+    statement: |
+      Prove that for every $n \ge 3$ there are $n$ distinct positive integers whose reciprocals add up to $1$.
+    solution: |
+      **Base.** $\frac12 + \frac13 + \frac16 = 1$.
+
+      **Step.** Suppose $\frac1{a_1} + \cdots + \frac1{a_n} = 1$ with distinct $a_i$; necessarily every $a_i \ge 2$. Then
+      $$\frac12 + \frac{1}{2a_1} + \cdots + \frac{1}{2a_n} = \frac12 + \frac12 = 1.$$
+      The numbers $2a_1, \dots, 2a_n$ are distinct and all at least $4$, so together with $2$ they are $n + 1$ distinct integers. $\blacksquare$
+
+  - id: in-243
+    title: A halving map always reaches 1
+    subtopic: Strong induction
+    difficulty: easy
+    type: proof
+    tags: [strong induction, termination, collatz]
+    statement: |
+      Let $f(n) = n/2$ if $n$ is even and $f(n) = (n+1)/2$ if $n$ is odd. Prove that for every $n \ge 1$, repeatedly applying $f$ eventually reaches $1$. Why does the same argument not settle the Collatz problem, where $f(n) = 3n + 1$ for odd $n$?
+    solution: |
+      Strong induction on $n$. If $n = 1$ we are there. If $n \ge 2$, then $1 \le f(n) < n$: for even $n$, $\frac n2 < n$; for odd $n \ge 3$, $\frac{n+1}{2} < n$. By hypothesis iterating from $f(n)$ reaches $1$, hence so does iterating from $n$. $\blacksquare$
+
+      The argument needs $f(n) < n$ at every step. In the Collatz map, $3n + 1 > n$ for odd $n$, so the iterates can go up, and strong induction has nothing to stand on. Whether every Collatz orbit reaches 1 is still unknown.
+
+  - id: in-244
+    title: Counting orderings
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [weak induction, permutations, counting]
+    statement: |
+      Prove by induction that $n$ distinct objects can be arranged in a row in exactly $n!$ ways.
+    solution: |
+      **Base.** $n = 1$: one way, $1! = 1$. (Or $n = 0$: the empty arrangement, $0! = 1$.)
+
+      **Step.** An arrangement of $k + 1$ objects consists of an arrangement of the first $k$ objects together with a choice of where to insert the last object: one of the $k + 1$ gaps (before the first, between two, or after the last). Different choices give different arrangements and every arrangement arises once, so there are $(k+1)\cdot k! = (k+1)!$. $\blacksquare$
+
+  - id: in-245
+    title: Counting functions and injections
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [weak induction, functions, counting]
+    statement: |
+      Let $|B| = n$. Prove by induction on $m$ that there are $n^m$ functions from an $m$-element set $A$ to $B$, and $n(n-1)\cdots(n - m + 1)$ injective ones.
+    solution: |
+      **Base.** $m = 0$: there is exactly one function from $\varnothing$ (the empty function), and it is injective. Both formulas give $1$ (an empty product).
+
+      **Step.** Let $|A| = k + 1$, pick $a \in A$ and let $A' = A \setminus\{a\}$. A function $A \to B$ is a function $A' \to B$ together with a value for $a$.
+
+      - All functions: $n^k$ choices on $A'$ and $n$ for $a$: $n^{k+1}$.
+      - Injections: $n(n-1)\cdots(n-k+1)$ injections on $A'$; then $a$ must avoid the $k$ values already used, leaving $n - k$ choices. Total $n(n-1)\cdots(n-k)$.
+
+      $\blacksquare$
+
+  - id: in-246
+    title: Two recurrences for derangements
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [weak induction, derangements, recurrence]
+    related: [cb-017]
+    statement: |
+      The derangement numbers satisfy $D_1 = 0$, $D_2 = 1$ and $D_n = (n-1)(D_{n-1} + D_{n-2})$ for $n \ge 3$. Prove that $D_n = nD_{n-1} + (-1)^n$ for all $n \ge 2$, and deduce $D_n = n!\sum_{k=0}^n\frac{(-1)^k}{k!}$.
+    solution: |
+      **Base.** $n = 2$: $1 = 2\cdot0 + 1$.
+
+      **Step.** Assume $D_n = nD_{n-1} + (-1)^n$. Then
+      $$D_{n+1} = n(D_n + D_{n-1}) = nD_n + nD_{n-1} = nD_n + D_n - (-1)^n = (n+1)D_n + (-1)^{n+1}.$$
+
+      **Formula.** Dividing by $n!$: $\frac{D_n}{n!} = \frac{D_{n-1}}{(n-1)!} + \frac{(-1)^n}{n!}$. With $\frac{D_1}{1!} = 0 = \frac1{0!} - \frac1{1!}$, summing gives $\frac{D_n}{n!} = \sum_{k=0}^n\frac{(-1)^k}{k!}$. $\blacksquare$
+
+  - id: in-247
+    title: Bell numbers are at most factorials
+    subtopic: Strong induction
+    difficulty: medium
+    type: proof
+    tags: [strong induction, bell numbers, inequalities]
+    related: [in-103]
+    statement: |
+      The Bell numbers satisfy $B_0 = 1$ and $B_{n+1} = \sum_{k=0}^n\binom nkB_k$. Prove that $B_n \le n!$ for all $n \ge 0$. (You may use $\sum_{j=0}^n\frac1{j!} < 3$.)
+    solution: |
+      **Bases.** $B_0 = 1$, $B_1 = 1$, $B_2 = B_0 + B_1 = 2$; compare $0! = 1! = 1$, $2! = 2$.
+
+      **Step.** Let $n \ge 2$ and assume $B_k \le k!$ for $k \le n$. Then
+      $$B_{n+1} \le \sum_{k=0}^n\binom nkk! = \sum_{k=0}^n\frac{n!}{(n-k)!} = n!\sum_{j=0}^n\frac{1}{j!} < 3\cdot n! \le (n+1)!,$$
+      since $n + 1 \ge 3$. $\blacksquare$
+
+  - id: in-248
+    title: Stamps of 6, 10 and 15 cents
+    subtopic: Strong induction
+    difficulty: medium
+    type: compute
+    tags: [strong induction, frobenius]
+    related: [in-121]
+    statement: |
+      With stamps of 6, 10 and 15 cents, show that 29 cents cannot be paid but every amount of at least 30 cents can.
+    solution: |
+      **29 is impossible.** $6$ and $10$ are even, so an odd total needs an odd number of 15s; three would exceed 29, so exactly one, leaving $14 = 6a + 10b$. But $14 - 10 = 4$ and $14$ are not multiples of $6$.
+
+      **Bases.** 
+      $$30 = 15 + 15,\ 31 = 6 + 10 + 15,\ 32 = 6 + 6 + 10 + 10,\ 33 = 6\cdot3 + 15,\ 34 = 6\cdot4 + 10,\ 35 = 10 + 10 + 15.$$
+
+      **Step.** For $n \ge 36$, $n - 6 \ge 30$ is payable by strong induction; add a 6-cent stamp.
+
+  - id: in-249
+    title: Nested radicals and cosines
+    subtopic: Recursion & well-ordering
+    difficulty: medium
+    type: proof
+    tags: [weak induction, trigonometry, square roots]
+    statement: |
+      Let $a_1 = \sqrt2$ and $a_{n+1} = \sqrt{2 + a_n}$. Prove that $a_n = 2\cos\dfrac{\pi}{2^{n+1}}$ for all $n \ge 1$.
+    solution: |
+      **Base.** $2\cos\frac\pi4 = \sqrt2$.
+
+      **Step.** If $a_n = 2\cos\theta$ with $\theta = \frac{\pi}{2^{n+1}}$, then using $1 + \cos\theta = 2\cos^2\frac\theta2$,
+      $$a_{n+1} = \sqrt{2 + 2\cos\theta} = \sqrt{4\cos^2\tfrac\theta2} = 2\cos\tfrac\theta2,$$
+      taking the positive root since $0 < \frac\theta2 < \frac\pi2$. And $\frac\theta2 = \frac{\pi}{2^{n+2}}$. $\blacksquare$
+
+      (So $a_n \to 2\cos 0 = 2$, matching in-026.)
+
+  - id: in-250
+    title: Edges of the hypercube
+    subtopic: Recursion & well-ordering
+    difficulty: easy
+    type: proof
+    tags: [weak induction, graphs, hypercube]
+    statement: |
+      The $n$-cube $Q_n$ has the $2^n$ binary strings of length $n$ as vertices, two being joined when they differ in exactly one position. Prove that $Q_n$ has $n2^{n-1}$ edges.
+    solution: |
+      **Base.** $Q_1$ is one edge: $1\cdot2^0 = 1$.
+
+      **Step.** The vertices of $Q_{n+1}$ starting with $0$ form a copy of $Q_n$, as do those starting with $1$. The remaining edges join $0w$ to $1w$, one for each of the $2^n$ strings $w$. So
+      $$e_{n+1} = 2e_n + 2^n = 2n2^{n-1} + 2^n = (n+1)2^n. \qquad\blacksquare$$

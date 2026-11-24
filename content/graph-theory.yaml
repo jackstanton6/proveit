@@ -459,3 +459,981 @@ problems:
       **Hall's condition.** Let $S \subseteq X$. Exactly $k|S|$ edges leave $S$, and all of them end in $N(S)$. Each vertex of $N(S)$ is the endpoint of exactly $k$ edges in total, so $k|S| \le k|N(S)|$, i.e. $|N(S)| \ge |S|$.
 
       By Hall's theorem there is a matching covering $X$. Since $|X| = |Y|$, it covers $Y$ as well: a perfect matching. $\blacksquare$
+
+  - id: gt-031
+    title: Degrees of familiar graphs
+    subtopic: Degrees
+    difficulty: easy
+    type: compute
+    tags: [degrees, handshake lemma, special graphs]
+    related: [gt-001]
+    statement: |
+      Give the degrees and the number of edges of $K_n$, $K_{m,n}$, the cycle $C_n$, the hypercube $Q_n$, and the Petersen graph (10 vertices, 3-regular).
+    solution: |
+      - $K_n$: every degree $n - 1$; $\frac{n(n-1)}{2}$ edges.
+      - $K_{m,n}$: degrees $n$ (on the $m$ side) and $m$; $mn$ edges.
+      - $C_n$: every degree 2; $n$ edges.
+      - $Q_n$: every degree $n$ (flip any of $n$ bits); $\frac{n2^n}{2} = n2^{n-1}$ edges.
+      - Petersen: $\frac{10\cdot3}{2} = 15$ edges.
+
+      In each case the edge count is half the degree sum.
+
+  - id: gt-032
+    title: The Havel–Hakimi test
+    subtopic: Degrees
+    difficulty: medium
+    type: proof
+    tags: [degree sequences, graphic sequences]
+    source: Havel, Hakimi
+    related: [gt-003, gt-038]
+    statement: |
+      Let $d_1 \ge d_2 \ge \cdots \ge d_n$. Prove that $(d_1, \dots, d_n)$ is the degree sequence of a simple graph iff $(d_2 - 1, \dots, d_{d_1+1} - 1, d_{d_1+2}, \dots, d_n)$ is. Use it to show $(3, 3, 2, 2, 1, 1)$ is graphic.
+    solution: |
+      **($\Leftarrow$)** Take a graph with the reduced sequence and add a vertex adjacent to the vertices of degrees $d_2 - 1, \dots, d_{d_1+1} - 1$.
+
+      **($\Rightarrow$)** Among graphs with degrees $d_i$ at vertices $v_i$, take one where $v_1$ has as many neighbours as possible among $v_2, \dots, v_{d_1+1}$. If $v_1$ is not adjacent to some $v_i$ ($2 \le i \le d_1 + 1$), it is adjacent to some $v_j$ with $j > d_1 + 1$. As $d_i \ge d_j$ and $v_j$ has the neighbour $v_1$ that $v_i$ lacks, $v_i$ has a neighbour $w$ that $v_j$ lacks. Replace edges $v_1v_j, v_iw$ by $v_1v_i, v_jw$: degrees are unchanged and $v_1$ gains a neighbour in the first group, a contradiction. So $v_1$ is adjacent to exactly $v_2, \dots, v_{d_1+1}$, and deleting it gives the reduced sequence.
+
+      **Example.** $(3,3,2,2,1,1) \to (2,1,1,1,1) \to (0,0,1,1) = (1,1,0,0) \to (0,0,0)$, which is graphic (three isolated vertices). $\blacksquare$
+
+  - id: gt-033
+    title: High minimum degree forces connectivity
+    subtopic: Degrees
+    difficulty: medium
+    type: proof
+    tags: [degrees, connectivity]
+    related: [gt-005]
+    statement: |
+      Prove that a simple graph on $n$ vertices in which every vertex has degree at least $\frac{n-1}{2}$ is connected. Show the bound can't be lowered.
+    solution: |
+      Take non-adjacent $u, v$. They have at least $\frac{n-1}{2}$ neighbours each, all among the other $n - 2$ vertices. Since $\frac{n-1}{2} + \frac{n-1}2 = n - 1 > n - 2$, they share a neighbour. So any two vertices are at distance at most 2.
+
+      **Sharp.** For even $n$, two disjoint copies of $K_{n/2}$ have minimum degree $\frac n2 - 1 < \frac{n-1}{2}$ and are disconnected. $\blacksquare$
+
+  - id: gt-034
+    title: Dense subgraphs
+    subtopic: Degrees
+    difficulty: hard
+    type: proof
+    tags: [degrees, average degree, subgraphs]
+    statement: |
+      Prove that every graph with average degree $d > 0$ has a subgraph with minimum degree greater than $\frac d2$.
+    solution: |
+      Let $n, e$ be the numbers of vertices and edges, so $e = \frac{dn}{2}$, and consider $\Phi = e - \frac d2n$, initially $0$. Repeatedly delete a vertex of degree at most $\frac d2$ (in the current graph). Each deletion removes one vertex and at most $\frac d2$ edges, so $\Phi$ never decreases.
+
+      If every vertex were eventually deleted, then just before the last deletion the graph would be a single vertex with no edges, where $\Phi = -\frac d2 < 0$, a contradiction. So the process stops at a non-empty subgraph in which every vertex has degree greater than $\frac d2$. $\blacksquare$
+
+  - id: gt-035
+    title: Regular graphs
+    subtopic: Degrees
+    difficulty: easy
+    type: proof
+    tags: [regular graphs, handshake lemma]
+    statement: |
+      Prove that a $k$-regular graph on $n$ vertices has $\frac{nk}{2}$ edges, so $nk$ is even. For which $n$ is there a 3-regular graph on $n$ vertices?
+    solution: |
+      Handshake lemma: $2e = nk$.
+
+      3-regular needs $n$ even, and $n \ge 4$. Conversely every even $n \ge 4$ works: take the cycle $C_n$ and join each vertex to the opposite one ($i \sim i + \frac n2$). $\blacksquare$
+
+  - id: gt-036
+    title: Enough edges force a cycle
+    subtopic: Degrees
+    difficulty: medium
+    type: proof
+    tags: [cycles, forests, edges]
+    related: [gt-044]
+    statement: |
+      Prove that a graph with $n$ vertices and at least $n$ edges contains a cycle.
+    solution: |
+      If not, it is a forest; with $c \ge 1$ components it has $n - c \le n - 1$ edges (gt-044). Contradiction. $\blacksquare$
+
+  - id: gt-037
+    title: Mantel's theorem
+    subtopic: Degrees
+    difficulty: hard
+    type: proof
+    tags: [extremal graph theory, triangles, cauchy-schwarz]
+    source: Mantel, 1907
+    hints:
+      - |
+        For an edge $uv$ in a triangle-free graph, $\deg u + \deg v \le n$. Sum over edges.
+    statement: |
+      Prove that a triangle-free graph on $n$ vertices has at most $\frac{n^2}{4}$ edges, and that this is attained.
+    solution: |
+      For an edge $uv$, the neighbourhoods of $u$ and $v$ are disjoint (a common neighbour would make a triangle), so $\deg u + \deg v \le n$. Summing over the $e$ edges,
+      $$\sum_{uv\in E}(\deg u + \deg v) = \sum_v\deg(v)^2 \le ne,$$
+      since each vertex $v$ appears in $\deg v$ edges. By Cauchy–Schwarz, $\sum\deg(v)^2 \ge \frac{(\sum\deg v)^2}{n} = \frac{4e^2}{n}$. So $\frac{4e^2}{n} \le ne$, i.e. $e \le \frac{n^2}{4}$.
+
+      **Attained:** $K_{\lfloor n/2\rfloor, \lceil n/2\rceil}$ is triangle-free (bipartite) with $\lfloor\frac{n^2}{4}\rfloor$ edges. $\blacksquare$
+
+  - id: gt-038
+    title: A sequence that isn't graphic
+    subtopic: Degrees
+    difficulty: easy
+    type: compute
+    tags: [degree sequences, havel-hakimi]
+    related: [gt-032]
+    statement: |
+      Is $(5, 5, 4, 3, 2, 1)$ the degree sequence of a simple graph? Is $(4, 4, 3, 3, 2, 2)$?
+    solution: |
+      **First.** The sum is 20 (even), but Havel–Hakimi gives $(4, 3, 2, 1, 0) \to (2, 1, 0, -1)$, negative. **Not graphic.** (Directly: two vertices of degree 5 are adjacent to all others, so the degree-1 vertex would have degree 2.)
+
+      **Second.** $(4,4,3,3,2,2) \to (3,2,2,1,2) = (3,2,2,2,1) \to (1,1,1,1) \to (0,1,1) = (1,1,0) \to (0,0)$. **Graphic.**
+
+  - id: gt-039
+    title: Same degrees, different graphs
+    subtopic: Degrees
+    difficulty: easy
+    type: proof
+    tags: [isomorphism, degree sequences]
+    statement: |
+      Show that the 6-cycle $C_6$ and two disjoint triangles have the same degree sequence but are not isomorphic.
+    solution: |
+      Both are 2-regular on 6 vertices. But $C_6$ is connected and the two triangles are not; isomorphisms preserve connectedness. (Also $C_6$ has no triangle.) $\blacksquare$
+
+  - id: gt-040
+    title: Self-complementary graphs
+    subtopic: Degrees
+    difficulty: medium
+    type: proof
+    tags: [complement, isomorphism, edges]
+    related: [gt-016]
+    statement: |
+      A graph is self-complementary if it is isomorphic to its complement. Prove that then $n \equiv 0$ or $1 \pmod 4$, and give examples with 4 and 5 vertices.
+    solution: |
+      $G$ and $\overline G$ have the same number of edges, which together make $\binom n2$. So $\binom n2 = \frac{n(n-1)}{2}$ is even, i.e. $4 \mid n(n-1)$, which (as $n$ and $n - 1$ are coprime) means $4 \mid n$ or $4 \mid n - 1$.
+
+      **Examples.** The path $P_4$ ($a-b-c-d$): its complement is the path $b-d-a-c$. The 5-cycle: its complement is the 5-cycle of "distance 2" chords. $\blacksquare$
+
+  - id: gt-041
+    title: Edges of the line graph
+    subtopic: Degrees
+    difficulty: medium
+    type: proof
+    tags: [line graphs, degrees, counting]
+    statement: |
+      The line graph $L(G)$ has the edges of $G$ as vertices, two adjacent when they share an endpoint. Prove that $L(G)$ has $\sum_v\binom{\deg v}{2}$ edges (for a simple graph $G$). Compute it for $K_4$.
+    solution: |
+      Two edges of a simple graph share at most one endpoint. So edges of $L(G)$ correspond to pairs of edges at a common vertex $v$, and at $v$ there are $\binom{\deg v}{2}$ such pairs.
+
+      $K_4$: $4\binom32 = 12$. ($L(K_4)$ is the octahedron.) $\blacksquare$
+
+  - id: gt-042
+    title: Sum of squared degrees
+    subtopic: Degrees
+    difficulty: medium
+    type: proof
+    tags: [degrees, double counting]
+    related: [gt-037]
+    statement: |
+      Prove that $\sum_v\deg(v)^2 = \sum_{uv \in E}(\deg u + \deg v)$.
+    solution: |
+      In the right-hand sum, each vertex $v$ contributes $\deg v$ once for each edge at $v$, i.e. $\deg v$ times. So the total is $\sum_v\deg v\cdot\deg v$. $\blacksquare$
+
+  - id: gt-043
+    title: Acyclic with n − 1 edges means tree
+    subtopic: Trees
+    difficulty: medium
+    type: proof
+    tags: [trees, forests, characterisations]
+    related: [gt-009, gt-044]
+    statement: |
+      Prove that an acyclic graph with $n$ vertices and $n - 1$ edges is connected (hence a tree).
+    solution: |
+      An acyclic graph is a forest. If it has $c$ components, each a tree, it has $n - c$ edges (gt-044). So $n - c = n - 1$, i.e. $c = 1$. $\blacksquare$
+
+  - id: gt-044
+    title: Edges in a forest
+    subtopic: Trees
+    difficulty: easy
+    type: proof
+    tags: [forests, trees, edges]
+    related: [gt-007]
+    statement: |
+      Prove that a forest with $n$ vertices and $c$ components has $n - c$ edges.
+    solution: |
+      Each component is a tree; if it has $n_i$ vertices it has $n_i - 1$ edges (gt-007). Summing, $\sum(n_i - 1) = n - c$. $\blacksquare$
+
+  - id: gt-045
+    title: Trees are minimally connected and maximally acyclic
+    subtopic: Trees
+    difficulty: easy
+    type: proof
+    tags: [trees, bridges, cycles]
+    related: [gt-010]
+    statement: |
+      Let $T$ be a tree. Prove that deleting any edge disconnects $T$, and adding any new edge creates exactly one cycle.
+    solution: |
+      **Deleting $uv$.** The edge $uv$ is the unique $u$–$v$ path (gt-010), so after deletion there is none.
+
+      **Adding $uv$.** The unique $u$–$v$ path $P$ together with $uv$ is a cycle. Any cycle in $T + uv$ must use $uv$ ($T$ has none), and removing $uv$ from it leaves a $u$–$v$ path in $T$, which must be $P$. So the cycle is unique. $\blacksquare$
+
+  - id: gt-046
+    title: Trees are bipartite
+    subtopic: Trees
+    difficulty: easy
+    type: proof
+    tags: [trees, bipartite]
+    related: [gt-015]
+    statement: |
+      Prove that every tree is bipartite, and that its bipartition is unique.
+    solution: |
+      A tree has no cycles, in particular no odd cycles, so it is bipartite (gt-015). Concretely, colour vertices by the parity of their distance from a fixed root.
+
+      **Unique.** In any 2-colouring, adjacent vertices differ, so along the unique path from the root, colours alternate: each vertex's colour is forced by its distance's parity. $\blacksquare$
+
+  - id: gt-047
+    title: The centre of a tree
+    subtopic: Trees
+    difficulty: hard
+    type: proof
+    tags: [trees, eccentricity, centre]
+    source: Jordan, 1869
+    hints:
+      - |
+        Removing all leaves lowers every remaining vertex's eccentricity by exactly 1.
+    statement: |
+      The eccentricity of a vertex is its greatest distance to another vertex, and the centre is the set of vertices of minimum eccentricity. Prove that the centre of a tree is a single vertex or two adjacent vertices.
+    solution: |
+      Induct on $n$; trees with 1 or 2 vertices are clear. Let $n \ge 3$ and let $T'$ be $T$ with all leaves removed, a non-empty tree.
+
+      **A farthest vertex is a leaf.** If $w$ is farthest from $v$ and had a neighbour off the $v$–$w$ path, that neighbour would be farther.
+
+      **Eccentricities drop by 1.** For $v \in T'$, the vertices at maximum distance from $v$ are leaves, so in $T'$ all distances from $v$ are at most $\mathrm{ecc}_T(v) - 1$. And the neighbour of a farthest leaf on the path from $v$ is not a leaf, lies in $T'$, and is at distance $\mathrm{ecc}_T(v) - 1$. So $\mathrm{ecc}_{T'}(v) = \mathrm{ecc}_T(v) - 1$.
+
+      **Leaves are not central.** A leaf $\ell$ with neighbour $u$ has $d(\ell, x) = d(u, x) + 1$ for all $x \ne \ell$, and (as $n \ge 3$) the maximum of $d(u, x)$ over $x \ne \ell$ is $\mathrm{ecc}(u)$. So $\mathrm{ecc}(\ell) = \mathrm{ecc}(u) + 1$.
+
+      Hence the centre of $T$ is the set of vertices of $T'$ minimising $\mathrm{ecc}_T$, which is the centre of $T'$; by induction it is a vertex or two adjacent vertices. $\blacksquare$
+
+  - id: gt-048
+    title: Prüfer codes and Cayley's formula
+    subtopic: Trees
+    difficulty: hard
+    type: proof
+    tags: [trees, prufer code, cayley formula, bijection]
+    source: Prüfer, 1918
+    related: [gt-012]
+    statement: |
+      For a tree on $\{1, \dots, n\}$ ($n \ge 2$), repeatedly delete the smallest leaf and record its neighbour, until two vertices remain. This gives a sequence of length $n - 2$. Prove that this is a bijection between labelled trees and $\{1, \dots, n\}^{n-2}$, so there are $n^{n-2}$ trees. Find the code of the tree with edges $14, 24, 34, 45, 56$.
+    solution: |
+      **Degrees.** Each vertex $v$ appears in the code exactly $\deg v - 1$ times: it is recorded once each time a neighbour is deleted, and every neighbour except possibly one (the last) is deleted before $v$ either is deleted or survives to the end. So the vertices **not** in the code are exactly the leaves.
+
+      **Inverse.** Given a code $a_1, \dots, a_{n-2}$, the first deleted leaf must be the smallest vertex not appearing in the code, and its neighbour is $a_1$. Remove that vertex and $a_1$ from consideration appropriately and repeat on $a_2, \dots$ with the remaining vertices; at the end join the last two. This reconstructs the tree uniquely, and running it on any sequence produces a tree whose code is that sequence. So the map is a bijection and there are $n^{n-2}$ labelled trees.
+
+      **Example.** Leaves 1, 2, 3, 6. Delete 1 (record 4), 2 (record 4), 3 (record 4); now 4 is a leaf adjacent to 5, delete 4 (record 5). Code: $(4, 4, 4, 5)$. $\blacksquare$
+
+  - id: gt-049
+    title: Spanning trees of K₂,ₙ
+    subtopic: Trees
+    difficulty: medium
+    type: compute
+    tags: [spanning trees, counting, complete bipartite]
+    statement: |
+      Count the spanning trees of $K_{2,n}$.
+    solution: |
+      Let the small side be $\{a, b\}$ and the large side $Y$. A spanning tree has $n + 2$ vertices and $n + 1$ edges, and each $y \in Y$ must be joined to $a$, $b$, or both. That gives at least $n$ edges, and exactly one extra: so exactly one $y$ is joined to both (otherwise $a$ and $b$ would not be connected, or there would be too many edges).
+
+      Choose that $y$ ($n$ ways) and, for each other $y$, whether it hangs off $a$ or $b$ ($2^{n-1}$ ways). Each choice is connected with $n + 1$ edges, hence a tree. Total $n2^{n-1}$.
+
+  - id: gt-050
+    title: Spanning trees of a cycle
+    subtopic: Trees
+    difficulty: easy
+    type: compute
+    tags: [spanning trees, cycles]
+    statement: |
+      How many spanning trees does $C_n$ have? How many does $C_n$ with one chord (splitting it into cycles of lengths $a$ and $b$) have?
+    solution: |
+      A spanning tree of $C_n$ has $n - 1$ edges, so it omits exactly one edge, and omitting any one edge leaves a path. So $n$.
+
+      **With a chord.** Now there are $n + 1$ edges and three cycles: $C_a$, $C_b$ (sharing the chord) and the outer $n$-cycle. A spanning tree omits two edges that together break all three cycles. Either the chord and any one of the $n$ outer edges, or one non-chord edge of $C_a$ and one of $C_b$: $(a - 1)(b - 1)$ ways. (Two edges from the same side leave the other small cycle intact.) Total $n + (a - 1)(b - 1)$.
+
+      E.g. a square with a diagonal ($n = 4$, $a = b = 3$): $4 + 4 = 8$.
+
+  - id: gt-051
+    title: Kruskal's algorithm
+    subtopic: Trees
+    difficulty: hard
+    type: proof
+    tags: [minimum spanning trees, greedy algorithms, exchange argument]
+    source: Kruskal, 1956
+    statement: |
+      In a connected graph with distinct edge weights, Kruskal's algorithm considers edges in increasing order of weight and keeps each one that doesn't form a cycle with those already kept. Prove that the result is a minimum-weight spanning tree.
+    solution: |
+      **It is a spanning tree.** The kept edges form a forest. If it had two components, the lightest edge of $G$ joining them would have been kept when considered (it couldn't form a cycle), a contradiction.
+
+      **Cut property.** If $S$ is a set of vertices, the lightest edge $e$ leaving $S$ lies in every minimum spanning tree $M$: otherwise $M + e$ has a cycle crossing the cut twice, so it contains another edge $f$ leaving $S$, heavier than $e$, and $M + e - f$ is a lighter spanning tree.
+
+      **Each kept edge is in the minimum tree.** When Kruskal keeps $e = uv$, let $S$ be the component of $u$ in the current forest. $v \notin S$, and every lighter edge leaving $S$ would already have been kept (it formed no cycle), so $e$ is the lightest edge leaving $S$. By the cut property it lies in the minimum spanning tree. So Kruskal's tree is contained in it, and having the same number of edges, equals it. $\blacksquare$
+
+  - id: gt-052
+    title: Many leaves for high degree
+    subtopic: Trees
+    difficulty: medium
+    type: proof
+    tags: [trees, leaves, degrees]
+    related: [gt-008]
+    statement: |
+      Prove that a tree with a vertex of degree $\Delta$ has at least $\Delta$ leaves.
+    solution: |
+      Let $v$ have neighbours $u_1, \dots, u_\Delta$. Deleting $v$ splits the tree into $\Delta$ components, one containing each $u_i$. In each component, follow a longest path starting at $u_i$ away from $v$; it ends at a vertex with no further neighbours, a leaf of the original tree (if the component is just $u_i$, then $u_i$ is itself a leaf). These $\Delta$ leaves lie in different components, so they are distinct. $\blacksquare$
+
+  - id: gt-053
+    title: Cut vertices
+    subtopic: Connectivity
+    difficulty: medium
+    type: proof
+    tags: [cut vertices, paths]
+    statement: |
+      In a connected graph, $v$ is a cut vertex if $G - v$ is disconnected. Prove that $v$ is a cut vertex iff there are vertices $u, w \ne v$ such that every $u$–$w$ path passes through $v$.
+    solution: |
+      **($\Rightarrow$)** Pick $u, w$ in different components of $G - v$. A $u$–$w$ path avoiding $v$ would lie in $G - v$, impossible.
+
+      **($\Leftarrow$)** If every $u$–$w$ path uses $v$, then $G - v$ has no $u$–$w$ path, so it is disconnected. $\blacksquare$
+
+  - id: gt-054
+    title: A vertex you can always remove
+    subtopic: Connectivity
+    difficulty: easy
+    type: proof
+    tags: [connectivity, spanning trees, leaves]
+    related: [gt-013, gt-008]
+    statement: |
+      Prove that every connected graph with at least 2 vertices has at least two vertices that are not cut vertices.
+    solution: |
+      Take a spanning tree $T$ (gt-013); it has at least two leaves (gt-008). Removing a leaf $\ell$ from $T$ leaves a tree on the other vertices, which is a connected spanning subgraph of $G - \ell$. So $G - \ell$ is connected. $\blacksquare$
+
+  - id: gt-055
+    title: Bridges are the edges on no cycle
+    subtopic: Connectivity
+    difficulty: medium
+    type: proof
+    tags: [bridges, cycles]
+    related: [gt-045]
+    statement: |
+      An edge $e$ of a connected graph is a bridge if $G - e$ is disconnected. Prove that $e$ is a bridge iff it lies on no cycle.
+    solution: |
+      Let $e = uv$.
+
+      **On a cycle ⇒ not a bridge.** The rest of the cycle is a $u$–$v$ path avoiding $e$, so any walk using $e$ can be rerouted.
+
+      **Not a bridge ⇒ on a cycle.** If $G - e$ is connected, it has a $u$–$v$ path, which with $e$ forms a cycle. $\blacksquare$
+
+  - id: gt-056
+    title: Graph distance is a metric
+    subtopic: Connectivity
+    difficulty: easy
+    type: proof
+    tags: [distance, metric]
+    statement: |
+      In a connected graph let $d(u, v)$ be the length of a shortest $u$–$v$ path. Prove that $d$ is a metric.
+    solution: |
+      $d(u, v) \ge 0$ with equality iff $u = v$ (a path of length 0 is a single vertex). $d(u,v) = d(v,u)$ by reversing paths. Triangle inequality: concatenating a shortest $u$–$v$ path and a shortest $v$–$w$ path gives a $u$–$w$ walk of length $d(u,v) + d(v,w)$, which contains a $u$–$w$ path no longer (gt-014). $\blacksquare$
+
+  - id: gt-057
+    title: Large diameter makes the complement small
+    subtopic: Connectivity
+    difficulty: medium
+    type: proof
+    tags: [diameter, complement]
+    related: [gt-016]
+    statement: |
+      Prove that if a graph $G$ has diameter at least 3, then $\overline G$ has diameter at most 3.
+    solution: |
+      Pick $a, b$ with $d_G(a, b) \ge 3$. They are not adjacent in $G$ and have no common neighbour in $G$. So $ab$ is an edge of $\overline G$, and every other vertex is non-adjacent in $G$ to at least one of $a, b$, i.e. adjacent to it in $\overline G$.
+
+      For each vertex $x$ let $\alpha(x) \in \{a, b\}$ be $x$ itself if $x \in \{a, b\}$, and otherwise one of $a, b$ adjacent to $x$ in $\overline G$. For any $u, v$, the walk $u,\ \alpha(u),\ \alpha(v),\ v$ in $\overline G$ (where $\alpha(u)\alpha(v)$ is either a single vertex or the edge $ab$) has length at most 3. So $\overline G$ has diameter at most 3. $\blacksquare$
+
+  - id: gt-058
+    title: Two longest paths meet
+    subtopic: Connectivity
+    difficulty: medium
+    type: proof
+    tags: [paths, connectivity, longest path]
+    statement: |
+      Prove that in a connected graph any two longest paths share a vertex.
+    solution: |
+      Let $P$ and $Q$ be longest paths, of length $L$, and suppose they are disjoint. By connectivity there is a path $R$ from a vertex $p$ of $P$ to a vertex $q$ of $Q$ meeting $P$ and $Q$ only at its ends. $p$ splits $P$ into two pieces, one of length at least $\frac L2$; likewise $q$ splits $Q$. Joining the long piece of $P$, then $R$ (length $\ge 1$), then the long piece of $Q$ gives a path of length at least $\frac L2 + 1 + \frac L2 > L$. Contradiction. $\blacksquare$
+
+  - id: gt-059
+    title: Few edges mean many components
+    subtopic: Connectivity
+    difficulty: easy
+    type: proof
+    tags: [components, edges]
+    related: [gt-044]
+    statement: |
+      Prove that a graph with $n$ vertices and $m$ edges has at least $n - m$ connected components.
+    solution: |
+      Start with $n$ isolated vertices ($n$ components) and add the edges one at a time. Each edge either joins two components (reducing the count by 1) or lies within one (no change). So at the end there are at least $n - m$. $\blacksquare$
+
+  - id: gt-060
+    title: Long paths and cycles from minimum degree
+    subtopic: Connectivity
+    difficulty: medium
+    type: proof
+    tags: [paths, cycles, minimum degree]
+    statement: |
+      Let $G$ have minimum degree $\delta \ge 2$. Prove that $G$ contains a path of length at least $\delta$ and a cycle of length at least $\delta + 1$.
+    solution: |
+      Let $P = v_0v_1\cdots v_k$ be a longest path. All neighbours of $v_0$ lie on $P$ (otherwise $P$ could be extended). $v_0$ has at least $\delta$ neighbours among $v_1, \dots, v_k$, so $k \ge \delta$.
+
+      Let $v_j$ be the neighbour of $v_0$ with largest index; $j \ge \delta$. Then $v_0v_1\cdots v_jv_0$ is a cycle of length $j + 1 \ge \delta + 1$. $\blacksquare$
+
+  - id: gt-061
+    title: Two vertices on a common cycle
+    subtopic: Connectivity
+    difficulty: hard
+    type: proof
+    tags: [2-connected, cycles, whitney]
+    source: Whitney, 1932
+    statement: |
+      A graph with at least 3 vertices is 2-connected if it is connected and has no cut vertex. Prove that if every two vertices lie on a common cycle, the graph is 2-connected; and conversely, that in a 2-connected graph any two **adjacent** vertices lie on a common cycle.
+    solution: |
+      **Cycles ⇒ 2-connected.** Connected: any two vertices lie on a cycle, which contains paths between them. No cut vertex: given $v$ and $u, w \ne v$, a cycle through $u$ and $w$ gives two $u$–$w$ paths sharing only their ends, so at least one avoids $v$; hence $G - v$ is connected.
+
+      **Adjacent vertices.** Let $uv$ be an edge. If $G - uv$ had no $u$–$v$ path, then $uv$ would be a bridge. With at least 3 vertices, one endpoint, say $u$, has another neighbour $w$ (by connectivity). Removing $uv$ separates $u$'s side from $v$'s, and then $u$ is a cut vertex separating $w$ from $v$ (every $w$–$v$ path must use $uv$, hence pass through $u$). Contradiction. So $G - uv$ has a $u$–$v$ path, which with $uv$ forms a cycle. $\blacksquare$
+
+      (Whitney's theorem extends this to non-adjacent vertices too.)
+
+  - id: gt-062
+    title: Every tournament has a king
+    subtopic: Connectivity
+    difficulty: medium
+    type: proof
+    tags: [tournaments, directed graphs]
+    related: [in-133]
+    statement: |
+      In a tournament, a **king** is a player $k$ such that every other player is beaten by $k$ or by someone $k$ beats. Prove that a player with the most wins is a king.
+    solution: |
+      Let $k$ have the most wins, and suppose some $x$ is neither beaten by $k$ nor by anyone $k$ beats. Then $x$ beats $k$ and beats everyone $k$ beats. So $x$ has at least one more win than $k$, a contradiction. $\blacksquare$
+
+  - id: gt-063
+    title: Orienting a graph to be strongly connected
+    subtopic: Connectivity
+    difficulty: medium
+    type: proof
+    tags: [orientations, bridges, strongly connected]
+    source: Robbins, 1939
+    related: [gt-055]
+    statement: |
+      Prove that if a connected graph has a bridge then no orientation of its edges is strongly connected (every vertex reachable from every other along directed edges). Show that every cycle can be oriented to be strongly connected.
+    solution: |
+      **Bridge.** Let $uv$ be a bridge, oriented $u \to v$ say. Every path from $v$'s side to $u$'s side must use $uv$, but it only goes from $u$ to $v$. So nothing on $v$'s side reaches $u$.
+
+      **Cycle.** Orient it cyclically, $v_1 \to v_2 \to \cdots \to v_n \to v_1$. From $v_i$ you reach every vertex by going round. $\blacksquare$
+
+      (Robbins' theorem: a connected graph has a strongly connected orientation iff it is bridgeless.)
+
+  - id: gt-064
+    title: The bridges of Königsberg
+    subtopic: Euler & Hamilton
+    difficulty: easy
+    type: compute
+    tags: [euler trails, multigraphs]
+    source: Euler, 1736
+    related: [gt-018]
+    statement: |
+      Königsberg had four land masses joined by seven bridges: the island $A$ joined to the north bank $B$ by two bridges, to the south bank $C$ by two, and to the east land $D$ by one; and $D$ joined to $B$ and to $C$ by one each. Can one walk crossing every bridge exactly once?
+    solution: |
+      Degrees: $A$: $5$; $B$: $3$; $C$: $3$; $D$: $3$. All four are odd. An Euler trail needs 0 or 2 odd vertices (the theorem holds for multigraphs), so **no**.
+
+  - id: gt-065
+    title: Euler trails
+    subtopic: Euler & Hamilton
+    difficulty: medium
+    type: proof
+    tags: [euler trails, euler circuits]
+    related: [gt-017]
+    statement: |
+      Prove that a connected graph has an Euler trail from $u$ to $v \ne u$ if and only if $u$ and $v$ are the only vertices of odd degree.
+    solution: |
+      **($\Rightarrow$)** Passing through a vertex uses edges in pairs; only the start and end use one unpaired edge each.
+
+      **($\Leftarrow$)** Add a new edge $e = uv$ (allowing a multigraph). Now every degree is even and the graph is connected, so it has an Euler circuit (gt-017, which works for multigraphs). Start the circuit with $e$ traversed from $v$ to $u$; deleting $e$ leaves an Euler trail from $u$ to $v$. $\blacksquare$
+
+  - id: gt-066
+    title: Euler circuits in directed graphs
+    subtopic: Euler & Hamilton
+    difficulty: medium
+    type: proof
+    tags: [euler circuits, directed graphs]
+    related: [gt-017, gt-071]
+    statement: |
+      Prove that if a directed graph has an Euler circuit (using every arc once, in its direction) then every vertex has in-degree equal to out-degree, and that a connected directed graph with this property has an Euler circuit.
+    solution: |
+      **Necessity.** Each visit to a vertex enters along one arc and leaves along another.
+
+      **Sufficiency.** As in gt-017: starting anywhere and following unused arcs, we can only get stuck at the start vertex (every other vertex has as many unused exits as entrances when we arrive), so we obtain a closed trail. Remove it; in/out balance is preserved; by induction each remaining connected piece has an Euler circuit, and we splice them in where the first trail meets them. $\blacksquare$
+
+  - id: gt-067
+    title: Dirac's theorem
+    subtopic: Euler & Hamilton
+    difficulty: hard
+    type: proof
+    tags: [hamiltonian cycles, minimum degree, longest path]
+    source: Dirac, 1952
+    hints:
+      - |
+        Take a longest path $v_0\cdots v_k$ and find an index $i$ with $v_0 \sim v_{i+1}$ and $v_k \sim v_i$.
+    statement: |
+      Prove that a simple graph on $n \ge 3$ vertices with minimum degree at least $\frac n2$ has a Hamiltonian cycle.
+    solution: |
+      $G$ is connected (gt-033). Let $P = v_0\cdots v_k$ be a longest path. All neighbours of $v_0$ and of $v_k$ lie on $P$.
+
+      **A cycle on $P$'s vertices.** Let $A = \{i : v_0 \sim v_{i+1}\}$ and $B = \{i : v_k \sim v_i\}$, both subsets of $\{0, \dots, k-1\}$, with $|A|, |B| \ge \frac n2$. Since $k \le n - 1$, $|A| + |B| \ge n > k$, so some $i \in A\cap B$. Then $v_0v_1\cdots v_iv_kv_{k-1}\cdots v_{i+1}v_0$ is a cycle $C$ through all of $P$'s vertices.
+
+      **It covers everything.** If some vertex $w$ is not on $C$, connectivity gives an edge from $w$ (or a path) to some vertex of $C$; opening $C$ there gives a path longer than $P$. So $C$ is Hamiltonian. $\blacksquare$
+
+  - id: gt-068
+    title: Hamiltonian grids
+    subtopic: Euler & Hamilton
+    difficulty: medium
+    type: proof
+    tags: [hamiltonian cycles, grids, bipartite]
+    related: [gt-020]
+    statement: |
+      The $m\times n$ grid graph ($m, n \ge 2$) has the cells of an $m\times n$ board as vertices, adjacent when they share a side. Prove it has a Hamiltonian cycle iff $mn$ is even.
+    solution: |
+      **Odd $mn$ fails.** The grid is bipartite (chessboard colouring) with parts of sizes $\frac{mn+1}{2}$ and $\frac{mn-1}2$. A cycle alternates colours, so it uses equally many of each and can't cover all vertices.
+
+      **Even $mn$.** Say $m$ (the number of rows) is even. Go along the top row from left to right, then snake back and forth through rows $2, \dots, m$ using columns $2, \dots, n$ only, ending in row $m$ at column 2; finally return up column 1 from row $m$ to row 1. Since $m$ is even, the snake through rows $2..m$ starts heading left in row 2 and ends heading left in row $m$, arriving at column 2, next to column 1. $\blacksquare$
+
+  - id: gt-069
+    title: No closed knight's tour on a 5×5 board
+    subtopic: Euler & Hamilton
+    difficulty: easy
+    type: proof
+    tags: [hamiltonian cycles, knight's tour, bipartite]
+    statement: |
+      Prove that there is no closed knight's tour of a $5\times5$ board (a sequence of knight moves visiting every square once and returning to the start).
+    solution: |
+      A knight always moves between squares of opposite colours, so the knight's graph is bipartite. A closed tour is a Hamiltonian cycle, which in a bipartite graph needs equally many squares of each colour. A $5\times5$ board has 13 of one colour and 12 of the other. $\blacksquare$
+
+  - id: gt-070
+    title: A necessary condition for Hamiltonicity
+    subtopic: Euler & Hamilton
+    difficulty: medium
+    type: proof
+    tags: [hamiltonian cycles, components]
+    related: [gt-020]
+    statement: |
+      Prove that if $G$ has a Hamiltonian cycle then for every non-empty set $S$ of vertices, $G - S$ has at most $|S|$ components. Use this to show $K_{2,3}$ is not Hamiltonian.
+    solution: |
+      Removing $|S|$ vertices from a cycle leaves at most $|S|$ arcs (paths). The cycle is a spanning subgraph, so each component of $G - S$ contains at least one of these arcs. Hence at most $|S|$ components.
+
+      In $K_{2,3}$, removing the two vertices of the small side leaves 3 isolated vertices: $3 > 2$ components. $\blacksquare$
+
+  - id: gt-071
+    title: De Bruijn sequences
+    subtopic: Euler & Hamilton
+    difficulty: hard
+    type: proof
+    tags: [de bruijn sequences, euler circuits, directed graphs]
+    source: de Bruijn, 1946
+    related: [gt-066]
+    statement: |
+      Prove that for every $n \ge 1$ there is a cyclic binary sequence of length $2^n$ in which every binary string of length $n$ appears exactly once as a block of consecutive digits. Give one for $n = 3$.
+    solution: |
+      Build the directed graph whose vertices are the $2^{n-1}$ strings of length $n - 1$, with an arc $a_1\cdots a_{n-1} \to a_2\cdots a_n$ for each string $a_1\cdots a_n$ of length $n$. Every vertex has out-degree 2 (append 0 or 1) and in-degree 2 (prepend 0 or 1), and the graph is strongly connected (you can reach any string by shifting in its digits). So it has an Euler circuit (gt-066), using each of the $2^n$ arcs once.
+
+      Reading off the last digit of each arc along the circuit gives a cyclic sequence of length $2^n$ whose length-$n$ windows are exactly the arcs, each once.
+
+      **$n = 3$:** $00010111$: the windows (cyclically) are $000, 001, 010, 101, 011, 111, 110, 100$. $\blacksquare$
+
+  - id: gt-072
+    title: The Chinese postman on K₄
+    subtopic: Euler & Hamilton
+    difficulty: medium
+    type: compute
+    tags: [euler circuits, route inspection]
+    related: [gt-018]
+    statement: |
+      A postman must walk every edge of $K_4$ (each of length 1) at least once and return to the start. What is the shortest possible walk?
+    solution: |
+      $K_4$ has 6 edges and all 4 vertices have odd degree. A closed walk covering every edge corresponds to an Euler circuit of the multigraph obtained by duplicating the repeated edges, which must make every degree even. Each duplicated edge fixes the parity at 2 vertices, so at least 2 edges must be repeated: length $\ge 8$.
+
+      Duplicating a perfect matching (2 disjoint edges) makes all degrees 4, so an Euler circuit of length $6 + 2 = 8$ exists. **Answer: 8.**
+
+  - id: gt-073
+    title: Even graphs decompose into cycles
+    subtopic: Euler & Hamilton
+    difficulty: medium
+    type: proof
+    tags: [cycle decomposition, even degrees]
+    source: Veblen
+    related: [gt-017]
+    statement: |
+      Prove that the edges of a graph can be partitioned into cycles if and only if every vertex has even degree.
+    solution: |
+      **($\Rightarrow$)** Each cycle through a vertex contributes 2 to its degree.
+
+      **($\Leftarrow$)** Induct on the number of edges. If there are none, use no cycles. Otherwise the non-isolated vertices have degree $\ge 2$, so there is a cycle (take a longest path; its end has another neighbour on the path). Removing its edges keeps all degrees even, and by induction the rest decomposes. $\blacksquare$
+
+  - id: gt-074
+    title: Counting Hamiltonian cycles in Kₙ
+    subtopic: Euler & Hamilton
+    difficulty: easy
+    type: compute
+    tags: [hamiltonian cycles, counting]
+    statement: |
+      How many Hamiltonian cycles does $K_n$ ($n \ge 3$) have?
+    solution: |
+      A Hamiltonian cycle is a cyclic ordering of the vertices up to rotation and reversal. Fix the start vertex (removing rotations): $(n-1)!$ orders of the rest; each cycle arises twice (two directions). So $\frac{(n-1)!}{2}$; e.g. $K_4$ has 3 and $K_5$ has 12.
+
+  - id: gt-075
+    title: Decomposing K₅ into Hamiltonian cycles
+    subtopic: Euler & Hamilton
+    difficulty: medium
+    type: compute
+    tags: [hamiltonian decomposition, complete graphs]
+    source: Walecki
+    statement: |
+      Show that the edges of $K_5$ split into two Hamiltonian cycles. Why can $K_n$ with $n$ even never split into Hamiltonian cycles?
+    solution: |
+      On $\{1,2,3,4,5\}$: the cycle $1\,2\,3\,4\,5\,1$ uses edges with "difference" $\pm1 \bmod 5$, and $1\,3\,5\,2\,4\,1$ uses those with difference $\pm2$. Together they use all 10 edges once.
+
+      For even $n$, every vertex has odd degree $n - 1$, but each Hamiltonian cycle uses 2 edges at each vertex. So the degree would have to be even. $\blacksquare$
+
+  - id: gt-076
+    title: Independence number bounds the chromatic number
+    subtopic: Colouring & planarity
+    difficulty: easy
+    type: proof
+    tags: [chromatic number, independent sets]
+    statement: |
+      Let $\alpha(G)$ be the size of a largest independent set. Prove that $\chi(G) \ge \frac{n}{\alpha(G)}$, and use it to show $\chi(C_5) \ge 3$.
+    solution: |
+      Each colour class is an independent set, so has at most $\alpha$ vertices. With $\chi$ classes covering $n$ vertices, $\chi\alpha \ge n$.
+
+      $C_5$ has $\alpha = 2$, so $\chi \ge \frac52$, hence $\chi \ge 3$. $\blacksquare$
+
+  - id: gt-077
+    title: Nordhaus–Gaddum upper bound
+    subtopic: Colouring & planarity
+    difficulty: hard
+    type: proof
+    tags: [chromatic number, complement, induction]
+    source: Nordhaus, Gaddum, 1956
+    related: [gt-078]
+    statement: |
+      Prove that $\chi(G) + \chi(\overline G) \le n + 1$ for every graph $G$ on $n$ vertices.
+    solution: |
+      Induct on $n$; $n = 1$ gives $1 + 1 = 2$. Remove a vertex $v$; by hypothesis $\chi(G - v) + \chi(\overline G - v) \le n$. Adding $v$ back increases each chromatic number by at most 1.
+
+      If not both increase, $\chi(G) + \chi(\overline G) \le n + 1$. If both increase, then $v$ must see all colours in an optimal colouring of $G - v$, so $\deg_G v \ge \chi(G - v)$; likewise $\deg_{\overline G}v \ge \chi(\overline G - v)$. Adding, $n - 1 \ge \chi(G - v) + \chi(\overline G - v)$, and then $\chi(G) + \chi(\overline G) \le (n - 1) + 2 = n + 1$. $\blacksquare$
+
+  - id: gt-078
+    title: Nordhaus–Gaddum lower bound
+    subtopic: Colouring & planarity
+    difficulty: medium
+    type: proof
+    tags: [chromatic number, complement, cliques]
+    related: [gt-077, gt-076]
+    statement: |
+      Prove that $\chi(G)\,\chi(\overline G) \ge n$.
+    solution: |
+      Each colour class of $G$ is independent in $G$, hence a clique in $\overline G$, so it has at most $\omega(\overline G) \le \chi(\overline G)$ vertices. The $\chi(G)$ classes cover all $n$ vertices: $n \le \chi(G)\chi(\overline G)$. $\blacksquare$
+
+  - id: gt-079
+    title: Planar bipartite graphs
+    subtopic: Colouring & planarity
+    difficulty: medium
+    type: proof
+    tags: [planar graphs, bipartite, euler formula]
+    related: [gt-022, gt-023]
+    statement: |
+      Prove that a simple planar bipartite graph with $v \ge 3$ vertices has at most $2v - 4$ edges.
+    solution: |
+      We may assume it is connected (adding edges between components, keeping it bipartite and planar, only increases $e$) with $e \ge 3$ (else $e \le 2 \le 2v - 4$). It has no triangles, so every face is bounded by at least 4 edge-sides, and each edge has 2 sides: $4f \le 2e$. Euler: $2 = v - e + f \le v - e + \frac e2$, so $e \le 2v - 4$. $\blacksquare$
+
+  - id: gt-080
+    title: Planar graphs of large girth
+    subtopic: Colouring & planarity
+    difficulty: medium
+    type: proof
+    tags: [planar graphs, girth, euler formula]
+    related: [gt-079, gt-081]
+    statement: |
+      The girth of a graph is the length of its shortest cycle. Prove that a connected planar graph with girth $g \ge 3$ (so it has a cycle) satisfies $e \le \frac{g}{g-2}(v - 2)$.
+    solution: |
+      Every face of a plane drawing is bounded by a closed walk containing a cycle, so by at least $g$ edge-sides; each edge has two sides: $gf \le 2e$. Euler: $2 = v - e + f \le v - e + \frac{2e}{g}$. Rearranging, $e\left(1 - \frac2g\right) \le v - 2$. $\blacksquare$
+
+      ($g = 3$ gives $3v - 6$, $g = 4$ gives $2v - 4$.)
+
+  - id: gt-081
+    title: The Petersen graph is not planar
+    subtopic: Colouring & planarity
+    difficulty: medium
+    type: proof
+    tags: [planar graphs, petersen graph, girth]
+    related: [gt-080]
+    statement: |
+      The Petersen graph has 10 vertices, 15 edges and girth 5. Prove that it is not planar.
+    solution: |
+      By gt-080 a planar graph with these parameters would have $e \le \frac53(10 - 2) = \frac{40}{3} < 14$. But $e = 15$. $\blacksquare$
+
+  - id: gt-082
+    title: Counting in a triangulation
+    subtopic: Colouring & planarity
+    difficulty: easy
+    type: compute
+    tags: [planar graphs, triangulations, euler formula]
+    related: [gt-022]
+    statement: |
+      A plane triangulation is a connected plane graph (with $v \ge 3$) in which every face, including the outer one, is a triangle. Find $e$ and $f$ in terms of $v$.
+    solution: |
+      Every face has 3 edge-sides and every edge 2 sides: $3f = 2e$. Euler: $v - e + \frac{2e}{3} = 2$, so $e = 3v - 6$ and $f = 2v - 4$. (These are maximal planar graphs: the bound of gt-022 is attained.)
+
+  - id: gt-083
+    title: There are five Platonic solids
+    subtopic: Colouring & planarity
+    difficulty: hard
+    type: proof
+    tags: [platonic solids, euler formula, regular polyhedra]
+    statement: |
+      A convex polyhedron whose faces are all regular $p$-gons with $q$ meeting at each vertex ($p, q \ge 3$) gives a plane graph with every face of size $p$ and every vertex of degree $q$. Prove that $(p, q)$ is one of $(3,3), (3,4), (4,3), (3,5), (5,3)$.
+    solution: |
+      Counting edge-ends and edge-sides: $qv = 2e = pf$. Substituting into $v - e + f = 2$:
+      $$\frac{2e}{q} - e + \frac{2e}{p} = 2 \implies \frac1p + \frac1q = \frac12 + \frac1e > \frac12.$$
+      With $p, q \ge 3$: if $p \ge 6$ or $q \ge 6$ the sum is at most $\frac13 + \frac16 = \frac12$. Checking $3 \le p, q \le 5$: $\frac1p + \frac1q > \frac12$ holds only for $(3,3), (3,4), (4,3), (3,5), (5,3)$. These are the tetrahedron, octahedron, cube, icosahedron and dodecahedron. $\blacksquare$
+
+  - id: gt-084
+    title: Colouring interval graphs greedily
+    subtopic: Colouring & planarity
+    difficulty: medium
+    type: proof
+    tags: [interval graphs, greedy colouring, perfect graphs]
+    related: [gt-027]
+    statement: |
+      Vertices are closed intervals on the line, adjacent when they overlap. Prove that colouring greedily in order of left endpoints uses exactly $\omega$ colours, the size of the largest clique.
+    solution: |
+      Clearly at least $\omega$ colours are needed. When interval $I = [a, b]$ is coloured, its already-coloured neighbours all start at or before $a$ and overlap $I$, so they all contain the point $a$. Together with $I$ they form a clique (intervals sharing a point pairwise overlap), of size at most $\omega$. So $I$ has at most $\omega - 1$ coloured neighbours, and some colour among $1, \dots, \omega$ is free. $\blacksquare$
+
+  - id: gt-085
+    title: The chromatic polynomial of a tree
+    subtopic: Colouring & planarity
+    difficulty: medium
+    type: proof
+    tags: [chromatic polynomial, trees, induction]
+    related: [cb-114]
+    statement: |
+      Prove that a tree on $n$ vertices has exactly $k(k-1)^{n-1}$ proper colourings with $k$ colours.
+    solution: |
+      Induct on $n$; one vertex has $k$ colourings. Given a tree on $n \ge 2$ vertices, remove a leaf $\ell$. The rest has $k(k-1)^{n-2}$ colourings, and $\ell$ must avoid only its neighbour's colour: $k - 1$ choices. $\blacksquare$
+
+      (So every tree with at least 2 vertices has chromatic number 2.)
+
+  - id: gt-086
+    title: Perfect matchings of complete bipartite graphs
+    subtopic: Matchings & Ramsey
+    difficulty: easy
+    type: compute
+    tags: [matchings, permutations]
+    related: [cb-048]
+    statement: |
+      How many perfect matchings do $K_{n,n}$ and $K_{2n}$ have?
+    solution: |
+      $K_{n,n}$: each matching pairs the $n$ left vertices with the right ones bijectively: $n!$.
+
+      $K_{2n}$: $(2n-1)(2n-3)\cdots1$ (cb-048).
+
+  - id: gt-087
+    title: Matchings and vertex covers
+    subtopic: Matchings & Ramsey
+    difficulty: easy
+    type: proof
+    tags: [matchings, vertex covers, duality]
+    related: [gt-088]
+    statement: |
+      A vertex cover is a set of vertices meeting every edge. Prove that every matching is at most as large as every vertex cover, and show by example that equality may fail in non-bipartite graphs.
+    solution: |
+      A vertex cover must contain an endpoint of each edge of the matching, and these endpoints are distinct (matching edges are disjoint). So $|M| \le |C|$.
+
+      **$K_3$:** a maximum matching has 1 edge, but a vertex cover needs 2 vertices. $\blacksquare$
+
+  - id: gt-088
+    title: Kőnig's theorem
+    subtopic: Matchings & Ramsey
+    difficulty: hard
+    type: proof
+    tags: [matchings, vertex covers, hall theorem]
+    source: Kőnig, 1931
+    related: [gt-029, gt-087]
+    hints:
+      - |
+        Let $\tau$ be the minimum cover size. Apply Hall's theorem to $X$ with a "deficiency" version: add $|X| - \nu$ dummy vertices to $Y$ adjacent to all of $X$.
+    statement: |
+      Prove that in a bipartite graph the maximum size of a matching equals the minimum size of a vertex cover.
+    solution: |
+      By gt-087, $\nu \le \tau$. For the reverse, let $d = \max_{S\subseteq X}(|S| - |N(S)|) \ge 0$ (take $S = \varnothing$).
+
+      **A matching of size $|X| - d$.** Add $d$ new vertices to $Y$ joined to everything in $X$. Now $|N(S)| \ge |S|$ for every non-empty $S$, so by Hall $X$ can be matched; at most $d$ of these edges use new vertices, leaving a matching of size $\ge |X| - d$ in $G$.
+
+      **A cover of size $|X| - d$.** Take $S$ attaining $d$. Then $(X\setminus S) \cup N(S)$ covers every edge (an edge from $S$ goes to $N(S)$), and has size $|X| - |S| + |N(S)| = |X| - d$.
+
+      So $\nu \ge |X| - d \ge \tau$. $\blacksquare$
+
+  - id: gt-089
+    title: Berge's augmenting path lemma
+    subtopic: Matchings & Ramsey
+    difficulty: hard
+    type: proof
+    tags: [matchings, augmenting paths, symmetric difference]
+    source: Berge, 1957
+    statement: |
+      An augmenting path for a matching $M$ is a path that starts and ends at vertices not covered by $M$ and alternates between edges not in $M$ and edges in $M$. Prove that $M$ is a maximum matching iff it has no augmenting path.
+    solution: |
+      **Augmenting path ⇒ not maximum.** Swapping the path's edges in and out of $M$ ($M \triangle P$) gives a matching with one more edge.
+
+      **Not maximum ⇒ augmenting path.** Let $M'$ be larger. In $M \triangle M'$ every vertex has degree at most 2 (at most one edge from each), so its components are paths and cycles alternating between $M$ and $M'$. Cycles have equally many edges of each; since $|M'| > |M|$, some path component has more $M'$-edges than $M$-edges. Such a path starts and ends with $M'$-edges at vertices not covered by $M$ (else the path would continue), so it is augmenting for $M$. $\blacksquare$
+
+  - id: gt-090
+    title: Trees have at most one perfect matching
+    subtopic: Matchings & Ramsey
+    difficulty: medium
+    type: proof
+    tags: [matchings, trees, uniqueness]
+    related: [gt-089]
+    statement: |
+      Prove that a tree has at most one perfect matching.
+    solution: |
+      If $M \ne M'$ were both perfect, $M\triangle M'$ would be non-empty with every vertex of degree 0 or 2 in it (each vertex is in exactly one edge of each). A non-empty graph with all degrees 0 or 2 contains a cycle, but a tree has none. $\blacksquare$
+
+  - id: gt-091
+    title: The mutilated chessboard
+    subtopic: Matchings & Ramsey
+    difficulty: easy
+    type: proof
+    tags: [domino tilings, colouring, perfect matchings]
+    statement: |
+      Two opposite corners are removed from an $8\times8$ chessboard. Prove that the remaining 62 squares cannot be tiled by 31 dominoes.
+    solution: |
+      Opposite corners have the same colour, so 32 squares of one colour and 30 of the other remain. Every domino covers one square of each colour, so 31 dominoes cover 31 of each. $\blacksquare$
+
+      (A domino tiling is a perfect matching in the grid graph, which is bipartite.)
+
+  - id: gt-092
+    title: Latin rectangles extend
+    subtopic: Matchings & Ramsey
+    difficulty: hard
+    type: proof
+    tags: [latin squares, hall theorem, regular bipartite]
+    related: [gt-030]
+    statement: |
+      A $k\times n$ Latin rectangle ($k < n$) has entries from $\{1, \dots, n\}$ with no repeats in any row or column. Prove that a new row can always be added, so every Latin rectangle extends to a Latin square.
+    solution: |
+      Build a bipartite graph with columns on one side and symbols on the other, joining column $j$ to symbol $s$ if $s$ does not yet appear in column $j$. Each column misses $n - k$ symbols. Each symbol appears once in each row, so in $k$ columns, and is missing from $n - k$ columns. So the graph is $(n-k)$-regular, and by gt-030 it has a perfect matching: assign to each column a missing symbol, all different. That is a valid new row. Repeating gives a Latin square. $\blacksquare$
+
+  - id: gt-093
+    title: A lower bound for R(3, 4)
+    subtopic: Matchings & Ramsey
+    difficulty: medium
+    type: proof
+    tags: [ramsey numbers, circulant graphs]
+    related: [cb-098]
+    statement: |
+      On vertices $\Z_8$ join $i$ and $j$ when $i - j \equiv \pm1$ or $4 \pmod 8$. Show this graph has no triangle and no independent set of 4 vertices, and deduce $R(3,4) \ge 9$.
+    solution: |
+      **No triangle.** Going round a triangle $i \to j \to k \to i$, the three differences are each $1$, $4$ or $7$ mod 8 and sum to $0$. But the sums of three values from $\{1, 4, 7\}$ are $3, 6, 9, 9, 12, 15, 12, 15, 18, 21$, i.e. $3, 6, 1, 1, 4, 7, 4, 7, 2, 5 \pmod 8$, never $0$.
+
+      **No independent 4-set.** Translate so one vertex is $0$. The other three lie among the non-neighbours of $0$, namely $\{2, 3, 5, 6\}$, and must be pairwise non-adjacent. The adjacent pairs there are $\{2,3\}$, $\{5,6\}$ (difference 1) and $\{2,6\}$ (difference 4), leaving only $\{2,5\}, \{3,5\}, \{3,6\}$ non-adjacent. No three of $2, 3, 5, 6$ are pairwise non-adjacent.
+
+      Colouring the edges of $K_8$ red when they are in this graph and blue otherwise gives no red triangle and no blue $K_4$, so $R(3,4) > 8$. $\blacksquare$
+
+      (A sharpening of cb-098 shows $R(3,4) \le 9$, so in fact $R(3,4) = 9$.)
+
+  - id: gt-094
+    title: Schur's theorem for two colours
+    subtopic: Matchings & Ramsey
+    difficulty: medium
+    type: proof
+    tags: [schur, ramsey theory, colouring]
+    source: Schur, 1916
+    statement: |
+      Prove that if $\{1, 2, 3, 4, 5\}$ is coloured red and blue, there are $x, y, z$ of one colour (not necessarily distinct) with $x + y = z$. Show that $\{1, 2, 3, 4\}$ can be coloured to avoid this.
+    solution: |
+      Suppose not, and say 1 is red. Then 2 is blue ($1 + 1 = 2$), so 4 is red ($2 + 2 = 4$), so 3 is blue ($1 + 3 = 4$), and 5 is blue ($1 + 4 = 5$). But $2 + 3 = 5$ is all blue. Contradiction.
+
+      **$\{1,2,3,4\}$:** red $\{1, 4\}$, blue $\{2, 3\}$. Red sums: $1+1 = 2$, $1 + 4 = 5$, $4 + 4 = 8$, none red. Blue sums: $2 + 2 = 4$, $2 + 3 = 5$, $3 + 3 = 6$, none blue. $\blacksquare$
+
+  - id: gt-095
+    title: The infinite Ramsey theorem
+    subtopic: Matchings & Ramsey
+    difficulty: hard
+    type: proof
+    tags: [ramsey theory, infinite pigeonhole]
+    source: Ramsey, 1930
+    related: [cb-101]
+    statement: |
+      The edges of the complete graph on $\N$ are coloured red and blue. Prove there is an infinite set all of whose edges have the same colour.
+    solution: |
+      Build $v_1, v_2, \dots$ and infinite sets $S_0 = \N \supset S_1 \supset \cdots$. Given infinite $S_{i-1}$, pick $v_i \in S_{i-1}$. Its edges to the infinitely many other elements of $S_{i-1}$ have two colours, so infinitely many have one colour $c_i$; let $S_i$ be those elements.
+
+      For $i < j$, $v_j \in S_i$, so the edge $v_iv_j$ has colour $c_i$. Infinitely many $i$ share the same $c_i$ (pigeonhole), and those $v_i$ span a monochromatic infinite set. $\blacksquare$
+
+  - id: gt-096
+    title: Stable marriages exist
+    subtopic: Matchings & Ramsey
+    difficulty: hard
+    type: proof
+    tags: [stable matching, gale-shapley, algorithms]
+    source: Gale, Shapley, 1962
+    statement: |
+      $n$ proposers and $n$ receivers each rank the other side. A perfect matching is **unstable** if some proposer $p$ and receiver $r$, not matched together, each prefer the other to their partner. In the Gale–Shapley algorithm, each unmatched proposer proposes to the best receiver not yet tried; each receiver keeps the best offer so far and rejects the rest. Prove that it ends with a stable perfect matching.
+    solution: |
+      **Termination.** Each proposer proposes to each receiver at most once, so there are at most $n^2$ proposals.
+
+      **Perfect.** Once proposed to, a receiver stays matched (only trading up). If some proposer $p$ ended unmatched, $p$ was rejected by all $n$ receivers, so all $n$ are matched, to $n$ proposers other than $p$: impossible.
+
+      **Stable.** Suppose $p$ prefers $r$ to his final partner. Then $p$ proposed to $r$ earlier and was rejected (immediately or later) in favour of someone $r$ preferred; and $r$'s partner only improves. So $r$ prefers her final partner to $p$. No unstable pair exists. $\blacksquare$
+
+  - id: gt-097
+    title: Edge-colouring regular bipartite graphs
+    subtopic: Matchings & Ramsey
+    difficulty: medium
+    type: proof
+    tags: [edge colouring, regular bipartite, perfect matchings]
+    related: [gt-030]
+    statement: |
+      Prove that the edges of a $k$-regular bipartite graph can be coloured with $k$ colours so that edges sharing a vertex get different colours.
+    solution: |
+      Induct on $k$; for $k = 0$ there are no edges. For $k \ge 1$, gt-030 gives a perfect matching $M$; colour it with colour $k$. Removing $M$ leaves a $(k-1)$-regular bipartite graph, which by hypothesis is $(k-1)$-edge-colourable with the other colours. Edges of $M$ are disjoint, so the combined colouring is proper. $\blacksquare$
+
+  - id: gt-098
+    title: Greedy matchings are half-optimal
+    subtopic: Matchings & Ramsey
+    difficulty: medium
+    type: proof
+    tags: [matchings, greedy algorithms, approximation]
+    related: [gt-087]
+    statement: |
+      A matching is maximal if no edge can be added to it. Prove that every maximal matching has at least half as many edges as a maximum matching.
+    solution: |
+      Let $M$ be maximal and $V(M)$ its $2|M|$ endpoints. Every edge of $G$ meets $V(M)$ (else it could be added), so $V(M)$ is a vertex cover. By gt-087 every matching has at most $|V(M)| = 2|M|$ edges. $\blacksquare$
+
+  - id: gt-099
+    title: Choosing one card of each rank
+    subtopic: Matchings & Ramsey
+    difficulty: medium
+    type: proof
+    tags: [hall theorem, systems of distinct representatives]
+    related: [gt-030]
+    statement: |
+      A standard deck is dealt into 13 piles of 4 cards. Prove that one can choose one card from each pile so that the 13 chosen cards have all 13 ranks.
+    solution: |
+      Make a bipartite graph between piles and ranks, joining a pile to a rank once for each card of that rank in the pile (a multigraph). Each pile has 4 cards, and each rank has 4 cards, so the multigraph is 4-regular. Hall's condition holds as in gt-030 (multi-edges don't affect the counting argument), so there is a perfect matching: each pile is assigned a distinct rank that it contains. $\blacksquare$
+
+  - id: gt-100
+    title: A bound for R(4, 4)
+    subtopic: Matchings & Ramsey
+    difficulty: easy
+    type: compute
+    tags: [ramsey numbers]
+    related: [gt-028, gt-093]
+    statement: |
+      Use gt-028 and $R(3,4) = 9$ to bound $R(4,4)$. What bound do you get from $R(3,4) \le 10$ alone?
+    solution: |
+      $R(4,4) \le R(3,4) + R(4,3) = 9 + 9 = 18$. (This is exact: $R(4,4) = 18$.)
+
+      Using only $R(3,4) \le 10$ gives $R(4,4) \le 20$.

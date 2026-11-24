@@ -507,3 +507,993 @@ problems:
       Expanding each geometric series,
       $$a_n = \frac{2^n - (-1)^n}{3}.$$
       Check: $a_2 = 1$, $a_3 = 3 = 1 + 2\cdot1$, $a_4 = 5 = 3 + 2\cdot 1$.
+
+  - id: dm-031
+    title: Counting antisymmetric relations
+    subtopic: Relations
+    difficulty: medium
+    type: compute
+    tags: [relations, antisymmetric, counting]
+    related: [cb-028]
+    statement: |
+      Let $|A| = n$. How many relations on $A$ are antisymmetric? How many are reflexive and antisymmetric? Evaluate the first for $n = 4$.
+    solution: |
+      Decide the $n$ diagonal pairs freely ($2^n$ ways). For each unordered pair $\{a, b\}$, $a \ne b$, antisymmetry allows three options: neither, $(a,b)$ only, $(b,a)$ only. So there are $2^n3^{\binom n2}$ antisymmetric relations; for $n = 4$: $16\cdot3^6 = 11\,664$.
+
+      Reflexive and antisymmetric: diagonal forced, so $3^{\binom n2}$.
+
+  - id: dm-032
+    title: Inverses of relations
+    subtopic: Relations
+    difficulty: easy
+    type: proof
+    tags: [relations, inverse, composition]
+    related: [dm-002]
+    statement: |
+      For relations $R \subseteq A\times B$ and $S \subseteq B\times C$ define $R^{-1} = \{(b,a) : (a,b) \in R\}$ and $S\circ R = \{(a,c) : \exists b\ (a,b)\in R,\ (b,c)\in S\}$. Prove that $(S\circ R)^{-1} = R^{-1}\circ S^{-1}$.
+    solution: |
+      $(c, a) \in (S\circ R)^{-1} \iff (a, c) \in S\circ R \iff \exists b\ \big((a,b) \in R \wedge (b,c) \in S\big)$
+      $\iff \exists b\ \big((c, b) \in S^{-1} \wedge (b, a) \in R^{-1}\big) \iff (c, a) \in R^{-1}\circ S^{-1}$. $\blacksquare$
+
+  - id: dm-033
+    title: Symmetry via the inverse
+    subtopic: Relations
+    difficulty: easy
+    type: proof
+    tags: [relations, symmetric, inverse]
+    related: [dm-032]
+    statement: |
+      Prove that a relation $R$ on $A$ is symmetric iff $R = R^{-1}$, and antisymmetric iff $R \cap R^{-1} \subseteq \Delta = \{(a,a) : a \in A\}$.
+    solution: |
+      **Symmetric.** If $R$ is symmetric, $(a, b) \in R \Rightarrow (b, a) \in R \Rightarrow (a, b) \in R^{-1}$, so $R \subseteq R^{-1}$, and applying this to $(b,a)$ gives the reverse. Conversely if $R = R^{-1}$ then $(a,b) \in R$ gives $(a,b) \in R^{-1}$, i.e. $(b, a) \in R$.
+
+      **Antisymmetric.** $(a, b) \in R\cap R^{-1}$ means $aRb$ and $bRa$; antisymmetry says exactly that this forces $a = b$. $\blacksquare$
+
+  - id: dm-034
+    title: Reflexive and symmetric closures
+    subtopic: Relations
+    difficulty: easy
+    type: proof
+    tags: [relations, closures]
+    related: [dm-004, dm-035]
+    statement: |
+      Prove that $R \cup \Delta$ is the smallest reflexive relation containing $R$, and $R \cup R^{-1}$ is the smallest symmetric one.
+    solution: |
+      $R \cup \Delta$ contains every $(a,a)$, so it is reflexive; any reflexive relation containing $R$ contains $\Delta$ and $R$, hence $R \cup \Delta$.
+
+      $R\cup R^{-1}$ is symmetric since its inverse is $R^{-1}\cup R$. Any symmetric $S \supseteq R$ contains $R^{-1}$ (if $(a,b) \in R \subseteq S$ then $(b,a) \in S$), hence contains $R \cup R^{-1}$. $\blacksquare$
+
+  - id: dm-035
+    title: The transitive closure is the union of powers
+    subtopic: Relations
+    difficulty: medium
+    type: proof
+    tags: [relations, transitive closure, composition]
+    related: [dm-004, dm-002]
+    statement: |
+      Let $R^1 = R$ and $R^{k+1} = R^k\circ R$. Prove that $R^+ = \bigcup_{k\ge1}R^k$ is the smallest transitive relation containing $R$. Show that if $|A| = n$ then $R^+ = R \cup R^2 \cup \cdots \cup R^n$.
+    solution: |
+      $(a,b) \in R^k$ iff there is a chain $a = x_0, x_1, \dots, x_k = b$ with each $x_{i-1}Rx_i$.
+
+      **Transitive.** Chains of lengths $k$ and $l$ concatenate to a chain of length $k + l$.
+
+      **Smallest.** If $T \supseteq R$ is transitive, then by induction on $k$ every $R^k \subseteq T$: a chain of length $k+1$ is a chain of length $k$ (in $T$) followed by one $R$-step (in $T$), and transitivity joins them.
+
+      **Finite $A$.** A chain from $a$ to $b$ of length $k > n$ visits $k + 1 > n + 1$ positions, so some element repeats; cutting out the loop gives a shorter chain. So the shortest chain has length at most $n$. $\blacksquare$
+
+  - id: dm-036
+    title: Transitive closure by matrices
+    subtopic: Relations
+    difficulty: easy
+    type: compute
+    tags: [relations, transitive closure, boolean matrices]
+    related: [dm-035]
+    statement: |
+      Let $R = \{(1,2), (2,3), (3,1), (3,3)\}$ on $\{1,2,3\}$. Compute $R^2$, $R^3$ and the transitive closure.
+    solution: |
+      Follow chains: $R^2$ consists of pairs joined by two steps: $1\to3$, $2\to1$, $2\to3$, $3\to2$, $3\to1$, $3\to3$. So $R^2 = \{(1,3),(2,1),(2,3),(3,1),(3,2),(3,3)\}$.
+
+      $R^3$ (three steps): from 1: $1\to2\to3\to\{1,3\}$; from 2: $2\to3\to\{1,3\}\to\{2,1,3\}$; from 3: everything. So $R^3$ contains $(1,1),(1,3),(2,1),(2,2),(2,3)$ and all $(3,\cdot)$.
+
+      $R \cup R^2 \cup R^3$ is all of $\{1,2,3\}^2$: the closure is the full relation, since $1\to2\to3\to1$ is a cycle through every element.
+
+  - id: dm-037
+    title: Composition of relations is associative
+    subtopic: Relations
+    difficulty: easy
+    type: proof
+    tags: [relations, composition]
+    statement: |
+      Prove that $(T\circ S)\circ R = T\circ(S\circ R)$ for relations $R \subseteq A\times B$, $S\subseteq B\times C$, $T \subseteq C\times D$.
+    solution: |
+      Both sides consist of the pairs $(a, d)$ for which there exist $b, c$ with $aRb$, $bSc$ and $cTd$: unwind the definitions, and the existential quantifiers can be combined in either order. $\blacksquare$
+
+  - id: dm-038
+    title: Relation matrices multiply
+    subtopic: Relations
+    difficulty: medium
+    type: proof
+    tags: [relations, boolean matrices, composition]
+    statement: |
+      For a relation $R$ on $\{1, \dots, n\}$, let $M_R$ be the 0–1 matrix with $(M_R)_{ij} = 1$ iff $iRj$. Show that $M_{S\circ R}$ is the Boolean product of $M_R$ and $M_S$ (ordinary product with $1 + 1 = 1$).
+    solution: |
+      $(M_RM_S)_{ik} = \sum_j(M_R)_{ij}(M_S)_{jk}$ is non-zero iff some $j$ has $iRj$ and $jSk$, iff $(i,k) \in S\circ R$. Replacing every positive entry by 1 gives exactly $M_{S\circ R}$. $\blacksquare$
+
+      (So $R$ is transitive iff $M_R^2 \le M_R$ entrywise in Boolean arithmetic, and powers of $M_R$ compute $R^k$.)
+
+  - id: dm-039
+    title: Intersections and unions of transitive relations
+    subtopic: Relations
+    difficulty: easy
+    type: proof
+    tags: [relations, transitive]
+    statement: |
+      Prove that the intersection of two transitive relations on $A$ is transitive, but the union need not be.
+    solution: |
+      If $aRb$, $bRc$ hold in both $R_1$ and $R_2$, then $aR_1c$ and $aR_2c$.
+
+      **Union fails.** On $\{1,2,3\}$, $R_1 = \{(1,2)\}$ and $R_2 = \{(2,3)\}$ are transitive, but $R_1\cup R_2$ lacks $(1,3)$. $\blacksquare$
+
+  - id: dm-040
+    title: Symmetrising can break transitivity
+    subtopic: Relations
+    difficulty: easy
+    type: compute
+    tags: [relations, transitive, symmetric closure]
+    related: [dm-034]
+    statement: |
+      Give a transitive relation whose symmetric closure is not transitive.
+    solution: |
+      $<$ on $\{1, 2\}$: $R = \{(1,2)\}$ is transitive. Its symmetric closure $\{(1,2),(2,1)\}$ has $1R2$, $2R1$ but not $1R1$, so it is not transitive.
+
+  - id: dm-041
+    title: Strict orders are asymmetric
+    subtopic: Relations
+    difficulty: easy
+    type: proof
+    tags: [relations, irreflexive, asymmetric]
+    statement: |
+      Prove that an irreflexive, transitive relation $R$ is asymmetric: $aRb$ implies $\neg(bRa)$.
+    solution: |
+      If $aRb$ and $bRa$ then transitivity gives $aRa$, contradicting irreflexivity. $\blacksquare$
+
+  - id: dm-042
+    title: Symmetric and antisymmetric at once
+    subtopic: Relations
+    difficulty: easy
+    type: compute
+    tags: [relations, symmetric, antisymmetric, counting]
+    related: [dm-033]
+    statement: |
+      Which relations on a set $A$ are both symmetric and antisymmetric? How many are there when $|A| = 3$?
+    solution: |
+      If $aRb$ then $bRa$ by symmetry, and then $a = b$ by antisymmetry. So $R \subseteq \Delta$; conversely every subset of the diagonal is both. With $|A| = 3$ there are $2^3 = 8$.
+
+  - id: dm-043
+    title: Circular relations
+    subtopic: Relations
+    difficulty: medium
+    type: proof
+    tags: [relations, equivalence relations]
+    statement: |
+      A relation is **circular** if $aRb$ and $bRc$ imply $cRa$. Prove that $R$ is an equivalence relation iff it is reflexive and circular.
+    solution: |
+      **($\Rightarrow$)** If $aRb$ and $bRc$, transitivity gives $aRc$ and symmetry $cRa$.
+
+      **($\Leftarrow$)** *Symmetric:* if $aRb$, use $aRb$ and $bRb$ (reflexive) to get $bRa$. *Transitive:* if $aRb$ and $bRc$ then $cRa$ by circularity, and by symmetry $aRc$. $\blacksquare$
+
+  - id: dm-044
+    title: Powers of the successor relation
+    subtopic: Relations
+    difficulty: easy
+    type: compute
+    tags: [relations, composition, transitive closure]
+    related: [dm-035]
+    statement: |
+      Let $S = \{(a, a+1) : a \in \Z\}$. Describe $S^k$ and the transitive closure of $S$.
+    solution: |
+      By induction $S^k = \{(a, a + k)\}$: composing with $S$ adds 1 more. The transitive closure is $\bigcup_kS^k = \{(a, b) : b - a \ge 1\}$, the relation $<$.
+
+  - id: dm-045
+    title: Preorders give partial orders
+    subtopic: Relations
+    difficulty: medium
+    type: proof
+    tags: [preorders, equivalence relations, partial orders]
+    statement: |
+      Let $\preceq$ be reflexive and transitive on $A$ (a preorder). Prove that $a \sim b \iff (a \preceq b \wedge b \preceq a)$ is an equivalence relation, and that $[a] \le [b] \iff a \preceq b$ is a well-defined partial order on the classes.
+    solution: |
+      **Equivalence.** Reflexive and transitive because $\preceq$ is; symmetric by its definition.
+
+      **Well defined.** If $a \sim a'$, $b \sim b'$ and $a \preceq b$, then $a' \preceq a \preceq b \preceq b'$, so $a' \preceq b'$.
+
+      **Partial order.** Reflexive and transitive from $\preceq$. Antisymmetric: $[a] \le [b]$ and $[b] \le [a]$ mean $a \sim b$, i.e. $[a] = [b]$. $\blacksquare$
+
+      (E.g. "$a$ divides $b$" on $\Z$ is a preorder; it identifies $a$ with $-a$.)
+
+  - id: dm-046
+    title: Reals modulo integers
+    subtopic: Equivalence relations
+    difficulty: easy
+    type: proof
+    tags: [equivalence relations, representatives]
+    statement: |
+      Prove that $x \sim y \iff x - y \in \Z$ is an equivalence relation on $\R$, and that each class contains exactly one element of $[0, 1)$.
+    solution: |
+      $x - x = 0 \in \Z$; if $x - y \in \Z$ so is $y - x$; and $(x - y) + (y - z) = x - z$. So it is an equivalence relation.
+
+      $x - \lfloor x\rfloor \in [0,1)$ is equivalent to $x$. If $s, t \in [0, 1)$ are equivalent, $s - t$ is an integer in $(-1, 1)$, so $s = t$. $\blacksquare$
+
+      (The classes are the points of a circle: wrap the line around with circumference 1.)
+
+  - id: dm-047
+    title: Building the integers
+    subtopic: Equivalence relations
+    difficulty: medium
+    type: proof
+    tags: [equivalence relations, construction of Z]
+    related: [dm-007]
+    statement: |
+      On $\N\times\N$ define $(a,b) \sim (c,d) \iff a + d = b + c$. Prove this is an equivalence relation, and that $[(a,b)] + [(c,d)] = [(a + c, b + d)]$ is well defined. (Think of $(a,b)$ as $a - b$.)
+    solution: |
+      **Reflexive:** $a + b = b + a$. **Symmetric:** clear. **Transitive:** from $a + d = b + c$ and $c + f = d + e$, adding gives $a + d + c + f = b + c + d + e$, and cancelling $c + d$ (valid in $\N$) gives $a + f = b + e$.
+
+      **Well defined.** If $(a,b) \sim (a',b')$ and $(c,d)\sim(c',d')$, then $a + b' = b + a'$ and $c + d' = d + c'$; adding, $(a + c) + (b' + d') = (b + d) + (a' + c')$, i.e. $(a+c, b+d) \sim (a'+c', b'+d')$. $\blacksquare$
+
+  - id: dm-048
+    title: Similarity is an equivalence relation
+    subtopic: Equivalence relations
+    difficulty: easy
+    type: proof
+    tags: [equivalence relations, similar matrices]
+    related: [la-114]
+    statement: |
+      Prove that $A \sim B \iff B = P^{-1}AP$ for some invertible $P$ is an equivalence relation on $n\times n$ matrices.
+    solution: |
+      **Reflexive:** $P = I$. **Symmetric:** if $B = P^{-1}AP$ then $A = PBP^{-1} = (P^{-1})^{-1}BP^{-1}$. **Transitive:** if $B = P^{-1}AP$ and $C = Q^{-1}BQ$ then $C = (PQ)^{-1}A(PQ)$. $\blacksquare$
+
+  - id: dm-049
+    title: Functions differing by a constant
+    subtopic: Equivalence relations
+    difficulty: easy
+    type: proof
+    tags: [equivalence relations, antiderivatives]
+    related: [ca-013]
+    statement: |
+      On differentiable functions $\R \to \R$, let $f \sim g$ iff $f - g$ is constant. Prove that $\sim$ is an equivalence relation and that $f \sim g$ iff $f' = g'$.
+    solution: |
+      $f - f = 0$; if $f - g = c$ then $g - f = -c$; if $f - g = c$ and $g - h = d$ then $f - h = c + d$.
+
+      If $f - g$ is constant its derivative is 0. Conversely if $f' = g'$ then $(f - g)' = 0$ on $\R$, so $f - g$ is constant (ca-013). $\blacksquare$
+
+      (Each class is an "indefinite integral $+ C$".)
+
+  - id: dm-050
+    title: Equivalence relations with two classes
+    subtopic: Equivalence relations
+    difficulty: medium
+    type: compute
+    tags: [equivalence relations, partitions, counting]
+    related: [dm-008]
+    statement: |
+      How many equivalence relations on an $n$-element set have exactly two classes?
+    solution: |
+      These correspond to partitions into two non-empty blocks. Choose the block containing a fixed element $x$: it is $\{x\}\cup S$ for any $S$ from the other $n - 1$ elements except $S$ = everything (the other block must be non-empty). So $2^{n-1} - 1$.
+
+      (Check $n = 4$: the $4 + 3 = 7$ partitions of types $3+1$ and $2+2$ in dm-008.)
+
+  - id: dm-051
+    title: Intersections and unions of equivalence relations
+    subtopic: Equivalence relations
+    difficulty: easy
+    type: proof
+    tags: [equivalence relations, intersection, union]
+    statement: |
+      Prove that the intersection of two equivalence relations on $A$ is an equivalence relation, but the union need not be.
+    solution: |
+      Reflexivity, symmetry and transitivity each pass to intersections (dm-039 for transitivity).
+
+      **Union.** On $\{1,2,3\}$ let $\sim_1$ have classes $\{1,2\},\{3\}$ and $\sim_2$ have classes $\{1\},\{2,3\}$. The union relates $1, 2$ and $2, 3$ but not $1, 3$, so it isn't transitive. $\blacksquare$
+
+  - id: dm-052
+    title: The equivalence relation generated by a relation
+    subtopic: Equivalence relations
+    difficulty: easy
+    type: compute
+    tags: [equivalence relations, closures]
+    related: [dm-035]
+    statement: |
+      Find the smallest equivalence relation on $\{1, 2, 3, 4, 5\}$ containing $R = \{(1,2), (2,3), (4,4)\}$, by listing its classes. Describe the general construction.
+    solution: |
+      $1 \sim 2$ and $2 \sim 3$ force $1 \sim 3$; nothing links 4 or 5 to anything. Classes: $\{1, 2, 3\}$, $\{4\}$, $\{5\}$.
+
+      In general take the transitive closure of $R \cup R^{-1}\cup\Delta$: it is reflexive and symmetric (as its generating set is), transitive by construction, and contained in every equivalence relation containing $R$. Equivalently, $a \sim b$ iff $a, b$ are in the same connected component of the graph with edges $R$.
+
+  - id: dm-053
+    title: Arithmetic mod n is well defined
+    subtopic: Equivalence relations
+    difficulty: medium
+    type: proof
+    tags: [equivalence relations, modular arithmetic, well-defined]
+    related: [nt-163]
+    statement: |
+      On $\Z_n = \Z/{\sim}$ (congruence mod $n$), define $[a] + [b] = [a + b]$ and $[a][b] = [ab]$. Prove these are well defined.
+    solution: |
+      Suppose $[a] = [a']$ and $[b] = [b']$: $a' = a + kn$, $b' = b + ln$. Then
+      $$a' + b' = a + b + (k + l)n,\qquad a'b' = ab + (al + bk + kln)n,$$
+      so $[a' + b'] = [a + b]$ and $[a'b'] = [ab]$. The results don't depend on the representatives. $\blacksquare$
+
+  - id: dm-054
+    title: A map out of Z_n that isn't well defined
+    subtopic: Equivalence relations
+    difficulty: medium
+    type: compute
+    tags: [well-defined, modular arithmetic]
+    related: [lg-028, dm-053]
+    statement: |
+      Decide whether each rule is well defined: (1) $\Z_6 \to \Z_2$, $[x]_6 \mapsto [x]_2$; (2) $\Z_5 \to \Z_2$, $[x]_5 \mapsto [x]_2$; (3) $\Z_n \to \Z_n$, $[x] \mapsto [x^2]$.
+    solution: |
+      1. **Yes**: if $x \equiv x' \pmod 6$ then $2 \mid 6 \mid x - x'$.
+      2. **No**: $[0]_5 = [5]_5$ but $[0]_2 \ne [5]_2$. (It works iff $2 \mid 5$.)
+      3. **Yes**: if $x' = x + kn$ then $x'^2 = x^2 + (2xk + k^2n)n$.
+
+      In general $[x]_m \mapsto [x]_d$ is well defined iff $d \mid m$.
+
+  - id: dm-055
+    title: Partitions give equivalence relations
+    subtopic: Equivalence relations
+    difficulty: medium
+    type: proof
+    tags: [equivalence relations, partitions, bijection]
+    related: [dm-006]
+    statement: |
+      Let $\mathcal P$ be a partition of $A$ (non-empty, pairwise disjoint blocks covering $A$). Prove that "$a \sim b$ iff $a, b$ lie in the same block" is an equivalence relation whose classes are the blocks. Together with dm-006, this gives a bijection between equivalence relations and partitions.
+    solution: |
+      Each $a$ lies in exactly one block $B_a$. Then $a \sim b \iff B_a = B_b$, and "having the same block" is reflexive, symmetric and transitive because equality is.
+
+      The class of $a$ is $\{b : B_b = B_a\} = B_a$. So the partition is recovered as the set of classes, and conversely the relation is recovered from its classes. $\blacksquare$
+
+  - id: dm-056
+    title: Lines through the origin
+    subtopic: Equivalence relations
+    difficulty: easy
+    type: proof
+    tags: [equivalence relations, projective line]
+    statement: |
+      On $\R^2\setminus\{0\}$ let $v \sim w$ iff $w = \lambda v$ for some real $\lambda \ne 0$. Show this is an equivalence relation and describe the classes and a set of representatives.
+    solution: |
+      $\lambda = 1$; if $w = \lambda v$ then $v = \lambda^{-1}w$; if $w = \lambda v$ and $u = \mu w$ then $u = (\mu\lambda)v$.
+
+      The class of $v$ is the line through $0$ and $v$, with $0$ removed. A set of representatives: the unit vectors $(\cos\theta, \sin\theta)$ with $0 \le \theta < \pi$ (each line meets the upper half of the circle once, counting $(1,0)$ but not $(-1,0)$). This set of classes is the real projective line.
+
+  - id: dm-057
+    title: Reals modulo rationals
+    subtopic: Equivalence relations
+    difficulty: medium
+    type: proof
+    tags: [equivalence relations, countability]
+    related: [dm-016, dm-017]
+    statement: |
+      Let $x \sim y$ iff $x - y \in \Q$ on $\R$. Prove that every class is countable and that there are uncountably many classes.
+    solution: |
+      $\sim$ is an equivalence relation as in dm-046 ($\Q$ is closed under subtraction). The class of $x$ is $x + \Q$, in bijection with $\Q$, hence countable.
+
+      If there were countably many classes, $\R$ would be a countable union of countable sets, hence countable (dm-078), contradicting dm-016. $\blacksquare$
+
+      (Choosing one element from each class gives the Vitali set, which is not Lebesgue measurable.)
+
+  - id: dm-058
+    title: Rotations of strings
+    subtopic: Equivalence relations
+    difficulty: easy
+    type: compute
+    tags: [equivalence relations, necklaces]
+    related: [cb-147]
+    statement: |
+      Call two binary strings of length 4 equivalent if one is a cyclic rotation of the other. Show this is an equivalence relation and list the classes.
+    solution: |
+      Rotation by 0 places is the identity; rotation by $k$ is undone by rotation by $4 - k$; rotations compose. So it is an equivalence relation.
+
+      Classes (6 of them): $\{0000\}$, $\{1111\}$, $\{0001, 0010, 0100, 1000\}$, $\{0111, 1011, 1101, 1110\}$, $\{0011, 0110, 1100, 1001\}$, $\{0101, 1010\}$. Sizes $1 + 1 + 4 + 4 + 4 + 2 = 16$.
+
+  - id: dm-059
+    title: Connected components
+    subtopic: Equivalence relations
+    difficulty: easy
+    type: proof
+    tags: [equivalence relations, graphs, connectivity]
+    statement: |
+      In a graph, let $u \sim v$ iff there is a walk from $u$ to $v$. Prove that $\sim$ is an equivalence relation. (Its classes are the connected components.)
+    solution: |
+      The walk of length 0 gives $u \sim u$. Reversing a walk from $u$ to $v$ gives one from $v$ to $u$. Concatenating walks $u \to v$ and $v \to w$ gives one $u \to w$. $\blacksquare$
+
+  - id: dm-060
+    title: Asymptotic equivalence
+    subtopic: Equivalence relations
+    difficulty: easy
+    type: proof
+    tags: [equivalence relations, asymptotics, limits]
+    statement: |
+      On sequences of positive reals let $a \sim b$ iff $a_n/b_n \to 1$. Prove $\sim$ is an equivalence relation. Is $n^2 + n \sim n^2$? Is $2^{n+1} \sim 2^n$?
+    solution: |
+      $a_n/a_n = 1$; if $a_n/b_n \to 1$ then $b_n/a_n \to 1$; and $\frac{a_n}{c_n} = \frac{a_n}{b_n}\cdot\frac{b_n}{c_n} \to 1$.
+
+      $\frac{n^2 + n}{n^2} = 1 + \frac1n \to 1$: **yes**. $\frac{2^{n+1}}{2^n} = 2$: **no** (they are, however, of the same order $\Theta$). $\blacksquare$
+
+  - id: dm-061
+    title: Classes of equal squares mod 5
+    subtopic: Equivalence relations
+    difficulty: easy
+    type: compute
+    tags: [equivalence relations, quadratic residues]
+    statement: |
+      On $\Z$ let $a \sim b$ iff $a^2 \equiv b^2 \pmod 5$. Describe the equivalence classes.
+    solution: |
+      $a^2 \bmod 5$ depends only on $a \bmod 5$: residues $0, 1, 2, 3, 4$ give squares $0, 1, 4, 4, 1$. So there are three classes:
+      $$\{a : a \equiv 0\},\quad\{a : a \equiv \pm1\},\quad\{a : a \equiv \pm2\} \pmod 5.$$
+
+  - id: dm-062
+    title: Subsets ordered by inclusion
+    subtopic: Partial orders
+    difficulty: easy
+    type: proof
+    tags: [partial orders, power set, chains, antichains]
+    statement: |
+      Prove that $\subseteq$ is a partial order on $\mathcal P(X)$, and that it is a total order iff $|X| \le 1$. For $X = \{1,2,3\}$ give a chain of length 4 and an antichain of size 3.
+    solution: |
+      Reflexive, antisymmetric (double inclusion) and transitive. If $x \ne y$ are in $X$, $\{x\}$ and $\{y\}$ are incomparable. If $|X| \le 1$, $\mathcal P(X)$ is $\{\varnothing\}$ or $\{\varnothing, X\}$, totally ordered.
+
+      Chain: $\varnothing \subset \{1\} \subset \{1,2\} \subset \{1,2,3\}$. Antichain: $\{1\}, \{2\}, \{3\}$ (or the three 2-subsets). $\blacksquare$
+
+  - id: dm-063
+    title: The pointwise order on functions
+    subtopic: Partial orders
+    difficulty: easy
+    type: proof
+    tags: [partial orders, functions]
+    statement: |
+      On functions $[0,1] \to \R$ let $f \le g$ iff $f(x) \le g(x)$ for all $x$. Prove this is a partial order and not a total order.
+    solution: |
+      Reflexivity and transitivity hold pointwise. Antisymmetry: $f \le g \le f$ gives $f(x) = g(x)$ for all $x$.
+
+      $f(x) = x$ and $g(x) = 1 - x$ are incomparable: $f(0) < g(0)$ but $f(1) > g(1)$. $\blacksquare$
+
+  - id: dm-064
+    title: Divisibility is a lattice
+    subtopic: Partial orders
+    difficulty: medium
+    type: proof
+    tags: [lattices, gcd, lcm, divisibility]
+    related: [dm-010, nt-127]
+    statement: |
+      In the poset $(\Z_{>0}, \mid)$, prove that every pair $a, b$ has a greatest lower bound $\gcd(a,b)$ and a least upper bound $\mathrm{lcm}(a,b)$.
+    solution: |
+      **Lower bounds.** $\gcd(a, b)$ divides both. Any common divisor $c$ divides $\gcd(a,b)$ (by Bézout, $c \mid ax + by = \gcd(a,b)$). So it is the greatest lower bound in the divisibility order.
+
+      **Upper bounds.** $\mathrm{lcm}(a,b)$ is a common multiple, and it divides every common multiple (nt-127). So it is the least upper bound. $\blacksquare$
+
+  - id: dm-065
+    title: Divisors of 30 form a cube
+    subtopic: Partial orders
+    difficulty: easy
+    type: compute
+    tags: [partial orders, hasse diagram, isomorphism]
+    related: [dm-069]
+    statement: |
+      Draw (describe) the Hasse diagram of the divisors of 30 under divisibility, and show it is isomorphic to $(\mathcal P(\{2,3,5\}), \subseteq)$.
+    solution: |
+      The divisors are $1, 2, 3, 5, 6, 10, 15, 30$. Each $d$ covers $d/p$ for each prime $p \mid d$: $1$ at the bottom; $2, 3, 5$ above it; $6, 10, 15$ above pairs; $30$ at the top. It is the skeleton of a cube.
+
+      $d \mapsto \{p : p \mid d\}$ is a bijection to $\mathcal P(\{2,3,5\})$ (30 is squarefree), and $d \mid d'$ iff the prime set of $d$ is contained in that of $d'$. So it is an order isomorphism.
+
+  - id: dm-066
+    title: Mirsky's theorem
+    subtopic: Partial orders
+    difficulty: hard
+    type: proof
+    tags: [partial orders, chains, antichains]
+    source: Mirsky, 1971
+    related: [dm-067]
+    hints:
+      - |
+        Let $h(x)$ be the length of the longest chain ending at $x$, and group elements by $h$.
+    statement: |
+      Prove that if the longest chain in a finite poset has $k$ elements, then the poset can be partitioned into $k$ antichains (and not fewer).
+    solution: |
+      **Not fewer.** A chain meets each antichain at most once, so $k$ elements need at least $k$ antichains.
+
+      **$k$ suffice.** For each $x$, let $h(x)$ be the number of elements in a longest chain ending at $x$; so $1 \le h(x) \le k$. Let $A_i = \{x : h(x) = i\}$. If $x < y$ were both in $A_i$, a longest chain ending at $x$ followed by $y$ would be a chain of length $i + 1$ ending at $y$, so $h(y) > i$. Hence each $A_i$ is an antichain, and $A_1, \dots, A_k$ partition the poset. $\blacksquare$
+
+  - id: dm-067
+    title: Long chains or large antichains
+    subtopic: Partial orders
+    difficulty: medium
+    type: proof
+    tags: [partial orders, chains, antichains, pigeonhole]
+    related: [dm-066, cb-013]
+    statement: |
+      Prove that every poset with $mn + 1$ elements has a chain of $m + 1$ elements or an antichain of $n + 1$ elements. Deduce the Erdős–Szekeres theorem (cb-013).
+    solution: |
+      If there is no chain of $m + 1$ elements, Mirsky (dm-066) partitions the poset into at most $m$ antichains, and by pigeonhole one has at least $\lceil\frac{mn+1}{m}\rceil = n + 1$ elements.
+
+      **Erdős–Szekeres.** Given distinct $a_1, \dots, a_{n^2+1}$, order the indices by $i \preceq j$ iff $i \le j$ and $a_i \le a_j$. Chains are increasing subsequences, and antichains are decreasing ones (two indices $i < j$ are incomparable iff $a_i > a_j$). With $m = n$, there is an increasing or decreasing subsequence of length $n + 1$. $\blacksquare$
+
+  - id: dm-068
+    title: Which orders are well-orders?
+    subtopic: Partial orders
+    difficulty: easy
+    type: compute
+    tags: [well-ordering, total orders]
+    related: [dm-013, in-198]
+    statement: |
+      Which of these total orders are well-orders (every non-empty subset has a least element)? (1) $\N$ with $\le$; (2) $\Z$ with $\le$; (3) $\N$ with $\ge$; (4) $\{1 - \frac1n : n \ge 1\}\cup\{1\}$ with $\le$; (5) $[0,1]$ with $\le$.
+    solution: |
+      1. **Yes** (the well-ordering principle).
+      2. **No**: $\Z$ itself has no least element.
+      3. **No**: in the reversed order, "least" means largest, and $\N$ has no largest element.
+      4. **Yes**: it is $0 < \frac12 < \frac23 < \cdots < 1$, order-isomorphic to $\N$ followed by one more point; any non-empty subset either contains some $1 - \frac1n$ (take the smallest $n$) or is $\{1\}$.
+      5. **No**: $(0, 1]$ has no least element.
+
+  - id: dm-069
+    title: Order isomorphisms
+    subtopic: Partial orders
+    difficulty: easy
+    type: proof
+    tags: [partial orders, isomorphism]
+    related: [dm-065]
+    statement: |
+      Show that the divisors of 6 under divisibility and $\mathcal P(\{a, b\})$ under inclusion are isomorphic posets, but the divisors of 8 under divisibility are not isomorphic to either.
+    solution: |
+      $1 \mapsto \varnothing$, $2 \mapsto \{a\}$, $3 \mapsto \{b\}$, $6 \mapsto \{a,b\}$ is a bijection preserving and reflecting the order.
+
+      The divisors of 8, $1 \mid 2 \mid 4 \mid 8$, form a chain, but $\mathcal P(\{a,b\})$ has the incomparable pair $\{a\}, \{b\}$. An isomorphism preserves comparability, so none exists. $\blacksquare$
+
+  - id: dm-070
+    title: Partial orders on three elements
+    subtopic: Partial orders
+    difficulty: medium
+    type: compute
+    tags: [partial orders, counting]
+    statement: |
+      How many partial orders are there on the labelled set $\{1, 2, 3\}$?
+    solution: |
+      Classify by shape (Hasse diagram), then count labellings:
+
+      | shape | labellings |
+      |---|---|
+      | antichain (no relations) | 1 |
+      | one comparable pair, third element isolated | $3\cdot2 = 6$ |
+      | "V": one element below the other two | 3 |
+      | "Λ": one element above the other two | 3 |
+      | chain | $3! = 6$ |
+
+      **Total: 19.**
+
+  - id: dm-071
+    title: Topological sorts of the divisors of 12
+    subtopic: Partial orders
+    difficulty: medium
+    type: compute
+    tags: [linear extensions, topological sort]
+    related: [dm-014]
+    statement: |
+      How many ways can the divisors of 12 be listed so that whenever $a \mid b$, $a$ comes before $b$?
+    solution: |
+      $1$ must be first and $12$ last. The middle elements $2, 3, 4, 6$ must respect $2$ before $4$ and $6$, and $3$ before $6$.
+
+      - If 2 comes first among them: the rest $3, 4, 6$ need $3$ before $6$: $3$ orders ($346$, $364$, $436$).
+      - If 3 comes first: then 2 must come next (both 4 and 6 need 2 first), then $4, 6$ in either order: 2 orders.
+
+      **Total: 5.**
+
+  - id: dm-072
+    title: Upper bounds without a supremum
+    subtopic: Partial orders
+    difficulty: medium
+    type: compute
+    tags: [partial orders, supremum, lattices]
+    related: [dm-064]
+    statement: |
+      Find a finite poset with two elements that have common upper bounds but no least upper bound.
+    solution: |
+      Take $\{a, b, c, d\}$ with $a < c$, $a < d$, $b < c$, $b < d$ and no other relations (a "bow tie"). The upper bounds of $\{a, b\}$ are $c$ and $d$, which are incomparable, so neither is least. (So this poset is not a lattice.)
+
+  - id: dm-073
+    title: Finite lattices are bounded
+    subtopic: Partial orders
+    difficulty: easy
+    type: proof
+    tags: [lattices, finiteness]
+    related: [dm-064]
+    statement: |
+      In a lattice every pair has a least upper bound $a\vee b$. Prove that a non-empty finite lattice has a greatest element.
+    solution: |
+      List the elements $x_1, \dots, x_n$ and let $m = x_1\vee x_2\vee\cdots\vee x_n$ (joining one at a time). By induction $m$ is an upper bound for every $x_i$, and $m$ is in the lattice. So it is the greatest element. $\blacksquare$
+
+      (Dually, there is a least element. $\Z$ shows finiteness is needed.)
+
+  - id: dm-074
+    title: The product order on the plane
+    subtopic: Partial orders
+    difficulty: easy
+    type: proof
+    tags: [partial orders, product order]
+    related: [dm-013]
+    statement: |
+      On $\R^2$ let $(a, b) \le (c, d)$ iff $a \le c$ and $b \le d$. Prove it is a partial order but not total, and compare it with the lexicographic order of dm-013.
+    solution: |
+      Each property holds coordinatewise. $(0, 1)$ and $(1, 0)$ are incomparable.
+
+      Every pair related in the product order is related the same way in the lexicographic order (if $a \le c$ and $b \le d$, then $a < c$ or $a = c$, $b \le d$), so the lexicographic order is a total order extending the product order. $\blacksquare$
+
+  - id: dm-075
+    title: Strict and non-strict orders
+    subtopic: Partial orders
+    difficulty: easy
+    type: proof
+    tags: [partial orders, strict orders]
+    related: [dm-041]
+    statement: |
+      Prove that if $\le$ is a partial order then $a < b \iff (a \le b \wedge a \ne b)$ is irreflexive and transitive, and conversely that if $<$ is irreflexive and transitive then $a \le b \iff (a < b \vee a = b)$ is a partial order.
+    solution: |
+      **From $\le$.** $a < a$ would need $a \ne a$. If $a < b < c$ then $a \le c$; if $a = c$ then $a \le b \le a$ gives $a = b$ by antisymmetry, contradicting $a \ne b$. So $a < c$.
+
+      **From $<$.** Reflexive by the "$a = b$" clause. Transitive: check the four cases, using transitivity of $<$. Antisymmetric: if $a \le b$, $b \le a$ and $a \ne b$, then $a < b < a$, so $a < a$. $\blacksquare$
+
+  - id: dm-076
+    title: Everything lies above a minimal element
+    subtopic: Partial orders
+    difficulty: easy
+    type: proof
+    tags: [partial orders, minimal elements, finiteness]
+    related: [dm-012]
+    statement: |
+      Let $P$ be a finite poset and $x \in P$. Prove that there is a minimal element $m$ with $m \le x$.
+    solution: |
+      Apply dm-012 to the non-empty finite poset $\{y \in P : y \le x\}$ to get a minimal element $m$ of it. If $z < m$ in $P$, then $z < m \le x$, so $z$ is in the subset, contradicting minimality there. So $m$ is minimal in $P$. $\blacksquare$
+
+  - id: dm-077
+    title: Unions of two countable sets
+    subtopic: Cardinality
+    difficulty: easy
+    type: proof
+    tags: [countability, union]
+    related: [dm-015]
+    statement: |
+      Prove that if $A$ and $B$ are countable then so is $A \cup B$.
+    solution: |
+      Let $f : \N \to A$ and $g : \N \to B$ be surjections (if a set is empty, the union is just the other one). Define $h(2n) = f(n)$ and $h(2n + 1) = g(n)$. Then $h : \N \to A \cup B$ is surjective, so $A\cup B$ is countable. $\blacksquare$
+
+      (A set is countable iff it is empty or a surjective image of $\N$.)
+
+  - id: dm-078
+    title: Countable unions of countable sets
+    subtopic: Cardinality
+    difficulty: medium
+    type: proof
+    tags: [countability, union, pairing function]
+    related: [dm-018, dm-077]
+    statement: |
+      Prove that if $A_0, A_1, \dots$ are countable non-empty sets, then $\bigcup_nA_n$ is countable.
+    solution: |
+      Choose surjections $f_n : \N \to A_n$. Define $h : \N\times\N \to \bigcup A_n$ by $h(n, m) = f_n(m)$; it is surjective. Composing with the bijection $\N \to \N\times\N$ of dm-018 gives a surjection from $\N$. $\blacksquare$
+
+      (Choosing the $f_n$ uses the axiom of countable choice.)
+
+  - id: dm-079
+    title: Transcendental numbers exist
+    subtopic: Cardinality
+    difficulty: hard
+    type: proof
+    tags: [countability, algebraic numbers, transcendental]
+    source: Cantor, 1874
+    related: [dm-078, dm-016]
+    statement: |
+      A real number is algebraic if it is a root of a non-zero polynomial with integer coefficients. Prove that the algebraic numbers are countable, and deduce that transcendental (non-algebraic) reals exist.
+    solution: |
+      For each $d \ge 1$ the integer polynomials of degree $d$ correspond to tuples $(a_0, \dots, a_d) \in \Z^{d+1}$ with $a_d \ne 0$, a countable set (a finite product of countable sets is countable, by dm-018 repeatedly). So the set of all non-zero integer polynomials is a countable union of countable sets, hence countable (dm-078).
+
+      Each such polynomial has at most $d$ real roots. So the algebraic numbers are a countable union of finite sets, hence countable.
+
+      $\R$ is uncountable (dm-016), so not every real is algebraic. $\blacksquare$
+
+      (This existence proof gives no example; Liouville, Hermite and Lindemann found explicit ones, e.g. $e$ and $\pi$.)
+
+  - id: dm-080
+    title: Infinite binary sequences are uncountable
+    subtopic: Cardinality
+    difficulty: medium
+    type: proof
+    tags: [diagonal argument, uncountability]
+    related: [dm-016, lg-027]
+    statement: |
+      Prove that the set of infinite 0–1 sequences is uncountable.
+    solution: |
+      Suppose $s^{(0)}, s^{(1)}, \dots$ lists them all. Define $t$ by $t_n = 1 - s^{(n)}_n$. Then $t$ differs from $s^{(n)}$ in position $n$, for every $n$, so it is not on the list. $\blacksquare$
+
+      (Equivalently $\mathcal P(\N)$ is uncountable, via indicator functions.)
+
+  - id: dm-081
+    title: The irrationals are uncountable
+    subtopic: Cardinality
+    difficulty: easy
+    type: proof
+    tags: [countability, irrationals]
+    related: [dm-016, dm-017, dm-077]
+    statement: |
+      Prove that $\R\setminus\Q$ is uncountable.
+    solution: |
+      If it were countable, $\R = \Q\cup(\R\setminus\Q)$ would be a union of two countable sets, hence countable (dm-077), contradicting dm-016. $\blacksquare$
+
+  - id: dm-082
+    title: An interval and two intervals
+    subtopic: Cardinality
+    difficulty: easy
+    type: proof
+    tags: [bijection, cardinality, intervals]
+    related: [dm-019]
+    statement: |
+      Give an explicit bijection from $(0, 1)$ to $(0, 1)\cup(2, 3)$.
+    solution: |
+      Stretching $(0, \frac12)$ onto $(0, 1)$ and $(\frac12, 1)$ onto $(2, 3)$ would work, except for the point $\frac12$. So first remove it with a Hilbert-hotel shift:
+      $$g(x) = \begin{cases}\frac{1}{k+1} & x = \frac1k \text{ for some integer } k \ge 2,\\ x & \text{otherwise.}\end{cases}$$
+      $g$ is a bijection from $(0,1)$ onto $(0,1)\setminus\{\frac12\}$: it maps $\{\frac12, \frac13, \dots\}$ onto $\{\frac13, \frac14, \dots\}$ and fixes everything else. Then
+      $$h(y) = \begin{cases}2y & 0 < y < \frac12,\\ 2y + 1 & \frac12 < y < 1\end{cases}$$
+      is a bijection from $(0,1)\setminus\{\frac12\}$ onto $(0,1)\cup(2,3)$. The composite $h\circ g$ is the required bijection. $\blacksquare$
+
+  - id: dm-083
+    title: Infinite sets contain countable subsets
+    subtopic: Cardinality
+    difficulty: medium
+    type: proof
+    tags: [countability, infinite sets, choice]
+    related: [dm-085]
+    statement: |
+      Prove that every infinite set $A$ has a countably infinite subset.
+    solution: |
+      Choose $a_0 \in A$ (possible since $A \ne \varnothing$). Having chosen distinct $a_0, \dots, a_{n-1}$, the set $A\setminus\{a_0, \dots, a_{n-1}\}$ is non-empty (else $A$ would be finite), so choose $a_n$ in it. Then $\{a_0, a_1, \dots\}$ is a countably infinite subset. $\blacksquare$
+
+      (The repeated choices use the axiom of dependent choice.)
+
+  - id: dm-084
+    title: Subsets of countable sets
+    subtopic: Cardinality
+    difficulty: medium
+    type: proof
+    tags: [countability, subsets, well-ordering]
+    statement: |
+      Prove that every subset of $\N$ is finite or in bijection with $\N$. Deduce that every subset of a countable set is countable.
+    solution: |
+      Let $S \subseteq \N$ be infinite. Define $s_0 = \min S$ and $s_{n+1} = \min(S\setminus\{s_0, \dots, s_n\})$ (non-empty as $S$ is infinite; the minimum exists by well-ordering). Then $s_0 < s_1 < \cdots$, so $n \mapsto s_n$ is injective. It is surjective: if $s \in S$, then at most $s$ elements of $S$ are below it, so $s$ is chosen by step $s$.
+
+      If $A$ is countable via an injection $f : A \to \N$, a subset $B \subseteq A$ injects into $\N$ via $f|_B$. $\blacksquare$
+
+  - id: dm-085
+    title: Dedekind-infinite sets
+    subtopic: Cardinality
+    difficulty: hard
+    type: proof
+    tags: [infinite sets, bijection, hilbert hotel]
+    source: Dedekind, 1888
+    related: [dm-083, dm-028]
+    statement: |
+      Prove that a set is infinite if and only if it is in bijection with a proper subset of itself.
+    solution: |
+      **($\Leftarrow$)** A finite set with $n$ elements has no injection into a set with fewer elements (pigeonhole), so it isn't in bijection with a proper subset.
+
+      **($\Rightarrow$)** By dm-083, $A$ contains distinct $a_0, a_1, \dots$. Define $f(a_n) = a_{n+1}$ and $f(x) = x$ for other $x$. Then $f$ is injective, and its image is $A\setminus\{a_0\}$, a proper subset. $\blacksquare$
+
+  - id: dm-086
+    title: Countably many programs
+    subtopic: Cardinality
+    difficulty: medium
+    type: proof
+    tags: [countability, strings, computability]
+    related: [dm-080, al-004]
+    statement: |
+      Prove that the set of all finite strings over a finite alphabet is countable. Deduce that some function $\N \to \{0,1\}$ is not computed by any computer program.
+    solution: |
+      Strings of length $n$ form a finite set ($k^n$ of them for $k$ letters). So all strings form a countable union of finite sets, hence are countable; concretely, list them by length and then alphabetically.
+
+      Every program is a finite string, so there are countably many programs. But the functions $\N\to\{0,1\}$ are in bijection with infinite 0–1 sequences, an uncountable set (dm-080). So some function has no program. $\blacksquare$
+
+  - id: dm-087
+    title: Eventually-zero sequences
+    subtopic: Cardinality
+    difficulty: medium
+    type: proof
+    tags: [countability, sequences]
+    related: [dm-027, dm-080]
+    statement: |
+      Prove that the set of sequences of natural numbers that are eventually 0 is countable, while the set of all sequences of natural numbers is uncountable.
+    solution: |
+      **Eventually zero.** Map $(a_0, a_1, \dots, a_k, 0, 0, \dots)$ to $\prod_{i}p_i^{a_i}$, with $p_i$ the $i$th prime. This is a finite product, and by unique factorisation the map is injective into $\N$.
+
+      **All sequences.** The 0–1 sequences among them are already uncountable (dm-080). $\blacksquare$
+
+  - id: dm-088
+    title: Closed and half-open intervals via Schröder–Bernstein
+    subtopic: Cardinality
+    difficulty: easy
+    type: proof
+    tags: [schroder-bernstein, injection, cardinality]
+    related: [lg-235, dm-019]
+    statement: |
+      Use the Schröder–Bernstein theorem (lg-235) to show that $[0, 1]$ and $[0, 1)$ have the same cardinality.
+    solution: |
+      $[0,1) \to [0,1]$, $x \mapsto x$ is injective, and $[0,1] \to [0,1)$, $x \mapsto \frac x2$ is injective. By Schröder–Bernstein there is a bijection. $\blacksquare$
+
+      (No explicit formula needed, though one can be built as in dm-019.)
+
+  - id: dm-089
+    title: A recurrence with an exponential forcing term
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, particular solution]
+    related: [dm-020]
+    statement: |
+      Solve $a_n = 2a_{n-1} + 3^n$ with $a_0 = 1$.
+    solution: |
+      Try a particular solution $c\,3^n$: $c3^n = 2c3^{n-1} + 3^n$ gives $c = \frac{2c}{3} + 1$, so $c = 3$. The general solution is $a_n = A2^n + 3^{n+1}$, and $a_0 = A + 3 = 1$ gives $A = -2$:
+      $$a_n = 3^{n+1} - 2^{n+1}.$$
+      Check: $a_1 = 9 - 4 = 5 = 2\cdot1 + 3$.
+
+  - id: dm-090
+    title: A recurrence with a linear forcing term
+    subtopic: Recurrences
+    difficulty: easy
+    type: compute
+    tags: [recurrence, particular solution]
+    related: [in-196, gf-010]
+    statement: |
+      Solve $a_n = 3a_{n-1} + 2n$ with $a_0 = 0$.
+    solution: |
+      Try $a_n = An + B$: $An + B = 3A(n - 1) + 3B + 2n$, so $A = 3A + 2$ and $B = -3A + 3B$, giving $A = -1$, $B = -\frac32$. The general solution is $C3^n - n - \frac32$, and $a_0 = 0$ gives $C = \frac32$:
+      $$a_n = \frac{3^{n+1} - 2n - 3}{2}.$$
+      Check: $a_1 = 2 = 3\cdot0 + 2$, $a_2 = 10 = 3\cdot2 + 4$.
+
+  - id: dm-091
+    title: A third-order recurrence
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, characteristic equation]
+    related: [dm-021]
+    statement: |
+      Solve $a_n = 6a_{n-1} - 11a_{n-2} + 6a_{n-3}$ with $a_0 = 0$, $a_1 = 1$, $a_2 = 5$.
+    solution: |
+      $x^3 - 6x^2 + 11x - 6 = (x - 1)(x - 2)(x - 3)$, so $a_n = A + B2^n + C3^n$. Then
+      $$A + B + C = 0,\quad A + 2B + 3C = 1,\quad A + 4B + 9C = 5.$$
+      Subtracting: $B + 2C = 1$ and $2B + 6C = 4$, so $C = 1$, $B = -1$, $A = 0$:
+      $$a_n = 3^n - 2^n.$$
+      Check: $a_3 = 19 = 6\cdot5 - 11\cdot1 + 0$.
+
+  - id: dm-092
+    title: Complex characteristic roots
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, complex roots, trigonometry]
+    statement: |
+      Solve $a_n = 2a_{n-1} - 2a_{n-2}$ with $a_0 = a_1 = 1$.
+    solution: |
+      $x^2 - 2x + 2 = 0$ has roots $1 \pm i = \sqrt2e^{\pm i\pi/4}$. Real solutions are $a_n = 2^{n/2}\left(A\cos\frac{n\pi}4 + B\sin\frac{n\pi}4\right)$. Then $a_0 = A = 1$ and $a_1 = \sqrt2\left(\frac{1}{\sqrt2} + \frac{B}{\sqrt2}\right) = 1 + B = 1$, so $B = 0$:
+      $$a_n = 2^{n/2}\cos\frac{n\pi}{4}.$$
+      Check: $a_2 = 0 = 2 - 2$, $a_3 = 2^{3/2}\cos\frac{3\pi}4 = -2 = 0 - 2$.
+
+  - id: dm-093
+    title: Why the characteristic equation works
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [recurrence, linear algebra, characteristic equation]
+    related: [la-070]
+    statement: |
+      Suppose $x^2 - px - q$ has distinct roots $r, s$. Prove that every solution of $a_n = pa_{n-1} + qa_{n-2}$ has the form $Ar^n + Bs^n$.
+    solution: |
+      $r^n$ satisfies the recurrence: $pr^{n-1} + qr^{n-2} = r^{n-2}(pr + q) = r^{n-2}r^2$. Likewise $s^n$, and hence any $Ar^n + Bs^n$ (the recurrence is linear).
+
+      Given a solution $(a_n)$, choose $A, B$ with $A + B = a_0$ and $Ar + Bs = a_1$; this is possible since the determinant is $s - r \ne 0$. Then $(a_n)$ and $(Ar^n + Bs^n)$ satisfy the same recurrence with the same first two terms, so they agree by strong induction. $\blacksquare$
+
+  - id: dm-094
+    title: A divide-and-conquer recurrence
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, divide and conquer]
+    related: [dm-025]
+    statement: |
+      Solve $T(n) = 4T(n/2) + n^2$ with $T(1) = 1$, for $n$ a power of 2.
+    solution: |
+      With $n = 2^k$, divide by $4^k = n^2$: $S_k = T(2^k)/4^k$ satisfies $S_k = S_{k-1} + 1$, $S_0 = 1$. So $S_k = k + 1$ and
+      $$T(n) = n^2(\log_2n + 1).$$
+      Check: $T(2) = 4 + 4 = 8 = 4(1 + 1)$.
+
+  - id: dm-095
+    title: Tilings with coloured squares
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, tiling, characteristic equation]
+    related: [cb-027]
+    statement: |
+      A $1\times n$ strip is tiled with red squares, blue squares and dominoes. Find a recurrence and a closed form for the number $a_n$ of tilings.
+    solution: |
+      The last tile is a red square, a blue square or a domino: $a_n = 2a_{n-1} + a_{n-2}$, with $a_0 = 1$, $a_1 = 2$.
+
+      The roots of $x^2 - 2x - 1$ are $1 \pm\sqrt2$. Solving for the constants:
+      $$a_n = \frac{(1 + \sqrt2)^{n+1} - (1 - \sqrt2)^{n+1}}{2\sqrt2}.$$
+      Check: $n = 0$ gives $\frac{2\sqrt2}{2\sqrt2} = 1$ and $n = 1$ gives $\frac{(3 + 2\sqrt2) - (3 - 2\sqrt2)}{2\sqrt2} = 2$. Values $1, 2, 5, 12, 29, \dots$ (Pell numbers).
+
+  - id: dm-096
+    title: Ternary strings without 00
+    subtopic: Recurrences
+    difficulty: medium
+    type: compute
+    tags: [recurrence, strings, characteristic equation]
+    related: [dm-026]
+    statement: |
+      Let $a_n$ be the number of strings of length $n$ over $\{0,1,2\}$ with no two consecutive 0s. Find a recurrence and compute $a_5$.
+    solution: |
+      Split by the last character. If it is 1 or 2, the first $n - 1$ form any valid string: $2a_{n-1}$. If it is 0, the previous character is 1 or 2 (or absent), and the first $n - 2$ form any valid string: $2a_{n-2}$. So
+      $$a_n = 2a_{n-1} + 2a_{n-2},\qquad a_0 = 1,\ a_1 = 3.$$
+      Then $a_2 = 8$, $a_3 = 22$, $a_4 = 60$, $a_5 = 164$.
+
+      (Closed form: $a_n = \frac{(2 + \sqrt3)(1+\sqrt3)^n - (2 - \sqrt3)(1 - \sqrt3)^n}{2\sqrt3}$.)
+
+  - id: dm-097
+    title: Climbing stairs in steps of 1, 2 or 3
+    subtopic: Recurrences
+    difficulty: easy
+    type: compute
+    tags: [recurrence, tribonacci]
+    related: [in-139]
+    statement: |
+      In how many ways can you climb 10 stairs taking 1, 2 or 3 steps at a time?
+    solution: |
+      Let $t_n$ be the number of ways; the last step has size 1, 2 or 3, so $t_n = t_{n-1} + t_{n-2} + t_{n-3}$ with $t_0 = 1$, $t_1 = 1$, $t_2 = 2$. Then
+      $$4, 7, 13, 24, 44, 81, 149, 274$$
+      for $n = 3, \dots, 10$. **274 ways.**
+
+  - id: dm-098
+    title: No three equal digits in a row
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [recurrence, fibonacci, binary strings]
+    related: [dm-026]
+    statement: |
+      Prove that the number of binary strings of length $n \ge 1$ with no three consecutive equal digits is $2F_{n+1}$.
+    solution: |
+      Such a string is a sequence of runs of equal digits, each run of length 1 or 2, with alternating digits. It is determined by its first digit (2 choices) and the sequence of run lengths, a composition of $n$ into parts 1 and 2. The number of such compositions is $F_{n+1}$ (the tiling count of cb-027). So there are $2F_{n+1}$ strings. $\blacksquare$
+
+      (Values $2, 4, 6, 10, 16, \dots$)
+
+  - id: dm-099
+    title: A multiplicative recurrence
+    subtopic: Recurrences
+    difficulty: easy
+    type: compute
+    tags: [recurrence, logarithms, geometric sequences]
+    related: [in-233]
+    statement: |
+      Solve $a_n = \dfrac{a_{n-1}^2}{a_{n-2}}$ with $a_0 = 2$, $a_1 = 6$ (all terms positive).
+    solution: |
+      $\frac{a_n}{a_{n-1}} = \frac{a_{n-1}}{a_{n-2}}$, so the ratio of consecutive terms is constant, equal to $\frac{a_1}{a_0} = 3$. Hence $a_n = 2\cdot3^n$.
+
+      (Taking logs, $b_n = \ln a_n$ satisfies the linear recurrence $b_n = 2b_{n-1} - b_{n-2}$, whose solutions are arithmetic progressions.)
+
+  - id: dm-100
+    title: Last digits of Fibonacci numbers repeat
+    subtopic: Recurrences
+    difficulty: medium
+    type: proof
+    tags: [recurrence, periodicity, pigeonhole]
+    related: [nt-074]
+    statement: |
+      Prove that the last digits of the Fibonacci numbers form a purely periodic sequence. (Its period is 60.)
+    solution: |
+      Let $d_n = F_n \bmod 10$. Then $d_{n+1} \equiv d_n + d_{n-1}$, so each pair $(d_n, d_{n+1})$ determines the next pair, and also the previous one, since $d_{n-1} \equiv d_{n+1} - d_n$.
+
+      There are only 100 possible pairs, so some pair repeats: $(d_i, d_{i+1}) = (d_j, d_{j+1})$ with $i < j$. Running the recurrence backwards from both, $(d_0, d_1) = (d_{j-i}, d_{j-i+1})$, and then forwards, $d_{n + (j-i)} = d_n$ for all $n$. $\blacksquare$

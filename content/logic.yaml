@@ -272,7 +272,7 @@ problems:
     statement: |
       Prove that among any $n+1$ integers there are two whose difference is divisible by $n$.
     solution: |
-      Each integer leaves one of the $n$ remainders $0, 1, \dots, n-1$ on division by $n$. With $n+1$ integers and only $n$ possible remainders, by the pigeonhole principle two of them, say $a \ne b$ (as positions in the list), have the same remainder $r$: $a = nq + r$ and $b = nq' + r$. Then $a - b = n(q - q')$ is divisible by $n$. $\blacksquare$
+      Each integer leaves one of the $n$ remainders $0, 1, \dots, n-1$ on division by $n$. With $n+1$ integers and only $n$ possible remainders, by the pigeonhole principle two of them, say $a$ and $b$ (taken from different positions in the list, though possibly equal as numbers), have the same remainder $r$: $a = nq + r$ and $b = nq' + r$. Then $a - b = n(q - q')$ is divisible by $n$. $\blacksquare$
 
   - id: lg-016
     title: De Morgan for sets
@@ -525,3 +525,3299 @@ problems:
       1. **Valid.** From $\neg R$ and $Q \to R$, modus tollens gives $\neg Q$; then from $P \to Q$, again $\neg P$.
       2. **Invalid.** From $\neg R$ and $P \to R$ we get $\neg P$, and then $P \vee Q$ forces $Q$. So whenever the premises hold, $Q$ is **true**: the assignment $P = F$, $Q = T$, $R = F$ makes all premises true and the conclusion false. (Indeed $Q$ is what follows.)
       3. **Invalid** (denying the antecedent). $P = F$, $Q = T$ makes both premises true and $\neg Q$ false.
+
+  - id: lg-031
+    title: Unpacking the biconditional
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [truth tables, biconditional]
+    statement: |
+      Prove that $P \leftrightarrow Q$, $(P \to Q) \wedge (Q \to P)$ and $(P \wedge Q) \vee (\neg P \wedge \neg Q)$ are logically equivalent.
+    solution: |
+      | $P$ | $Q$ | $P \leftrightarrow Q$ | $(P\to Q)\wedge(Q \to P)$ | $(P\wedge Q)\vee(\neg P\wedge\neg Q)$ |
+      |---|---|---|---|---|
+      | T | T | T | T $\wedge$ T = T | T |
+      | T | F | F | F $\wedge$ T = F | F |
+      | F | T | F | T $\wedge$ F = F | F |
+      | F | F | T | T $\wedge$ T = T | T |
+
+      All three columns agree, so the formulas are equivalent. In words: $P \leftrightarrow Q$ says $P$ and $Q$ have the same truth value. $\blacksquare$
+
+  - id: lg-032
+    title: Implication as a disjunction
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [implication, equivalence]
+    related: [lg-001]
+    statement: |
+      Prove that $P \to Q \equiv \neg P \vee Q$, and deduce that $\neg(P \to Q) \equiv P \wedge \neg Q$.
+    solution: |
+      $P \to Q$ is false only in the row $P = T$, $Q = F$. $\neg P \vee Q$ is false only when $\neg P$ and $Q$ are both false, i.e. again only when $P = T$, $Q = F$. So they are equivalent.
+
+      Negating and using De Morgan: $\neg(P \to Q) \equiv \neg(\neg P \vee Q) \equiv \neg\neg P \wedge \neg Q \equiv P \wedge \neg Q$. $\blacksquare$
+
+  - id: lg-033
+    title: Exportation
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [implication, equivalence]
+    related: [lg-032]
+    statement: |
+      Prove that $(P \wedge Q) \to R \equiv P \to (Q \to R)$.
+    solution: |
+      Using $A \to B \equiv \neg A \vee B$ (lg-032) and De Morgan,
+      $$(P\wedge Q)\to R \equiv \neg(P \wedge Q) \vee R \equiv \neg P \vee \neg Q \vee R,$$
+      $$P \to (Q \to R) \equiv \neg P \vee (\neg Q \vee R).$$
+      By associativity of $\vee$ these are the same. $\blacksquare$
+
+      (This is why "assume $P$, then assume $Q$, and prove $R$" is a valid way to prove $(P\wedge Q) \to R$.)
+
+  - id: lg-034
+    title: Implication is not associative
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [implication, counterexample]
+    statement: |
+      Show that $(P \to Q) \to R$ and $P \to (Q \to R)$ are not equivalent. Which implies which?
+    solution: |
+      Take $P = Q = R = F$. Then $P \to Q$ is T, so $(P \to Q)\to R$ is $T \to F = F$. But $P \to (Q \to R)$ has false hypothesis, so it is T. Not equivalent.
+
+      **$(P \to Q) \to R$ implies $P \to (Q \to R)$.** Suppose the first is true and $P$, $Q$ are true. Then $P \to Q$ is true, so $R$ is true. Hence $Q \to R$ holds whenever $P$ does.
+
+      The converse fails by the assignment above. $\blacksquare$
+
+  - id: lg-035
+    title: Absorption laws
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [equivalence, absorption]
+    statement: |
+      Prove that $P \vee (P \wedge Q) \equiv P$ and $P \wedge (P \vee Q) \equiv P$.
+    solution: |
+      **First.** If $P$ is true, both sides are true. If $P$ is false, $P \wedge Q$ is false, so the left side is $F \vee F = F$. The sides agree in every case.
+
+      **Second.** If $P$ is true, $P \vee Q$ is true and the left side is true. If $P$ is false, the left side is false. $\blacksquare$
+
+  - id: lg-036
+    title: Distributive laws for connectives
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [equivalence, distributive law]
+    related: [lg-017]
+    statement: |
+      Prove that $P \wedge (Q \vee R) \equiv (P \wedge Q) \vee (P \wedge R)$ and $P \vee (Q \wedge R) \equiv (P \vee Q) \wedge (P \vee R)$.
+    solution: |
+      Split on $P$.
+
+      **First.** If $P$ is false, both sides are false. If $P$ is true, the left side is $Q \vee R$, and the right side is $Q \vee R$ too.
+
+      **Second.** If $P$ is true, both sides are true. If $P$ is false, both sides reduce to $Q \wedge R$. $\blacksquare$
+
+  - id: lg-037
+    title: The biconditional is associative
+    subtopic: Propositional logic
+    difficulty: medium
+    type: proof
+    tags: [biconditional, exclusive or, parity]
+    related: [lg-005, lg-018]
+    hints:
+      - |
+        Write $A \leftrightarrow B$ as $A \oplus B \oplus 1$, working mod 2 with T $= 1$.
+    statement: |
+      Prove that $(P \leftrightarrow Q) \leftrightarrow R \equiv P \leftrightarrow (Q \leftrightarrow R)$, and describe exactly when it is true.
+    solution: |
+      Identify T with $1$ and F with $0$, and compute mod 2. Then $A \oplus B = A + B$, and $A \leftrightarrow B$ is true iff $A = B$, i.e. $A \leftrightarrow B = A + B + 1$.
+
+      So
+      $$(P\leftrightarrow Q)\leftrightarrow R = (P + Q + 1) + R + 1 = P + Q + R,$$
+      $$P\leftrightarrow(Q \leftrightarrow R) = P + (Q + R + 1) + 1 = P + Q + R,$$
+      mod 2. The two agree, and both are true exactly when an **odd** number of $P, Q, R$ are true. (Check: all three true gives $(T\leftrightarrow T)\leftrightarrow T = T$.) $\blacksquare$
+
+  - id: lg-038
+    title: Algebraic simplification
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [equivalence, simplification]
+    statement: |
+      Using the laws of logic (not truth tables), simplify
+
+      1. $\neg\big(P \vee (\neg P \wedge Q)\big)$,
+      2. $(P \to Q) \wedge (P \to \neg Q)$,
+      3. $(P \wedge Q) \vee (P \wedge \neg Q)$.
+    solution: |
+      1. By distributivity $P \vee (\neg P \wedge Q) \equiv (P \vee \neg P) \wedge (P \vee Q) \equiv P \vee Q$. Negating with De Morgan: $\neg P \wedge \neg Q$.
+      2. $(\neg P \vee Q) \wedge (\neg P \vee \neg Q) \equiv \neg P \vee (Q \wedge \neg Q) \equiv \neg P$.
+      3. $P \wedge (Q \vee \neg Q) \equiv P$.
+
+  - id: lg-039
+    title: NOR is functionally complete
+    subtopic: Propositional logic
+    difficulty: medium
+    type: proof
+    tags: [connectives, nor, completeness]
+    related: [lg-004]
+    statement: |
+      Let $P \downarrow Q = \neg(P \vee Q)$ (NOR). Given that $\{\neg, \wedge\}$ is functionally complete, prove that $\{\downarrow\}$ is.
+    solution: |
+      It suffices to express $\neg$ and $\wedge$.
+
+      - $P \downarrow P = \neg(P \vee P) \equiv \neg P$.
+      - $(P\downarrow P)\downarrow(Q \downarrow Q) \equiv \neg P \downarrow \neg Q = \neg(\neg P \vee \neg Q) \equiv P \wedge Q$ by De Morgan.
+
+      Replacing $\neg A$ by $A \downarrow A$ and $A \wedge B$ by $(A\downarrow A)\downarrow(B\downarrow B)$ throughout any $\{\neg, \wedge\}$-formula gives an equivalent $\{\downarrow\}$-formula. $\blacksquare$
+
+  - id: lg-040
+    title: Negation and implication suffice
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [connectives, completeness, implication]
+    related: [lg-032]
+    statement: |
+      Given that $\{\neg, \wedge\}$ is functionally complete, prove that $\{\neg, \to\}$ is.
+    solution: |
+      We must express $\wedge$. Since $A \to B \equiv \neg A \vee B$,
+      $$\neg(P \to \neg Q) \equiv \neg(\neg P \vee \neg Q) \equiv P \wedge Q.$$
+      So every $\{\neg, \wedge\}$-formula can be rewritten with $\neg$ and $\to$ only. $\blacksquare$
+
+  - id: lg-041
+    title: Formulas without negation can't say "false"
+    subtopic: Propositional logic
+    difficulty: medium
+    type: proof
+    tags: [connectives, completeness, structural induction]
+    related: [in-173]
+    statement: |
+      Prove that $\{\wedge, \vee, \to, \leftrightarrow\}$ is not functionally complete.
+    solution: |
+      **Claim.** Every formula built from variables using these connectives is true when all its variables are true.
+
+      Structural induction: a variable is true under that assignment; and if $A$ and $B$ are both true then $A \wedge B$, $A \vee B$, $A \to B$ and $A \leftrightarrow B$ are all true.
+
+      So no such formula is equivalent to $\neg P$, which is false when $P$ is true. $\blacksquare$
+
+  - id: lg-042
+    title: Negation and the biconditional are not complete
+    subtopic: Propositional logic
+    difficulty: hard
+    type: proof
+    tags: [connectives, completeness, structural induction, parity]
+    hints:
+      - |
+        Count the true rows in the 4-row truth table of a formula in $P, Q$.
+    statement: |
+      Prove that $P \wedge Q$ cannot be expressed using only $\neg$, $\leftrightarrow$ and the variables $P, Q$.
+    solution: |
+      For a formula $A$ in $P, Q$ let $t(A)$ be the number of rows (out of 4) of its truth table in which it is true. **Claim:** $t(A)$ is even for every $\{\neg, \leftrightarrow\}$-formula.
+
+      **Base.** $t(P) = t(Q) = 2$.
+
+      **Negation.** $t(\neg A) = 4 - t(A)$, even if $t(A)$ is.
+
+      **Biconditional.** Let $a = t(A)$, $b = t(B)$, and $c$ be the number of rows where both are true. $A \leftrightarrow B$ is true where both are true ($c$ rows) or both false ($4 - a - b + c$ rows, by inclusion–exclusion). So $t(A\leftrightarrow B) = 4 - a - b + 2c$, even.
+
+      But $t(P \wedge Q) = 1$ is odd, so no such formula is equivalent to $P \wedge Q$. $\blacksquare$
+
+  - id: lg-043
+    title: How many truth functions are there?
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [truth tables, counting, connectives]
+    statement: |
+      How many truth functions of $n$ variables are there? List all 16 truth functions of two variables by name where possible.
+    solution: |
+      A truth table for $n$ variables has $2^n$ rows, and a truth function chooses T or F in each, so there are $2^{2^n}$.
+
+      For $n = 2$, writing the outputs in the rows $TT, TF, FT, FF$:
+
+      | outputs | function | outputs | function |
+      |---|---|---|---|
+      | FFFF | constant F | TTTT | constant T |
+      | TFFF | $P \wedge Q$ | FTTT | NAND |
+      | TTTF | $P \vee Q$ | FFFT | NOR |
+      | TFTT | $P \to Q$ | FTFF | $\neg(P\to Q)$ |
+      | TTFT | $Q \to P$ | FFTF | $\neg(Q \to P)$ |
+      | TFFT | $P \leftrightarrow Q$ | FTTF | $P \oplus Q$ |
+      | TTFF | $P$ | FFTT | $\neg P$ |
+      | TFTF | $Q$ | FTFT | $\neg Q$ |
+
+  - id: lg-044
+    title: Every truth function has a DNF
+    subtopic: Propositional logic
+    difficulty: medium
+    type: proof
+    tags: [normal forms, dnf, completeness]
+    related: [lg-005, lg-045]
+    statement: |
+      Prove that every truth function $f(P_1, \dots, P_n)$ is expressed by a formula in disjunctive normal form (a disjunction of conjunctions of literals). Deduce that $\{\neg, \wedge, \vee\}$ is functionally complete.
+    solution: |
+      If $f$ is never true, take $P_1 \wedge \neg P_1$.
+
+      Otherwise, for each row $r = (r_1, \dots, r_n)$ where $f$ is true, let $M_r = L_1 \wedge \cdots \wedge L_n$ with $L_i = P_i$ if $r_i = T$ and $L_i = \neg P_i$ if $r_i = F$. Then $M_r$ is true in row $r$ and false in every other row (some literal disagrees). Let $D = \bigvee_r M_r$ over all such rows.
+
+      In a row where $f$ is true, its own $M_r$ is true, so $D$ is true. In a row where $f$ is false, every $M_r$ is false, so $D$ is false. Hence $D$ expresses $f$, using only $\neg, \wedge, \vee$. $\blacksquare$
+
+  - id: lg-045
+    title: Every truth function has a CNF
+    subtopic: Propositional logic
+    difficulty: medium
+    type: proof
+    tags: [normal forms, cnf, de morgan]
+    related: [lg-044]
+    statement: |
+      Prove that every truth function is expressed by a formula in conjunctive normal form (a conjunction of disjunctions of literals).
+    solution: |
+      Apply lg-044 to $\neg f$: there is a DNF $D = \bigvee_i\bigwedge_j L_{ij}$ expressing $\neg f$. Then $f \equiv \neg D$, and by De Morgan's laws (generalised by induction to many terms)
+      $$\neg D \equiv \bigwedge_i\neg\bigwedge_jL_{ij} \equiv \bigwedge_i\bigvee_j\neg L_{ij}.$$
+      Each $\neg L_{ij}$ is a literal (replacing $\neg\neg P$ by $P$), so this is a CNF. $\blacksquare$
+
+      (Concretely: one clause per row where $f$ is false, ruling that row out.)
+
+  - id: lg-046
+    title: Converting to CNF
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [normal forms, cnf]
+    statement: |
+      Find a CNF and a DNF equivalent to $(P \to Q) \to R$.
+    solution: |
+      Using $A \to B \equiv \neg A \vee B$ twice:
+      $$(P \to Q) \to R \equiv \neg(\neg P \vee Q) \vee R \equiv (P \wedge \neg Q) \vee R.$$
+      This is already a **DNF**. Distributing $\vee$ over $\wedge$ gives the **CNF**
+      $$(P \vee R) \wedge (\neg Q \vee R).$$
+
+  - id: lg-047
+    title: The majority function
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [normal forms, dnf, cnf]
+    statement: |
+      Let $M(P, Q, R)$ be true when at least two of $P, Q, R$ are true. Give a short DNF and a short CNF for $M$ and justify them.
+    solution: |
+      **DNF:** $(P \wedge Q) \vee (P \wedge R) \vee (Q \wedge R)$. It is true iff some pair is both true, i.e. iff at least two are true.
+
+      **CNF:** $(P \vee Q) \wedge (P \vee R) \wedge (Q \vee R)$. It is false iff some pair is both false, i.e. iff at least two are false, i.e. iff at most one is true. So it is true iff at least two are true.
+
+      (The two forms are each other's duals: $M$ is self-dual.)
+
+  - id: lg-048
+    title: Exactly one in CNF
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [normal forms, cnf, encoding]
+    statement: |
+      Write a CNF formula that is true exactly when exactly one of $P, Q, R$ is true. How many clauses does the same idea need for $n$ variables?
+    solution: |
+      "At least one" is the clause $P \vee Q \vee R$, and "at most one" says no two are both true: $\neg P \vee \neg Q$, $\neg P \vee \neg R$, $\neg Q \vee \neg R$. So
+      $$(P \vee Q \vee R) \wedge (\neg P \vee \neg Q) \wedge (\neg P \vee \neg R) \wedge (\neg Q \vee \neg R).$$
+      For $n$ variables: one "at least one" clause and $\binom n2$ pair clauses, $1 + \binom n2$ in total. (This encoding is standard in SAT solving, e.g. for sudoku.)
+
+  - id: lg-049
+    title: Knights and knaves I
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [puzzles, knights and knaves]
+    related: [lg-050, lg-051, lg-052]
+    statement: |
+      On an island, knights always tell the truth and knaves always lie. $A$ says: "At least one of us two is a knave." What are $A$ and $B$?
+    solution: |
+      If $A$ were a knave, the statement "at least one of us is a knave" would be true, but knaves never say true things. So $A$ is a **knight**, and the statement is true: one of them is a knave, which must be $B$. So $B$ is a **knave**.
+
+      (Formally, with $a$ = "$A$ is a knight", the situation is $a \leftrightarrow (\neg a \vee \neg b)$, which is satisfied only by $a = T$, $b = F$.)
+
+  - id: lg-050
+    title: Knights and knaves II
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [puzzles, knights and knaves]
+    related: [lg-049]
+    statement: |
+      $A$ says: "We are both knaves." What are $A$ and $B$?
+    solution: |
+      A knight can't say this, since it would make the knight a knave. So $A$ is a **knave**, and the statement is false: they are not both knaves. Hence $B$ is a **knight**.
+
+  - id: lg-051
+    title: Knights and knaves III
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [puzzles, knights and knaves]
+    related: [lg-049]
+    statement: |
+      $A$ says "$B$ is a knave", and $B$ says "$A$ and I are both knights." What are they?
+    solution: |
+      If $B$ were a knight, his statement would make $A$ a knight too, and then $A$'s claim that $B$ is a knave would be true, a contradiction. So $B$ is a **knave**. Then $A$'s statement is true, so $A$ is a **knight**. Check: $B$'s claim "both knights" is indeed false.
+
+  - id: lg-052
+    title: Knights and knaves IV
+    subtopic: Propositional logic
+    difficulty: medium
+    type: compute
+    tags: [puzzles, knights and knaves, cases]
+    related: [lg-049]
+    statement: |
+      $A$ says: "$B$ and $C$ are the same type." Someone then asks $C$: "Are $A$ and $B$ the same type?" What does $C$ answer?
+    solution: |
+      $C$ answers **yes**, whatever the types. Check all cases consistent with $A$'s statement:
+
+      - $A$ knight, so $B, C$ the same. If both knights, $A, B$ are the same and $C$ truthfully says yes. If both knaves, $A, B$ differ and $C$ lies: yes.
+      - $A$ knave, so $B, C$ differ. If $C$ is a knight, $B$ is a knave, so $A, B$ are the same and $C$ says yes. If $C$ is a knave, $B$ is a knight, so $A, B$ differ and $C$ lies: yes.
+
+      (Even though we can't determine anyone's type, the answer is forced.)
+
+  - id: lg-053
+    title: Satisfiable or not?
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [satisfiability, cnf]
+    statement: |
+      Decide whether each formula is satisfiable, giving a satisfying assignment or a proof that none exists.
+
+      1. $(P \vee Q) \wedge (\neg P \vee R) \wedge (\neg Q \vee R) \wedge \neg R$
+      2. $(P \vee Q) \wedge (\neg P \vee R) \wedge (\neg Q \vee \neg R)$
+    solution: |
+      1. **Unsatisfiable.** $\neg R$ forces $R = F$. Then $\neg P \vee R$ forces $P = F$ and $\neg Q \vee R$ forces $Q = F$, making $P \vee Q$ false.
+      2. **Satisfiable:** $P = T$, $Q = F$, $R = T$ gives $T \wedge T \wedge T$.
+
+  - id: lg-054
+    title: Resolution is sound
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [resolution, validity]
+    statement: |
+      Prove that from $A \vee B$ and $\neg A \vee C$ one may validly infer $B \vee C$.
+    solution: |
+      Suppose $A \vee B$ and $\neg A \vee C$ are true. If $A$ is true, then $\neg A$ is false, so $C$ is true. If $A$ is false, then $B$ is true. Either way $B \vee C$ is true. $\blacksquare$
+
+      (Repeating this rule until the empty clause appears is the resolution method for showing a CNF is unsatisfiable, as in lg-053.)
+
+  - id: lg-055
+    title: Hypothetical syllogism
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [tautology, implication]
+    statement: |
+      Prove that $\big((P \to Q) \wedge (Q \to R)\big) \to (P \to R)$ is a tautology.
+    solution: |
+      Suppose it is false in some row. Then the hypothesis is true and $P \to R$ is false, so $P = T$ and $R = F$. From $P \to Q$ and $P = T$, $Q = T$. From $Q \to R$ and $Q = T$, $R = T$, contradicting $R = F$. So no such row exists. $\blacksquare$
+
+  - id: lg-056
+    title: Peirce's law
+    subtopic: Propositional logic
+    difficulty: medium
+    type: proof
+    tags: [tautology, implication]
+    source: Peirce
+    statement: |
+      Prove that $\big((P \to Q) \to P\big) \to P$ is a tautology.
+    solution: |
+      Suppose it were false in some row. Then $P$ is false and $(P \to Q) \to P$ is true. With $P$ false, the latter forces $P \to Q$ to be false. But $P \to Q$ is true whenever $P$ is false. Contradiction. $\blacksquare$
+
+      (Peirce's law is classically valid but not provable in intuitionistic logic, which rejects proof by contradiction in general.)
+
+  - id: lg-057
+    title: Constructive dilemma
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [validity, cases]
+    statement: |
+      Prove that the premises $P \to Q$, $R \to S$, $P \vee R$ logically imply $Q \vee S$.
+    solution: |
+      Assume all three premises. By $P \vee R$, either $P$ or $R$ is true. If $P$, then $Q$ by the first premise; if $R$, then $S$ by the second. In both cases $Q \vee S$. $\blacksquare$
+
+  - id: lg-058
+    title: Consequence and tautology
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [validity, tautology, deduction theorem]
+    statement: |
+      Write $\Gamma \models B$ if $B$ is true in every assignment making all formulas in $\Gamma$ true. Prove that $\{A_1, \dots, A_n\} \models B$ if and only if $(A_1 \wedge \cdots \wedge A_n) \to B$ is a tautology.
+    solution: |
+      **($\Rightarrow$)** In any assignment, either some $A_i$ is false, making the hypothesis false and the implication true, or all $A_i$ are true, in which case $B$ is true by assumption and the implication is true.
+
+      **($\Leftarrow$)** In any assignment making all $A_i$ true, the hypothesis of the tautology is true, so $B$ is true. $\blacksquare$
+
+  - id: lg-059
+    title: Equivalence is an equivalence relation
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [equivalence, validity]
+    statement: |
+      Prove that logical equivalence $\equiv$ is reflexive, symmetric and transitive, and that $\models$ is transitive: if $A \models B$ and $B \models C$ then $A \models C$.
+    solution: |
+      $A \equiv B$ means $A$ and $B$ have the same truth value in every assignment. "Same value" is reflexive, symmetric and transitive at each assignment, so the same holds for $\equiv$.
+
+      For $\models$: take an assignment making $A$ true. Then $B$ is true by $A \models B$, and then $C$ is true by $B \models C$. $\blacksquare$
+
+  - id: lg-060
+    title: Substituting into tautologies
+    subtopic: Propositional logic
+    difficulty: medium
+    type: proof
+    tags: [tautology, substitution]
+    statement: |
+      Let $A$ be a tautology containing the variable $P$, and let $A'$ be the result of replacing every occurrence of $P$ by a formula $B$. Prove that $A'$ is a tautology. Use this to show that $(Q \to R) \vee \neg(Q \to R)$ is a tautology.
+    solution: |
+      Take any assignment $v$ of the variables of $A'$. Let $v'$ be the assignment that agrees with $v$ on the variables other than $P$ and gives $P$ the value of $B$ under $v$. Evaluating $A'$ under $v$ and $A$ under $v'$ proceed identically: wherever $A$ has $P$, $A'$ has $B$, and they have the same value. So $A'$ under $v$ has the same value as $A$ under $v'$, which is T because $A$ is a tautology. $\blacksquare$
+
+      With $A = P \vee \neg P$ and $B = Q \to R$ we get the example.
+
+  - id: lg-061
+    title: Converse, inverse, contrapositive
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [converse, contrapositive, translation]
+    related: [lg-001]
+    statement: |
+      For the statement "If a real function is differentiable at $a$, then it is continuous at $a$", write down the converse, the inverse and the contrapositive, and say which are true.
+    solution: |
+      - **Statement** (true): differentiable at $a$ $\Rightarrow$ continuous at $a$.
+      - **Converse** (false): continuous at $a$ $\Rightarrow$ differentiable at $a$. Counterexample $|x|$ at $0$.
+      - **Inverse** (false): not differentiable $\Rightarrow$ not continuous. Same counterexample.
+      - **Contrapositive** (true): not continuous at $a$ $\Rightarrow$ not differentiable at $a$.
+
+      The contrapositive is equivalent to the statement, and the inverse is the contrapositive of the converse, so they stand or fall together.
+
+  - id: lg-062
+    title: Only if, unless, necessary, sufficient
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [translation, implication]
+    statement: |
+      Let $P$ = "you pass" and $Q$ = "you study". Translate into symbols:
+
+      1. You pass only if you study.
+      2. You pass if you study.
+      3. Studying is necessary for passing.
+      4. Studying is sufficient for passing.
+      5. You don't pass unless you study.
+    solution: |
+      1. $P \to Q$. ("Only if" introduces the consequence.)
+      2. $Q \to P$.
+      3. $P \to Q$. (A necessary condition is implied.)
+      4. $Q \to P$. (A sufficient condition implies.)
+      5. "$A$ unless $B$" means $\neg B \to A$. Here $\neg Q \to \neg P$, which is the contrapositive of $P \to Q$.
+
+  - id: lg-063
+    title: The duality principle
+    subtopic: Propositional logic
+    difficulty: hard
+    type: proof
+    tags: [duality, structural induction, de morgan]
+    hints:
+      - |
+        Let $A^*$ be $A$ with every variable replaced by its negation. Show by structural induction that $A^d \equiv \neg A^*$.
+    statement: |
+      For a formula $A$ built from variables with $\neg, \wedge, \vee$, its **dual** $A^d$ is obtained by swapping $\wedge$ and $\vee$. Prove that if $A \equiv B$ then $A^d \equiv B^d$. (For example, the two distributive laws are dual.)
+    solution: |
+      Let $A^*$ be $A$ with each variable $P$ replaced by $\neg P$.
+
+      **Lemma.** $A^d \equiv \neg A^*$. Structural induction:
+
+      - $A = P$: $P^d = P \equiv \neg\neg P = \neg P^*$.
+      - $A = \neg B$: $A^d = \neg B^d \equiv \neg\neg B^* = \neg A^*$.
+      - $A = B \wedge C$: $A^d = B^d \vee C^d \equiv \neg B^* \vee \neg C^* \equiv \neg(B^* \wedge C^*) = \neg A^*$. Similarly for $\vee$.
+
+      **Duality.** If $A \equiv B$, then substituting $\neg P$ for every variable $P$ preserves equivalence (each assignment for $A^*, B^*$ corresponds to the assignment with all variables flipped for $A, B$), so $A^* \equiv B^*$. Hence $A^d \equiv \neg A^* \equiv \neg B^* \equiv B^d$. $\blacksquare$
+
+  - id: lg-064
+    title: Counting satisfying assignments
+    subtopic: Propositional logic
+    difficulty: medium
+    type: compute
+    tags: [counting, satisfiability]
+    statement: |
+      How many of the $2^n$ assignments to $P_1, \dots, P_n$ satisfy
+
+      1. $P_1 \vee P_2 \vee \cdots \vee P_n$,
+      2. $P_1 \oplus P_2 \oplus \cdots \oplus P_n$,
+      3. $(P_1 \to P_2) \wedge (P_2 \to P_3) \wedge \cdots \wedge (P_{n-1} \to P_n)$?
+    solution: |
+      1. All except the all-false assignment: $2^n - 1$.
+      2. The formula is true iff an odd number of $P_i$ are true. Pairing each assignment with the one obtained by flipping $P_1$ swaps odd and even counts, so exactly half: $2^{n-1}$.
+      3. The conditions say that once some $P_i$ is true, every later one is. So a satisfying assignment is $F, \dots, F, T, \dots, T$, determined by the number of $F$s ($0$ to $n$): $n + 1$.
+
+  - id: lg-065
+    title: Adding with logic gates
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [circuits, exclusive or]
+    statement: |
+      A full adder takes bits $a, b$ and a carry-in $c$ and outputs a sum bit $s$ and a carry-out $c'$ with $a + b + c = s + 2c'$. Express $s$ and $c'$ as formulas in $a, b, c$.
+    solution: |
+      $a + b + c \in \{0,1,2,3\}$. The sum bit is $1$ exactly when the total is odd, and the carry is $1$ exactly when the total is at least $2$. So
+      $$s = a \oplus b \oplus c, \qquad c' = (a \wedge b) \vee (a \wedge c) \vee (b \wedge c),$$
+      i.e. parity and majority. Check $a = b = c = 1$: $s = 1$, $c' = 1$, and $1 + 2 = 3$.
+
+  - id: lg-066
+    title: Properties of exclusive or
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [exclusive or, equivalence]
+    statement: |
+      Prove that $P \oplus Q \equiv \neg(P \leftrightarrow Q) \equiv (P \vee Q) \wedge \neg(P \wedge Q)$, and that $(P \oplus Q) \oplus Q \equiv P$.
+    solution: |
+      $P \oplus Q$ is true iff $P$ and $Q$ differ, which is exactly when $P \leftrightarrow Q$ is false, and exactly when at least one is true but not both.
+
+      For the last identity, $(P \oplus Q) \oplus Q$: if $Q$ is false, both $\oplus Q$'s do nothing and we get $P$. If $Q$ is true, each $\oplus Q$ flips the value, and two flips return $P$. $\blacksquare$
+
+      (This is why the one-time pad works: encrypting with $\oplus k$ twice returns the message.)
+
+  - id: lg-067
+    title: Valid or fallacious?
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [validity, fallacy]
+    related: [lg-030]
+    statement: |
+      Symbolise and decide whether each argument is valid.
+
+      1. If it rained, the grass is wet. The grass is wet. So it rained.
+      2. If it rained, the grass is wet. The grass is not wet. So it did not rain.
+      3. Either the butler or the cook did it. If the cook did it, the knife is in the kitchen. The knife is not in the kitchen. So the butler did it.
+    solution: |
+      1. $R \to W$, $W$ $\therefore R$. **Invalid** (affirming the consequent): $R = F$, $W = T$ makes the premises true and the conclusion false.
+      2. $R \to W$, $\neg W$ $\therefore \neg R$. **Valid** (modus tollens).
+      3. $B \vee C$, $C \to K$, $\neg K$ $\therefore B$. **Valid**: modus tollens gives $\neg C$, then $B \vee C$ gives $B$.
+
+  - id: lg-068
+    title: Modus ponens and modus tollens are tautologies
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [tautology, inference rules]
+    statement: |
+      Prove that $\big(P \wedge (P \to Q)\big) \to Q$ and $\big(\neg Q \wedge (P \to Q)\big) \to \neg P$ are tautologies, using algebraic laws.
+    solution: |
+      **First.** $P \wedge (\neg P \vee Q) \equiv (P \wedge \neg P) \vee (P \wedge Q) \equiv P \wedge Q$. So the formula is $(P \wedge Q) \to Q \equiv \neg P \vee \neg Q \vee Q$, which is true since $\neg Q \vee Q$ is.
+
+      **Second.** $\neg Q \wedge (\neg P \vee Q) \equiv (\neg Q \wedge \neg P) \vee (\neg Q \wedge Q) \equiv \neg P \wedge \neg Q$. So the formula is $(\neg P \wedge \neg Q) \to \neg P \equiv P \vee Q \vee \neg P$, true. $\blacksquare$
+
+  - id: lg-069
+    title: Tautologies, contradictions and equivalence
+    subtopic: Propositional logic
+    difficulty: easy
+    type: proof
+    tags: [tautology, satisfiability, equivalence]
+    statement: |
+      Prove that (1) $A$ is a tautology iff $\neg A$ is unsatisfiable, and (2) $A \equiv B$ iff $A \leftrightarrow B$ is a tautology.
+    solution: |
+      1. $A$ is true in every assignment iff $\neg A$ is false in every assignment, i.e. no assignment satisfies $\neg A$.
+      2. $A \leftrightarrow B$ is true in an assignment iff $A$ and $B$ have the same value there. So it is true in every assignment iff $A$ and $B$ agree in every assignment, which is the definition of $A \equiv B$. $\blacksquare$
+
+  - id: lg-070
+    title: Proof by contradiction as a tautology
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [tautology, contradiction]
+    statement: |
+      Decide whether each is a tautology.
+
+      1. $(P \to Q) \to \big((P \to \neg Q) \to \neg P\big)$
+      2. $(\neg P \to (Q \wedge \neg Q)) \to P$
+      3. $(P \to Q) \to (\neg P \to \neg Q)$
+    solution: |
+      1. **Tautology.** If $P \to Q$ and $P \to \neg Q$ are both true and $P$ were true, then $Q$ and $\neg Q$ would both be true. So $\neg P$. (This is the reductio rule.)
+      2. **Tautology.** $Q \wedge \neg Q$ is false, so the hypothesis says $\neg P \to F$, i.e. $P$. This is proof by contradiction.
+      3. **Not a tautology.** $P = F$, $Q = T$: $P \to Q$ is T but $\neg P \to \neg Q$ is $T \to F = F$.
+
+  - id: lg-071
+    title: What does P ∧ Q imply?
+    subtopic: Propositional logic
+    difficulty: medium
+    type: compute
+    tags: [validity, counting, truth tables]
+    statement: |
+      Up to logical equivalence, how many formulas $F$ in the variables $P, Q$ satisfy $P \wedge Q \models F$? How many satisfy $F \models P \vee Q$?
+    solution: |
+      Up to equivalence a formula is a truth function, i.e. a choice of T/F in each of the 4 rows.
+
+      $P \wedge Q \models F$ means $F$ is true in the one row where $P \wedge Q$ is true, namely $TT$. The other three rows are free: $2^3 = 8$.
+
+      $F \models P \vee Q$ means $F$ is false wherever $P \vee Q$ is false, namely in row $FF$. The other three are free: $8$.
+
+  - id: lg-072
+    title: If-then-else is complete
+    subtopic: Propositional logic
+    difficulty: medium
+    type: proof
+    tags: [connectives, completeness]
+    statement: |
+      Define the ternary connective $\mathrm{ite}(P, Q, R) = (P \wedge Q) \vee (\neg P \wedge R)$ ("if $P$ then $Q$ else $R$"). Prove that $\mathrm{ite}$ together with the constants $T$ and $F$ is functionally complete.
+    solution: |
+      It is enough to express $\neg$ and $\wedge$.
+
+      - $\mathrm{ite}(P, F, T)$: if $P$ then $F$ else $T$, which is $\neg P$.
+      - $\mathrm{ite}(P, Q, F)$: if $P$ then $Q$ else $F$, which is true exactly when both are true: $P \wedge Q$.
+
+      $\blacksquare$
+
+      (Binary decision diagrams represent every Boolean function this way.)
+
+  - id: lg-073
+    title: Which single connectives are complete?
+    subtopic: Propositional logic
+    difficulty: hard
+    type: proof
+    tags: [connectives, completeness, sheffer stroke]
+    related: [lg-004, lg-039, lg-041]
+    hints:
+      - |
+        A complete binary connective $\ast$ must have $T \ast T = F$ and $F \ast F = T$. Why?
+    statement: |
+      Prove that NAND and NOR are the only binary connectives that are functionally complete on their own.
+    solution: |
+      Let $\ast$ be a binary connective that is complete on its own.
+
+      - If $T \ast T = T$, every formula built with $\ast$ is true when all variables are true (structural induction), so $\neg P$ is not expressible. Hence $T \ast T = F$.
+      - Likewise, if $F \ast F = F$, every $\ast$-formula is false when all variables are false, so again $\neg P$ is not expressible. Hence $F \ast F = T$.
+
+      That leaves four possibilities for $(T \ast F, F \ast T)$:
+
+      - $(T, T)$: $\ast$ is NAND, complete (lg-004).
+      - $(F, F)$: $\ast$ is NOR, complete (lg-039).
+      - $(F, T)$: then $P \ast Q \equiv \neg P$. Every formula built from such a connective is equivalent to a literal ($P_i$ or $\neg P_i$), by structural induction, so $P \wedge Q$ is not expressible.
+      - $(T, F)$: then $P \ast Q \equiv \neg Q$, not complete for the same reason.
+
+      $\blacksquare$
+
+  - id: lg-074
+    title: Translating with connectives
+    subtopic: Propositional logic
+    difficulty: easy
+    type: compute
+    tags: [translation, connectives]
+    statement: |
+      With $R$ = "it is raining", $C$ = "it is cold", $S$ = "I stay home", symbolise:
+
+      1. It is raining but not cold.
+      2. If it is cold or raining, I stay home.
+      3. I stay home exactly when it is both cold and raining.
+      4. It is neither cold nor raining, yet I stay home.
+    solution: |
+      1. $R \wedge \neg C$ ("but" is "and").
+      2. $(C \vee R) \to S$.
+      3. $S \leftrightarrow (C \wedge R)$.
+      4. $\neg C \wedge \neg R \wedge S$, equivalently $\neg(C \vee R) \wedge S$.
+
+  - id: lg-075
+    title: Everybody loves somebody
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, translation]
+    related: [lg-007]
+    statement: |
+      Over the domain of all people, let $L(x, y)$ mean "$x$ loves $y$". Symbolise:
+
+      1. Everybody loves somebody.
+      2. Somebody is loved by everybody.
+      3. Nobody loves everybody.
+      4. Everybody loves themselves.
+      5. There is someone who loves only themselves.
+    solution: |
+      1. $\forall x\,\exists y\,L(x,y)$.
+      2. $\exists y\,\forall x\,L(x,y)$.
+      3. $\neg\exists x\,\forall y\,L(x,y)$, equivalently $\forall x\,\exists y\,\neg L(x,y)$.
+      4. $\forall x\,L(x,x)$.
+      5. $\exists x\,\big(L(x,x) \wedge \forall y\,(L(x,y) \to y = x)\big)$.
+
+      Note that 2 implies 1 but not conversely.
+
+  - id: lg-076
+    title: Negating Goldbach's conjecture
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, negation, translation]
+    statement: |
+      Goldbach's conjecture says every even integer greater than 2 is a sum of two primes. Write it with quantifiers over $\N$ (using a predicate $\mathrm{Pr}(p)$ for "$p$ is prime"), then write its negation with no $\neg$ in front of a quantifier.
+    solution: |
+      $$\forall n\,\Big(\big(2 \mid n \wedge n > 2\big) \to \exists p\,\exists q\,\big(\mathrm{Pr}(p) \wedge \mathrm{Pr}(q) \wedge n = p + q\big)\Big).$$
+      Negation: there is a counterexample.
+      $$\exists n\,\Big(2 \mid n \wedge n > 2 \wedge \forall p\,\forall q\,\big(\neg\mathrm{Pr}(p) \vee \neg\mathrm{Pr}(q) \vee n \ne p + q\big)\Big).$$
+
+  - id: lg-077
+    title: Expressing unique existence
+    subtopic: Quantifiers
+    difficulty: medium
+    type: proof
+    tags: [quantifiers, uniqueness]
+    statement: |
+      $\exists!\,x\,P(x)$ means "there is exactly one $x$ with $P(x)$". Prove that the following are equivalent:
+
+      1. $\exists x\,\big(P(x) \wedge \forall y\,(P(y) \to y = x)\big)$
+      2. $\exists x\,P(x) \wedge \forall x\,\forall y\,\big((P(x) \wedge P(y)) \to x = y\big)$
+    solution: |
+      **(1) ⇒ (2).** Let $x_0$ be as in (1). Then $P(x_0)$, so $\exists x\,P(x)$. If $P(x)$ and $P(y)$, then by (1) $x = x_0$ and $y = x_0$, so $x = y$.
+
+      **(2) ⇒ (1).** By (2) pick $x_0$ with $P(x_0)$. For any $y$ with $P(y)$, the second conjunct applied to $x_0, y$ gives $x_0 = y$. So $x_0$ witnesses (1). $\blacksquare$
+
+      (So a uniqueness proof has two parts: existence, and "any two solutions are equal".)
+
+  - id: lg-078
+    title: Existential quantifiers distribute over or
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, disjunction]
+    related: [lg-008]
+    statement: |
+      Prove that $\exists x\,\big(P(x) \vee Q(x)\big) \iff \exists x\,P(x) \vee \exists x\,Q(x)$.
+    solution: |
+      **($\Rightarrow$)** Let $a$ satisfy $P(a) \vee Q(a)$. If $P(a)$, then $\exists x\,P(x)$; otherwise $Q(a)$ and $\exists x\,Q(x)$.
+
+      **($\Leftarrow$)** If $P(a)$ for some $a$, then $P(a) \vee Q(a)$, so $\exists x\,(P(x)\vee Q(x))$. Similarly if $Q(b)$ for some $b$.
+
+      (Alternatively, negate both sides of lg-008's equivalence for $\forall$ and $\wedge$.) $\blacksquare$
+
+  - id: lg-079
+    title: Existential quantifiers and conjunction
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, conjunction, counterexample]
+    statement: |
+      Prove that $\exists x\,\big(P(x) \wedge Q(x)\big)$ implies $\exists x\,P(x) \wedge \exists x\,Q(x)$, and give a counterexample to the converse.
+    solution: |
+      If $P(a) \wedge Q(a)$ then $a$ witnesses both $\exists x\,P(x)$ and $\exists x\,Q(x)$.
+
+      **Counterexample.** Over $\Z$, let $P(x)$ be "$x$ is even" and $Q(x)$ "$x$ is odd". There are even integers and odd integers, but none is both. $\blacksquare$
+
+  - id: lg-080
+    title: Swapping quantifiers
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, order of quantifiers]
+    related: [lg-007]
+    statement: |
+      Prove that $\forall x\,\forall y\,P(x,y) \iff \forall y\,\forall x\,P(x,y)$, and that $\exists x\,\forall y\,P(x,y)$ implies $\forall y\,\exists x\,P(x,y)$.
+    solution: |
+      **Same quantifiers.** Both sides say $P(a, b)$ holds for every pair $(a, b)$.
+
+      **Mixed.** Suppose $a$ is such that $P(a, y)$ for every $y$. Given any $b$, the same $a$ satisfies $P(a, b)$, so $\exists x\,P(x, b)$. As $b$ was arbitrary, $\forall y\,\exists x\,P(x,y)$. $\blacksquare$
+
+      (The converse fails, as lg-007 shows: one $x$ for all $y$ is stronger than an $x$ for each $y$.)
+
+  - id: lg-081
+    title: Moving quantifiers past an implication
+    subtopic: Quantifiers
+    difficulty: medium
+    type: proof
+    tags: [quantifiers, implication, prenex]
+    statement: |
+      Let $Q$ be a statement in which $x$ does not occur, and let the domain be non-empty. Prove
+
+      1. $\forall x\,\big(P(x) \to Q\big) \equiv \big(\exists x\,P(x)\big) \to Q$,
+      2. $\exists x\,\big(P(x) \to Q\big) \equiv \big(\forall x\,P(x)\big) \to Q$.
+    solution: |
+      Split on the truth value of $Q$.
+
+      **$Q$ true.** Every $P(x) \to Q$ is true, so both left sides are true (for (2) we need some $x$ to exist). Both right sides have a true consequent, so are true.
+
+      **$Q$ false.** $P(x) \to Q$ is equivalent to $\neg P(x)$. Then (1) reads $\forall x\,\neg P(x) \equiv \neg\exists x\,P(x)$, and (2) reads $\exists x\,\neg P(x) \equiv \neg\forall x\,P(x)$. Both are the rules for negating quantifiers. $\blacksquare$
+
+      (Notice the quantifier flips when it moves into the hypothesis of an implication.)
+
+  - id: lg-082
+    title: The drinker paradox
+    subtopic: Quantifiers
+    difficulty: hard
+    type: proof
+    tags: [quantifiers, cases, paradox]
+    source: Smullyan
+    hints:
+      - |
+        Split into cases: either everyone in the pub is drinking or someone isn't.
+    statement: |
+      Prove that in any non-empty pub there is someone such that, if they are drinking, then everyone in the pub is drinking. That is, over a non-empty domain,
+      $$\exists x\,\big(D(x) \to \forall y\,D(y)\big).$$
+    solution: |
+      **Case 1: everyone is drinking.** Pick anyone $a$ (the pub is non-empty). Then $\forall y\,D(y)$ is true, so $D(a) \to \forall y\,D(y)$ is true.
+
+      **Case 2: someone, $a$, is not drinking.** Then $D(a)$ is false, so $D(a) \to \forall y\,D(y)$ is vacuously true.
+
+      Either way some $x$ works. $\blacksquare$
+
+      (It sounds absurd because "if" in English suggests causation, but $\to$ is material implication. It is also an instance of lg-081(2) with $Q = \forall y\,D(y)$.)
+
+  - id: lg-083
+    title: A sequence with no limit
+    subtopic: Quantifiers
+    difficulty: medium
+    type: proof
+    tags: [quantifiers, negation, sequences, limits]
+    related: [lg-006]
+    statement: |
+      Write down what "$a_n \to L$" means with quantifiers, and its negation. Then prove that $a_n = (-1)^n$ does not converge to any real $L$.
+    solution: |
+      $a_n \to L$ means
+      $$\forall\eps > 0\ \exists N\ \forall n \ge N\ |a_n - L| < \eps,$$
+      and its negation is
+      $$\exists\eps > 0\ \forall N\ \exists n \ge N\ |a_n - L| \ge \eps.$$
+
+      Let $L$ be any real and take $\eps = 1$. Given $N$, both $n = N$ and $n = N+1$ are $\ge N$, and $\{a_N, a_{N+1}\} = \{1, -1\}$. By the triangle inequality
+      $$|1 - L| + |-1 - L| \ge |1 - (-1)| = 2,$$
+      so at least one of these is $\ge 1$. That $n$ witnesses the negation. $\blacksquare$
+
+  - id: lg-084
+    title: Truth depends on the domain
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, domains]
+    statement: |
+      Decide the truth of each statement over the given domains.
+
+      1. $\forall x\,\exists y\,(y^2 = x)$ over $\R$, over $\C$, over $[0, \infty)$.
+      2. $\exists x\,\forall y\,(xy = y)$ over $\Z$.
+      3. $\forall x\,\exists y\,(xy = 1)$ over $\Q$ and over $\Q\setminus\{0\}$.
+    solution: |
+      1. Over $\R$: **false** ($x = -1$ has no real square root). Over $\C$: **true** (every complex number has a square root). Over $[0,\infty)$: **true** ($y = \sqrt x$).
+      2. **True**: $x = 1$.
+      3. Over $\Q$: **false**, $x = 0$ has no inverse. Over $\Q\setminus\{0\}$: **true**, $y = 1/x$.
+
+  - id: lg-085
+    title: Uniform continuity of x² on [0, 1]
+    subtopic: Quantifiers
+    difficulty: medium
+    type: proof
+    tags: [quantifiers, epsilon-delta, uniform continuity]
+    related: [lg-086]
+    statement: |
+      Prove that
+      $$\forall\eps > 0\ \exists\delta > 0\ \forall x, y \in [0, 1]\ \big(|x - y| < \delta \to |x^2 - y^2| < \eps\big).$$
+    solution: |
+      Let $\eps > 0$ and take $\delta = \eps/2$. For $x, y \in [0,1]$ with $|x - y| < \delta$,
+      $$|x^2 - y^2| = |x - y|\,|x + y| \le 2|x - y| < 2\delta = \eps.$$
+      Note $\delta$ depends only on $\eps$, not on $x$ or $y$; that is what makes this **uniform** continuity. $\blacksquare$
+
+  - id: lg-086
+    title: Continuity versus uniform continuity
+    subtopic: Quantifiers
+    difficulty: medium
+    type: proof
+    tags: [quantifiers, order of quantifiers, uniform continuity]
+    related: [lg-085]
+    statement: |
+      Write "$f$ is continuous at every point of $\R$" and "$f$ is uniformly continuous on $\R$" with quantifiers. Prove that the second implies the first, and show that $f(x) = x^2$ is continuous but not uniformly continuous on $\R$.
+    solution: |
+      - Continuous everywhere: $\forall y\ \forall\eps > 0\ \exists\delta > 0\ \forall x\ (|x - y| < \delta \to |f(x) - f(y)| < \eps)$.
+      - Uniformly continuous: $\forall\eps > 0\ \exists\delta > 0\ \forall x\ \forall y\ (|x - y| < \delta \to |f(x) - f(y)| < \eps)$.
+
+      The only difference is that in the second $\delta$ is chosen before $y$.
+
+      **Uniform ⇒ continuous.** Given $y$ and $\eps$, the $\delta$ from uniform continuity works for this $y$.
+
+      **$x^2$ is not uniform.** Take $\eps = 1$. For any $\delta > 0$ let $x = 1/\delta$ and $y = x + \delta/2$. Then $|x - y| < \delta$ but
+      $$|y^2 - x^2| = \tfrac\delta2\left(2x + \tfrac\delta2\right) > \delta x = 1.$$
+      (It is continuous, as a polynomial.) $\blacksquare$
+
+  - id: lg-087
+    title: Bounded and unbounded
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, negation, bounded functions]
+    statement: |
+      Write "$f : \R \to \R$ is bounded" with quantifiers and negate it. Prove that $\sin x + \cos x$ is bounded and that $x^2$ is not.
+    solution: |
+      Bounded: $\exists M\ \forall x\ |f(x)| \le M$. Unbounded: $\forall M\ \exists x\ |f(x)| > M$.
+
+      **$\sin x + \cos x$.** $|\sin x + \cos x| \le |\sin x| + |\cos x| \le 2$, so $M = 2$ works.
+
+      **$x^2$.** Given $M$, take $x = |M| + 1$. Then $x^2 \ge x > |M| \ge M$. $\blacksquare$
+
+  - id: lg-088
+    title: Injective and surjective in symbols
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, negation, injective, surjective]
+    related: [lg-026]
+    statement: |
+      Write "$f: A \to B$ is injective" and "$f$ is surjective" with quantifiers, negate both, and use the negations to show $f(x) = x^2$ on $\R$ is neither.
+    solution: |
+      - Injective: $\forall a\,\forall a'\,\big(f(a) = f(a') \to a = a'\big)$. Not injective: $\exists a\,\exists a'\,\big(f(a) = f(a') \wedge a \ne a'\big)$.
+      - Surjective: $\forall b\,\exists a\,f(a) = b$. Not surjective: $\exists b\,\forall a\,f(a) \ne b$.
+
+      For $x^2$: $a = 1$, $a' = -1$ witness non-injectivity; $b = -1$ witnesses non-surjectivity, since $x^2 \ne -1$ for every real $x$.
+
+  - id: lg-089
+    title: Between any two rationals
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, rationals, density]
+    statement: |
+      Prove that $\forall a\,\forall b\,\big(a < b \to \exists c\,(a < c < b)\big)$ holds over $\Q$ but fails over $\Z$.
+    solution: |
+      **Over $\Q$.** Given rationals $a < b$, let $c = \frac{a+b}{2}$, which is rational. Then $c - a = \frac{b - a}{2} > 0$ and $b - c = \frac{b-a}{2} > 0$.
+
+      **Over $\Z$.** $a = 0$, $b = 1$: no integer lies strictly between them. $\blacksquare$
+
+  - id: lg-090
+    title: Vacuous truth
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, empty set, vacuous truth]
+    statement: |
+      Explain why $\forall x \in \varnothing\ P(x)$ is true and $\exists x \in \varnothing\ P(x)$ is false, whatever $P$ is. Is "every element of $\varnothing$ is both even and odd" true?
+    solution: |
+      $\forall x \in \varnothing\,P(x)$ means $\forall x\,(x \in \varnothing \to P(x))$. Since $x \in \varnothing$ is always false, every instance of the implication is true. (Equivalently, its negation $\exists x \in \varnothing\,\neg P(x)$ would need an element of $\varnothing$.)
+
+      $\exists x\in\varnothing\,P(x)$ means $\exists x\,(x \in \varnothing \wedge P(x))$, which needs an element of $\varnothing$, so it is false.
+
+      So yes, every element of $\varnothing$ is both even and odd. There is no element to be a counterexample.
+
+  - id: lg-091
+    title: Restricted quantifiers
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, translation, restricted quantifiers]
+    statement: |
+      The restricted quantifiers mean $\forall x \in A\ P(x) \equiv \forall x\,(x \in A \to P(x))$ and $\exists x \in A\ P(x) \equiv \exists x\,(x \in A \wedge P(x))$. Explain, with an example over $\Z$, why $\exists x\,(x \in A \to P(x))$ would be the **wrong** translation of the second.
+    solution: |
+      $\exists x\,(x \in A \to P(x))$ is true as soon as there is some $x \notin A$, whatever $P$ says, because the implication is vacuously true for that $x$.
+
+      Example over $\Z$: let $A$ be the even integers and $P(x)$ be "$x \ne x$". "Some even integer differs from itself" is false. But $\exists x\,(x \in A \to x \ne x)$ is true: take $x = 1 \notin A$.
+
+      Rule of thumb: $\forall$ goes with $\to$, $\exists$ goes with $\wedge$.
+
+  - id: lg-092
+    title: Counting with quantifiers
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, equality, translation]
+    related: [lg-077]
+    statement: |
+      Using only $\forall, \exists$, connectives and $=$, write formulas expressing:
+
+      1. at least two $x$ satisfy $P(x)$;
+      2. at most one $x$ satisfies $P(x)$;
+      3. exactly two $x$ satisfy $P(x)$.
+    solution: |
+      1. $\exists x\,\exists y\,\big(x \ne y \wedge P(x) \wedge P(y)\big)$.
+      2. $\forall x\,\forall y\,\big((P(x) \wedge P(y)) \to x = y\big)$.
+      3. $\exists x\,\exists y\,\big(x \ne y \wedge P(x) \wedge P(y) \wedge \forall z\,(P(z) \to (z = x \vee z = y))\big)$.
+
+      (Formula 2 is the negation of formula 1.)
+
+  - id: lg-093
+    title: There is exactly one cube root of 2
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [unique existence, intermediate value theorem]
+    related: [lg-077]
+    statement: |
+      Prove that $\exists!\,x \in \R$ with $x^3 = 2$. (You may use the intermediate value theorem.)
+    solution: |
+      **Existence.** $f(x) = x^3 - 2$ is continuous, $f(1) = -1 < 0$ and $f(2) = 6 > 0$, so $f(c) = 0$ for some $c \in (1, 2)$.
+
+      **Uniqueness.** If $x < y$ then
+      $$y^3 - x^3 = (y - x)(x^2 + xy + y^2) = (y - x)\left[\left(x + \tfrac y2\right)^2 + \tfrac34y^2\right] > 0,$$
+      since the bracket is positive unless $x = y = 0$. So $x \mapsto x^3$ is strictly increasing, and two different reals can't both have cube $2$. $\blacksquare$
+
+  - id: lg-094
+    title: Something in between
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, domains]
+    statement: |
+      Decide, with proof: (1) $\forall n \in \Z\ \exists m \in \Z\ (n < m < n + 1)$; (2) $\forall x \in \R\ \exists y \in \R\ (x < y < x + 1)$.
+    solution: |
+      1. **False.** Take $n = 0$: no integer $m$ satisfies $0 < m < 1$ (in-165).
+      2. **True.** Given $x$, take $y = x + \frac12$. $\blacksquare$
+
+  - id: lg-095
+    title: Prenex normal form
+    subtopic: Quantifiers
+    difficulty: medium
+    type: compute
+    tags: [quantifiers, prenex normal form]
+    related: [lg-081]
+    statement: |
+      Over a non-empty domain, rewrite each with all quantifiers at the front.
+
+      1. $\big(\forall x\,P(x)\big) \to \big(\exists y\,Q(y)\big)$
+      2. $\big(\exists x\,P(x)\big) \wedge \big(\forall x\,Q(x)\big)$
+    solution: |
+      1. $\neg\forall x\,P(x) \vee \exists y\,Q(y) \equiv \exists x\,\neg P(x) \vee \exists y\,Q(y) \equiv \exists x\,\exists y\,\big(\neg P(x) \vee Q(y)\big)$, i.e. $\exists x\,\exists y\,\big(P(x) \to Q(y)\big)$.
+      2. Rename the second bound variable to avoid a clash: $\exists x\,P(x) \wedge \forall z\,Q(z) \equiv \exists x\,\forall z\,\big(P(x) \wedge Q(z)\big)$.
+
+      (Pulling $\exists$ out of a conjunction with a sentence not mentioning $x$ is fine, and likewise for $\forall$; non-emptiness is used when a quantifier is pulled over a statement that doesn't mention its variable.)
+
+  - id: lg-096
+    title: Quantifiers over a two-element domain
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, order of quantifiers, finite domains]
+    related: [lg-080]
+    statement: |
+      Over the domain $\{1, 2\}$ write $\forall x\,\exists y\,P(x,y)$ and $\exists y\,\forall x\,P(x,y)$ without quantifiers, using $P_{ij}$ for $P(i,j)$. Find an assignment making the first true and the second false.
+    solution: |
+      $$\forall x\,\exists y\,P(x,y) \equiv (P_{11} \vee P_{12}) \wedge (P_{21} \vee P_{22}),$$
+      $$\exists y\,\forall x\,P(x,y) \equiv (P_{11} \wedge P_{21}) \vee (P_{12} \wedge P_{22}).$$
+      Take $P_{11} = P_{22} = T$ and $P_{12} = P_{21} = F$: the first is $T \wedge T$, the second $F \vee F$. (So $P$ is equality: everyone equals someone, but no one equals everyone.)
+
+  - id: lg-097
+    title: A valid quantifier inference
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, validity]
+    related: [lg-008]
+    statement: |
+      Prove that $\forall x\,\big(P(x) \vee Q(x)\big)$ implies $\big(\forall x\,P(x)\big) \vee \big(\exists x\,Q(x)\big)$.
+    solution: |
+      Assume $\forall x\,(P(x) \vee Q(x))$. If $\forall x\,P(x)$ holds we are done. Otherwise there is $a$ with $\neg P(a)$. Since $P(a) \vee Q(a)$, we get $Q(a)$, so $\exists x\,Q(x)$. $\blacksquare$
+
+  - id: lg-098
+    title: Definitions about sequences
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, negation, sequences]
+    statement: |
+      Write with quantifiers, and negate: (1) $(a_n)$ is increasing; (2) $(a_n)$ is eventually constant. Give a sequence that is neither increasing nor eventually constant nor decreasing.
+    solution: |
+      1. Increasing: $\forall n\,(a_n \le a_{n+1})$. Negation: $\exists n\,(a_n > a_{n+1})$.
+      2. Eventually constant: $\exists N\,\forall n \ge N\,(a_n = a_N)$. Negation: $\forall N\,\exists n \ge N\,(a_n \ne a_N)$.
+
+      Example: $a_n = (-1)^n$. It is not increasing ($a_0 > a_1$), not decreasing ($a_1 < a_2$), and for every $N$, $a_{N+1} \ne a_N$.
+
+  - id: lg-099
+    title: An epsilon–delta statement
+    subtopic: Quantifiers
+    difficulty: medium
+    type: proof
+    tags: [quantifiers, epsilon-delta]
+    statement: |
+      Prove that $\forall\eps > 0\ \exists\delta > 0\ \forall x\ \big(|x| < \delta \to |x^3 + x| < \eps\big)$.
+    solution: |
+      Let $\eps > 0$ and take $\delta = \min(1, \eps/2)$. If $|x| < \delta$ then $|x| < 1$, so $|x|^3 \le |x|$, and
+      $$|x^3 + x| \le |x|^3 + |x| \le 2|x| < 2\delta \le \eps. \qquad\blacksquare$$
+
+      (Restricting to $\delta \le 1$ first, to tame the higher power, is a standard move.)
+
+  - id: lg-100
+    title: Ambiguity in English
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, translation, ambiguity]
+    statement: |
+      "Every student read a book." Give the two possible readings in symbols (with $R(s, b)$: "$s$ read $b$") and say which implies which.
+    solution: |
+      - $\forall s\,\exists b\,R(s, b)$: each student read some book, possibly different ones.
+      - $\exists b\,\forall s\,R(s, b)$: there is one book that every student read.
+
+      The second implies the first (lg-080), not conversely.
+
+  - id: lg-101
+    title: No largest real, no smallest positive real
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, negation, real numbers]
+    statement: |
+      Prove $\neg\exists x \in \R\ \forall y \in \R\ (y \le x)$ and $\neg\exists x > 0\ \forall y > 0\ (x \le y)$.
+    solution: |
+      **First.** The negation of $\exists x\,\forall y\,(y \le x)$ is $\forall x\,\exists y\,(y > x)$. Given $x$, take $y = x + 1$.
+
+      **Second.** We show $\forall x > 0\ \exists y > 0\ (y < x)$: given $x > 0$, take $y = x/2$. $\blacksquare$
+
+  - id: lg-102
+    title: Number theory in symbols
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, translation, primes]
+    statement: |
+      Over $\N$, using only $\cdot$, $+$, $<$, $=$ and quantifiers, express:
+
+      1. $p$ is prime;
+      2. there are infinitely many primes;
+      3. there are infinitely many twin primes ($p$ and $p + 2$ both prime).
+    solution: |
+      1. $\mathrm{Pr}(p)$: $\ 1 < p \wedge \forall a\,\forall b\,\big(a\cdot b = p \to (a = 1 \vee b = 1)\big)$.
+      2. $\forall n\,\exists p\,\big(n < p \wedge \mathrm{Pr}(p)\big)$: beyond every $n$ there is a prime.
+      3. $\forall n\,\exists p\,\big(n < p \wedge \mathrm{Pr}(p) \wedge \mathrm{Pr}(p + 2)\big)$.
+
+      (2 is Euclid's theorem; 3 is an open problem.)
+
+  - id: lg-103
+    title: Unbounded but not tending to infinity
+    subtopic: Quantifiers
+    difficulty: medium
+    type: proof
+    tags: [quantifiers, negation, limits]
+    statement: |
+      Write "$f(x) \to \infty$ as $x \to \infty$" with quantifiers and negate it. Show that $f(x) = x\sin x$ is unbounded above on $[0, \infty)$ but does not tend to $\infty$.
+    solution: |
+      $f(x) \to \infty$: $\forall M\ \exists K\ \forall x\ (x > K \to f(x) > M)$.
+
+      Negation: $\exists M\ \forall K\ \exists x\ (x > K \wedge f(x) \le M)$.
+
+      **Not $\to \infty$.** Take $M = 0$. Given $K$, choose an integer $k > K/\pi$ and $x = k\pi > K$; then $f(x) = 0 \le M$.
+
+      **Unbounded above.** Given $M$, choose $k$ with $x = 2k\pi + \frac\pi2 > M$; then $f(x) = x > M$. $\blacksquare$
+
+  - id: lg-104
+    title: The harmonic numbers are not Cauchy
+    subtopic: Quantifiers
+    difficulty: medium
+    type: proof
+    tags: [quantifiers, negation, cauchy sequences, harmonic series]
+    related: [in-014]
+    statement: |
+      Write the definition of a Cauchy sequence and its negation. Prove that $H_n = 1 + \frac12 + \cdots + \frac1n$ is not Cauchy.
+    solution: |
+      Cauchy: $\forall\eps > 0\ \exists N\ \forall m, n \ge N\ |a_m - a_n| < \eps$.
+
+      Not Cauchy: $\exists\eps > 0\ \forall N\ \exists m, n \ge N\ |a_m - a_n| \ge \eps$.
+
+      Take $\eps = \frac12$. Given $N \ge 1$, let $n = N$ and $m = 2N$. Then
+      $$H_{2N} - H_N = \sum_{k=N+1}^{2N}\frac1k \ge N\cdot\frac{1}{2N} = \frac12. \qquad\blacksquare$$
+
+  - id: lg-105
+    title: Evaluating quantifiers on a finite relation
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, relations, finite domains]
+    statement: |
+      On the domain $\{a, b, c\}$ let $R = \{(a,a), (a,b), (b,c), (c,c)\}$. Decide each:
+
+      1. $\forall x\,\exists y\,R(x,y)$
+      2. $\exists y\,\forall x\,R(x,y)$
+      3. $\forall x\,R(x,x)$
+      4. $\forall x\,\forall y\,\big(R(x,y) \to R(y,x)\big)$
+      5. $\forall x\,\forall y\,\forall z\,\big(R(x,y) \wedge R(y,z) \to R(x,z)\big)$
+    solution: |
+      1. **True**: $a \to a$, $b \to c$, $c \to c$.
+      2. **False**: $y = a$ fails at $x = b$; $y = b$ fails at $x = b$; $y = c$ fails at $x = a$.
+      3. **False**: $(b,b) \notin R$.
+      4. **False**: $(a,b) \in R$ but $(b,a) \notin R$.
+      5. **False**: $(a,b), (b,c) \in R$ but $(a,c) \notin R$.
+
+  - id: lg-106
+    title: Pigeonhole in symbols
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, pigeonhole, translation]
+    related: [lg-015]
+    statement: |
+      Write the pigeonhole principle for functions $f : \{1, \dots, n+1\} \to \{1, \dots, n\}$ as a quantified statement, and explain why it says exactly that no such $f$ is injective.
+    solution: |
+      $$\forall f\ \exists x\ \exists y\ \big(x \ne y \wedge f(x) = f(y)\big),$$
+      with $f$ ranging over functions $\{1, \dots, n+1\} \to \{1, \dots, n\}$.
+
+      The inner part $\exists x\,\exists y\,(x \ne y \wedge f(x) = f(y))$ is precisely the negation of injectivity (lg-088). So the statement says every such $f$ fails to be injective.
+
+  - id: lg-107
+    title: Universal implication versus implication of universals
+    subtopic: Quantifiers
+    difficulty: medium
+    type: proof
+    tags: [quantifiers, implication, counterexample]
+    statement: |
+      Prove that $\forall x\,\big(P(x) \to Q(x)\big)$ implies both $\forall x\,P(x) \to \forall x\,Q(x)$ and $\exists x\,P(x) \to \exists x\,Q(x)$, and show neither converse holds.
+    solution: |
+      Assume $\forall x\,(P(x) \to Q(x))$.
+
+      - If $\forall x\,P(x)$, then for each $a$, $P(a)$ and hence $Q(a)$; so $\forall x\,Q(x)$.
+      - If $P(a)$ for some $a$, then $Q(a)$; so $\exists x\,Q(x)$.
+
+      **Converses fail.** Over $\Z$, let $P$ be "even" and $Q$ be "odd". Then $\forall x\,(P(x) \to Q(x))$ is false ($x = 0$). But $\forall x\,P(x)$ is false, so $\forall x\,P \to \forall x\,Q$ is true; and $\exists x\,Q(x)$ is true, so $\exists x\,P \to \exists x\,Q$ is true. $\blacksquare$
+
+  - id: lg-108
+    title: Disproving universal statements
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [counterexample, quantifiers]
+    statement: |
+      Disprove each by counterexample.
+
+      1. For every real $x$, $x^2 > x$.
+      2. For every $n \in \N$, $n^2 - n + 11$ is prime.
+      3. For all reals $a, b$, $\sqrt{a^2 + b^2} = a + b$ whenever $a, b \ge 0$.
+    solution: |
+      1. $x = \frac12$: $\frac14 < \frac12$.
+      2. $n = 11$: $121 - 11 + 11 = 121 = 11^2$. (It is prime for $n = 0, \dots, 10$, which is why one counterexample is needed rather than evidence.)
+      3. $a = b = 1$: $\sqrt2 \ne 2$.
+
+  - id: lg-109
+    title: A limit definition with the quantifiers swapped
+    subtopic: Quantifiers
+    difficulty: medium
+    type: proof
+    tags: [quantifiers, order of quantifiers, limits]
+    related: [lg-110]
+    statement: |
+      What sequences satisfy $\exists N\ \forall\eps > 0\ \forall n \ge N\ |a_n - L| < \eps$? Prove your answer.
+    solution: |
+      Exactly the sequences that are **eventually equal to $L$**: $\exists N\,\forall n \ge N\,a_n = L$.
+
+      If $a_n = L$ for $n \ge N$, then $|a_n - L| = 0 < \eps$ for every $\eps > 0$.
+
+      Conversely, with $N$ as given, fix $n \ge N$. Then $|a_n - L| < \eps$ for every $\eps > 0$, which forces $|a_n - L| = 0$ (if it were positive, take $\eps = |a_n - L|$). $\blacksquare$
+
+      (Moving $\exists N$ in front of $\forall \eps$ turns convergence into something much stronger.)
+
+  - id: lg-110
+    title: Smaller than every positive number
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, real numbers]
+    statement: |
+      Let $a, b$ be real. Prove that (1) if $|x| < \eps$ for every $\eps > 0$ then $x = 0$, and (2) if $a \le b + \eps$ for every $\eps > 0$ then $a \le b$.
+    solution: |
+      1. If $x \ne 0$, take $\eps = |x| > 0$: then $|x| < |x|$, false.
+      2. If $a > b$, take $\eps = \frac{a - b}{2} > 0$: then $a \le b + \frac{a-b}{2}$ gives $\frac{a - b}{2} \le 0$, false. $\blacksquare$
+
+  - id: lg-111
+    title: A bounded rational function
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, bounds, inequalities]
+    statement: |
+      Prove that $\exists M\ \forall x \in \R\ \dfrac{x}{1 + x^2} \le M$, and find the least such $M$.
+    solution: |
+      $(x - 1)^2 \ge 0$ gives $2x \le 1 + x^2$, so $\frac{x}{1 + x^2} \le \frac12$ for every $x$. So $M = \frac12$ works.
+
+      It is the least: at $x = 1$ the value is $\frac12$, so no $M < \frac12$ works. $\blacksquare$
+
+  - id: lg-112
+    title: Additive inverses with a twist
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, domains]
+    statement: |
+      Decide whether $\forall x\,\exists y\,(x + y = 0 \wedge xy < 0)$ is true over $\R$, and over $\R \setminus\{0\}$.
+    solution: |
+      $x + y = 0$ forces $y = -x$, and then $xy = -x^2$.
+
+      - Over $\R$: **false**, since $x = 0$ gives $xy = 0$.
+      - Over $\R\setminus\{0\}$: **true**, since $y = -x \ne 0$ and $xy = -x^2 < 0$.
+
+  - id: lg-113
+    title: A bogus generalisation
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, fallacy, universal generalisation]
+    statement: |
+      Find the error: "Claim: $\exists x\,P(x) \to \forall x\,P(x)$. Proof: assume $\exists x\,P(x)$ and let $c$ be such that $P(c)$. Since $c$ was arbitrary, $\forall x\,P(x)$."
+    solution: |
+      $c$ was **not** arbitrary: it was chosen specifically to satisfy $P$. Universal generalisation ("$P(c)$ for arbitrary $c$, hence $\forall x\,P(x)$") is only valid when nothing has been assumed about $c$.
+
+      The claim is false: over $\Z$ with $P(x)$ "$x$ is even", some integer is even but not all are.
+
+  - id: lg-114
+    title: Well-ordering as a formula
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, negation, well-ordering]
+    related: [in-023]
+    statement: |
+      Write the well-ordering principle ("every non-empty subset of $\N$ has a least element") with quantifiers, and write its negation with no $\neg$ before a quantifier.
+    solution: |
+      $$\forall S \subseteq \N\ \Big(S \ne \varnothing \to \exists m \in S\ \forall n \in S\ (m \le n)\Big).$$
+      Negation:
+      $$\exists S \subseteq \N\ \Big(S \ne \varnothing \wedge \forall m \in S\ \exists n \in S\ (n < m)\Big).$$
+      (This quantifies over sets, not just numbers: it is a second-order statement.)
+
+  - id: lg-115
+    title: x + sin x is not periodic
+    subtopic: Quantifiers
+    difficulty: medium
+    type: proof
+    tags: [quantifiers, negation, periodic functions]
+    statement: |
+      $f$ is periodic if $\exists T > 0\ \forall x\ f(x + T) = f(x)$. Write the negation, and prove that $f(x) = x + \sin x$ is not periodic.
+    solution: |
+      Not periodic: $\forall T > 0\ \exists x\ f(x + T) \ne f(x)$.
+
+      Suppose $f(x + T) = f(x)$ for all $x$, with $T > 0$. Then for all $x$,
+      $$0 = T + \sin(x + T) - \sin x = T + 2\cos\left(x + \tfrac T2\right)\sin\tfrac T2.$$
+      Choose $x = \frac\pi2 - \frac T2$, so the cosine is $0$. Then $T = 0$, a contradiction. $\blacksquare$
+
+  - id: lg-116
+    title: Is there a least element?
+    subtopic: Quantifiers
+    difficulty: easy
+    type: compute
+    tags: [quantifiers, domains, least element]
+    statement: |
+      Decide the truth of $\exists x\,\forall y\,(x \le y)$ over $\N$, $\Z$, $[0, 1)$ and $(0, 1]$.
+    solution: |
+      - $\N$: **true**, $x = 0$.
+      - $\Z$: **false**, since $x - 1 < x$.
+      - $[0, 1)$: **true**, $x = 0$.
+      - $(0, 1]$: **false**, since for any $x$ in it, $x/2$ is in it and smaller.
+
+  - id: lg-117
+    title: Negating nested quantifiers
+    subtopic: Quantifiers
+    difficulty: easy
+    type: proof
+    tags: [quantifiers, negation]
+    related: [lg-006]
+    statement: |
+      Using only $\neg\forall x\,A \equiv \exists x\,\neg A$ and $\neg\exists x\,A \equiv \forall x\,\neg A$, prove that
+      $$\neg\,\forall x\,\exists y\,\forall z\,P(x,y,z) \equiv \exists x\,\forall y\,\exists z\,\neg P(x,y,z).$$
+    solution: |
+      Apply the rules from the outside in:
+      $$\neg\forall x\,\exists y\,\forall z\,P \equiv \exists x\,\neg\exists y\,\forall z\,P \equiv \exists x\,\forall y\,\neg\forall z\,P \equiv \exists x\,\forall y\,\exists z\,\neg P.$$
+      Each step negates one quantifier and passes the $\neg$ inside. $\blacksquare$
+
+  - id: lg-118
+    title: Order of quantifiers in a definition
+    subtopic: Quantifiers
+    difficulty: medium
+    type: proof
+    tags: [quantifiers, order of quantifiers, bounded functions]
+    statement: |
+      Compare (1) $\exists M\ \forall x\ f(x) \le M$ with (2) $\forall x\ \exists M\ f(x) \le M$ for $f : \R \to \R$. Show that (2) holds for every $f$, and give an $f$ for which (1) fails.
+    solution: |
+      **(2) is always true.** Given $x$, take $M = f(x)$.
+
+      **(1) can fail.** For $f(x) = x$, given any $M$, the point $x = M + 1$ has $f(x) > M$. So $f$ is not bounded above.
+
+      (1) says one bound works for all $x$; (2) only says each value is bounded by something, which is trivial. $\blacksquare$
+
+  - id: lg-119
+    title: Odd plus odd, odd times odd
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [direct proof, parity]
+    statement: |
+      Prove directly that the sum of two odd integers is even and their product is odd.
+    solution: |
+      Let $m = 2a + 1$ and $n = 2b + 1$ with $a, b \in \Z$.
+
+      **Sum.** $m + n = 2a + 2b + 2 = 2(a + b + 1)$, which is even.
+
+      **Product.** $mn = 4ab + 2a + 2b + 1 = 2(2ab + a + b) + 1$, which is odd. $\blacksquare$
+
+  - id: lg-120
+    title: Mutual divisibility
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [direct proof, divisibility]
+    statement: |
+      Let $a, b$ be positive integers with $a \mid b$ and $b \mid a$. Prove that $a = b$. What if $a, b$ may be any integers?
+    solution: |
+      Write $b = am$ and $a = bn$ with integers $m, n$. Then $a = amn$, and since $a \ne 0$, $mn = 1$. As $a, b > 0$, $m, n > 0$, so $m = n = 1$ and $a = b$.
+
+      For arbitrary non-zero integers the same argument gives $mn = 1$, so $m = n = \pm1$ and $a = \pm b$. (And $0 \mid b$ forces $b = 0$.) $\blacksquare$
+
+  - id: lg-121
+    title: n² + n is always even
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [proof by cases, parity]
+    statement: |
+      Prove by cases that $n^2 + n$ is even for every integer $n$.
+    solution: |
+      **$n$ even**, $n = 2k$: $n^2 + n = 4k^2 + 2k = 2(2k^2 + k)$.
+
+      **$n$ odd**, $n = 2k+1$: $n^2 + n = (2k+1)(2k+2) = 2(2k+1)(k+1)$.
+
+      (Or with no cases: $n^2 + n = n(n+1)$ and one of two consecutive integers is even.) $\blacksquare$
+
+  - id: lg-122
+    title: Three divides n² only if three divides n
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [contrapositive, cases, divisibility]
+    related: [lg-011, lg-123]
+    statement: |
+      Prove that if $3 \mid n^2$ then $3 \mid n$.
+    solution: |
+      Contrapositive: suppose $3 \nmid n$, so $n = 3k + 1$ or $n = 3k + 2$.
+
+      - $(3k+1)^2 = 3(3k^2 + 2k) + 1$.
+      - $(3k+2)^2 = 3(3k^2 + 4k + 1) + 1$.
+
+      In both cases $n^2$ leaves remainder 1 on division by 3, so $3 \nmid n^2$. $\blacksquare$
+
+  - id: lg-123
+    title: √3 is irrational
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [contradiction, irrationality]
+    related: [lg-009, lg-122]
+    statement: |
+      Prove that $\sqrt3$ is irrational. Where does the same argument break down for $\sqrt4$?
+    solution: |
+      Suppose $\sqrt3 = p/q$ in lowest terms. Then $p^2 = 3q^2$, so $3 \mid p^2$, and by lg-122 $3 \mid p$. Write $p = 3m$: then $9m^2 = 3q^2$, so $q^2 = 3m^2$ and likewise $3 \mid q$. This contradicts lowest terms. $\blacksquare$
+
+      For $\sqrt4$ the step "$4 \mid p^2 \Rightarrow 4 \mid p$" is false (e.g. $p = 2$), so the argument doesn't go through, as it shouldn't.
+
+  - id: lg-124
+    title: log₂ 3 is irrational
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [contradiction, irrationality, logarithms]
+    statement: |
+      Prove that $\log_2 3$ is irrational.
+    solution: |
+      Since $2 < 3 < 4$, $1 < \log_2 3 < 2$, so if it were rational it would be $p/q$ with positive integers $p, q$. Then $2^{p/q} = 3$, so $2^p = 3^q$. The left side is even and the right side is odd, a contradiction. $\blacksquare$
+
+  - id: lg-125
+    title: An equation with no integer solutions
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [contradiction, divisibility]
+    statement: |
+      Prove that $14x + 21y = 100$ has no solutions in integers.
+    solution: |
+      Suppose it did. The left side is $7(2x + 3y)$, a multiple of 7. But $100 = 7\cdot14 + 2$ is not. Contradiction. $\blacksquare$
+
+  - id: lg-126
+    title: The triangle inequality by cases
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [proof by cases, absolute value, inequalities]
+    statement: |
+      Prove that $|x + y| \le |x| + |y|$ for all reals $x, y$.
+    solution: |
+      Recall $|t| = t$ if $t \ge 0$ and $-t$ otherwise, so $-|t| \le t \le |t|$ always.
+
+      - If $x + y \ge 0$: $|x + y| = x + y \le |x| + |y|$.
+      - If $x + y < 0$: $|x + y| = -x - y \le |x| + |y|$.
+
+      $\blacksquare$
+
+  - id: lg-127
+    title: Max and min with absolute values
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [proof by cases, absolute value]
+    statement: |
+      Prove that $\max(a, b) = \frac{a + b + |a - b|}{2}$ and $\min(a, b) = \frac{a + b - |a - b|}{2}$.
+    solution: |
+      By symmetry of both sides in $a, b$, assume without loss of generality that $a \ge b$. Then $|a - b| = a - b$, and
+      $$\frac{a + b + (a - b)}{2} = a = \max(a,b),\qquad \frac{a + b - (a - b)}{2} = b = \min(a,b). \qquad\blacksquare$$
+
+      ("Without loss of generality" is justified because swapping $a$ and $b$ doesn't change either side.)
+
+  - id: lg-128
+    title: An explicit irrational power that is rational
+    subtopic: Proof techniques
+    difficulty: medium
+    type: proof
+    tags: [constructive proof, irrationality]
+    related: [lg-010, lg-124]
+    statement: |
+      Lg-010 proved non-constructively that some irrational $a, b$ have $a^b$ rational. Give an explicit example and prove it works.
+    solution: |
+      Take $a = \sqrt2$ and $b = \log_2 9$. Then
+      $$a^b = 2^{\frac12\log_29} = 2^{\log_2 3} = 3.$$
+      $\sqrt2$ is irrational (lg-009). If $\log_29 = p/q$ with positive integers $p, q$, then $2^p = 9^q$, even = odd, impossible. So $b$ is irrational too. $\blacksquare$
+
+  - id: lg-129
+    title: Uniqueness of identities and inverses
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [uniqueness, algebra]
+    statement: |
+      In a set with an associative operation $\cdot$, prove that there is at most one identity element $e$ (with $e\cdot x = x\cdot e = x$ for all $x$), and that each element has at most one inverse.
+    solution: |
+      **Identity.** If $e$ and $e'$ are both identities, then $e = e\cdot e' = e'$ (first using that $e'$ is an identity, then that $e$ is).
+
+      **Inverses.** If $y$ and $z$ are both inverses of $x$ ($xy = yx = e$ and $xz = zx = e$), then
+      $$y = ye = y(xz) = (yx)z = ez = z. \qquad\blacksquare$$
+
+  - id: lg-130
+    title: A prime-generating polynomial fails
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [counterexample, primes]
+    source: Euler
+    statement: |
+      $n^2 + n + 41$ is prime for $n = 0, 1, \dots, 39$. Disprove the claim that it is prime for every $n \ge 0$.
+    solution: |
+      $n = 40$: $40^2 + 40 + 41 = 40\cdot41 + 41 = 41^2$. (Also $n = 41$: $41^2 + 41 + 41 = 41\cdot43$.) $\blacksquare$
+
+      Forty confirming cases prove nothing about the general claim; one counterexample disproves it.
+
+  - id: lg-131
+    title: Euler's factor of a Fermat number
+    subtopic: Proof techniques
+    difficulty: medium
+    type: proof
+    tags: [counterexample, congruences, fermat numbers]
+    source: Euler, 1732
+    related: [in-074]
+    hints:
+      - |
+        $641 = 5\cdot2^7 + 1 = 5^4 + 2^4$.
+    statement: |
+      Fermat conjectured that every number $2^{2^n} + 1$ is prime. Prove that $641 \mid 2^{32} + 1$.
+    solution: |
+      Note $641 = 5\cdot2^7 + 1$ and $641 = 5^4 + 2^4$. Working mod 641:
+
+      - From the first, $5\cdot2^7 \equiv -1$, so $5^4\cdot2^{28} \equiv (-1)^4 = 1$.
+      - From the second, $2^4 \equiv -5^4$.
+
+      Hence
+      $$2^{32} = 2^4\cdot2^{28} \equiv -5^4\cdot2^{28} \equiv -1 \pmod{641},$$
+      so $641 \mid 2^{32} + 1$. $\blacksquare$
+
+  - id: lg-132
+    title: The cube root of 2 is irrational
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [contradiction, irrationality]
+    related: [lg-009]
+    statement: |
+      Prove that $\sqrt[3]2$ is irrational.
+    solution: |
+      Suppose $\sqrt[3]2 = p/q$ in lowest terms. Then $p^3 = 2q^3$ is even, so $p$ is even (an odd cube is odd). Write $p = 2m$: $8m^3 = 2q^3$, so $q^3 = 4m^3$ is even and $q$ is even. Contradiction with lowest terms. $\blacksquare$
+
+  - id: lg-133
+    title: a² − 4b is never 2
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [contradiction, parity]
+    statement: |
+      Prove that there are no integers $a, b$ with $a^2 - 4b = 2$.
+    solution: |
+      Suppose $a^2 = 4b + 2$. Then $a^2$ is even, so $a$ is even, $a = 2c$, and $4c^2 = 4b + 2$. So $2c^2 - 2b = 1$: an even number equals 1. Contradiction. $\blacksquare$
+
+  - id: lg-134
+    title: Cubing preserves order
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [biconditional, inequalities]
+    related: [lg-093]
+    statement: |
+      Prove that for real $x, y$: $x < y$ if and only if $x^3 < y^3$.
+    solution: |
+      $y^3 - x^3 = (y - x)(x^2 + xy + y^2)$ and $x^2 + xy + y^2 = \left(x + \frac y2\right)^2 + \frac34y^2 \ge 0$, with equality only if $x = y = 0$.
+
+      **($\Rightarrow$)** If $x < y$, the second factor is positive (not both zero), so $y^3 - x^3 > 0$.
+
+      **($\Leftarrow$)** Contrapositive: if $x \ge y$, then either $x = y$ and $x^3 = y^3$, or $y < x$ and $y^3 < x^3$ by the forward direction. Either way $x^3 \not< y^3$. $\blacksquare$
+
+  - id: lg-135
+    title: A cycle of equivalences
+    subtopic: Proof techniques
+    difficulty: medium
+    type: proof
+    tags: [tfae, parity, divisibility]
+    related: [lg-011, in-082]
+    statement: |
+      For an integer $n$, prove that the following are equivalent: (a) $n$ is odd; (b) $n^2$ is odd; (c) $8 \mid n^2 - 1$.
+    solution: |
+      It suffices to prove (a) ⇒ (c) ⇒ (b) ⇒ (a).
+
+      **(a) ⇒ (c).** $n = 2k + 1$ gives $n^2 - 1 = 4k(k+1)$, and $k(k+1)$ is even, so $8 \mid n^2 - 1$.
+
+      **(c) ⇒ (b).** $n^2 = 8m + 1$ is odd.
+
+      **(b) ⇒ (a).** This is lg-011. $\blacksquare$
+
+      (Proving a cycle uses three implications instead of the six needed for all pairs.)
+
+  - id: lg-136
+    title: A sum or a difference divisible by 10
+    subtopic: Proof techniques
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, congruences]
+    related: [lg-015]
+    statement: |
+      Prove that among any 7 integers there are two whose sum or difference is divisible by 10.
+    solution: |
+      Sort the integers by remainder mod 10 into the 6 boxes
+      $$\{0\},\ \{5\},\ \{1, 9\},\ \{2, 8\},\ \{3, 7\},\ \{4, 6\}.$$
+      With 7 integers, two land in the same box. If they have the same remainder, their difference is divisible by 10. Otherwise their remainders are $r$ and $10 - r$, and their sum is divisible by 10. $\blacksquare$
+
+  - id: lg-137
+    title: Two coprime numbers
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [pigeonhole, gcd]
+    related: [cb-012]
+    statement: |
+      Prove that any $n + 1$ numbers chosen from $\{1, 2, \dots, 2n\}$ include two that are coprime.
+    solution: |
+      Split $\{1, \dots, 2n\}$ into the $n$ pairs $\{1,2\}, \{3,4\}, \dots, \{2n-1, 2n\}$. With $n+1$ numbers chosen, two lie in the same pair, so they are consecutive, $k$ and $k+1$. Any common divisor divides $(k+1) - k = 1$, so they are coprime. $\blacksquare$
+
+  - id: lg-138
+    title: Descent on x³ + 2y³ = 4z³
+    subtopic: Proof techniques
+    difficulty: medium
+    type: proof
+    tags: [infinite descent, parity]
+    related: [nt-027]
+    statement: |
+      Prove that the only integer solution of $x^3 + 2y^3 = 4z^3$ is $x = y = z = 0$.
+    solution: |
+      Suppose there is a non-zero solution, and choose one with $|x| + |y| + |z|$ as small as possible.
+
+      $x^3 = 4z^3 - 2y^3$ is even, so $x = 2a$. Then $8a^3 + 2y^3 = 4z^3$, i.e. $y^3 = 2z^3 - 4a^3$, so $y$ is even, $y = 2b$. Then $8b^3 = 2z^3 - 4a^3$, i.e. $z^3 = 4b^3 + 2a^3$, so $z = 2c$. Substituting, $8c^3 = 4b^3 + 2a^3$, i.e.
+      $$a^3 + 2b^3 = 4c^3.$$
+      So $(a, b, c)$ is a non-zero solution with $|a| + |b| + |c| = \frac12(|x| + |y| + |z|)$, smaller than the minimum. Contradiction. $\blacksquare$
+
+  - id: lg-139
+    title: Sums of two squares divisible by 3
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [proof by cases, congruences]
+    related: [nt-025]
+    statement: |
+      Prove that if $3 \mid a^2 + b^2$ then $3 \mid a$ and $3 \mid b$.
+    solution: |
+      Squares mod 3 are $0$ (if $3 \mid n$) or $1$ (otherwise), by lg-122's computation. So $a^2 + b^2 \bmod 3$ is $0 + 0$, $0 + 1$, $1 + 0$ or $1 + 1 = 2$. It is $0$ only in the first case, i.e. when $3 \mid a$ and $3 \mid b$. $\blacksquare$
+
+  - id: lg-140
+    title: Vacuous and trivial proofs
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [vacuous proof, implication]
+    statement: |
+      Prove (1) "if $n$ is an integer with $n^2 < 0$, then $n = 7$" and (2) "if $x > 0$ then $x^2 + 1 > 0$". Which kind of proof is each?
+    solution: |
+      1. **Vacuous.** No integer has $n^2 < 0$, so the hypothesis is never true and the implication holds for every $n$.
+      2. **Trivial.** The conclusion $x^2 + 1 \ge 1 > 0$ holds for every real $x$, so the hypothesis isn't needed.
+
+  - id: lg-141
+    title: "Where's the error? −1 = 1"
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [fallacy, square roots, complex numbers]
+    statement: |
+      Find the error: $\ 1 = \sqrt1 = \sqrt{(-1)(-1)} = \sqrt{-1}\,\sqrt{-1} = i\cdot i = -1$.
+    solution: |
+      The rule $\sqrt{ab} = \sqrt a\sqrt b$ is only valid for $a, b \ge 0$ (with the principal square root). Here $a = b = -1$, so the third equality is false: $\sqrt{(-1)(-1)} = 1$ but $\sqrt{-1}\sqrt{-1} = -1$.
+
+  - id: lg-142
+    title: "Where's the error? 2 = 1"
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [fallacy, division by zero]
+    statement: |
+      Find the error: Let $a = b$. Then $a^2 = ab$, so $a^2 - b^2 = ab - b^2$, i.e. $(a+b)(a-b) = b(a - b)$. Cancelling, $a + b = b$, so $2b = b$ and $2 = 1$.
+    solution: |
+      Cancelling $a - b$ divides by $a - b$, which is $0$ because $a = b$. From $x\cdot0 = y\cdot0$ nothing follows about $x$ and $y$. Every step before the cancellation is correct.
+
+  - id: lg-143
+    title: "Where's the error? Proving the converse"
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [fallacy, converse]
+    related: [lg-011]
+    statement: |
+      A student "proves" that if $n^2$ is even then $n$ is even: "Suppose $n$ is even, $n = 2k$. Then $n^2 = 4k^2 = 2(2k^2)$ is even." What is wrong? Fix the proof.
+    solution: |
+      The student assumed the conclusion ($n$ even) and derived the hypothesis ($n^2$ even). That proves the **converse**, "if $n$ is even then $n^2$ is even", which is a different statement.
+
+      **Correct proof** (contrapositive): if $n$ is odd, $n = 2k + 1$, then $n^2 = 2(2k^2 + 2k) + 1$ is odd. So if $n^2$ is even, $n$ is even.
+
+  - id: lg-144
+    title: AM–GM for two numbers
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [direct proof, inequalities, am-gm]
+    related: [in-016]
+    statement: |
+      Prove that for $a, b \ge 0$, $\frac{a + b}{2} \ge \sqrt{ab}$, with equality if and only if $a = b$.
+    solution: |
+      $$\frac{a+b}{2} - \sqrt{ab} = \frac{(\sqrt a)^2 - 2\sqrt a\sqrt b + (\sqrt b)^2}{2} = \frac{(\sqrt a - \sqrt b)^2}{2} \ge 0.$$
+      Equality holds iff $\sqrt a = \sqrt b$, iff $a = b$. $\blacksquare$
+
+      (Don't start from the inequality and square both sides "until something true appears": that argues in the wrong direction unless every step is reversible.)
+
+  - id: lg-145
+    title: Solving a quadratic inequality
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [direct proof, inequalities, cases]
+    statement: |
+      Prove that if $x$ is real and $x^2 - 3x + 2 < 0$, then $1 < x < 2$.
+    solution: |
+      $x^2 - 3x + 2 = (x - 1)(x - 2) < 0$, so the factors have opposite signs.
+
+      - If $x - 1 > 0$ and $x - 2 < 0$: $1 < x < 2$.
+      - If $x - 1 < 0$ and $x - 2 > 0$: $x < 1$ and $x > 2$, impossible.
+
+      $\blacksquare$
+
+  - id: lg-146
+    title: Consecutive squares
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [contradiction, factorisation]
+    statement: |
+      Prove that there are no positive integers $m, n$ with $m^2 - n^2 = 1$.
+    solution: |
+      Suppose $(m - n)(m + n) = 1$ with $m, n \ge 1$. Then $m + n \ge 2$ and $m - n$ is an integer, so the product is $1$ only if $m + n = 1$ or $m + n = -1$ (the only integer divisors of 1 are $\pm1$). Both contradict $m + n \ge 2$. $\blacksquare$
+
+  - id: lg-147
+    title: Primes are one away from a multiple of 6
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [proof by cases, primes]
+    related: [nt-010]
+    statement: |
+      Prove that every prime $p > 3$ has the form $6k + 1$ or $6k - 1$.
+    solution: |
+      Every integer is $6k + r$ with $r \in \{0, 1, 2, 3, 4, 5\}$.
+
+      - $r = 0, 2, 4$: $6k + r$ is even and larger than 2, so not prime.
+      - $r = 3$: $6k + 3 = 3(2k+1)$ is a multiple of 3 larger than 3, so not prime.
+
+      So $r = 1$ or $r = 5$, and $6k + 5 = 6(k+1) - 1$. $\blacksquare$
+
+  - id: lg-148
+    title: Squares are 0 or 1 mod 3
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [proof by cases, divisibility]
+    related: [lg-122]
+    statement: |
+      Prove that if $3 \nmid n$ then $3 \mid n^2 - 1$.
+    solution: |
+      $n^2 - 1 = (n - 1)(n + 1)$. Of the three consecutive integers $n - 1, n, n + 1$ exactly one is divisible by 3. It isn't $n$, so it is $n - 1$ or $n + 1$. $\blacksquare$
+
+  - id: lg-149
+    title: Four consecutive integers
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [direct proof, algebra, squares]
+    statement: |
+      Prove that the product of four consecutive integers, plus 1, is a perfect square.
+    solution: |
+      $$n(n+1)(n+2)(n+3) + 1 = (n^2 + 3n)(n^2 + 3n + 2) + 1.$$
+      With $m = n^2 + 3n + 1$, this is $(m - 1)(m + 1) + 1 = m^2$. $\blacksquare$
+
+      (Pair the outer and inner factors to make two numbers differing by 2.)
+
+  - id: lg-150
+    title: An irrational between two rationals
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [constructive proof, irrationality, density]
+    related: [lg-012]
+    statement: |
+      Prove that between any two rationals $q < r$ there is an irrational number.
+    solution: |
+      Let $x = q + \frac{r - q}{\sqrt2}$. Since $0 < \frac1{\sqrt2} < 1$, $q < x < r$.
+
+      If $x$ were rational, then $\sqrt2 = \frac{r - q}{x - q}$ would be a quotient of non-zero rationals, hence rational, contradicting lg-009. $\blacksquare$
+
+  - id: lg-151
+    title: Integer roots and parity
+    subtopic: Proof techniques
+    difficulty: medium
+    type: proof
+    tags: [contradiction, polynomials, parity]
+    statement: |
+      Let $p(x)$ be a polynomial with integer coefficients such that $p(0)$ and $p(1)$ are both odd. Prove that $p$ has no integer root.
+    solution: |
+      For integer coefficients, $a \equiv b \pmod 2$ implies $p(a) \equiv p(b) \pmod 2$, since sums and products respect congruences.
+
+      Let $n$ be any integer. If $n$ is even, $p(n) \equiv p(0) \equiv 1 \pmod 2$. If $n$ is odd, $p(n) \equiv p(1) \equiv 1$. Either way $p(n)$ is odd, so $p(n) \ne 0$. $\blacksquare$
+
+  - id: lg-152
+    title: Sums of two squares are closed under products
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [direct proof, sums of squares, algebra]
+    source: Brahmagupta, Fibonacci
+    statement: |
+      Prove that if $m$ and $n$ are each a sum of two integer squares, then so are $2m$ and $mn$.
+    solution: |
+      **$2m$.** If $m = a^2 + b^2$ then $(a + b)^2 + (a - b)^2 = 2a^2 + 2b^2 = 2m$.
+
+      **$mn$.** If $m = a^2 + b^2$ and $n = c^2 + d^2$, then
+      $$(ac - bd)^2 + (ad + bc)^2 = a^2c^2 + b^2d^2 + a^2d^2 + b^2c^2 = (a^2 + b^2)(c^2 + d^2).$$
+      (The cross terms $\mp 2abcd$ cancel.) This is $|z|^2|w|^2 = |zw|^2$ for $z = a + bi$, $w = c + di$. $\blacksquare$
+
+  - id: lg-153
+    title: √2 + √3 is irrational
+    subtopic: Proof techniques
+    difficulty: medium
+    type: proof
+    tags: [contradiction, irrationality]
+    related: [lg-009]
+    statement: |
+      Prove that $\sqrt2 + \sqrt3$ is irrational.
+    solution: |
+      Suppose $r = \sqrt2 + \sqrt3$ is rational; $r > 0$. Then $\sqrt3 = r - \sqrt2$, and squaring, $3 = r^2 - 2r\sqrt2 + 2$, so
+      $$\sqrt2 = \frac{r^2 - 1}{2r},$$
+      which is rational. This contradicts the irrationality of $\sqrt2$. $\blacksquare$
+
+  - id: lg-154
+    title: Every Pythagorean triple has an even leg
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [contradiction, congruences, pythagorean triples]
+    related: [nt-025]
+    statement: |
+      Prove that if $a^2 + b^2 = c^2$ in integers then $a$ or $b$ is even.
+    solution: |
+      Odd squares are $\equiv 1 \pmod 4$ and even squares $\equiv 0$ (nt-003). If $a, b$ were both odd, $c^2 = a^2 + b^2 \equiv 2 \pmod 4$, which no square is. $\blacksquare$
+
+  - id: lg-155
+    title: Rationality is inherited downwards
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [contrapositive, irrationality]
+    statement: |
+      Prove: (1) if $xy$ is irrational then $x$ or $y$ is irrational; (2) if $x > 0$ is irrational then $\sqrt x$ and $1/x$ are irrational.
+    solution: |
+      Each by contrapositive.
+
+      1. If $x$ and $y$ are both rational, so is $xy$.
+      2. If $\sqrt x$ is rational, so is $x = (\sqrt x)^2$. If $1/x$ is rational, so is $x = 1/(1/x)$. $\blacksquare$
+
+  - id: lg-156
+    title: Infinitely many composite values
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [existence, parity]
+    statement: |
+      Prove that $n^2 + 1$ is composite for infinitely many positive integers $n$.
+    solution: |
+      For every odd $n \ge 3$, $n^2$ is odd, so $n^2 + 1$ is even and at least $10$, hence composite. There are infinitely many odd $n \ge 3$. $\blacksquare$
+
+      (Whether $n^2 + 1$ is prime infinitely often is an open problem.)
+
+  - id: lg-157
+    title: The golden ratio is irrational
+    subtopic: Proof techniques
+    difficulty: medium
+    type: proof
+    tags: [contradiction, irrationality, parity]
+    statement: |
+      Prove that no rational number $r$ satisfies $r^2 = r + 1$. Deduce that $\frac{1 + \sqrt5}{2}$ and $\sqrt5$ are irrational.
+    solution: |
+      Suppose $r = p/q$ in lowest terms, $q > 0$. Then $p^2 = pq + q^2$, so $q \mid p^2$. Any prime factor of $q$ would divide $p^2$ and hence $p$, contradicting lowest terms; so $q = 1$ and $r = p$ is an integer with $p^2 - p = 1$. But $p^2 - p = p(p-1)$ is a product of consecutive integers, hence even. Contradiction.
+
+      $\varphi = \frac{1 + \sqrt5}{2}$ satisfies $\varphi^2 = \varphi + 1$, so it is irrational, and then so is $\sqrt5 = 2\varphi - 1$. $\blacksquare$
+
+  - id: lg-158
+    title: The rational root theorem
+    subtopic: Proof techniques
+    difficulty: medium
+    type: proof
+    tags: [polynomials, divisibility, rational roots]
+    related: [lg-159]
+    statement: |
+      Let $f(x) = a_nx^n + \cdots + a_1x + a_0$ have integer coefficients, $a_n \ne 0$. Prove that if $p/q$ (in lowest terms) is a root, then $p \mid a_0$ and $q \mid a_n$.
+    solution: |
+      Multiply $f(p/q) = 0$ by $q^n$:
+      $$a_np^n + a_{n-1}p^{n-1}q + \cdots + a_1pq^{n-1} + a_0q^n = 0.$$
+      Every term except the last is divisible by $p$, so $p \mid a_0q^n$. Since $\gcd(p, q) = 1$, $p$ shares no prime factor with $q^n$, so $p \mid a_0$.
+
+      Likewise every term except the first is divisible by $q$, so $q \mid a_np^n$, and hence $q \mid a_n$. $\blacksquare$
+
+  - id: lg-159
+    title: cos 20° is irrational
+    subtopic: Proof techniques
+    difficulty: hard
+    type: proof
+    tags: [rational roots, trigonometry, irrationality]
+    related: [lg-158]
+    hints:
+      - |
+        $\cos3\theta = 4\cos^3\theta - 3\cos\theta$.
+    statement: |
+      Prove that $\cos 20^\circ$ is irrational.
+    solution: |
+      Let $c = \cos20^\circ$. Since $\cos60^\circ = \frac12$ and $\cos3\theta = 4\cos^3\theta - 3\cos\theta$, we get $4c^3 - 3c = \frac12$, i.e.
+      $$8c^3 - 6c - 1 = 0.$$
+      By the rational root theorem, a rational root $p/q$ has $p \mid 1$ and $q \mid 8$: so it is one of $\pm1, \pm\frac12, \pm\frac14, \pm\frac18$. With $f(x) = 8x^3 - 6x - 1$:
+      $$f(1) = 1,\ f(-1) = -3,\ f(\tfrac12) = -3,\ f(-\tfrac12) = 1,\ f(\tfrac14) = -\tfrac{19}{8},\ f(-\tfrac14) = \tfrac38,\ f(\tfrac18) = -\tfrac{111}{64},\ f(-\tfrac18) = -\tfrac{17}{64}.$$
+      None is $0$, so $f$ has no rational root and $c$ is irrational. $\blacksquare$
+
+      (This is the algebraic core of why a $60^\circ$ angle can't be trisected with ruler and compass.)
+
+  - id: lg-160
+    title: Odd products have odd factors
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [contrapositive, parity]
+    related: [lg-119]
+    statement: |
+      Prove that if $mn$ is odd then $m$ and $n$ are both odd.
+    solution: |
+      Contrapositive: if $m$ or $n$ is even, say $m = 2k$, then $mn = 2(kn)$ is even. $\blacksquare$
+
+  - id: lg-161
+    title: Contrapositive with a polynomial
+    subtopic: Proof techniques
+    difficulty: easy
+    type: proof
+    tags: [contrapositive, inequalities]
+    statement: |
+      Prove that if $x$ is real and $x^5 + 7x^3 + 5x \ge x^4 + x^2 + 8$, then $x \ge 0$.
+    solution: |
+      Contrapositive: suppose $x < 0$. Then $x^5, 7x^3, 5x$ are all negative, so the left side is negative. The right side is at least $8$. So the left side is less than the right side. $\blacksquare$
+
+      (A direct attack would require solving a quintic.)
+
+  - id: lg-162
+    title: Five points in a triangle
+    subtopic: Proof techniques
+    difficulty: medium
+    type: proof
+    tags: [pigeonhole, geometry]
+    related: [cb-011]
+    statement: |
+      Five points lie in an equilateral triangle of side 2. Prove that two of them are at distance at most 1.
+    solution: |
+      Joining the midpoints of the sides divides the triangle into four equilateral triangles of side 1. Every point lies in at least one of these closed small triangles, so by pigeonhole two of the five points lie in the same one. The largest distance between two points of an equilateral triangle of side 1 is 1 (the farthest pair of points of a triangle are vertices). $\blacksquare$
+
+  - id: lg-163
+    title: Three ways to say A ⊆ B
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, subsets, tfae]
+    statement: |
+      Prove that the following are equivalent: (a) $A \subseteq B$; (b) $A \cup B = B$; (c) $A \cap B = A$.
+    solution: |
+      **(a) ⇒ (b).** Always $B \subseteq A \cup B$. If $x \in A \cup B$ then $x \in A \subseteq B$ or $x \in B$; either way $x \in B$.
+
+      **(b) ⇒ (c).** Always $A \cap B \subseteq A$. If $x \in A$ then $x \in A \cup B = B$, so $x \in A \cap B$.
+
+      **(c) ⇒ (a).** If $x \in A = A \cap B$ then $x \in B$. $\blacksquare$
+
+  - id: lg-164
+    title: Removing a union
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, set difference, de morgan]
+    related: [lg-165]
+    statement: |
+      Prove that $A \setminus (B \cup C) = (A \setminus B) \cap (A \setminus C)$.
+    solution: |
+      $x \in A\setminus(B \cup C) \iff x \in A \wedge \neg(x \in B \vee x \in C) \iff x \in A \wedge x \notin B \wedge x \notin C$
+      $\iff (x \in A \wedge x \notin B) \wedge (x \in A \wedge x \notin C) \iff x \in (A\setminus B) \cap (A \setminus C)$. $\blacksquare$
+
+  - id: lg-165
+    title: Removing an intersection
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, set difference, de morgan]
+    related: [lg-164]
+    statement: |
+      Prove that $A \setminus (B \cap C) = (A \setminus B) \cup (A \setminus C)$.
+    solution: |
+      $x \in A \setminus (B \cap C) \iff x \in A \wedge (x \notin B \vee x \notin C)$, by De Morgan. Distributing $\wedge$ over $\vee$, this is
+      $$(x \in A \wedge x \notin B) \vee (x \in A \wedge x \notin C) \iff x \in (A \setminus B) \cup (A \setminus C). \qquad\blacksquare$$
+
+  - id: lg-166
+    title: Repeated set differences
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, set difference, counterexample]
+    statement: |
+      Prove that $(A \setminus B) \setminus C = A \setminus (B \cup C)$. Is $(A \setminus B)\setminus C = A \setminus (B \setminus C)$ in general?
+    solution: |
+      $x \in (A\setminus B)\setminus C \iff x \in A \wedge x \notin B \wedge x \notin C \iff x \in A \wedge x \notin B \cup C$.
+
+      **No** for the second: $A = \{1, 2\}$, $B = C = \{1\}$ gives $(A \setminus B)\setminus C = \{2\}$ but $A \setminus (B \setminus C) = A\setminus\varnothing = \{1, 2\}$. So set difference is not associative. $\blacksquare$
+
+  - id: lg-167
+    title: Union distributes over intersection
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, distributive law, double inclusion]
+    related: [lg-017]
+    statement: |
+      Prove that $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$.
+    solution: |
+      **($\subseteq$)** If $x \in A$, it is in both $A \cup B$ and $A \cup C$. If $x \in B \cap C$, it is in $B \subseteq A \cup B$ and in $C \subseteq A \cup C$.
+
+      **($\supseteq$)** Let $x$ be in both $A \cup B$ and $A \cup C$. If $x \in A$ we're done. Otherwise $x \in B$ (from the first) and $x \in C$ (from the second), so $x \in B \cap C$. $\blacksquare$
+
+  - id: lg-168
+    title: Symmetric difference as union minus intersection
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, symmetric difference]
+    related: [lg-018]
+    statement: |
+      Prove that $A \triangle B = (A \cup B) \setminus (A \cap B)$, where $A \triangle B = (A \setminus B) \cup (B \setminus A)$.
+    solution: |
+      Both sides consist of exactly the elements lying in one of $A, B$ but not both:
+
+      - $x \in (A \setminus B) \cup (B \setminus A)$ iff $x$ is in $A$ and not $B$, or in $B$ and not $A$.
+      - $x \in (A \cup B) \setminus (A\cap B)$ iff $x$ is in at least one of $A, B$ and not in both.
+
+      These conditions are the same. $\blacksquare$
+
+  - id: lg-169
+    title: Cancelling a symmetric difference
+    subtopic: Sets
+    difficulty: medium
+    type: proof
+    tags: [sets, symmetric difference]
+    related: [lg-018, lg-170]
+    statement: |
+      Prove that $A \triangle B = \varnothing$ iff $A = B$, and that if $A \triangle C = B \triangle C$ then $A = B$.
+    solution: |
+      **First.** $A \triangle B = \varnothing$ means no element is in exactly one of $A, B$, i.e. every element is in both or neither, i.e. $A = B$.
+
+      **Second.** Symmetric difference is associative (lg-018) and $C \triangle C = \varnothing$, $X \triangle \varnothing = X$. So
+      $$A = A \triangle (C \triangle C) = (A \triangle C) \triangle C = (B \triangle C) \triangle C = B. \qquad\blacksquare$$
+
+  - id: lg-170
+    title: The Boolean ring of subsets
+    subtopic: Sets
+    difficulty: medium
+    type: proof
+    tags: [sets, symmetric difference, groups, rings]
+    related: [lg-018, lg-187]
+    statement: |
+      Show that $\mathcal P(U)$ is an abelian group under $\triangle$, and that $\cap$ distributes over $\triangle$. (So $\mathcal P(U)$ is a commutative ring with $\triangle$ as addition and $\cap$ as multiplication.)
+    solution: |
+      Use indicator functions mod 2: $\mathbf 1_{A\triangle B} \equiv \mathbf 1_A + \mathbf 1_B$ and $\mathbf 1_{A \cap B} = \mathbf 1_A\mathbf 1_B$.
+
+      - **Associative and commutative**: addition mod 2 is (lg-018).
+      - **Identity**: $A \triangle \varnothing = A$.
+      - **Inverses**: $A \triangle A = \varnothing$, so each set is its own inverse.
+      - **Distributive**: $\mathbf 1_A(\mathbf 1_B + \mathbf 1_C) = \mathbf 1_A\mathbf 1_B + \mathbf 1_A\mathbf 1_C$, so $A \cap (B \triangle C) = (A \cap B) \triangle (A \cap C)$.
+
+      The multiplicative identity is $U$, and every element satisfies $A \cap A = A$. $\blacksquare$
+
+  - id: lg-171
+    title: When is the power set of a union the union of power sets?
+    subtopic: Sets
+    difficulty: medium
+    type: proof
+    tags: [sets, power set]
+    related: [lg-019]
+    statement: |
+      Prove that $\mathcal P(A \cup B) = \mathcal P(A) \cup \mathcal P(B)$ if and only if $A \subseteq B$ or $B \subseteq A$.
+    solution: |
+      **($\Leftarrow$)** If $A \subseteq B$ then $A \cup B = B$ and $\mathcal P(A) \subseteq \mathcal P(B)$, so both sides are $\mathcal P(B)$. Similarly if $B \subseteq A$.
+
+      **($\Rightarrow$)** Suppose neither contains the other: pick $a \in A \setminus B$ and $b \in B \setminus A$. Then $\{a, b\} \subseteq A \cup B$, but $\{a,b\} \not\subseteq A$ (as $b \notin A$) and $\{a,b\}\not\subseteq B$. So $\{a,b\}$ is in the left side but not the right. $\blacksquare$
+
+  - id: lg-172
+    title: Iterated power sets of the empty set
+    subtopic: Sets
+    difficulty: easy
+    type: compute
+    tags: [sets, power set, empty set]
+    statement: |
+      List the elements of $\mathcal P(\varnothing)$, $\mathcal P(\mathcal P(\varnothing))$ and $\mathcal P(\mathcal P(\mathcal P(\varnothing)))$. How many elements does $\mathcal P^5(\varnothing)$ (five power sets) have?
+    solution: |
+      - $\mathcal P(\varnothing) = \{\varnothing\}$, 1 element.
+      - $\mathcal P(\{\varnothing\}) = \{\varnothing, \{\varnothing\}\}$, 2 elements.
+      - $\mathcal P(\{\varnothing, \{\varnothing\}\}) = \{\varnothing, \{\varnothing\}, \{\{\varnothing\}\}, \{\varnothing, \{\varnothing\}\}\}$, 4 elements.
+
+      Each power set takes $n$ elements to $2^n$, giving $1, 2, 4, 16, 2^{16} = 65536$. So $\mathcal P^5(\varnothing)$ has $65536$ elements.
+
+  - id: lg-173
+    title: Element or subset?
+    subtopic: Sets
+    difficulty: easy
+    type: compute
+    tags: [sets, membership, subsets]
+    statement: |
+      Let $S = \{\varnothing, \{\varnothing\}, \{1, \{1\}\}\}$. Decide each: (1) $\varnothing \in S$; (2) $\varnothing \subseteq S$; (3) $\{\varnothing\} \in S$; (4) $\{\varnothing\} \subseteq S$; (5) $\{1\} \in S$; (6) $\{\{1\}\} \subseteq S$; (7) $\{1, \{1\}\} \in S$; (8) $|S|$.
+    solution: |
+      1. True (listed).
+      2. True (the empty set is a subset of everything).
+      3. True (listed).
+      4. True: its only element, $\varnothing$, is in $S$.
+      5. False: $\{1\}$ is an element of an element of $S$, not of $S$.
+      6. False: that would need $\{1\} \in S$.
+      7. True (listed).
+      8. $|S| = 3$.
+
+  - id: lg-174
+    title: Is membership transitive?
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, membership, transitivity]
+    statement: |
+      Prove that $\subseteq$ is transitive. Show by example that $\in$ is not: there are sets with $A \in B$, $B \in C$ but $A \notin C$.
+    solution: |
+      **$\subseteq$.** If $A \subseteq B \subseteq C$ and $x \in A$, then $x \in B$, so $x \in C$.
+
+      **$\in$.** Let $A = \varnothing$, $B = \{\varnothing\}$, $C = \{\{\varnothing\}\}$. Then $A \in B$ and $B \in C$, but the only element of $C$ is $\{\varnothing\} \ne \varnothing$, so $A \notin C$. $\blacksquare$
+
+  - id: lg-175
+    title: Inclusion–exclusion for two and three sets
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, counting, inclusion-exclusion]
+    related: [cb-016]
+    statement: |
+      For finite sets prove $|A \cup B| = |A| + |B| - |A \cap B|$, and deduce the formula for $|A \cup B \cup C|$.
+    solution: |
+      $A \cup B$ is the disjoint union of $A$ and $B \setminus A$, and $B$ is the disjoint union of $B\setminus A$ and $A \cap B$. So $|A \cup B| = |A| + |B\setminus A| = |A| + |B| - |A \cap B|$.
+
+      For three sets, apply this to $A \cup B$ and $C$, using $(A \cup B) \cap C = (A\cap C) \cup (B \cap C)$:
+      $$|A\cup B\cup C| = |A \cup B| + |C| - |(A\cap C) \cup (B \cap C)|$$
+      $$= |A| + |B| - |A\cap B| + |C| - |A \cap C| - |B \cap C| + |A \cap B \cap C|. \qquad\blacksquare$$
+
+  - id: lg-176
+    title: Products distribute over unions
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, cartesian product]
+    related: [lg-020]
+    statement: |
+      Prove that $A \times (B \cup C) = (A \times B) \cup (A \times C)$ and $(A \cup B) \times C = (A \times C) \cup (B \times C)$.
+    solution: |
+      $(a, x) \in A \times (B\cup C) \iff a \in A \wedge (x \in B \vee x \in C) \iff (a \in A \wedge x \in B) \vee (a \in A \wedge x \in C)$, which says $(a,x) \in (A \times B) \cup (A \times C)$. The second identity is the same argument in the first coordinate. $\blacksquare$
+
+  - id: lg-177
+    title: Intersections and unions of rectangles
+    subtopic: Sets
+    difficulty: medium
+    type: proof
+    tags: [sets, cartesian product, counterexample]
+    statement: |
+      Prove that $(A \times B) \cap (C \times D) = (A \cap C) \times (B \cap D)$. Show that $(A \times B) \cup (C \times D) = (A \cup C) \times (B \cup D)$ can fail.
+    solution: |
+      $(x, y)$ is in both $A\times B$ and $C \times D$ iff $x \in A$, $y \in B$, $x \in C$, $y \in D$, iff $x \in A \cap C$ and $y \in B \cap D$.
+
+      **Union fails.** $A = B = \{0\}$, $C = D = \{1\}$: the left side is $\{(0,0), (1,1)\}$, but the right side $\{0,1\}\times\{0,1\}$ also contains $(0,1)$. (Picture two squares on a diagonal versus the big square containing them.) $\blacksquare$
+
+  - id: lg-178
+    title: Empty products
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, cartesian product, empty set]
+    statement: |
+      Prove that $A \times B = \varnothing$ if and only if $A = \varnothing$ or $B = \varnothing$.
+    solution: |
+      **($\Leftarrow$)** If $A = \varnothing$ there are no pairs $(a, b)$ with $a \in A$. Likewise for $B$.
+
+      **($\Rightarrow$)** Contrapositive: if $a \in A$ and $b \in B$, then $(a, b) \in A \times B$. $\blacksquare$
+
+  - id: lg-179
+    title: Indexed unions and intersections of intervals
+    subtopic: Sets
+    difficulty: easy
+    type: compute
+    tags: [sets, indexed families, intervals]
+    related: [lg-180]
+    statement: |
+      Compute, for $n$ ranging over the positive integers:
+      $$\text{(a) } \bigcup_n\left[\tfrac1n, 1\right],\quad\text{(b) } \bigcap_n\left(-\tfrac1n, \tfrac1n\right),\quad\text{(c) } \bigcap_n\left(0, \tfrac1n\right),\quad\text{(d) } \bigcup_n\left[0, 1 - \tfrac1n\right].$$
+    solution: |
+      (a) $(0, 1]$. Every $x \in (0,1]$ has $x \ge \frac1n$ for some $n$ (Archimedes), and $0$ is in none.
+
+      (b) $\{0\}$. $0$ is in every interval; if $x \ne 0$ then $|x| \ge \frac1n$ for some $n$, so $x$ misses that interval.
+
+      (c) $\varnothing$. Any $x > 0$ fails $x < \frac1n$ for large $n$, and $x \le 0$ is in none.
+
+      (d) $[0, 1)$. Each $x < 1$ satisfies $x \le 1 - \frac1n$ for large $n$, and $1$ is in none. (A union of closed sets need not be closed.)
+
+  - id: lg-180
+    title: More indexed families
+    subtopic: Sets
+    difficulty: easy
+    type: compute
+    tags: [sets, indexed families, intervals]
+    related: [lg-179]
+    statement: |
+      For $n \ge 1$, compute $\bigcup_n[n, n+1)$, $\bigcap_n[n, \infty)$ and $\bigcap_n\left[-\frac1n, 1 + \frac1n\right]$.
+    solution: |
+      - $\bigcup_n[n, n+1) = [1, \infty)$: each $x \ge 1$ lies in $[\lfloor x\rfloor, \lfloor x\rfloor + 1)$.
+      - $\bigcap_n[n, \infty) = \varnothing$: any real $x$ is less than some integer $n$.
+      - $\bigcap_n\left[-\frac1n, 1 + \frac1n\right] = [0, 1]$: points of $[0,1]$ are in all of them; if $x < 0$ then $x < -\frac1n$ for large $n$, and if $x > 1$ then $x > 1 + \frac1n$ for large $n$.
+
+  - id: lg-181
+    title: De Morgan for indexed families
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, indexed families, de morgan]
+    related: [lg-016, in-187]
+    statement: |
+      For any family of sets $(A_i)_{i \in I}$ inside $U$, prove that $\left(\bigcup_iA_i\right)^c = \bigcap_iA_i^c$ and $\left(\bigcap_iA_i\right)^c = \bigcup_iA_i^c$.
+    solution: |
+      $x \notin \bigcup_iA_i \iff \neg\exists i\,(x \in A_i) \iff \forall i\,(x \notin A_i) \iff x \in \bigcap_iA_i^c$.
+
+      $x \notin \bigcap_iA_i \iff \neg\forall i\,(x \in A_i) \iff \exists i\,(x \notin A_i) \iff x \in \bigcup_iA_i^c$.
+
+      (This is the quantifier version of De Morgan; it works for infinite families, where induction would not.) $\blacksquare$
+
+  - id: lg-182
+    title: Distributive laws for families
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, indexed families, distributive law]
+    statement: |
+      Prove that $A \cap \bigcup_iB_i = \bigcup_i(A \cap B_i)$ and $A \cup \bigcap_iB_i = \bigcap_i(A \cup B_i)$.
+    solution: |
+      **First.** $x \in A \cap \bigcup_iB_i \iff x \in A \wedge \exists i\,(x \in B_i) \iff \exists i\,(x \in A \wedge x \in B_i)$, which says $x \in \bigcup_i(A\cap B_i)$.
+
+      **Second.** $x \in A \cup \bigcap_iB_i \iff x \in A \vee \forall i\,(x \in B_i) \iff \forall i\,(x \in A \vee x \in B_i)$. The middle step: if $x \in A$ both sides hold; if not, both say $x \in B_i$ for every $i$. $\blacksquare$
+
+  - id: lg-183
+    title: Nested sets with empty intersection
+    subtopic: Sets
+    difficulty: medium
+    type: proof
+    tags: [sets, nested intervals, completeness]
+    related: [lg-179]
+    statement: |
+      Give a decreasing sequence $A_1 \supseteq A_2 \supseteq \cdots$ of non-empty intervals with empty intersection. Then prove that if $[a_n, b_n]$ are non-empty closed bounded intervals with $[a_{n+1}, b_{n+1}] \subseteq [a_n, b_n]$, their intersection is non-empty. (You may use that every non-empty set of reals bounded above has a supremum.)
+    solution: |
+      **Example.** $A_n = (0, \frac1n)$ (lg-179(c)).
+
+      **Closed intervals.** Nestedness gives $a_1 \le a_2 \le \cdots$ and $\cdots \le b_2 \le b_1$, with $a_n \le b_n$. For any $n, m$, letting $k = \max(n, m)$, $a_n \le a_k \le b_k \le b_m$. So every $b_m$ is an upper bound for $\{a_n\}$. Let $a = \sup_na_n$. Then $a_n \le a$ for all $n$, and $a \le b_m$ for all $m$ (as $a$ is the least upper bound). So $a \in [a_n, b_n]$ for every $n$. $\blacksquare$
+
+  - id: lg-184
+    title: The empty set is unique
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, empty set, uniqueness]
+    statement: |
+      Prove that the empty set is a subset of every set, and that there is only one empty set.
+    solution: |
+      $\varnothing \subseteq A$ means $\forall x\,(x \in \varnothing \to x \in A)$, which is vacuously true.
+
+      If $E$ and $E'$ both have no elements, then $E \subseteq E'$ and $E' \subseteq E$ by the first part, so $E = E'$ by extensionality. $\blacksquare$
+
+  - id: lg-185
+    title: Power sets determine sets
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, power set]
+    statement: |
+      Prove that $A \subseteq B$ iff $\mathcal P(A) \subseteq \mathcal P(B)$, and hence $A = B$ iff $\mathcal P(A) = \mathcal P(B)$.
+    solution: |
+      **($\Rightarrow$)** If $S \subseteq A$ then $S \subseteq B$ by transitivity.
+
+      **($\Leftarrow$)** $A \in \mathcal P(A) \subseteq \mathcal P(B)$, so $A \subseteq B$.
+
+      Applying this both ways gives the second statement. $\blacksquare$
+
+  - id: lg-186
+    title: Indicator functions
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, indicator functions]
+    related: [lg-018]
+    statement: |
+      For $A \subseteq U$ let $\mathbf 1_A(x) = 1$ if $x \in A$ and $0$ otherwise. Prove that $\mathbf 1_{A\cap B} = \mathbf 1_A\mathbf 1_B$, $\mathbf 1_{A^c} = 1 - \mathbf 1_A$ and $\mathbf 1_{A\cup B} = \mathbf 1_A + \mathbf 1_B - \mathbf 1_A\mathbf 1_B$.
+    solution: |
+      Check at each $x$.
+
+      - $\mathbf 1_A(x)\mathbf 1_B(x)$ is $1$ iff both factors are $1$, iff $x \in A \cap B$.
+      - $1 - \mathbf 1_A(x)$ is $1$ iff $x \notin A$.
+      - By De Morgan, $\mathbf 1_{A\cup B} = 1 - \mathbf 1_{A^c\cap B^c} = 1 - (1 - \mathbf 1_A)(1 - \mathbf 1_B) = \mathbf 1_A + \mathbf 1_B - \mathbf 1_A\mathbf 1_B$. $\blacksquare$
+
+      (Summing over a finite $U$ gives $|A\cup B| = |A| + |B| - |A \cap B|$.)
+
+  - id: lg-187
+    title: Intersection distributes over symmetric difference
+    subtopic: Sets
+    difficulty: medium
+    type: proof
+    tags: [sets, symmetric difference, indicator functions]
+    related: [lg-018, lg-188]
+    statement: |
+      Prove that $A \cap (B \triangle C) = (A \cap B) \triangle (A \cap C)$.
+    solution: |
+      Working mod 2 with indicator functions,
+      $$\mathbf 1_{A\cap(B\triangle C)} = \mathbf 1_A(\mathbf 1_B + \mathbf 1_C) = \mathbf 1_A\mathbf 1_B + \mathbf 1_A\mathbf 1_C = \mathbf 1_{A\cap B} + \mathbf 1_{A \cap C} \equiv \mathbf 1_{(A\cap B)\triangle(A\cap C)}.$$
+      Both sides take values in $\{0,1\}$, so the sets are equal. $\blacksquare$
+
+  - id: lg-188
+    title: Union does not distribute over symmetric difference
+    subtopic: Sets
+    difficulty: easy
+    type: compute
+    tags: [sets, symmetric difference, counterexample]
+    related: [lg-187]
+    statement: |
+      Show that $A \cup (B \triangle C) = (A \cup B) \triangle (A \cup C)$ fails in general. Which inclusion always holds?
+    solution: |
+      $A = B = C = \{1\}$: the left side is $\{1\} \cup \varnothing = \{1\}$, the right side is $\{1\}\triangle\{1\} = \varnothing$.
+
+      The right side is always contained in the left: if $x$ is in exactly one of $A \cup B$, $A \cup C$, then $x \notin A$ (else it would be in both), so $x$ is in exactly one of $B, C$, i.e. $x \in B \triangle C$. In fact $(A \cup B)\triangle(A \cup C) = (B \triangle C) \setminus A$.
+
+  - id: lg-189
+    title: Four regions of a Venn diagram
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, partitions]
+    statement: |
+      For $A, B \subseteq U$, prove that $A \cap B$, $A \setminus B$, $B \setminus A$ and $U \setminus (A \cup B)$ are pairwise disjoint and have union $U$.
+    solution: |
+      Each $x \in U$ has a pair of answers to "is $x \in A$?" and "is $x \in B$?". The four sets are exactly the elements with answers (yes, yes), (yes, no), (no, yes), (no, no). Every element has exactly one pair of answers, so it lies in exactly one of the sets. $\blacksquare$
+
+  - id: lg-190
+    title: Venn diagrams with every region filled
+    subtopic: Sets
+    difficulty: medium
+    type: proof
+    tags: [sets, power set, construction]
+    statement: |
+      For $n$ sets $A_1, \dots, A_n \subseteq U$ there are $2^n$ "regions": for each $T \subseteq \{1, \dots, n\}$, the set of $x$ lying in $A_i$ exactly for $i \in T$. Construct, for every $n$, sets for which all $2^n$ regions are non-empty.
+    solution: |
+      Let $U = \mathcal P(\{1, \dots, n\})$ and $A_i = \{S \in U : i \in S\}$.
+
+      Given $T \subseteq \{1,\dots,n\}$, the element $S = T$ of $U$ lies in $A_i$ iff $i \in T$. So $T$ belongs to the region for $T$, and every region is non-empty. $\blacksquare$
+
+      (In fact each region has exactly one element.)
+
+  - id: lg-191
+    title: The barber paradox
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [paradox, contradiction]
+    related: [lg-029]
+    statement: |
+      In a village, the barber shaves exactly those villagers who do not shave themselves. Show that no such barber (who lives in the village) can exist.
+    solution: |
+      Ask whether the barber shaves himself. If he does, then he is a villager who shaves himself, so by the rule he does not. If he does not, then he is a villager who does not shave himself, so by the rule he does. Either way we have a contradiction, so the described barber does not exist. $\blacksquare$
+
+      (This is Russell's paradox with "$x$ shaves $y$" in place of "$y \in x$".)
+
+  - id: lg-192
+    title: No set contains every singleton
+    subtopic: Sets
+    difficulty: hard
+    type: proof
+    tags: [sets, russell paradox, axioms]
+    related: [lg-029]
+    statement: |
+      Assume that for every set $V$ the union $\bigcup V = \{x : x \in y \text{ for some } y \in V\}$ is a set, and that $\{x \in W : x \notin x\}$ is a set for every set $W$. Prove there is no set containing $\{x\}$ for every set $x$.
+    solution: |
+      Suppose $V$ contains every singleton. Let $W = \bigcup V$. For any set $x$, $\{x\} \in V$ and $x \in \{x\}$, so $x \in W$. Thus $W$ contains every set.
+
+      Now $R = \{x \in W : x \notin x\}$ is a set, and since every set is in $W$, for every set $x$ we have $x \in R \iff x \notin x$. Taking $x = R$ gives $R \in R \iff R \notin R$, a contradiction (lg-029). $\blacksquare$
+
+  - id: lg-193
+    title: Cancelling unions and intersections together
+    subtopic: Sets
+    difficulty: medium
+    type: proof
+    tags: [sets, cancellation, counterexample]
+    statement: |
+      Prove that if $A \cap B = A \cap C$ and $A \cup B = A \cup C$ then $B = C$. Show that neither equation alone suffices.
+    solution: |
+      Let $x \in B$. If $x \in A$, then $x \in A \cap B = A \cap C$, so $x \in C$. If $x \notin A$, then $x \in A \cup B = A \cup C$ forces $x \in C$. So $B \subseteq C$, and by symmetry $C \subseteq B$.
+
+      **Not alone.** $A = B = \{1\}$, $C = \{1, 2\}$: $A \cap B = A \cap C$ but $B \ne C$. $A = C = \{1\}$, $B = \varnothing$: $A \cup B = A \cup C$ but $B \ne C$. $\blacksquare$
+
+  - id: lg-194
+    title: A one-way inclusion
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, set difference, counterexample]
+    statement: |
+      Prove that $(A \cup B) \setminus C \subseteq A \cup (B \setminus C)$ and show the reverse inclusion can fail.
+    solution: |
+      If $x \in A \cup B$ and $x \notin C$: either $x \in A$, or $x \in B \setminus C$. Either way $x \in A \cup (B\setminus C)$.
+
+      **Reverse fails.** $A = C = \{1\}$, $B = \varnothing$: the left side is $\varnothing$ and the right side is $\{1\}$. $\blacksquare$
+
+  - id: lg-195
+    title: Union and intersection as extremes
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, union, intersection]
+    statement: |
+      Prove that $A \cup B$ is the smallest set containing both $A$ and $B$: it contains both, and any set containing both contains it. State and prove the analogous fact for $A \cap B$.
+    solution: |
+      $A, B \subseteq A \cup B$ by definition. If $A \subseteq C$ and $B \subseteq C$, then any $x \in A \cup B$ is in $A$ or $B$, hence in $C$.
+
+      **Intersection.** $A \cap B$ is the largest set contained in both: $A \cap B \subseteq A, B$, and if $D \subseteq A$ and $D \subseteq B$ then every $x \in D$ is in both, so $D \subseteq A \cap B$. $\blacksquare$
+
+  - id: lg-196
+    title: Limits of a sequence of sets
+    subtopic: Sets
+    difficulty: medium
+    type: compute
+    tags: [sets, indexed families, limsup]
+    statement: |
+      For sets $A_1, A_2, \dots$ define
+      $$\limsup A_n = \bigcap_{N\ge1}\bigcup_{n\ge N}A_n,\qquad \liminf A_n = \bigcup_{N\ge1}\bigcap_{n\ge N}A_n.$$
+      Show that $\limsup A_n$ is the set of points in infinitely many $A_n$ and $\liminf A_n$ is the set of points in all but finitely many. Compute both when $A_n = [0,1]$ for even $n$ and $A_n = [1,2]$ for odd $n$.
+    solution: |
+      $x \in \limsup A_n$ iff for every $N$ there is $n \ge N$ with $x \in A_n$, i.e. $x$ is in $A_n$ for infinitely many $n$.
+
+      $x \in \liminf A_n$ iff for some $N$, $x \in A_n$ for all $n \ge N$, i.e. $x$ misses only finitely many $A_n$.
+
+      **Example.** Every tail $\bigcup_{n\ge N}A_n$ contains both an even and an odd index, so equals $[0,2]$; hence $\limsup A_n = [0, 2]$. Every tail intersection is $[0,1]\cap[1,2] = \{1\}$, so $\liminf A_n = \{1\}$.
+
+  - id: lg-197
+    title: Kuratowski's ordered pairs
+    subtopic: Sets
+    difficulty: hard
+    type: proof
+    tags: [sets, ordered pairs, foundations]
+    source: Kuratowski, 1921
+    statement: |
+      Define $(a, b) = \{\{a\}, \{a, b\}\}$. Prove that $(a, b) = (c, d)$ implies $a = c$ and $b = d$.
+    solution: |
+      Suppose $\{\{a\}, \{a,b\}\} = \{\{c\}, \{c,d\}\}$.
+
+      **Case $a = b$.** The left side is $\{\{a\}\}$, a one-element set. So $\{c\} = \{a\}$ and $\{c, d\} = \{a\}$, giving $c = a$ and $d = a = b$.
+
+      **Case $a \ne b$.** The left side has two elements, a singleton $\{a\}$ and a two-element set $\{a,b\}$. So the right side also has two elements, which forces $c \ne d$ (else it would be $\{\{c\}\}$). A singleton can only equal a singleton, so $\{a\} = \{c\}$, i.e. $a = c$, and $\{a, b\} = \{c, d\} = \{a, d\}$. Since $b \ne a$ and $b \in \{a, d\}$, $b = d$. $\blacksquare$
+
+      (So ordered pairs can be built from sets alone.)
+
+  - id: lg-198
+    title: Natural numbers as sets
+    subtopic: Sets
+    difficulty: medium
+    type: proof
+    tags: [sets, von neumann ordinals, induction]
+    statement: |
+      Define $0 = \varnothing$ and $n + 1 = n \cup \{n\}$. Write out $1, 2, 3$. Prove by induction that $n = \{0, 1, \dots, n-1\}$, that $n$ has exactly $n$ elements, and that every element of $n$ is a subset of $n$. You may use that no set is an element of itself.
+    solution: |
+      $1 = \{\varnothing\}$, $2 = \{\varnothing, \{\varnothing\}\}$, $3 = \{\varnothing, \{\varnothing\}, \{\varnothing, \{\varnothing\}\}\}$.
+
+      **$n = \{0, \dots, n-1\}$.** True for $0 = \varnothing$. If $n = \{0, \dots, n-1\}$ then $n + 1 = n \cup \{n\} = \{0, \dots, n\}$.
+
+      **Size.** $|0| = 0$. Since $n \notin n$, $|n \cup \{n\}| = |n| + 1$, so $|n+1| = n + 1$ by induction.
+
+      **Transitivity.** Trivial for $0$. Suppose every element of $n$ is a subset of $n$. An element of $n+1$ is either an element $m$ of $n$, so $m \subseteq n \subseteq n+1$, or $n$ itself, and $n \subseteq n + 1$. $\blacksquare$
+
+      (So $m < n$ can be defined as $m \in n$, and also equals $m \subsetneq n$.)
+
+  - id: lg-199
+    title: An identity by element-chasing
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, double inclusion]
+    statement: |
+      Prove that $(A \cup B) \cap (A \cup B^c) = A$.
+    solution: |
+      **($\supseteq$)** If $x \in A$ it lies in both $A \cup B$ and $A \cup B^c$.
+
+      **($\subseteq$)** Let $x$ be in both. If $x \notin A$, then $x \in B$ (from the first) and $x \in B^c$ (from the second), impossible. So $x \in A$. $\blacksquare$
+
+      (Algebraically: by distributivity it is $A \cup (B \cap B^c) = A \cup \varnothing$.)
+
+  - id: lg-200
+    title: When union equals intersection
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, union, intersection]
+    statement: |
+      Prove that $A \cup B = A \cap B$ if and only if $A = B$.
+    solution: |
+      If $A = B$ both sides are $A$.
+
+      Conversely, $A \subseteq A \cup B = A \cap B \subseteq B$, and similarly $B \subseteq A$. $\blacksquare$
+
+  - id: lg-201
+    title: Squares of sets
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, cartesian product]
+    related: [lg-020]
+    statement: |
+      Prove that if $A \times A = B \times B$ then $A = B$.
+    solution: |
+      If $A = \varnothing$ then $B \times B = \varnothing$, so $B = \varnothing$ (lg-178), and similarly if $B = \varnothing$.
+
+      Otherwise, for $a \in A$ we have $(a, a) \in A\times A = B \times B$, so $a \in B$; hence $A \subseteq B$, and symmetrically $B \subseteq A$. $\blacksquare$
+
+  - id: lg-202
+    title: When do products commute?
+    subtopic: Sets
+    difficulty: medium
+    type: proof
+    tags: [sets, cartesian product]
+    related: [lg-020, lg-178]
+    statement: |
+      Prove that $A \times B = B \times A$ if and only if $A = B$, $A = \varnothing$ or $B = \varnothing$.
+    solution: |
+      **($\Leftarrow$)** If $A = B$ the sides are identical. If either set is empty, both products are empty (lg-178).
+
+      **($\Rightarrow$)** If neither is empty, lg-020 shows $A = B$. $\blacksquare$
+
+  - id: lg-203
+    title: Set difference via complement
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, set difference, complement]
+    related: [lg-164]
+    statement: |
+      Prove that $A \setminus B = A \cap B^c$, and use it with De Morgan's law to give an algebraic proof that $A \setminus (B \cup C) = (A \setminus B) \cap (A \setminus C)$.
+    solution: |
+      $x \in A \setminus B \iff x \in A \wedge x \notin B \iff x \in A \cap B^c$.
+
+      Then
+      $$A \setminus (B\cup C) = A \cap (B \cup C)^c = A \cap B^c \cap C^c = (A \cap B^c) \cap (A \cap C^c) = (A\setminus B)\cap(A \setminus C),$$
+      using $A = A \cap A$ and associativity/commutativity of $\cap$. $\blacksquare$
+
+  - id: lg-204
+    title: Equal differences
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, set difference]
+    statement: |
+      Prove that if $A \setminus B = B \setminus A$ then $A = B$.
+    solution: |
+      $A \setminus B$ and $B \setminus A$ are disjoint: an element of the first is not in $B$, while every element of the second is in $B$. If they are equal, they are therefore both empty. $A \setminus B = \varnothing$ means $A \subseteq B$, and $B \setminus A = \varnothing$ means $B \subseteq A$. $\blacksquare$
+
+  - id: lg-205
+    title: Union and intersection of a power set
+    subtopic: Sets
+    difficulty: easy
+    type: proof
+    tags: [sets, power set, indexed families]
+    statement: |
+      Prove that $\bigcup\mathcal P(A) = A$ and $\bigcap\mathcal P(A) = \varnothing$.
+    solution: |
+      **Union.** Every member of $\mathcal P(A)$ is a subset of $A$, so the union is contained in $A$. Conversely $A \in \mathcal P(A)$, so $A \subseteq \bigcup\mathcal P(A)$.
+
+      **Intersection.** $\varnothing \in \mathcal P(A)$, so the intersection is contained in $\varnothing$. $\blacksquare$
+
+  - id: lg-206
+    title: Counting nested pairs of subsets
+    subtopic: Sets
+    difficulty: medium
+    type: compute
+    tags: [sets, counting, subsets]
+    related: [lg-021]
+    statement: |
+      How many pairs $(X, Y)$ of subsets of $\{1, \dots, n\}$ satisfy $X \subseteq Y$? How many pairs have $X \cap Y = \varnothing$?
+    solution: |
+      **$X \subseteq Y$.** For each element choose one of three options: in $X$ (and so in $Y$), in $Y$ but not $X$, or in neither. These choices determine the pair and are independent: $3^n$.
+
+      **$X \cap Y = \varnothing$.** Each element is in $X$ only, in $Y$ only, or in neither: again $3^n$. (Indeed $(X, Y) \mapsto (X, Y^c)$ is a bijection between the two kinds of pairs.)
+
+  - id: lg-207
+    title: Inverting a fractional linear function
+    subtopic: Functions
+    difficulty: easy
+    type: compute
+    tags: [functions, inverse, bijection]
+    related: [lg-024]
+    statement: |
+      Show that $f(x) = \dfrac{2x + 1}{x - 3}$ is a bijection from $\R\setminus\{3\}$ to $\R\setminus\{2\}$ and find its inverse.
+    solution: |
+      **Well defined.** $f(x) = 2$ would mean $2x + 1 = 2x - 6$, impossible; so $f$ maps into $\R\setminus\{2\}$.
+
+      **Inverse.** Solve $y = \frac{2x+1}{x-3}$: $yx - 3y = 2x + 1$, so $x(y - 2) = 3y + 1$ and
+      $$g(y) = \frac{3y + 1}{y - 2}.$$
+      $g(y) = 3$ would mean $3y + 1 = 3y - 6$, impossible, so $g$ maps $\R\setminus\{2\}$ into $\R\setminus\{3\}$. The algebra above is reversible, so $f(g(y)) = y$ and $g(f(x)) = x$. Hence $f$ is a bijection with inverse $g$ (lg-024).
+
+  - id: lg-208
+    title: Composition is not commutative
+    subtopic: Functions
+    difficulty: easy
+    type: compute
+    tags: [functions, composition]
+    statement: |
+      For $f(x) = x^2$ and $g(x) = x + 1$ on $\R$, compute $f \circ g$ and $g \circ f$, and show they differ.
+    solution: |
+      $(f\circ g)(x) = (x+1)^2$ and $(g \circ f)(x) = x^2 + 1$. At $x = 1$ these are $4$ and $2$. So $f \circ g \ne g \circ f$.
+
+  - id: lg-209
+    title: Composition is associative
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, composition]
+    statement: |
+      Let $f : A \to B$, $g : B \to C$, $h : C \to D$. Prove that $(h \circ g)\circ f = h \circ (g \circ f)$.
+    solution: |
+      Both are functions $A \to D$. For every $a \in A$,
+      $$\big((h\circ g)\circ f\big)(a) = (h \circ g)(f(a)) = h(g(f(a))) = h\big((g \circ f)(a)\big) = \big(h \circ (g \circ f)\big)(a).$$
+      Functions with the same domain, codomain and values are equal. $\blacksquare$
+
+  - id: lg-210
+    title: One-sided inverses
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, inverse, injective, surjective]
+    related: [lg-024, lg-211]
+    statement: |
+      Let $f : A \to B$ with $A \ne \varnothing$. Prove that $f$ is injective iff it has a left inverse ($g : B \to A$ with $g \circ f = \mathrm{id}_A$), and surjective iff it has a right inverse ($h : B \to A$ with $f \circ h = \mathrm{id}_B$).
+    solution: |
+      **Left inverse ⇒ injective.** If $f(x) = f(y)$ then $x = g(f(x)) = g(f(y)) = y$.
+
+      **Injective ⇒ left inverse.** Fix $a_0 \in A$. For $b \in f(A)$ let $g(b)$ be the unique $a$ with $f(a) = b$; for $b \notin f(A)$ let $g(b) = a_0$. Then $g(f(a)) = a$.
+
+      **Right inverse ⇒ surjective.** Each $b = f(h(b))$ is in the image.
+
+      **Surjective ⇒ right inverse.** For each $b$ the set $f^{-1}(\{b\})$ is non-empty; choose an element $h(b)$ from it. Then $f(h(b)) = b$. (For infinite $B$ this choice uses the axiom of choice.) $\blacksquare$
+
+  - id: lg-211
+    title: Left inverses need not be unique
+    subtopic: Functions
+    difficulty: easy
+    type: compute
+    tags: [functions, inverse]
+    related: [lg-210]
+    statement: |
+      Let $f : \N \to \N$, $f(n) = n + 1$. Find all left inverses of $f$, and show it has no right inverse.
+    solution: |
+      $g$ is a left inverse iff $g(n + 1) = n$ for every $n \ge 0$, i.e. $g(m) = m - 1$ for $m \ge 1$, while $g(0)$ can be anything. So there are infinitely many left inverses, one for each value of $g(0)$.
+
+      There is no right inverse, since $f$ is not surjective ($0$ is not hit), by lg-210.
+
+  - id: lg-212
+    title: Inverse of a composition
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, inverse, composition]
+    related: [la-017]
+    statement: |
+      Let $f : A \to B$ and $g : B \to C$ be bijections. Prove that $g \circ f$ is a bijection and $(g\circ f)^{-1} = f^{-1}\circ g^{-1}$.
+    solution: |
+      Using associativity,
+      $$(g\circ f)\circ(f^{-1}\circ g^{-1}) = g\circ(f \circ f^{-1})\circ g^{-1} = g \circ g^{-1} = \mathrm{id}_C,$$
+      and similarly $(f^{-1}\circ g^{-1})\circ(g\circ f) = \mathrm{id}_A$. By lg-024, $g\circ f$ is a bijection with the stated inverse. $\blacksquare$
+
+      (Socks and shoes: undo the last thing first.)
+
+  - id: lg-213
+    title: Images and preimages of unions
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, image, preimage]
+    related: [lg-025]
+    statement: |
+      Let $f : A \to B$. Prove that $f(X \cup Y) = f(X) \cup f(Y)$ and $f^{-1}\left(\bigcup_iU_i\right) = \bigcup_if^{-1}(U_i)$.
+    solution: |
+      $b \in f(X \cup Y) \iff \exists a\,(a \in X \cup Y \wedge f(a) = b) \iff \exists a \in X\,(f(a) = b) \vee \exists a \in Y\,(f(a) = b) \iff b \in f(X)\cup f(Y)$.
+
+      $a \in f^{-1}\left(\bigcup U_i\right) \iff \exists i\,(f(a) \in U_i) \iff a \in \bigcup f^{-1}(U_i)$. $\blacksquare$
+
+  - id: lg-214
+    title: Preimages respect complements
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, preimage, complement]
+    statement: |
+      Let $f : A \to B$ and $U \subseteq B$. Prove that $f^{-1}(B \setminus U) = A \setminus f^{-1}(U)$. Does $f(A \setminus X) = B \setminus f(X)$ hold in general?
+    solution: |
+      $a \in f^{-1}(B\setminus U) \iff f(a) \notin U \iff a \notin f^{-1}(U)$.
+
+      **Not for images.** $f : \{1,2\} \to \{1, 2\}$ constant $1$, $X = \{1\}$: $f(A \setminus X) = \{1\}$ but $B \setminus f(X) = \{2\}$. (Preimages are better behaved than images: they respect all set operations.) $\blacksquare$
+
+  - id: lg-215
+    title: Image of a preimage
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, image, preimage, surjective]
+    related: [lg-216]
+    statement: |
+      Let $f : A \to B$ and $U \subseteq B$. Prove that $f(f^{-1}(U)) = U \cap f(A)$. Deduce that $f(f^{-1}(U)) = U$ for all $U$ iff $f$ is surjective.
+    solution: |
+      **($\subseteq$)** An element of $f(f^{-1}(U))$ is $f(a)$ with $f(a) \in U$; it is in $U$ and in $f(A)$.
+
+      **($\supseteq$)** If $b \in U \cap f(A)$, then $b = f(a)$ for some $a$, and $a \in f^{-1}(U)$, so $b \in f(f^{-1}(U))$.
+
+      If $f$ is surjective, $U \cap f(A) = U$. If not, take $U = B$: $f(f^{-1}(B)) = f(A) \ne B$. $\blacksquare$
+
+  - id: lg-216
+    title: Preimage of an image
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, image, preimage, injective]
+    related: [lg-215]
+    statement: |
+      Let $f : A \to B$ and $X \subseteq A$. Prove that $X \subseteq f^{-1}(f(X))$, with equality for every $X$ iff $f$ is injective.
+    solution: |
+      If $x \in X$ then $f(x) \in f(X)$, so $x \in f^{-1}(f(X))$.
+
+      **Injective ⇒ equality.** If $a \in f^{-1}(f(X))$ then $f(a) = f(x)$ for some $x \in X$, and injectivity gives $a = x \in X$.
+
+      **Equality ⇒ injective.** If $f(a) = f(a')$, take $X = \{a\}$: then $a' \in f^{-1}(f(\{a\})) = \{a\}$, so $a' = a$. $\blacksquare$
+
+  - id: lg-217
+    title: Images of differences
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, image, injective]
+    related: [lg-025]
+    statement: |
+      Let $f : A \to B$. Prove that $f(X) \setminus f(Y) \subseteq f(X \setminus Y)$, with equality for all $X, Y$ iff $f$ is injective.
+    solution: |
+      **Inclusion.** If $b \in f(X)\setminus f(Y)$, then $b = f(x)$ with $x \in X$, and $x \notin Y$ (else $b \in f(Y)$). So $b \in f(X \setminus Y)$.
+
+      **Injective ⇒ equality.** Let $b = f(x)$ with $x \in X \setminus Y$. If $b \in f(Y)$, then $b = f(y)$ with $y \in Y$, and injectivity gives $x = y \in Y$, a contradiction. So $b \in f(X)\setminus f(Y)$.
+
+      **Not injective ⇒ failure.** If $f(x) = f(y)$ with $x \ne y$, take $X = \{x, y\}$, $Y = \{y\}$. Then $f(X\setminus Y) = \{f(x)\}$ but $f(X)\setminus f(Y) = \varnothing$. $\blacksquare$
+
+  - id: lg-218
+    title: Monotone and injective
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, injective, monotone]
+    statement: |
+      Prove that a strictly increasing function $f : \R \to \R$ is injective. Give an injective function $\R \to \R$ that is not monotone.
+    solution: |
+      If $x \ne y$, say $x < y$, then $f(x) < f(y)$, so $f(x) \ne f(y)$.
+
+      **Example.** Swap $0$ and $1$: $f(0) = 1$, $f(1) = 0$, $f(x) = x$ otherwise. It is injective (indeed $f\circ f = \mathrm{id}$), but $f(-1) < f(0) > f(1)$, so it is neither increasing nor decreasing. (A *continuous* injective function on an interval must be monotone.) $\blacksquare$
+
+  - id: lg-219
+    title: A bijection from the integers to the naturals
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, bijection, countability]
+    statement: |
+      Show that $f : \Z \to \N$ defined by $f(n) = 2n$ for $n \ge 0$ and $f(n) = -2n - 1$ for $n < 0$ is a bijection.
+    solution: |
+      $f$ maps $\{0, 1, 2, \dots\}$ to the even naturals by $n \mapsto 2n$, which is a bijection, and maps $\{-1, -2, \dots\}$ to the odd naturals by $n \mapsto -2n - 1$ (so $-1 \mapsto 1$, $-2 \mapsto 3$, ...), also a bijection with inverse $m \mapsto -\frac{m+1}{2}$. Evens and odds partition $\N$, so $f$ is a bijection. $\blacksquare$
+
+  - id: lg-220
+    title: The open interval is as big as the line
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, bijection, cardinality]
+    related: [lg-221]
+    statement: |
+      Show that $f(x) = \tan\big(\pi(x - \frac12)\big)$ is a bijection from $(0, 1)$ to $\R$.
+    solution: |
+      $x \mapsto \pi(x - \frac12)$ is a bijection $(0,1) \to (-\frac\pi2, \frac\pi2)$ (a linear map with inverse $t \mapsto \frac t\pi + \frac12$). And $\tan$ is a bijection $(-\frac\pi2, \frac\pi2) \to \R$: it is strictly increasing (derivative $\sec^2 > 0$), continuous, and tends to $\pm\infty$ at the ends, so by the IVT it takes every real value. A composite of bijections is a bijection. $\blacksquare$
+
+  - id: lg-221
+    title: An algebraic bijection onto (−1, 1)
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, bijection, inverse]
+    related: [lg-220]
+    statement: |
+      Prove that $f(x) = \dfrac{x}{1 + |x|}$ is a bijection $\R \to (-1, 1)$ by finding its inverse.
+    solution: |
+      $|f(x)| = \frac{|x|}{1 + |x|} < 1$, so $f$ maps into $(-1, 1)$. Let $g(y) = \frac{y}{1 - |y|}$ on $(-1, 1)$. Note $f(x)$ has the same sign as $x$, and so does $g(y)$ as $y$.
+
+      $$f(g(y)) = \frac{\frac{y}{1-|y|}}{1 + \frac{|y|}{1 - |y|}} = \frac{\frac{y}{1-|y|}}{\frac{1}{1-|y|}} = y, \qquad g(f(x)) = \frac{\frac{x}{1+|x|}}{1 - \frac{|x|}{1 + |x|}} = \frac{\frac{x}{1+|x|}}{\frac{1}{1+|x|}} = x.$$
+      So $g$ is a two-sided inverse and $f$ is a bijection. $\blacksquare$
+
+  - id: lg-222
+    title: Properties of the floor function
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, floor function, inequalities]
+    statement: |
+      Prove that for real $x, y$ and integer $n$: (1) $\lfloor x + n\rfloor = \lfloor x\rfloor + n$; (2) $\lfloor x\rfloor + \lfloor y\rfloor \le \lfloor x + y\rfloor \le \lfloor x\rfloor + \lfloor y\rfloor + 1$.
+    solution: |
+      $\lfloor x\rfloor$ is the unique integer $m$ with $m \le x < m + 1$. Write $x = \lfloor x \rfloor + s$, $y = \lfloor y\rfloor + t$ with $s, t \in [0, 1)$.
+
+      1. $\lfloor x\rfloor + n \le x + n < \lfloor x \rfloor + n + 1$, and $\lfloor x\rfloor + n$ is an integer, so it is $\lfloor x + n\rfloor$.
+      2. $x + y = \lfloor x\rfloor + \lfloor y\rfloor + (s + t)$ with $0 \le s + t < 2$. By (1), $\lfloor x + y\rfloor = \lfloor x\rfloor + \lfloor y\rfloor + \lfloor s + t\rfloor$, and $\lfloor s + t\rfloor \in \{0, 1\}$. $\blacksquare$
+
+  - id: lg-223
+    title: Hermite's identity
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, floor function, cases]
+    source: Hermite
+    related: [lg-222]
+    statement: |
+      Prove that $\lfloor x\rfloor + \left\lfloor x + \frac12\right\rfloor = \lfloor 2x\rfloor$ for every real $x$.
+    solution: |
+      Write $x = m + t$ with $m = \lfloor x\rfloor$ and $0 \le t < 1$.
+
+      - If $0 \le t < \frac12$: $\lfloor x + \frac12\rfloor = m$ (as $m \le x + \frac12 < m + 1$), and $2x = 2m + 2t$ with $0 \le 2t < 1$, so $\lfloor 2x\rfloor = 2m$. Both sides are $2m$.
+      - If $\frac12 \le t < 1$: $\lfloor x + \frac12\rfloor = m + 1$, and $2x = 2m + 1 + (2t - 1)$ with $0 \le 2t - 1 < 1$, so $\lfloor 2x \rfloor = 2m + 1$. Both sides are $2m + 1$. $\blacksquare$
+
+  - id: lg-224
+    title: Swapping neighbours
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, bijection, involution]
+    statement: |
+      Prove that $f : \Z \to \Z$, $f(n) = n + (-1)^n$, is a bijection.
+    solution: |
+      For even $n$, $f(n) = n + 1$, which is odd; for odd $n$, $f(n) = n - 1$, which is even. So $f(f(n)) = (n+1) - 1 = n$ for even $n$, and $(n - 1) + 1 = n$ for odd $n$. Hence $f\circ f = \mathrm{id}$, so $f$ is its own inverse and a bijection. $\blacksquare$
+
+      ($f$ swaps $0 \leftrightarrow 1$, $2 \leftrightarrow 3$, $-2 \leftrightarrow -1$, …)
+
+  - id: lg-225
+    title: Sum and difference coordinates
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, bijection, parity]
+    statement: |
+      Show that $F(x, y) = (x + y, x - y)$ is a bijection $\R^2 \to \R^2$, but as a map $\Z^2 \to \Z^2$ it is injective and not surjective. Describe its image in $\Z^2$.
+    solution: |
+      **On $\R^2$.** $G(u, v) = \left(\frac{u+v}{2}, \frac{u-v}{2}\right)$ satisfies $G(F(x,y)) = (x, y)$ and $F(G(u,v)) = (u, v)$.
+
+      **On $\Z^2$.** Injectivity follows from $G\circ F = \mathrm{id}$. But $(x + y) + (x - y) = 2x$ is even, so $u$ and $v$ always have the same parity, and $(1, 0)$ is not in the image.
+
+      **Image.** Exactly the pairs $(u, v)$ with $u \equiv v \pmod 2$: for those, $G(u, v) \in \Z^2$ maps to $(u,v)$. $\blacksquare$
+
+  - id: lg-226
+    title: Subsets as functions to {0, 1}
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, power set, bijection, indicator functions]
+    related: [lg-186]
+    statement: |
+      Let $\{0,1\}^A$ be the set of functions $A \to \{0, 1\}$. Prove that $S \mapsto \mathbf 1_S$ is a bijection $\mathcal P(A) \to \{0,1\}^A$. Deduce $|\mathcal P(A)| = 2^{|A|}$ for finite $A$.
+    solution: |
+      Define $\Psi : \{0,1\}^A \to \mathcal P(A)$ by $\Psi(\varphi) = \varphi^{-1}(\{1\}) = \{a : \varphi(a) = 1\}$.
+
+      - $\Psi(\mathbf 1_S) = \{a : a \in S\} = S$.
+      - $\mathbf 1_{\Psi(\varphi)}(a) = 1 \iff \varphi(a) = 1$, and both take values in $\{0,1\}$, so $\mathbf 1_{\Psi(\varphi)} = \varphi$.
+
+      So the map is a bijection with inverse $\Psi$. For finite $A$ there are $2^{|A|}$ functions $A \to \{0,1\}$ (two choices per element). $\blacksquare$
+
+  - id: lg-227
+    title: Currying
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, bijection, currying]
+    statement: |
+      Write $Y^X$ for the set of functions $X \to Y$. Construct a bijection between $B^{A \times C}$ and $(B^C)^A$, and deduce $(b^c)^a = b^{ac}$ for natural numbers.
+    solution: |
+      Given $f : A \times C \to B$, define $\Phi(f) : A \to B^C$ by $\Phi(f)(a) = (c \mapsto f(a, c))$. Given $g : A \to B^C$, define $\Psi(g) : A \times C \to B$ by $\Psi(g)(a, c) = g(a)(c)$.
+
+      Then $\Psi(\Phi(f))(a, c) = \Phi(f)(a)(c) = f(a,c)$ and $\Phi(\Psi(g))(a)(c) = \Psi(g)(a,c) = g(a)(c)$. So $\Phi, \Psi$ are mutually inverse bijections.
+
+      For finite sets of sizes $a, b, c$: $|B^{A\times C}| = b^{ac}$ and $|(B^C)^A| = (b^c)^a$. $\blacksquare$
+
+      (Programmers know this as turning a two-argument function into one that returns a function.)
+
+  - id: lg-228
+    title: Even plus odd
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, even and odd, uniqueness]
+    statement: |
+      Prove that every $f : \R \to \R$ can be written uniquely as $f = e + o$ with $e$ even and $o$ odd. Find $e$ and $o$ for $f(x) = e^x$.
+    solution: |
+      **Existence.** $e(x) = \frac{f(x) + f(-x)}{2}$ and $o(x) = \frac{f(x) - f(-x)}{2}$. Then $e(-x) = e(x)$, $o(-x) = -o(x)$, and $e + o = f$.
+
+      **Uniqueness.** If $e + o = e' + o'$, then $h = e - e' = o' - o$ is both even and odd: $h(x) = h(-x) = -h(x)$, so $h = 0$.
+
+      For $e^x$: $e = \cosh x$, $o = \sinh x$. $\blacksquare$
+
+  - id: lg-229
+    title: Composing even and odd functions
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, even and odd, composition]
+    related: [lg-228]
+    statement: |
+      Prove that if $f$ is even then $g\circ f$ is even (for any $g$), and that the composite of two odd functions is odd. What about $g \circ f$ with $f$ odd and $g$ even?
+    solution: |
+      - $f$ even: $g(f(-x)) = g(f(x))$.
+      - $f, g$ odd: $g(f(-x)) = g(-f(x)) = -g(f(x))$.
+      - $f$ odd, $g$ even: $g(f(-x)) = g(-f(x)) = g(f(x))$, so even.
+
+      (Like multiplying signs, with even $= +1$ and odd $= -1$, except that an even inner function always wins.) $\blacksquare$
+
+  - id: lg-230
+    title: Functions with periodic iterates
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, involution, bijection]
+    related: [lg-238]
+    statement: |
+      Let $f : A \to A$. Prove that if $f\circ f = \mathrm{id}_A$, or more generally $f^{\circ k} = \mathrm{id}_A$ for some $k \ge 1$, then $f$ is a bijection.
+    solution: |
+      If $k = 1$, $f$ is the identity. For $k \ge 2$, let $g = f^{\circ(k-1)}$. Then $f\circ g = g \circ f = f^{\circ k} = \mathrm{id}_A$, so $g$ is a two-sided inverse and $f$ is a bijection (lg-024). $\blacksquare$
+
+  - id: lg-231
+    title: When is a relation a function?
+    subtopic: Functions
+    difficulty: easy
+    type: compute
+    tags: [functions, relations, graphs]
+    statement: |
+      A relation $R \subseteq A \times B$ is (the graph of) a function $A \to B$ iff for every $a \in A$ there is exactly one $b$ with $(a, b) \in R$. Decide which of these are functions $[-1, 1] \to \R$, or $\R \to \R$ where stated:
+
+      1. $\{(x, y) : x^2 + y^2 = 1\}$ as a relation on $\R$;
+      2. $\{(x, y) : x^2 + y^2 = 1,\ y \ge 0\}$ from $[-1,1]$;
+      3. $\{(x, y) : y^2 = x^2\}$ as a relation on $\R$.
+    solution: |
+      1. **No.** Existence fails ($x = 2$ has no $y$) and uniqueness fails ($x = 0$ has $y = \pm1$).
+      2. **Yes**: each $x \in [-1,1]$ has exactly one $y = \sqrt{1 - x^2} \ge 0$.
+      3. **No**: $x = 1$ has $y = \pm1$.
+
+  - id: lg-232
+    title: Restricting a quadratic to make it invertible
+    subtopic: Functions
+    difficulty: easy
+    type: compute
+    tags: [functions, inverse, bijection]
+    statement: |
+      Show that $f(x) = x^2 - 4x + 7$ is a bijection from $[2, \infty)$ to $[3, \infty)$ and find its inverse.
+    solution: |
+      $f(x) = (x - 2)^2 + 3$. On $[2, \infty)$, $x - 2 \ge 0$, so $f(x) \ge 3$, and $x \mapsto (x-2)^2$ is strictly increasing there, so $f$ is injective.
+
+      Given $y \ge 3$, $x = 2 + \sqrt{y - 3} \ge 2$ satisfies $f(x) = y$. So $f$ is surjective, and $f^{-1}(y) = 2 + \sqrt{y - 3}$.
+
+  - id: lg-233
+    title: Injectivity passes to the outer function
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, composition, injective, surjective]
+    related: [lg-023]
+    statement: |
+      Let $f: A \to B$ and $g : B \to C$. Prove that if $g\circ f$ is injective and $f$ is surjective then $g$ is injective.
+    solution: |
+      Suppose $g(b) = g(b')$. By surjectivity $b = f(a)$ and $b' = f(a')$. Then $(g \circ f)(a) = (g\circ f)(a')$, so $a = a'$ by injectivity of $g\circ f$, and $b = f(a) = f(a') = b'$. $\blacksquare$
+
+  - id: lg-234
+    title: Surjectivity passes to the inner function
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, composition, injective, surjective]
+    related: [lg-023, lg-233]
+    statement: |
+      Let $f: A \to B$ and $g : B \to C$. Prove that if $g\circ f$ is surjective and $g$ is injective then $f$ is surjective.
+    solution: |
+      Let $b \in B$. Since $g \circ f$ is surjective, $g(f(a)) = g(b)$ for some $a$. Since $g$ is injective, $f(a) = b$. $\blacksquare$
+
+  - id: lg-235
+    title: The Schröder–Bernstein theorem
+    subtopic: Functions
+    difficulty: hard
+    type: proof
+    tags: [functions, injective, bijection, cardinality]
+    source: Cantor, Schröder, Bernstein
+    hints:
+      - |
+        Let $C_0 = A \setminus g(B)$, $C_{n+1} = g(f(C_n))$ and $C = \bigcup C_n$. Use $f$ on $C$ and $g^{-1}$ off $C$.
+    statement: |
+      Prove that if there are injections $f : A \to B$ and $g : B \to A$, then there is a bijection $A \to B$.
+    solution: |
+      Let $C_0 = A \setminus g(B)$, $C_{n+1} = g(f(C_n))$ and $C = \bigcup_{n\ge0}C_n$. Every $a \notin C$ lies in $g(B)$ (since $C_0 \subseteq C$), so $g^{-1}(a)$ makes sense. Define
+      $$h(a) = \begin{cases} f(a) & a \in C,\\ g^{-1}(a) & a \notin C.\end{cases}$$
+
+      **Injective.** On $C$, $h = f$ is injective; off $C$, $h = g^{-1}$ is injective. If $f(a) = g^{-1}(a')$ with $a \in C_n$ and $a' \notin C$, then $a' = g(f(a)) \in C_{n+1} \subseteq C$, a contradiction.
+
+      **Surjective.** Let $b \in B$. If $g(b) \notin C$, then $h(g(b)) = b$. If $g(b) \in C$, then $g(b) \notin C_0$ (as $C_0$ avoids $g(B)$), so $g(b) \in C_{n+1} = g(f(C_n))$ for some $n$: $g(b) = g(f(a))$ with $a \in C_n$. Injectivity of $g$ gives $b = f(a) = h(a)$. $\blacksquare$
+
+  - id: lg-236
+    title: Counting idempotent functions
+    subtopic: Functions
+    difficulty: medium
+    type: compute
+    tags: [functions, counting, idempotent]
+    statement: |
+      How many functions $f : \{1, \dots, n\} \to \{1, \dots, n\}$ satisfy $f\circ f = f$? Evaluate for $n = 3$.
+    solution: |
+      **Characterisation.** $f \circ f = f$ iff $f(y) = y$ for every $y$ in the image of $f$: if $y = f(x)$ then $f(y) = f(f(x)) = f(x) = y$, and conversely if $f$ fixes its image then $f(f(x)) = f(x)$.
+
+      **Count.** Choose the image $I$ with $|I| = k \ge 1$ ($\binom nk$ ways). $f$ must fix each element of $I$ and send each of the other $n - k$ elements anywhere in $I$ ($k^{n-k}$ ways). So the number is
+      $$\sum_{k=1}^n\binom nk k^{n-k}.$$
+      For $n = 3$: $3\cdot1 + 3\cdot2 + 1\cdot1 = 10$.
+
+  - id: lg-237
+    title: The pigeonhole principle by induction
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, pigeonhole, induction, injective]
+    statement: |
+      Prove by induction on $n \ge 1$ that there is no injection from $\{1, \dots, n+1\}$ to $\{1, \dots, n\}$.
+    solution: |
+      **Base.** $n = 1$: any $f : \{1, 2\} \to \{1\}$ has $f(1) = f(2)$.
+
+      **Step.** Suppose there is no injection $[k+1] \to [k]$, and let $f : [k+2] \to [k+1]$ be injective (writing $[m] = \{1, \dots, m\}$).
+
+      - If $k+1$ is not in the image, $f$ restricted to $[k+1]$ is an injection into $[k]$.
+      - If $f(j) = k+1$, let $\tau$ swap $j$ and $k+2$ in $[k+2]$. Then $f \circ \tau$ is injective with $(f\circ\tau)(k+2) = k+1$, so no other element maps to $k+1$, and $f\circ\tau$ restricted to $[k+1]$ is an injection into $[k]$.
+
+      Either way we contradict the hypothesis. $\blacksquare$
+
+  - id: lg-238
+    title: A function of order three
+    subtopic: Functions
+    difficulty: easy
+    type: compute
+    tags: [functions, composition, iteration]
+    related: [lg-230]
+    statement: |
+      Let $f(x) = \dfrac{1}{1 - x}$ on $A = \R\setminus\{0, 1\}$. Show $f$ maps $A$ to $A$ and compute $f\circ f$ and $f \circ f \circ f$.
+    solution: |
+      $f(x) \ne 0$ always, and $f(x) = 1$ iff $x = 0$, which is excluded; so $f(A) \subseteq A$.
+      $$f(f(x)) = \frac{1}{1 - \frac1{1-x}} = \frac{1 - x}{-x} = \frac{x - 1}{x},\qquad f(f(f(x))) = \frac{1}{1 - \frac{x-1}{x}} = \frac{1}{1/x} = x.$$
+      So $f^{\circ3} = \mathrm{id}_A$, and by lg-230 $f$ is a bijection of $A$ with inverse $f\circ f$.
+
+  - id: lg-239
+    title: Computing images and preimages
+    subtopic: Functions
+    difficulty: easy
+    type: compute
+    tags: [functions, image, preimage]
+    related: [lg-215]
+    statement: |
+      For $f(x) = x^2$ on $\R$ find $f([-1, 2])$, $f^{-1}([1, 4])$, $f^{-1}([-4, -1])$ and $f(f^{-1}([-1, 4]))$. For $\sin$, find $\sin([0, \pi])$ and $\sin^{-1}(\{0\})$ (the preimage).
+    solution: |
+      - $f([-1, 2]) = [0, 4]$ (the minimum $0$ at $x = 0$, the maximum $4$ at $x = 2$).
+      - $f^{-1}([1,4]) = [-2, -1] \cup [1, 2]$.
+      - $f^{-1}([-4,-1]) = \varnothing$.
+      - $f^{-1}([-1,4]) = [-2, 2]$, whose image is $[0, 4] = [-1,4] \cap f(\R)$, as lg-215 predicts.
+      - $\sin([0,\pi]) = [0, 1]$ and the preimage of $\{0\}$ under $\sin$ is $\{k\pi : k \in \Z\}$.
+
+  - id: lg-240
+    title: Same size is an equivalence relation
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, bijection, cardinality, equivalence relation]
+    statement: |
+      Say $A \approx B$ if there is a bijection $A \to B$. Prove that $\approx$ is reflexive, symmetric and transitive.
+    solution: |
+      - **Reflexive:** $\mathrm{id}_A$ is a bijection.
+      - **Symmetric:** the inverse of a bijection $A \to B$ is a bijection $B \to A$ (lg-024).
+      - **Transitive:** the composite of bijections $A \to B \to C$ is a bijection (lg-022). $\blacksquare$
+
+  - id: lg-241
+    title: Injective means left-cancellable
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, injective, composition, cancellation]
+    related: [lg-242]
+    statement: |
+      Prove that $f : A \to B$ is injective if and only if for every set $C$ and all $g, h : C \to A$, $f \circ g = f \circ h$ implies $g = h$.
+    solution: |
+      **($\Rightarrow$)** For each $c$, $f(g(c)) = f(h(c))$, so $g(c) = h(c)$ by injectivity.
+
+      **($\Leftarrow$)** Suppose $f(a) = f(a')$. Let $C = \{\ast\}$ and $g(\ast) = a$, $h(\ast) = a'$. Then $f\circ g = f\circ h$, so $g = h$, i.e. $a = a'$. $\blacksquare$
+
+  - id: lg-242
+    title: Surjective means right-cancellable
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, surjective, composition, cancellation]
+    related: [lg-241]
+    statement: |
+      Prove that $f : A \to B$ is surjective if and only if for every set $C$ and all $g, h : B \to C$, $g\circ f = h \circ f$ implies $g = h$.
+    solution: |
+      **($\Rightarrow$)** Each $b \in B$ is $f(a)$ for some $a$, so $g(b) = g(f(a)) = h(f(a)) = h(b)$.
+
+      **($\Leftarrow$)** Suppose $b_0 \in B$ is not in the image. Let $C = \{0, 1\}$, $g \equiv 0$, and $h(b) = 1$ if $b = b_0$, $0$ otherwise. Then $g\circ f = h\circ f \equiv 0$ but $g \ne h$. $\blacksquare$
+
+  - id: lg-243
+    title: Multiplication maps modulo n
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, bijection, modular arithmetic, gcd]
+    related: [nt-016]
+    statement: |
+      For integers $a$ and $n \ge 2$, let $m_a : \Z_n \to \Z_n$, $x \mapsto ax \bmod n$. Prove that $m_a$ is a bijection iff $\gcd(a, n) = 1$. Check with $a = 3$ and $a = 2$, $n = 10$.
+    solution: |
+      **($\Leftarrow$)** By Bézout, $ab + nk = 1$ for some $b, k$, so $ab \equiv 1$. Then $m_b\circ m_a = m_a \circ m_b = \mathrm{id}$, and $m_a$ is a bijection.
+
+      **($\Rightarrow$)** If $d = \gcd(a, n) > 1$, then $x = n/d \not\equiv 0$ but $ax = \frac ad n \equiv 0 = a\cdot0$. So $m_a$ is not injective.
+
+      **Examples.** $m_3$ on $\Z_{10}$ sends $0,\dots,9$ to $0, 3, 6, 9, 2, 5, 8, 1, 4, 7$, a permutation (inverse $m_7$, since $3\cdot7 = 21 \equiv 1$). $m_2$ sends $0$ and $5$ both to $0$. $\blacksquare$
+
+  - id: lg-244
+    title: Composing monotone functions
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, monotone, composition]
+    statement: |
+      Prove that the composite of two increasing functions $\R \to \R$ is increasing, and the composite of two decreasing functions is increasing.
+    solution: |
+      Let $x \le y$.
+
+      - $f, g$ increasing: $f(x) \le f(y)$, then $g(f(x)) \le g(f(y))$.
+      - $f, g$ decreasing: $f(x) \ge f(y)$, then applying the decreasing $g$ reverses it again: $g(f(x)) \le g(f(y))$. $\blacksquare$
+
+  - id: lg-245
+    title: A unique fixed point of f∘f
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, fixed points, composition]
+    statement: |
+      Let $f : A \to A$. Prove that if $f\circ f$ has exactly one fixed point $a$, then $f(a) = a$.
+    solution: |
+      $f(f(a)) = a$. Apply $f$: $f(f(f(a))) = f(a)$, i.e. $(f\circ f)(f(a)) = f(a)$. So $f(a)$ is a fixed point of $f\circ f$, and by uniqueness $f(a) = a$. $\blacksquare$
+
+  - id: lg-246
+    title: Increasing maps of N don't fall behind
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, induction, monotone]
+    related: [in-199]
+    statement: |
+      Let $f : \N \to \N$ be strictly increasing. Prove that $f(n) \ge n$ for all $n$.
+    solution: |
+      Induction. $f(0) \ge 0$ since $f(0) \in \N$. If $f(n) \ge n$, then $f(n+1) > f(n) \ge n$, and since $f(n+1)$ is an integer, $f(n+1) \ge n + 1$. $\blacksquare$
+
+  - id: lg-247
+    title: Every set is smaller than its power set
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, cardinality, cantor, injective]
+    related: [lg-027]
+    statement: |
+      Prove that there is an injection $A \to \mathcal P(A)$ but no bijection.
+    solution: |
+      $a \mapsto \{a\}$ is injective, since $\{a\} = \{a'\}$ implies $a = a'$.
+
+      A bijection would in particular be a surjection $A \to \mathcal P(A)$, which Cantor's theorem (lg-027) rules out. $\blacksquare$
+
+  - id: lg-248
+    title: The symmetric group
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, bijection, groups, composition]
+    related: [lg-209, lg-212]
+    statement: |
+      Let $\mathrm{Sym}(A)$ be the set of bijections $A \to A$. Prove that it is a group under composition, and that it is not commutative when $|A| \ge 3$.
+    solution: |
+      - **Closure:** a composite of bijections is a bijection (lg-022).
+      - **Associativity:** lg-209.
+      - **Identity:** $\mathrm{id}_A$.
+      - **Inverses:** each bijection has an inverse bijection (lg-024).
+
+      **Not commutative.** Pick distinct $a, b, c \in A$. Let $s$ swap $a, b$ and $t$ swap $b, c$ (both fixing everything else). Then $(s\circ t)(c) = s(b) = a$ but $(t \circ s)(c) = t(c) = b$. $\blacksquare$
+
+  - id: lg-249
+    title: Exponential-type functions are positive
+    subtopic: Functions
+    difficulty: medium
+    type: proof
+    tags: [functions, functional equations]
+    statement: |
+      Let $f : \R \to \R$ satisfy $f(x + y) = f(x)f(y)$ for all $x, y$, and suppose $f$ is not identically zero. Prove that $f(0) = 1$ and $f(x) > 0$ for all $x$.
+    solution: |
+      If $f(a) = 0$ for some $a$, then $f(x) = f(a)f(x - a) = 0$ for all $x$, which is excluded. So $f$ is never $0$.
+
+      $f(0) = f(0)^2$ and $f(0) \ne 0$, so $f(0) = 1$.
+
+      Finally $f(x) = f(x/2)^2 \ge 0$, and $f(x) \ne 0$, so $f(x) > 0$. $\blacksquare$
+
+  - id: lg-250
+    title: Inverses of increasing bijections
+    subtopic: Functions
+    difficulty: easy
+    type: proof
+    tags: [functions, inverse, monotone]
+    statement: |
+      Let $f : \R \to \R$ be a strictly increasing bijection. Prove that $f^{-1}$ is strictly increasing.
+    solution: |
+      Let $y_1 < y_2$ and suppose $f^{-1}(y_1) \ge f^{-1}(y_2)$. Applying the increasing function $f$ gives $y_1 \ge y_2$, a contradiction. So $f^{-1}(y_1) < f^{-1}(y_2)$. $\blacksquare$
